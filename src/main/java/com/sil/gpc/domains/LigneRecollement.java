@@ -11,8 +11,6 @@ public class LigneRecollement {
 	private String numRecollement;
 	private Long quantiteLigneRecollement;
 	private Long PULigneRecollement;
-	private String numDebLigneRecollement;
-	private String numFinLigneRecollement;
 	private String observationLigneRecollement;
 	
 	public LigneRecollement() {
@@ -20,15 +18,12 @@ public class LigneRecollement {
 	}
 
 	public LigneRecollement(String codeArticle, String numRecollement, Long quantiteLigneRecollement,
-			Long pULigneRecollement, String numDebligneRecollement, String numFinLigneRecollement,
-			String observationLigneRecollement) {
+			Long pULigneRecollement,String observationLigneRecollement) {
 		super();
 		this.codeArticle = codeArticle;
 		this.numRecollement = numRecollement;
 		this.quantiteLigneRecollement = quantiteLigneRecollement;
-		PULigneRecollement = pULigneRecollement;
-		this.numDebLigneRecollement = numDebligneRecollement;
-		this.numFinLigneRecollement = numFinLigneRecollement;
+		this.PULigneRecollement = pULigneRecollement;
 		this.observationLigneRecollement = observationLigneRecollement;
 	}
 
@@ -64,22 +59,6 @@ public class LigneRecollement {
 		PULigneRecollement = pULigneRecollement;
 	}
 
-	public String getNumDebligneRecollement() {
-		return numDebLigneRecollement;
-	}
-
-	public void setNumDebligneRecollement(String numDebligneRecollement) {
-		this.numDebLigneRecollement = numDebligneRecollement;
-	}
-
-	public String getNumFinLigneRecollement() {
-		return numFinLigneRecollement;
-	}
-
-	public void setNumFinLigneRecollement(String numFinLigneRecollement) {
-		this.numFinLigneRecollement = numFinLigneRecollement;
-	}
-
 	public String getObservationLigneRecollement() {
 		return observationLigneRecollement;
 	}
@@ -94,8 +73,6 @@ public class LigneRecollement {
 		int result = 1;
 		result = prime * result + ((PULigneRecollement == null) ? 0 : PULigneRecollement.hashCode());
 		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((numDebLigneRecollement == null) ? 0 : numDebLigneRecollement.hashCode());
-		result = prime * result + ((numFinLigneRecollement == null) ? 0 : numFinLigneRecollement.hashCode());
 		result = prime * result + ((numRecollement == null) ? 0 : numRecollement.hashCode());
 		result = prime * result + ((observationLigneRecollement == null) ? 0 : observationLigneRecollement.hashCode());
 		result = prime * result + ((quantiteLigneRecollement == null) ? 0 : quantiteLigneRecollement.hashCode());
@@ -121,16 +98,6 @@ public class LigneRecollement {
 				return false;
 		} else if (!codeArticle.equals(other.codeArticle))
 			return false;
-		if (numDebLigneRecollement == null) {
-			if (other.numDebLigneRecollement != null)
-				return false;
-		} else if (!numDebLigneRecollement.equals(other.numDebLigneRecollement))
-			return false;
-		if (numFinLigneRecollement == null) {
-			if (other.numFinLigneRecollement != null)
-				return false;
-		} else if (!numFinLigneRecollement.equals(other.numFinLigneRecollement))
-			return false;
 		if (numRecollement == null) {
 			if (other.numRecollement != null)
 				return false;
@@ -153,9 +120,8 @@ public class LigneRecollement {
 	public String toString() {
 		return "LigneRecollement [codeArticle=" + codeArticle + ", numRecollement=" + numRecollement
 				+ ", quantiteLigneRecollement=" + quantiteLigneRecollement + ", PULigneRecollement="
-				+ PULigneRecollement + ", numDebligneRecollement=" + numDebLigneRecollement
-				+ ", numFinLigneRecollement=" + numFinLigneRecollement + ", observationLigneRecollement="
-				+ observationLigneRecollement + "]";
+				+ PULigneRecollement + ", observationLigneRecollement=" + observationLigneRecollement + "]";
 	}
+
 	
 }

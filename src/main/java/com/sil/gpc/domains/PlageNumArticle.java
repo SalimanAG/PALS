@@ -10,6 +10,10 @@ public class PlageNumArticle {
 	private Long idPlage;
 	private String numDebPlage;
 	private String numFinPlage;
+	private String codeArticle;
+	private String numRecollement;
+	private String numPlacement;
+	private String numAppro;
 	
 	public PlageNumArticle() {
 		super();
