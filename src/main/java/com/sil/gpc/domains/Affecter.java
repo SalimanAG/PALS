@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -10,8 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Affecter {
+public class Affecter implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,6 +53,4 @@ public class Affecter {
 		this.idUtilisateur = idUtilisateur;
 	}
 	
-	
-
 }

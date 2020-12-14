@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class ModePaiement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idModePay;
+	//private Long idModePay;
 
 	@Column(name = "codeModPay", length = 5)
 	@PrimaryKeyJoinColumn(name = "ModPay_PK")

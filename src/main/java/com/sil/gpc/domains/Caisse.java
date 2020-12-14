@@ -3,8 +3,6 @@ package com.sil.gpc.domains;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -13,11 +11,12 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class Caisse {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idCaisse;
 	@PrimaryKeyJoinColumn
 	private String codeCaisse;
 	private String libeCaisse;
+
+	
+	//Liaison à venir
 	private String codeArondissement;
 	
 	@OneToMany(targetEntity = Affecter.class, mappedBy = "caisse")
@@ -47,12 +46,6 @@ public class Caisse {
 	}
 	public void setLibeCaisse(String libeCaisse) {
 		this.libeCaisse = libeCaisse;
-	}
-	public Long getIdCaisse() {
-		return idCaisse;
-	}
-	public void setIdCaisse(Long idCaisse) {
-		this.idCaisse = idCaisse;
 	}
 	public String getCodeArondissement() {
 		return codeArondissement;

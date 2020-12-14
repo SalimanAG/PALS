@@ -14,7 +14,7 @@ public class TypeRecette {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idTypRec;
+	//private Long idTypRec;
 	
 	@PrimaryKeyJoinColumn(columnDefinition = "codeTypRec")
 	private String codeTypRec;
@@ -50,7 +50,5 @@ public class TypeRecette {
 	public void setLibeTypRec(String libeTypRec) {
 		this.libeTypRec = libeTypRec;
 	}
-	
-
 	
 }

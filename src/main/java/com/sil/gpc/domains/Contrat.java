@@ -1,6 +1,8 @@
 package com.sil.gpc.domains;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
@@ -31,10 +34,13 @@ public class Contrat {
 	private double cautionContrat;
 	@Column(name = "immeubleContrat")
 	private String codeIm;
+	@OneToMany(mappedBy = "idEcheance")
+	List<Echeance> echeanceContrat = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idLocataire")
 	private Locataire locataire;
+	
 	public Contrat() {
 		super();
 		// TODO Auto-generated constructor stub
