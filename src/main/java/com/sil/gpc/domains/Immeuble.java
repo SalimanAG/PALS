@@ -9,18 +9,23 @@ public class Immeuble {
 	private String localisationIm;
 	private boolean etatIm;
 	private String codeTypIm;
+	private String codeQuartier;
 	
 	public Immeuble() {
 		super();
 	}
 
-	public Immeuble(String codeIm, String localisationIm, boolean etatIm, String codeTypIm) {
+
+	public Immeuble(String codeIm, String localisationIm, boolean etatIm, String codeTypIm, String codeQuartier) {
 		super();
 		this.codeIm = codeIm;
 		this.localisationIm = localisationIm;
 		this.etatIm = etatIm;
 		this.codeTypIm = codeTypIm;
+		this.codeQuartier = codeQuartier;
 	}
+
+
 
 	public String getCodeIm() {
 		return codeIm;
