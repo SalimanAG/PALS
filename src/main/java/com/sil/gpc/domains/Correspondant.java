@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Correspondant {
 
+	@Id
 	private String idCorrespondant;
 	private boolean imputableCorres;
 	private Long numMagasinier;

@@ -3,10 +3,12 @@ package com.sil.gpc.domains;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Placement {
 
+	@Id
 	private String numPlacement;
 	private Date datePlacement;
 	private String codeExercice;

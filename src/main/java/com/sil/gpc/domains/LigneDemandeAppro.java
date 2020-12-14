@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class LigneDemandeAppro {
 
+	@Id
 	private String codeArticle;
 	private String numDA;
 	private Long quantiteDemandee;

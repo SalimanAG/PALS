@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Immeuble {
 
+	@Id
 	private String codeIm;
 	private String localisationIm;
 	private boolean etatIm;

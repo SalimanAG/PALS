@@ -3,10 +3,12 @@ package com.sil.gpc.domains;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class DemandeApprovisionnement {
 
+	@Id
 	private String numDA;
 	private Date date;
 	private String codeExercice;

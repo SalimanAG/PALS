@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Pays {
 
+	@Id
 	private String codePays;
 	private String nomPays;
 	private String nomCompletPays;

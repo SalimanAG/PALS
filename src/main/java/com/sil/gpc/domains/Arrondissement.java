@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Arrondissement {
 
+	@Id
 	private String codeArrondi;
 	private String nomArrondi;
 	private String adresseArrondi;

@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class TypeImmeuble {
 
+	@Id
 	private String codeTypIm;
 	private String libTypIm;
 	

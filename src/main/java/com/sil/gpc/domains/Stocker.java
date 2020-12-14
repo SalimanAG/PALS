@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Stocker {
 
+	@Id
 	private String codeMagasin;
 	private String codeArticle;
 	private Long quantiterStocker;

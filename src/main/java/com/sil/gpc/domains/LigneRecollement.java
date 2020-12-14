@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class LigneRecollement {
 
+	@Id
 	private String codeArticle;
 	private String numRecollement;
 	private Long quantiteLigneRecollement;

@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Utilisateur {
 
+	@Id
 	private Long idUtilisateur;
 	private String login;
 	private String motDePass;

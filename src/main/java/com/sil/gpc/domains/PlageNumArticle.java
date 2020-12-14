@@ -1,10 +1,12 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class PlageNumArticle {
 
+	@Id
 	private Long idPlage;
 	private String numDebPlage;
 	private String numFinPlage;
