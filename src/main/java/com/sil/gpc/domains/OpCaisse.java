@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -9,13 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+@SuppressWarnings("serial")
 @Entity(name = "OpCaisse")
-public class OpCaisse {
+public class OpCaisse implements Serializable {
 	@Id
 	// @GeneratedValue(strategy = GenerationType.AUTO)
 	// private Long idOpCaisse;
@@ -29,10 +30,14 @@ public class OpCaisse {
 	private boolean valideOpCaisse;
 	@Column(length = 150)
 	private String Observation;
+	
+	//Liaison à la caisse
 	private Date dateSaisie;
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Caisse.class)
 	@JoinColumn(name = "codeCaisse", referencedColumnName = "codeCaisse", nullable = false)
 	private Caisse caisse;
+	
+	//Liaison au type de recette
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = TypeRecette.class)
 	@JoinColumn(name = "codeTypRec", referencedColumnName = "codeTypRec", nullable = false)
 	private TypeRecette typeRecette;
@@ -42,17 +47,20 @@ public class OpCaisse {
 	@JoinColumn(name = "codeModPay", referencedColumnName = "codeModPay", nullable = false)
 	private ModePaiement modePaiement;
 	
-
-	private String codeExercice;
-	private String idUtilisateur;
-	
 	// Liaison avec la table Echeance
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,targetEntity = Echeance.class)
-	@JoinTable(name = "OpCaisseEcheance", 
-	joinColumns = { @JoinColumn(name = "numOpCaisse",nullable = true) }, 
-	inverseJoinColumns = {@JoinColumn(name = "idEcheance", nullable = true) })
+	@OneToMany( cascade = CascadeType.ALL,targetEntity = Echeance.class, mappedBy = "opCaisse")
 	private List<Echeance> echeancesOpCaisse;
+	
+	//Liaison à l'exercice
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
+	private Exercice exercice;
 
+	//Liaison à la table "Utilisateur"
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Utilisateur.class)
+	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
+	private Utilisateur utilisateur;
+	
 	public OpCaisse() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -130,20 +138,13 @@ public class OpCaisse {
 		this.modePaiement = modePaiement;
 	}
 
-	public String getCodeExercice() {
-		return codeExercice;
-	}
-
-	public void setCodeExercice(String codeExercice) {
-		this.codeExercice = codeExercice;
-	}
-
-	public String getIdUtilisateur() {
-		return idUtilisateur;
-	}
-
-	public void setIdUtilisateur(String idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
+	@Override
+	public String toString() {
+		return "OpCaisse [numOpCaisse=" + numOpCaisse + ", dateOpCaisse=" + dateOpCaisse + ", contribuable="
+				+ contribuable + ", valideOpCaisse=" + valideOpCaisse + ", Observation=" + Observation + ", dateSaisie="
+				+ dateSaisie + ", caisse=" + caisse + ", typeRecette=" + typeRecette + ", modePaiement=" + modePaiement
+				+ ", exercice=" + exercice + ", utilisateur=" + utilisateur + ", echeancesOpCaisse=" + echeancesOpCaisse
+				+ "]";
 	}
 
 }

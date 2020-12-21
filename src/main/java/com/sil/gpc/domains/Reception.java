@@ -22,7 +22,7 @@ public class Reception {
 	@Column(length = 150)
 	private String observation;
 	private Date DateReception;
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneReception.class)
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneReception.class, mappedBy = "reception")
 	public List<Reception> lignesParReception;
 	
 	public Reception() {

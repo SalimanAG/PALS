@@ -1,108 +1,147 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@SuppressWarnings("serial")
 @Entity
-public class LignePlacement {
+public class LignePlacement implements Serializable {
 
 	@Id
-	private String codeArticle;
-	private String numPlacement;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long idLignePlacement;
 	private Long quantiteLignePlacement;
 	private Long PULignePlacement;
-	
+
+	//Liaison à la table Placement
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Placement.class)
+	@JoinColumn(name = "numPlacement", nullable = false, referencedColumnName = "numPlacement")
+	public Placement placement;
+
+	//Liaison à la table Article
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
+	public Article article;
+
 	public LignePlacement() {
 		super();
 	}
 
-	public LignePlacement(String codeArticle, String numPlacement, Long quantiteLignePlacement, Long pULignePlacement) {
+	public LignePlacement(Long quantiteLignePlacement, Long pULignePlacement, Placement placement, Article article) {
 		super();
-		this.codeArticle = codeArticle;
-		this.numPlacement = numPlacement;
 		this.quantiteLignePlacement = quantiteLignePlacement;
 		PULignePlacement = pULignePlacement;
+		this.placement = placement;
+		this.article = article;
 	}
 
-	public String getCodeArticle() {
-		return codeArticle;
+	/**
+	 * @return the idLignePlacement
+	 */
+	public Long getIdLignePlacement() {
+		return idLignePlacement;
 	}
 
-	public void setCodeArticle(String codeArticle) {
-		this.codeArticle = codeArticle;
+	/**
+	 * @param idLignePlacement the idLignePlacement to set
+	 */
+	public void setIdLignePlacement(Long idLignePlacement) {
+		this.idLignePlacement = idLignePlacement;
 	}
 
-	public String getNumPlacement() {
-		return numPlacement;
-	}
-
-	public void setNumPlacement(String numPlacement) {
-		this.numPlacement = numPlacement;
-	}
-
+	/**
+	 * @return the quantiteLignePlacement
+	 */
 	public Long getQuantiteLignePlacement() {
 		return quantiteLignePlacement;
 	}
 
+	/**
+	 * @param quantiteLignePlacement the quantiteLignePlacement to set
+	 */
 	public void setQuantiteLignePlacement(Long quantiteLignePlacement) {
 		this.quantiteLignePlacement = quantiteLignePlacement;
 	}
 
+	/**
+	 * @return the pULignePlacement
+	 */
 	public Long getPULignePlacement() {
 		return PULignePlacement;
 	}
 
+	/**
+	 * @param pULignePlacement the pULignePlacement to set
+	 */
 	public void setPULignePlacement(Long pULignePlacement) {
 		PULignePlacement = pULignePlacement;
 	}
 
+	/**
+	 * @return the placement
+	 */
+	public Placement getPlacement() {
+		return placement;
+	}
+
+	/**
+	 * @param placement the placement to set
+	 */
+	public void setPlacement(Placement placement) {
+		this.placement = placement;
+	}
+
+	/**
+	 * @return the article
+	 */
+	public Article getArticle() {
+		return article;
+	}
+
+	/**
+	 * @param article the article to set
+	 */
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((PULignePlacement == null) ? 0 : PULignePlacement.hashCode());
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((numPlacement == null) ? 0 : numPlacement.hashCode());
-		result = prime * result + ((quantiteLignePlacement == null) ? 0 : quantiteLignePlacement.hashCode());
-		return result;
+		return Objects.hash(PULignePlacement, article, idLignePlacement, placement, quantiteLignePlacement);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		LignePlacement other = (LignePlacement) obj;
-		if (PULignePlacement == null) {
-			if (other.PULignePlacement != null)
-				return false;
-		} else if (!PULignePlacement.equals(other.PULignePlacement))
-			return false;
-		if (codeArticle == null) {
-			if (other.codeArticle != null)
-				return false;
-		} else if (!codeArticle.equals(other.codeArticle))
-			return false;
-		if (numPlacement == null) {
-			if (other.numPlacement != null)
-				return false;
-		} else if (!numPlacement.equals(other.numPlacement))
-			return false;
-		if (quantiteLignePlacement == null) {
-			if (other.quantiteLignePlacement != null)
-				return false;
-		} else if (!quantiteLignePlacement.equals(other.quantiteLignePlacement))
-			return false;
-		return true;
+		return Objects.equals(PULignePlacement, other.PULignePlacement) && Objects.equals(article, other.article)
+				&& Objects.equals(idLignePlacement, other.idLignePlacement)
+				&& Objects.equals(placement, other.placement)
+				&& Objects.equals(quantiteLignePlacement, other.quantiteLignePlacement);
 	}
 
 	@Override
 	public String toString() {
-		return "LignePlacement [codeArticle=" + codeArticle + ", numPlacement=" + numPlacement
-				+ ", quantiteLignePlacement=" + quantiteLignePlacement + ", PULignePlacement=" + PULignePlacement + "]";
+		return "LignePlacement [idLignePlacement=" + idLignePlacement + ", quantiteLignePlacement="
+				+ quantiteLignePlacement + ", PULignePlacement=" + PULignePlacement + ", placement=" + placement
+				+ ", article=" + article + "]";
 	}
-	
+
 }

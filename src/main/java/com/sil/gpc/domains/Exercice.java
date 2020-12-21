@@ -1,12 +1,18 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class Exercice {
+public class Exercice implements Serializable{
 
 	@Id
 	private String codeExercice;
@@ -15,6 +21,34 @@ public class Exercice {
 	private Date dateFin;
 	private String etatExo;
 	private boolean exoSelectionner;
+
+	//Liaison à l'approvisionnement
+	@OneToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER, targetEntity = Approvisionnement.class,mappedBy = "exercice")
+	public List<Approvisionnement> approsParExercice;
+
+	//Liaison à la commande
+	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Commande.class,mappedBy = "exercice")
+	public List<Commande> commandesParExercice;
+
+	//Liaison au Placement
+	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Placement.class,mappedBy = "exercice")
+	public List<Placement> placementsParExercice;
+
+	//Liaison au point de vente
+	@OneToMany(cascade = CascadeType.DETACH,targetEntity = PointVente.class,mappedBy = "exercice")
+	public List<PointVente> PointsParExercice;
+
+	//Liaison au reversement
+	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Reversement.class,mappedBy = "exercice")
+	public List<Reversement> ReversementsParExercice;
+
+	//Liaison au recollement
+	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Recollement.class,mappedBy = "exercice")
+	public List<Recollement> recollementsParExercice;
+
+	//Liaison à la plage disponible
+	@OneToMany(cascade = CascadeType.DETACH,targetEntity = PlageNumDispo.class,mappedBy = "exercice")
+	public List<PlageNumDispo> plagesParExercice;
 	
 	public Exercice() {
 		super();
@@ -91,44 +125,18 @@ public class Exercice {
 		result = prime * result + ((libExercice == null) ? 0 : libExercice.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Exercice other = (Exercice) obj;
-		if (codeExercice == null) {
-			if (other.codeExercice != null)
-				return false;
-		} else if (!codeExercice.equals(other.codeExercice))
-			return false;
-		if (dateDebut == null) {
-			if (other.dateDebut != null)
-				return false;
-		} else if (!dateDebut.equals(other.dateDebut))
-			return false;
-		if (dateFin == null) {
-			if (other.dateFin != null)
-				return false;
-		} else if (!dateFin.equals(other.dateFin))
-			return false;
-		if (etatExo == null) {
-			if (other.etatExo != null)
-				return false;
-		} else if (!etatExo.equals(other.etatExo))
-			return false;
-		if (exoSelectionner != other.exoSelectionner)
-			return false;
-		if (libExercice == null) {
-			if (other.libExercice != null)
-				return false;
-		} else if (!libExercice.equals(other.libExercice))
-			return false;
-		return true;
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
 	}
 
 	@Override

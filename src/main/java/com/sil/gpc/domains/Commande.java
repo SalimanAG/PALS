@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -28,10 +29,13 @@ public class Commande implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, targetEntity =Fournisseur.class)
 	private Fournisseur frs;
 	
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneCommande.class,fetch = FetchType.EAGER,mappedBy = "cmde")
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneCommande.class,fetch = FetchType.EAGER,mappedBy = "numCommande")
 	public List<LigneCommande> lignesParCommande;
+	
 	//Liaison à venir avec la table Exercice
-	private String codeExercice;
+	@ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY,targetEntity = Exercice.class)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
+	private Exercice exercice;
 
 	public Commande() {
 		super();
@@ -39,14 +43,14 @@ public class Commande implements Serializable {
 	}
 
 	public Commande(String numCommande, Date dateCommande, String description, int delaiLivraison, Fournisseur frs,
-			String codeExercice) {
+			Exercice exercice) {
 		super();
 		this.numCommande = numCommande;
 		this.dateCommande = dateCommande;
 		this.description = description;
 		this.delaiLivraison = delaiLivraison;
 		this.frs = frs;
-		this.codeExercice = codeExercice;
+		this.exercice = exercice;
 	}
 
 	public String getNumCommande() {
@@ -89,13 +93,48 @@ public class Commande implements Serializable {
 		this.frs = frs;
 	}
 
-	public String getCodeExercice() {
-		return codeExercice;
+	public Exercice getExercice() {
+		return exercice;
 	}
 
-	public void setCodeExercice(String codeExercice) {
-		this.codeExercice = codeExercice;
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
 	}
-	
+
+	public List<LigneCommande> getLignesParCommande() {
+		return lignesParCommande;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+
 	
 }

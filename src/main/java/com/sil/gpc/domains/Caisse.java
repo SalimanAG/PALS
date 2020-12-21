@@ -3,8 +3,12 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -19,7 +23,9 @@ public class Caisse implements Serializable {
 
 	
 	//Liaison à venir
-	private String codeArondissement;
+	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Arrondissement.class,fetch = FetchType.LAZY)
+	@JoinColumn(name = "codeArrondi",referencedColumnName = "codeArrondi")
+	private Arrondissement arrondissement;
 	
 	@OneToMany(targetEntity = Affecter.class, mappedBy = "caisse")
 	public List<Affecter> affectationsCaisse;
@@ -49,12 +55,7 @@ public class Caisse implements Serializable {
 	public void setLibeCaisse(String libeCaisse) {
 		this.libeCaisse = libeCaisse;
 	}
-	public String getCodeArondissement() {
-		return codeArondissement;
-	}
-	public void setCodeArondissement(String codeArondissement) {
-		this.codeArondissement = codeArondissement;
-	}
+	
 	public List<Affecter> getAffectationsCaisse() {
 		return affectationsCaisse;
 	}

@@ -1,159 +1,180 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@SuppressWarnings("serial")
 @Entity
-public class PlageNumDispo {
+public class PlageNumDispo implements Serializable {
 
 	@Id
-	private String codePlageDispo;
-	private String numDebPlage;
-	private String numDebPlageDispo;
-	private String numFinPlage;
-	private String numFinPlageDispo;
-	private String annee;
-	private String codeArticle;
-	
+	private String codePlageDispo; 
+	private String numDebPlage; //Le premier numéro réceptionné dans l'année
+	private String numDebPlageDispo; //le premier numero disponible
+	private String numFinPlage;//Le dernier numéro réceptionné dans l'année
+	private String numFinPlageDispo; //Le dernier numéro réceptionné dans l'année
+
+	//Liaison avec Exercice
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
+	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
+	private Exercice exercice;
+
+	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.LAZY)
+	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
+	public Article article;
+		
 	public PlageNumDispo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public PlageNumDispo(String codePlageDispo, String numDebPlage, String numDebPlageDispo, String numFinPlage,
-			String numFinPlageDispo, String annee, String codeArticle) {
+			String numFinPlageDispo, Exercice exercice, Article article) {
 		super();
 		this.codePlageDispo = codePlageDispo;
 		this.numDebPlage = numDebPlage;
 		this.numDebPlageDispo = numDebPlageDispo;
 		this.numFinPlage = numFinPlage;
 		this.numFinPlageDispo = numFinPlageDispo;
-		this.annee = annee;
-		this.codeArticle = codeArticle;
+		this.exercice = exercice;
+		this.article = article;
 	}
 
+	/**
+	 * @return the codePlageDispo
+	 */
 	public String getCodePlageDispo() {
 		return codePlageDispo;
 	}
 
+	/**
+	 * @param codePlageDispo the codePlageDispo to set
+	 */
 	public void setCodePlageDispo(String codePlageDispo) {
 		this.codePlageDispo = codePlageDispo;
 	}
 
+	/**
+	 * @return the numDebPlage
+	 */
 	public String getNumDebPlage() {
 		return numDebPlage;
 	}
 
+	/**
+	 * @param numDebPlage the numDebPlage to set
+	 */
 	public void setNumDebPlage(String numDebPlage) {
 		this.numDebPlage = numDebPlage;
 	}
 
+	/**
+	 * @return the numDebPlageDispo
+	 */
 	public String getNumDebPlageDispo() {
 		return numDebPlageDispo;
 	}
 
+	/**
+	 * @param numDebPlageDispo the numDebPlageDispo to set
+	 */
 	public void setNumDebPlageDispo(String numDebPlageDispo) {
 		this.numDebPlageDispo = numDebPlageDispo;
 	}
 
+	/**
+	 * @return the numFinPlage
+	 */
 	public String getNumFinPlage() {
 		return numFinPlage;
 	}
 
+	/**
+	 * @param numFinPlage the numFinPlage to set
+	 */
 	public void setNumFinPlage(String numFinPlage) {
 		this.numFinPlage = numFinPlage;
 	}
 
+	/**
+	 * @return the numFinPlageDispo
+	 */
 	public String getNumFinPlageDispo() {
 		return numFinPlageDispo;
 	}
 
+	/**
+	 * @param numFinPlageDispo the numFinPlageDispo to set
+	 */
 	public void setNumFinPlageDispo(String numFinPlageDispo) {
 		this.numFinPlageDispo = numFinPlageDispo;
 	}
 
-	public String getAnnee() {
-		return annee;
+	/**
+	 * @return the exercice
+	 */
+	public Exercice getExercice() {
+		return exercice;
 	}
 
-	public void setAnnee(String annee) {
-		this.annee = annee;
+	/**
+	 * @param exercice the exercice to set
+	 */
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
 	}
 
-	public String getCodeArticle() {
-		return codeArticle;
+	/**
+	 * @return the article
+	 */
+	public Article getArticle() {
+		return article;
 	}
 
-	public void setCodeArticle(String codeArticle) {
-		this.codeArticle = codeArticle;
+	/**
+	 * @param article the article to set
+	 */
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((annee == null) ? 0 : annee.hashCode());
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((codePlageDispo == null) ? 0 : codePlageDispo.hashCode());
-		result = prime * result + ((numDebPlage == null) ? 0 : numDebPlage.hashCode());
-		result = prime * result + ((numDebPlageDispo == null) ? 0 : numDebPlageDispo.hashCode());
-		result = prime * result + ((numFinPlage == null) ? 0 : numFinPlage.hashCode());
-		result = prime * result + ((numFinPlageDispo == null) ? 0 : numFinPlageDispo.hashCode());
-		return result;
+		return Objects.hash(article, codePlageDispo, exercice, numDebPlage, numDebPlageDispo, numFinPlage,
+				numFinPlageDispo);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		PlageNumDispo other = (PlageNumDispo) obj;
-		if (annee == null) {
-			if (other.annee != null)
-				return false;
-		} else if (!annee.equals(other.annee))
-			return false;
-		if (codeArticle == null) {
-			if (other.codeArticle != null)
-				return false;
-		} else if (!codeArticle.equals(other.codeArticle))
-			return false;
-		if (codePlageDispo == null) {
-			if (other.codePlageDispo != null)
-				return false;
-		} else if (!codePlageDispo.equals(other.codePlageDispo))
-			return false;
-		if (numDebPlage == null) {
-			if (other.numDebPlage != null)
-				return false;
-		} else if (!numDebPlage.equals(other.numDebPlage))
-			return false;
-		if (numDebPlageDispo == null) {
-			if (other.numDebPlageDispo != null)
-				return false;
-		} else if (!numDebPlageDispo.equals(other.numDebPlageDispo))
-			return false;
-		if (numFinPlage == null) {
-			if (other.numFinPlage != null)
-				return false;
-		} else if (!numFinPlage.equals(other.numFinPlage))
-			return false;
-		if (numFinPlageDispo == null) {
-			if (other.numFinPlageDispo != null)
-				return false;
-		} else if (!numFinPlageDispo.equals(other.numFinPlageDispo))
-			return false;
-		return true;
+		return Objects.equals(article, other.article) && Objects.equals(codePlageDispo, other.codePlageDispo)
+				&& Objects.equals(exercice, other.exercice) && Objects.equals(numDebPlage, other.numDebPlage)
+				&& Objects.equals(numDebPlageDispo, other.numDebPlageDispo)
+				&& Objects.equals(numFinPlage, other.numFinPlage)
+				&& Objects.equals(numFinPlageDispo, other.numFinPlageDispo);
 	}
 
 	@Override
 	public String toString() {
 		return "PlageNumDispo [codePlageDispo=" + codePlageDispo + ", numDebPlage=" + numDebPlage
 				+ ", numDebPlageDispo=" + numDebPlageDispo + ", numFinPlage=" + numFinPlage + ", numFinPlageDispo="
-				+ numFinPlageDispo + ", annee=" + annee + ", codeArticle=" + codeArticle + "]";
+				+ numFinPlageDispo + ", exercice=" + exercice + ", article=" + article + "]";
 	}
-	
+
 }

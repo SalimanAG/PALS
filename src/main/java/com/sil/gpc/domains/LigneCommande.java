@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,8 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class LigneCommande {
+public class LigneCommande implements Serializable{
 
 
 
@@ -24,17 +26,21 @@ public class LigneCommande {
 	private double PULigneCommande;
 	private double Remise;
 	private double TVA;
-	
+
 	//Liaison à la table Commande
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Commande.class)
-	@JoinColumn(name = "cmde", nullable = false, referencedColumnName = "numCommande")
-	public Commande cmde;
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = LigneReception.class,fetch = FetchType.EAGER)
+	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
+	public Commande numCommande;
+
+	//Liaison à la table Article
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
+	public Article article;
+	
+	//Liaison à la LigneReception
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = LigneReception.class,fetch = FetchType.EAGER,mappedBy ="ligneCommande" )
 	public List<LigneReception> lignReceptionParCommande;
 	
-	//Liaison à venir avec Article
-	private String codeArticle;
-
 	public LigneCommande() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -48,8 +54,7 @@ public class LigneCommande {
 		PULigneCommande = pULigneCommande;
 		Remise = remise;
 		TVA = tVA;
-		this.cmde = cmde;
-		this.codeArticle = codeArticle;
+		this.numCommande = cmde;
 	}
 
 
@@ -93,14 +98,5 @@ public class LigneCommande {
 	public void setTVA(double tVA) {
 		TVA = tVA;
 	}
-
-	public String getCodeArticle() {
-		return codeArticle;
-	}
-
-	public void setCodeArticle(String codeArticle) {
-		this.codeArticle = codeArticle;
-	}
-	
-	
+ 	
 }

@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
@@ -31,11 +28,9 @@ public class Echeance implements Serializable {
 	Contrat contrat;
 
 	//Liaison avec la table OpCaisse
-	@ManyToMany(targetEntity = OpCaisse.class,fetch = FetchType.EAGER,cascade = CascadeType.REFRESH)
-	@JoinTable(name = "OpCaisseEcheance",
-	joinColumns = {@JoinColumn(name="idEcheance")},
-	inverseJoinColumns = {@JoinColumn(name="numOpCaisse")})
-	private List<OpCaisse> opCaisseEcheance ;
+	@ManyToOne(targetEntity = OpCaisse.class,fetch = FetchType.EAGER,cascade = CascadeType.REFRESH,optional = true)
+	@JoinColumn(name = "numOpCaisse", referencedColumnName = "numOpCaisse",nullable = true)
+	private OpCaisse opCaisse ;
 
 	public Echeance() {
 		super();

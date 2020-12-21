@@ -1,29 +1,48 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class Commune {
+public class Commune implements Serializable{
 
 	@Id
 	private String codeCommune;
 	private String nomCommune;
 	private String numTelMairie;
 	private String adresseMairie;
-	private String codeDepartement;
+	//private String codeDepartement;
+	
+	//Migration de la clé du département vers la commune
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Departement.class)
+	@JoinColumn(name = "codeDepartement",referencedColumnName = "codeDepartement")
+	public Departement codeDepartement;
+	
+	//Migration de la clé de la commune vers les départements
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Arrondissement.class,fetch = FetchType.EAGER,mappedBy = "commune")
+	public List<Arrondissement> arrondissementsParCommune;
+	
 	public Commune() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Commune(String codeCommune, String nomCommune, String numTelMairie, String adresseMairie,
-			String codeDepartement) {
+			Departement codedepartement) {
 		super();
 		this.codeCommune = codeCommune;
 		this.nomCommune = nomCommune;
 		this.numTelMairie = numTelMairie;
 		this.adresseMairie = adresseMairie;
-		this.codeDepartement = codeDepartement;
+		this.codeDepartement = codedepartement;
 	}
 	public String getCodeCommune() {
 		return codeCommune;
@@ -49,19 +68,12 @@ public class Commune {
 	public void setAdresseMairie(String adresseMairie) {
 		this.adresseMairie = adresseMairie;
 	}
-	public String getCodeDepartement() {
-		return codeDepartement;
-	}
-	public void setCodeDepartement(String codeDepartement) {
-		this.codeDepartement = codeDepartement;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((adresseMairie == null) ? 0 : adresseMairie.hashCode());
 		result = prime * result + ((codeCommune == null) ? 0 : codeCommune.hashCode());
-		result = prime * result + ((codeDepartement == null) ? 0 : codeDepartement.hashCode());
 		result = prime * result + ((nomCommune == null) ? 0 : nomCommune.hashCode());
 		result = prime * result + ((numTelMairie == null) ? 0 : numTelMairie.hashCode());
 		return result;
@@ -84,11 +96,6 @@ public class Commune {
 			if (other.codeCommune != null)
 				return false;
 		} else if (!codeCommune.equals(other.codeCommune))
-			return false;
-		if (codeDepartement == null) {
-			if (other.codeDepartement != null)
-				return false;
-		} else if (!codeDepartement.equals(other.codeDepartement))
 			return false;
 		if (nomCommune == null) {
 			if (other.nomCommune != null)

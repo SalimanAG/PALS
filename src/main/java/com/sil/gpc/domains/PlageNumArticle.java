@@ -1,16 +1,31 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class PlageNumArticle {
+public class PlageNumArticle implements Serializable {
 
 	@Id
+	@GeneratedValue
 	private Long idPlage;
 	private String numDebPlage;
 	private String numFinPlage;
-	private String codeArticle;
+
+	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.LAZY)
+	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
+	public Article article;
+	
 	private String numRecollement;
 	private String numPlacement;
 	private String numAppro;

@@ -1,46 +1,61 @@
 package com.sil.gpc.domains;
 
-import java.sql.Date;
+import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class LigneAppro {
+public class LigneAppro implements Serializable {
 
 	@Id
-	private String codeArticle;
-	private String numAppro;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long idLigneAppro;
 	private Long quantiteLigneAppro;
 	private Long PULigneAppro;
+	
+	//Liaison avec Article
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
+	public Article article;
 
+	//Liaison avec Approvisionnement
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Approvisionnement.class)
+	@JoinColumn(name = "numAppro", referencedColumnName = "numAppro",nullable = false)
+	public Approvisionnement appro;
+
+	//Liaison avec LigneDemmandeAppro
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = LigneDemandeAppro.class)
+	@JoinColumn(name = "numidDA", referencedColumnName = "idLigneDA",nullable = false)
+	public LigneDemandeAppro ligneDA;
+	
 	public LigneAppro() {
 		super();
 	}
 
-	public LigneAppro(String codeArticle, String numAppro, Long quantiteLigneAppro, Long pULigneAppro,
-			String numDebLigneAppro, String numFinLigneAppro) {
+	public LigneAppro(Long idLigneAppro, Long quantiteLigneAppro, Long pULigneAppro, Article article,
+			Approvisionnement appro) {
 		super();
-		this.codeArticle = codeArticle;
-		this.numAppro = numAppro;
+		this.idLigneAppro = idLigneAppro;
 		this.quantiteLigneAppro = quantiteLigneAppro;
-		this.PULigneAppro = pULigneAppro;
+		PULigneAppro = pULigneAppro;
+		this.article = article;
+		this.appro = appro;
 	}
 
-	public String getCodeArticle() {
-		return codeArticle;
+	public Long getIdLigneAppro() {
+		return idLigneAppro;
 	}
 
-	public void setCodeArticle(String codeArticle) {
-		this.codeArticle = codeArticle;
-	}
-
-	public String getNumAppro() {
-		return numAppro;
-	}
-
-	public void setNumAppro(String numAppro) {
-		this.numAppro = numAppro;
+	public void setIdLigneAppro(Long idLigneAppro) {
+		this.idLigneAppro = idLigneAppro;
 	}
 
 	public Long getQuantiteLigneAppro() {
@@ -59,54 +74,51 @@ public class LigneAppro {
 		PULigneAppro = pULigneAppro;
 	}
 
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
+	public Approvisionnement getAppro() {
+		return appro;
+	}
+
+	public void setAppro(Approvisionnement appro) {
+		this.appro = appro;
+	}
+
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((PULigneAppro == null) ? 0 : PULigneAppro.hashCode());
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((numAppro == null) ? 0 : numAppro.hashCode());
-		result = prime * result + ((quantiteLigneAppro == null) ? 0 : quantiteLigneAppro.hashCode());
-		return result;
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LigneAppro other = (LigneAppro) obj;
-		if (PULigneAppro == null) {
-			if (other.PULigneAppro != null)
-				return false;
-		} else if (!PULigneAppro.equals(other.PULigneAppro))
-			return false;
-		if (codeArticle == null) {
-			if (other.codeArticle != null)
-				return false;
-		} else if (!codeArticle.equals(other.codeArticle))
-			return false;
-		if (numAppro == null) {
-			if (other.numAppro != null)
-				return false;
-		} else if (!numAppro.equals(other.numAppro))
-			return false;
-		if (quantiteLigneAppro == null) {
-			if (other.quantiteLigneAppro != null)
-				return false;
-		} else if (!quantiteLigneAppro.equals(other.quantiteLigneAppro))
-			return false;
-		return true;
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
 	}
 
 	@Override
 	public String toString() {
-		return "LigneAppro [codeArticle=" + codeArticle + ", numAppro=" + numAppro + ", quantiteLigneAppro="
-				+ quantiteLigneAppro + ", PULigneAppro=" + PULigneAppro + "]";
+		// TODO Auto-generated method stub
+		return super.toString();
 	}
-	
 	
 }

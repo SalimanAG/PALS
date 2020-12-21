@@ -1,16 +1,27 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Reversement {
+public class Reversement implements Serializable{
 
 	@Id
 	private String numReversement;
 	private Date dateVersement;
+	
+	//Liaison avec Exercice
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
+	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
+	private Exercice exercice;
 	
 	public Reversement() {
 		super();

@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,8 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class Locataire {
+public class Locataire implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,7 +1,11 @@
 package com.sil.gpc.domains;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Utilisateur {
@@ -14,6 +18,10 @@ public class Utilisateur {
 	private String prenomUtilisateur;
 	private String fonctionUtilisateur;
 	private boolean activeUtilisateur;
+	
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class,mappedBy = "utilisateur")
+	public List<OpCaisse> opCaisseParUtilisateur;
+	
 	private String codeService;
 	
 	public Utilisateur() {

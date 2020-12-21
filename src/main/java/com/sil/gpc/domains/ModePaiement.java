@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,9 +13,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "ModePaiement")
-public class ModePaiement {
+public class ModePaiement implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	//private Long idModePay;

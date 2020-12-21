@@ -1,15 +1,26 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class Pays {
+public class Pays implements Serializable{
 
 	@Id
 	private String codePays;
 	private String nomPays;
 	private String nomCompletPays;
+	
+	//Liaison avec les départements
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,targetEntity = Departement.class,mappedBy = "pays")
+	List<Departement> DepartemantsDuPays;
 	public Pays() {
 		super();
 		// TODO Auto-generated constructor stub

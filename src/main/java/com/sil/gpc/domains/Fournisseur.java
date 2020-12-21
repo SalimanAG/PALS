@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,8 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity(name = "Fournisseur")
-public class Fournisseur {
+public class Fournisseur implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

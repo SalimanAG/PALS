@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+@SuppressWarnings("serial")
 @Entity
-public class Contrat {
+public class Contrat implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

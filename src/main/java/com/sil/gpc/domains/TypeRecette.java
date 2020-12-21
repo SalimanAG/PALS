@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,8 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+@SuppressWarnings("serial")
 @Entity
-public class TypeRecette {
+public class TypeRecette implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

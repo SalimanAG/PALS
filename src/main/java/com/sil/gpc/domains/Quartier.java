@@ -1,113 +1,167 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class Quartier {
+public class Quartier implements Serializable {
 
 	@Id
-	private String codeQuatier;
+	private String codeQuartier;
 	private String nomQuartier;
 	private String numTelQuartier;
 	private String adresseQuartier;
-	private String codeArrondi;
+
+	//Liaison avec Immeuble
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Immeuble.class,mappedBy = "quartier")
+	public List<Immeuble> immeublesParQuartier;
+	
+	//Liaison  avec Arrondissement
+		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Arrondissement.class)
+		@JoinColumn(name="codeArrondi", referencedColumnName = "codeArrondi", nullable = false)
+		private Arrondissement arrondissement;
 	
 	public Quartier() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Quartier(String codeQuatier, String nomQuartier, String numTelQuartier, String adresseQuartier,
-			String codeArrondi) {
+
+	public Quartier(String codeQuartier, String nomQuartier, String numTelQuartier, String adresseQuartier,
+			List<Immeuble> immeublesParQuartier, Arrondissement arrondissement) {
 		super();
-		this.codeQuatier = codeQuatier;
+		this.codeQuartier = codeQuartier;
 		this.nomQuartier = nomQuartier;
 		this.numTelQuartier = numTelQuartier;
 		this.adresseQuartier = adresseQuartier;
-		this.codeArrondi = codeArrondi;
+		this.immeublesParQuartier = immeublesParQuartier;
+		this.arrondissement = arrondissement;
 	}
-	public String getCodeQuatier() {
-		return codeQuatier;
+
+	/**
+	 * @return the codeQuartier
+	 */
+	public String getCodeQuartier() {
+		return codeQuartier;
 	}
-	public void setCodeQuatier(String codeQuatier) {
-		this.codeQuatier = codeQuatier;
+
+	/**
+	 * @param codeQuartier the codeQuartier to set
+	 */
+	public void setCodeQuartier(String codeQuartier) {
+		this.codeQuartier = codeQuartier;
 	}
+
+	/**
+	 * @return the nomQuartier
+	 */
 	public String getNomQuartier() {
 		return nomQuartier;
 	}
+
+	/**
+	 * @param nomQuartier the nomQuartier to set
+	 */
 	public void setNomQuartier(String nomQuartier) {
 		this.nomQuartier = nomQuartier;
 	}
+
+	/**
+	 * @return the numTelQuartier
+	 */
 	public String getNumTelQuartier() {
 		return numTelQuartier;
 	}
+
+	/**
+	 * @param numTelQuartier the numTelQuartier to set
+	 */
 	public void setNumTelQuartier(String numTelQuartier) {
 		this.numTelQuartier = numTelQuartier;
 	}
+
+	/**
+	 * @return the adresseQuartier
+	 */
 	public String getAdresseQuartier() {
 		return adresseQuartier;
 	}
+
+	/**
+	 * @param adresseQuartier the adresseQuartier to set
+	 */
 	public void setAdresseQuartier(String adresseQuartier) {
 		this.adresseQuartier = adresseQuartier;
 	}
-	public String getCodeArrondi() {
-		return codeArrondi;
+
+	/**
+	 * @return the immeublesParQuartier
+	 */
+	public List<Immeuble> getImmeublesParQuartier() {
+		return immeublesParQuartier;
 	}
-	public void setCodeArrondi(String codeArrondi) {
-		this.codeArrondi = codeArrondi;
+
+	/**
+	 * @param immeublesParQuartier the immeublesParQuartier to set
+	 */
+	public void setImmeublesParQuartier(List<Immeuble> immeublesParQuartier) {
+		this.immeublesParQuartier = immeublesParQuartier;
 	}
+
+	/**
+	 * @return the arrondissement
+	 */
+	public Arrondissement getArrondissement() {
+		return arrondissement;
+	}
+
+	/**
+	 * @param arrondissement the arrondissement to set
+	 */
+	public void setArrondissement(Arrondissement arrondissement) {
+		this.arrondissement = arrondissement;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((adresseQuartier == null) ? 0 : adresseQuartier.hashCode());
-		result = prime * result + ((codeArrondi == null) ? 0 : codeArrondi.hashCode());
-		result = prime * result + ((codeQuatier == null) ? 0 : codeQuatier.hashCode());
-		result = prime * result + ((nomQuartier == null) ? 0 : nomQuartier.hashCode());
-		result = prime * result + ((numTelQuartier == null) ? 0 : numTelQuartier.hashCode());
-		return result;
+		return Objects.hash(adresseQuartier, arrondissement, codeQuartier, immeublesParQuartier, nomQuartier,
+				numTelQuartier);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Quartier other = (Quartier) obj;
-		if (adresseQuartier == null) {
-			if (other.adresseQuartier != null)
-				return false;
-		} else if (!adresseQuartier.equals(other.adresseQuartier))
-			return false;
-		if (codeArrondi == null) {
-			if (other.codeArrondi != null)
-				return false;
-		} else if (!codeArrondi.equals(other.codeArrondi))
-			return false;
-		if (codeQuatier == null) {
-			if (other.codeQuatier != null)
-				return false;
-		} else if (!codeQuatier.equals(other.codeQuatier))
-			return false;
-		if (nomQuartier == null) {
-			if (other.nomQuartier != null)
-				return false;
-		} else if (!nomQuartier.equals(other.nomQuartier))
-			return false;
-		if (numTelQuartier == null) {
-			if (other.numTelQuartier != null)
-				return false;
-		} else if (!numTelQuartier.equals(other.numTelQuartier))
-			return false;
-		return true;
+		return Objects.equals(adresseQuartier, other.adresseQuartier)
+				&& Objects.equals(arrondissement, other.arrondissement)
+				&& Objects.equals(codeQuartier, other.codeQuartier)
+				&& Objects.equals(immeublesParQuartier, other.immeublesParQuartier)
+				&& Objects.equals(nomQuartier, other.nomQuartier)
+				&& Objects.equals(numTelQuartier, other.numTelQuartier);
 	}
+
 	@Override
 	public String toString() {
-		return "Quartier [codeQuatier=" + codeQuatier + ", nomQuartier=" + nomQuartier + ", numTelQuartier="
-				+ numTelQuartier + ", adresseQuartier=" + adresseQuartier + ", codeArrondi=" + codeArrondi + "]";
+		return "Quartier [codeQuartier=" + codeQuartier + ", nomQuartier=" + nomQuartier + ", numTelQuartier="
+				+ numTelQuartier + ", adresseQuartier=" + adresseQuartier + ", immeublesParQuartier="
+				+ immeublesParQuartier + ", arrondissement=" + arrondissement + "]";
 	}
-	
 	
 }
