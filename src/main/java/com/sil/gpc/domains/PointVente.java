@@ -1,45 +1,76 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class PointVente {
+public class Point implements Serializable{
 
 	@Id
-	private String numpointVente;
-	private Date datePointVente;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name="numPoint", length = 15)
+	private String numPoint; 
+	private Date datePoint;
+	private boolean payerPoint;
+	/// Liaison à venir avec la table Exercice
 	private String codeExercice;
+	/// Liaison à venir avec la table Regisseur
+	private String idRegisseur;
+	/// Liaison à venir avec la table Corresondant
 	private String idCorrespondant;
 	
-	public PointVente() {
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, targetEntity = LignePoint.class)
+	public List<LignePoint> lignesParPoint;
+	
+	public Point() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public PointVente(String numpointVente, Date datePointVente, String codeExercice, String idCorrespondant) {
+	public Point(String numPoint, Date datePoint, boolean payerPoint, String codeExercice, String idRegisseur,
+			String idCorrespondant) {
 		super();
-		this.numpointVente = numpointVente;
-		this.datePointVente = datePointVente;
+		this.numPoint = numPoint;
+		this.datePoint = datePoint;
+		this.payerPoint = payerPoint;
 		this.codeExercice = codeExercice;
+		this.idRegisseur = idRegisseur;
 		this.idCorrespondant = idCorrespondant;
 	}
 
-	public String getNumpointVente() {
-		return numpointVente;
+	public String getNumPoint() {
+		return numPoint;
 	}
 
-	public void setNumpointVente(String numpointVente) {
-		this.numpointVente = numpointVente;
+	public void setNumPoint(String numPoint) {
+		this.numPoint = numPoint;
 	}
 
-	public Date getDatePointVente() {
-		return datePointVente;
+	public Date getDatePoint() {
+		return datePoint;
 	}
 
-	public void setDatePointVente(Date datePointVente) {
-		this.datePointVente = datePointVente;
+	public void setDatePoint(Date datePoint) {
+		this.datePoint = datePoint;
+	}
+
+	public boolean isPayerPoint() {
+		return payerPoint;
+	}
+
+	public void setPayerPoint(boolean payerPoint) {
+		this.payerPoint = payerPoint;
 	}
 
 	public String getCodeExercice() {
@@ -50,6 +81,14 @@ public class PointVente {
 		this.codeExercice = codeExercice;
 	}
 
+	public String getIdRegisseur() {
+		return idRegisseur;
+	}
+
+	public void setIdRegisseur(String idRegisseur) {
+		this.idRegisseur = idRegisseur;
+	}
+
 	public String getIdCorrespondant() {
 		return idCorrespondant;
 	}
@@ -57,55 +96,5 @@ public class PointVente {
 	public void setIdCorrespondant(String idCorrespondant) {
 		this.idCorrespondant = idCorrespondant;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeExercice == null) ? 0 : codeExercice.hashCode());
-		result = prime * result + ((datePointVente == null) ? 0 : datePointVente.hashCode());
-		result = prime * result + ((idCorrespondant == null) ? 0 : idCorrespondant.hashCode());
-		result = prime * result + ((numpointVente == null) ? 0 : numpointVente.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PointVente other = (PointVente) obj;
-		if (codeExercice == null) {
-			if (other.codeExercice != null)
-				return false;
-		} else if (!codeExercice.equals(other.codeExercice))
-			return false;
-		if (datePointVente == null) {
-			if (other.datePointVente != null)
-				return false;
-		} else if (!datePointVente.equals(other.datePointVente))
-			return false;
-		if (idCorrespondant == null) {
-			if (other.idCorrespondant != null)
-				return false;
-		} else if (!idCorrespondant.equals(other.idCorrespondant))
-			return false;
-		if (numpointVente == null) {
-			if (other.numpointVente != null)
-				return false;
-		} else if (!numpointVente.equals(other.numpointVente))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "PointVente [numpointVente=" + numpointVente + ", datePointVente=" + datePointVente + ", codeExercice="
-				+ codeExercice + ", idCorrespondant=" + idCorrespondant + "]";
-	}
-	
 	
 }
