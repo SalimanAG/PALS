@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 public class Commande implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)//*******************************Pourquoi ça ?
 	@Column(name = "numCommande", length = 8, updatable = false)
 	private String numCommande;
 	private Date dateCommande;

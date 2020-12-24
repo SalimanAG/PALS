@@ -17,7 +17,7 @@ public class Magasin implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long idGerer;
+	public Long idGerer;//************************Erreur de nom
 	private String codeMagasin;
 	private String libMagasin;
 	

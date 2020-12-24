@@ -18,7 +18,7 @@ public class TypeRecette implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	//private Long idTypRec;
 	
-	@PrimaryKeyJoinColumn(columnDefinition = "codeTypRec")
+	@PrimaryKeyJoinColumn(columnDefinition = "codeTypRec")//****************Pourquoi ceci encore ici
 	private String codeTypRec;
 	private String libeTypRec;
 	

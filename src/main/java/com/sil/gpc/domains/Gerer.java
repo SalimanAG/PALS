@@ -37,6 +37,8 @@ public class Gerer implements Serializable{
 		super();
 	}
 
+	//***************************************Constructeur surchargé
+	
 	/**
 	 * @return the idGerer
 	 */

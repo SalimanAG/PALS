@@ -24,7 +24,7 @@ public class PlageNumDispo implements Serializable {
 	//Liaison avec Exercice
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
-	private Exercice exercice;
+	private Exercice exercice; //***************************Pourquoi cette modification ?
 
 	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.LAZY)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)

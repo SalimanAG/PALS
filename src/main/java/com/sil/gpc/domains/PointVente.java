@@ -38,6 +38,8 @@ public class PointVente implements Serializable{
 	private Correspondant correspondant;
 
 
+	//*********************************Il reste l'opération de caisse
+	
 	//Liaison avec Regisseur
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)

@@ -72,6 +72,10 @@ public class Article implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Stocker.class,mappedBy = "article")
 	public List<Stocker> stocker;
 
+	//******************************Liste des plages de numérotation dispo
+	
+	//******************************Liste des plages de numérotation
+	
 	public Article() {
 		super();
 	}

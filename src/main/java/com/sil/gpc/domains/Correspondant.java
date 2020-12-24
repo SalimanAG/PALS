@@ -32,6 +32,10 @@ public class Correspondant implements Serializable{
 		@JoinColumn(name = "idUtilisateur",referencedColumnName = "idUtilisateur",nullable = true)
 		public Utilisateur utilisateur;
 		
+		
+		//**********************************Liste des points de vente
+		
+		
 	public Correspondant() {
 		super();
 	}

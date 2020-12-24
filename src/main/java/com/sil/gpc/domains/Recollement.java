@@ -21,7 +21,7 @@ public class Recollement implements Serializable{
 	private String numRecollement;
 	private String descriptionRecollement;
 	private Date dateRecollement;
-	private Long numMagasinier;
+	private Long numMagasinier;//*****************************Il reste cette liaison à faire
 	
 	//Liaison  avec Exercice
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)

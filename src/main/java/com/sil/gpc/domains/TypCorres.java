@@ -19,7 +19,6 @@ public class TypCorres implements Serializable {
 	// Liaison à Correspondant
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Correspondant.class,mappedBy = "typecorres")
 	public List<Correspondant> correspondantsParType;
-
 	
 	public TypCorres() {
 		super();

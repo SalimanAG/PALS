@@ -21,7 +21,7 @@ public class Locataire implements Serializable {
 	private String identiteLocataire;
 	private String adresseLocataire;
 	private String telLocataire;
-	private String ifuLocataire;
+	private String ifuLocataire;//**************Modification
 	private String personneAContacter;
 	@OneToMany(targetEntity = Contrat.class, mappedBy = "locataire")
 	List<Contrat> contratLocataire;

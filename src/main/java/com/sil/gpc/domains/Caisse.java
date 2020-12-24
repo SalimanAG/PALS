@@ -38,6 +38,7 @@ public class Caisse implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	//*******************************Constructeur à regénérer
 	public Caisse(String codeCaisse, String libeCaisse) {
 		super();
 		this.codeCaisse = codeCaisse;

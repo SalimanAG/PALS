@@ -19,6 +19,7 @@ public class Uniter implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class,mappedBy = "unite")
 	public List<Article> articleParUniter;
+	
 	public Uniter() {
 		super();
 	}

@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Utilisateur {
 
-	@Id
+	@Id  //*******************A générer automatiquement
 	private Long idUtilisateur;
 	private String login;
 	private String motDePass;
@@ -22,7 +22,9 @@ public class Utilisateur {
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class,mappedBy = "utilisateur")
 	public List<OpCaisse> opCaisseParUtilisateur;
 	
-	private String codeService;
+	private String codeService; //***************************Code Service A Etablir
+	
+	//**************************Les affecters de l'utilisateur
 	
 	public Utilisateur() {
 		super();

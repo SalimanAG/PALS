@@ -35,7 +35,7 @@ public class Contrat implements Serializable {
 	@Column(name = "cautionContrat")
 	private double cautionContrat;
 	@Column(name = "immeubleContrat")
-	private String codeIm;
+	private String codeIm;//***********************Liaison à effectuer
 	@OneToMany(mappedBy = "idEcheance")
 	List<Echeance> echeanceContrat = new ArrayList<>();
 

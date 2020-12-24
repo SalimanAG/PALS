@@ -21,6 +21,8 @@ public class LigneAppro implements Serializable {
 	private Long quantiteLigneAppro;
 	private Long PULigneAppro;
 	
+	//************************Liste des numéros de plage
+	
 	//Liaison avec Article
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
@@ -34,7 +36,7 @@ public class LigneAppro implements Serializable {
 	//Liaison avec LigneDemmandeAppro
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = LigneDemandeAppro.class)
 	@JoinColumn(name = "numidDA", referencedColumnName = "idLigneDA",nullable = false)
-	public LigneDemandeAppro ligneDA;
+	public LigneDemandeAppro ligneDA;//*********************Ceci....... Si il est là, alors code article n'est plus nécéssaire	
 	
 	public LigneAppro() {
 		super();

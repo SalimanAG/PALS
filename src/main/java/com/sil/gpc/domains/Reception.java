@@ -25,6 +25,8 @@ public class Reception {
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneReception.class, mappedBy = "reception")
 	public List<Reception> lignesParReception;
 	
+	//L'attribut exercice ou code exercice à été ignoré
+	
 	public Reception() {
 		super();
 		// TODO Auto-generated constructor stub

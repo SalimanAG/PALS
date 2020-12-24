@@ -22,6 +22,13 @@ public class Exercice implements Serializable{
 	private String etatExo;
 	private boolean exoSelectionner;
 
+	
+	//**********************************Liste de ces opérations de caisse
+	
+	//**********************************Liste des points de vente
+	
+	//**********************************Liste des demandes d'appro
+	
 	//Liaison à l'approvisionnement
 	@OneToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER, targetEntity = Approvisionnement.class,mappedBy = "exercice")
 	public List<Approvisionnement> approsParExercice;

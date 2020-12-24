@@ -25,6 +25,10 @@ public class Regisseur implements Serializable{
 	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
 	private Utilisateur utilisateur;
 	
+	
+	//**********************************Liste des points de vente
+	
+	
 	public Regisseur() {
 		super();
 	}

@@ -32,7 +32,7 @@ public class Immeuble implements Serializable{
 		
 		//Liaison  avec PrixImmeuble
 		@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Immeuble.class,mappedBy = "immeuble")
-		public List<Immeuble> immeuble;
+		public List<Immeuble> immeuble;//*****************************Erreur, c'est prix Immeuble
 	
 	public Immeuble() {
 		super();

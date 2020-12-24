@@ -29,7 +29,15 @@ public class OpCaisse implements Serializable {
 	private String contribuable;
 	private boolean valideOpCaisse;
 	@Column(length = 150)
-	private String Observation;
+	private String Observation;//**************************Le nom doit être conforme
+	
+	//******************************Où se trouve heure opCaisse
+	
+	//********************************La lsite des opérations de caisse à ajouter
+	
+	//******************************La classe de la ligne des opérations de caisse n'a pas été retrouvé
+	
+	//**********************************Liste des points de vente
 	
 	//Liaison à la caisse
 	private Date dateSaisie;

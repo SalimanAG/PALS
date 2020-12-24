@@ -26,9 +26,9 @@ public class PlageNumArticle implements Serializable {
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
 	
-	private String numRecollement;
-	private String numPlacement;
-	private String numAppro;
+	private String numRecollement;//*****************************Liaison à effectuer
+	private String numPlacement;//*****************************Liaison à effectuer
+	private String numAppro;//*****************************Liaison à effectuer
 	
 	public PlageNumArticle() {
 		super();

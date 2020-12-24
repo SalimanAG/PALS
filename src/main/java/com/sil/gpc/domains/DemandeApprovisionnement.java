@@ -27,6 +27,8 @@ public class DemandeApprovisionnement implements Serializable{
 	@ManyToOne(cascade =CascadeType.ALL,targetEntity = Exercice.class,fetch = FetchType.LAZY)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice",nullable = false)
 	public Exercice exercice;
+	
+	//***********************************Liste des lignes demandes Appro
 
 	public DemandeApprovisionnement() {
 		super();

@@ -22,6 +22,7 @@ public class Magasinier implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Gerer.class,mappedBy = "magasinier")
 	public List<Gerer> affectationsParMagasin;
 	
+	
 	public Magasinier() {
 		super();
 	}

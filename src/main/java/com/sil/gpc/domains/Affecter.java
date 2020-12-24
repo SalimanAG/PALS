@@ -23,7 +23,7 @@ public class Affecter implements Serializable{
 	@ManyToOne(targetEntity = Caisse.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "codeCaisse", referencedColumnName = "codeCaisse", nullable = false)
 	private Caisse caisse;
-	private Long idUtilisateur;
+	private Long idUtilisateur;//*************************Liaison à effectuer
 	public Affecter() {
 		super();
 		// TODO Auto-generated constructor stub

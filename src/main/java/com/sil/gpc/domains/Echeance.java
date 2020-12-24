@@ -19,7 +19,7 @@ public class Echeance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idEcheance;
-	private String mois;
+	private String mois;//*******************A conformer avec celui de la BDD
 	private Date dateEcheance;
 	private boolean payeEcheance;
 

@@ -23,6 +23,9 @@ public class Reversement implements Serializable{
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
 	private Exercice exercice;
 	
+	
+	//************************************Liste des lignes reversements
+	
 	public Reversement() {
 		super();
 	}

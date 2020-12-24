@@ -22,14 +22,14 @@ public class ModePaiement implements Serializable {
 	//private Long idModePay;
 
 	@Column(name = "codeModPay", length = 5)
-	@PrimaryKeyJoinColumn(name = "ModPay_PK")
+	@PrimaryKeyJoinColumn(name = "ModPay_PK")//*******************Pourquoi encore ceci
 	private String codeModPay;
 	@Column(name="libeModPay",nullable = false, length = 30, unique = true, updatable = true)
 	private String libeModPay;
 	
 
 	@OneToMany(targetEntity = OpCaisse.class, mappedBy = "modePaiement")
-	public List<ModePaiement> opérationsMode;
+	public List<ModePaiement> opérationsMode;//**************Pas bien compris, ça doit être OpCaisse non ?
 	
 	public ModePaiement() {
 		super();
