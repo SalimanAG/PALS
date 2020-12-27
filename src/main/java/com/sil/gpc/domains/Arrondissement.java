@@ -25,12 +25,14 @@ public class Arrondissement implements Serializable{
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Commune.class)
 	@JoinColumn(name = "commune", nullable = false, referencedColumnName = "codeCommune")
 	public Commune commune;
-
+	
+	//Migration de lab clé de l'arrondissement vers la caisse
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Caisse.class,mappedBy = "arrondissement")
-	List<Caisse> caissesParArrondi;
+	List<Caisse> caissesDunArrondissement;
 
+	//Migration de lab clé de l'arrondissement vers le quartier
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Quartier.class,mappedBy = "arrondissement")
-	List<Quartier> quartiersParArrondi;
+	List<Quartier> quartiersDunArrondissement;
 	
 	public Arrondissement() {
 		super();

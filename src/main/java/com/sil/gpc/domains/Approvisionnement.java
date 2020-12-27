@@ -3,6 +3,7 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,17 +22,23 @@ public class Approvisionnement implements Serializable {
 	private String descriptionAppro;
 	private Date dateAppro;
 	
-	//@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneAppro.class, mappedBy = )
-	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
 	private Exercice exercice;
 	
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneAppro.class,fetch = FetchType.EAGER,mappedBy = "appro")
-	public List<LigneAppro> ligneParAppro;
+	public List<LigneAppro> lignesDunAppro;
 	
 	public Approvisionnement() {
 		super();
+	}
+
+	public Approvisionnement(String numAppro, String descriptionAppro, Date dateAppro, Exercice exercice) {
+		super();
+		this.numAppro = numAppro;
+		this.descriptionAppro = descriptionAppro;
+		this.dateAppro = dateAppro;
+		this.exercice = exercice;
 	}
 
 	public String getNumAppro() {
@@ -66,6 +73,31 @@ public class Approvisionnement implements Serializable {
 		this.exercice = exercice;
 	}
 
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateAppro, descriptionAppro, exercice, numAppro);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Approvisionnement other = (Approvisionnement) obj;
+		return Objects.equals(dateAppro, other.dateAppro) && Objects.equals(descriptionAppro, other.descriptionAppro)
+				&& Objects.equals(exercice, other.exercice) && Objects.equals(numAppro, other.numAppro);
+	}
+
+	@Override
+	public String toString() {
+		return "Approvisionnement [numAppro=" + numAppro + ", descriptionAppro=" + descriptionAppro + ", dateAppro="
+				+ dateAppro + ", exercice=" + exercice + ", lignesDunAppro=" + lignesDunAppro + "]";
+	}
 	
 }

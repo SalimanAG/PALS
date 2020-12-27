@@ -36,9 +36,15 @@ public class Gerer implements Serializable{
 	public Gerer() {
 		super();
 	}
-
-	//***************************************Constructeur surchargé
 	
+	public Gerer(Date dateDebGerer, Date dateFinGerer, Magasinier magasinier, Magasin magasin) {
+		super();
+		this.dateDebGerer = dateDebGerer;
+		this.dateFinGerer = dateFinGerer;
+		this.magasinier = magasinier;
+		this.magasin = magasin;
+	}
+
 	/**
 	 * @return the idGerer
 	 */

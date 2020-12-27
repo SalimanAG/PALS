@@ -2,11 +2,10 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -18,18 +17,15 @@ import javax.persistence.Table;
 @Table(name = "ModePaiement")
 public class ModePaiement implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//private Long idModePay;
-
 	@Column(name = "codeModPay", length = 5)
-	@PrimaryKeyJoinColumn(name = "ModPay_PK")//*******************Pourquoi encore ceci
+	@PrimaryKeyJoinColumn(name = "ModPay_PK")
 	private String codeModPay;
 	@Column(name="libeModPay",nullable = false, length = 30, unique = true, updatable = true)
 	private String libeModPay;
 	
 
 	@OneToMany(targetEntity = OpCaisse.class, mappedBy = "modePaiement")
-	public List<ModePaiement> opérationsMode;//**************Pas bien compris, ça doit être OpCaisse non ?
+	public List<OpCaisse> opérationsMode;
 	
 	public ModePaiement() {
 		super();
@@ -57,7 +53,32 @@ public class ModePaiement implements Serializable {
 	public void setLibeModPay(String libeModPay) {
 		this.libeModPay = libeModPay;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codeModPay, libeModPay, opérationsMode);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		ModePaiement other = (ModePaiement) obj;
+		return Objects.equals(codeModPay, other.codeModPay) && Objects.equals(libeModPay, other.libeModPay)
+				&& Objects.equals(opérationsMode, other.opérationsMode);
+	}
+
+	@Override
+	public String toString() {
+		return "ModePaiement [codeModPay=" + codeModPay + ", libeModPay=" + libeModPay + ", opérationsMode="
+				+ opérationsMode + "]";
+	}
 	
 }

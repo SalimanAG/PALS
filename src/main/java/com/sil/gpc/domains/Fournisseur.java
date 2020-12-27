@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -107,6 +108,36 @@ public class Fournisseur implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(adresseFrs, codeFrs, description, identiteFrs, numIfuFrs, raisonSociale, telFRS);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Fournisseur other = (Fournisseur) obj;
+		return Objects.equals(adresseFrs, other.adresseFrs) && Objects.equals(codeFrs, other.codeFrs)
+				&& Objects.equals(description, other.description) && Objects.equals(identiteFrs, other.identiteFrs)
+				&& Objects.equals(numIfuFrs, other.numIfuFrs) && Objects.equals(raisonSociale, other.raisonSociale)
+				&& Objects.equals(telFRS, other.telFRS);
+	}
+
+	@Override
+	public String toString() {
+		return "Fournisseur [codeFrs=" + codeFrs + ", identiteFrs=" + identiteFrs + ", adresseFrs=" + adresseFrs
+				+ ", raisonSociale=" + raisonSociale + ", numIfuFrs=" + numIfuFrs + ", telFRS=" + telFRS
+				+ ", description=" + description + ", cmdesParFrs=" + cmdesParFrs + "]";
 	}
 	
 	

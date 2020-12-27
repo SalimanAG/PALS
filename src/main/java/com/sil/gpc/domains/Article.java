@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -37,24 +38,24 @@ public class Article implements Serializable {
 	public Uniter unite;
 
 	// Liaison à LigneAppro
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneAppro.class,mappedBy = "article")
-	public List<LigneAppro> articlesApprovisionnes;
+	//@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneAppro.class,mappedBy = "article")
+	//public List<LigneAppro> articlesApprovisionnes;
 
 	// Liaison à LigneCommande
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneCommande.class,mappedBy = "article")
-	public List<LigneCommande> articlesCommandes;
+	public List<LigneCommande> commandesDunArticle;
 
 	// Liaison à LigneDemmadeAppro
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneDemandeAppro.class,mappedBy = "article")
-	public List<LigneDemandeAppro> aticlesDemandés;
+	public List<LigneDemandeAppro> DemandesDunArticle;
 
 	// Liaison à LignePlacement
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LignePlacement.class,mappedBy = "article")
-	public List<LignePlacement> articlesPlaces;
+	public List<LignePlacement> placementsDunArticle;
 
 	// Liaison à LigneCommande
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LignePointVente.class,mappedBy = "article")
-	public List<LignePointVente> articlesVendus;
+	public List<LignePointVente> ventesDunArticle;
 
 	// Liaison à LigneReception
 	//@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneReception.class,mappedBy = "article")
@@ -62,20 +63,23 @@ public class Article implements Serializable {
 
 	// Liaison à LigneRecollement
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneRecollement.class,mappedBy = "article")
-	public List<LigneRecollement> articlesRecolles;
+	public List<LigneRecollement> recollementsDunArticle;
 
 	// Liaison à LigneReversement
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneReversement.class,mappedBy = "article")
-	public List<LigneReversement> articlesReverses;
+	public List<LigneReversement> reversementDunArticle;
 
 	// Liaison à Stocker
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Stocker.class,mappedBy = "article")
-	public List<Stocker> stocker;
+	public List<Stocker> stocksDunArticle;
+	
 
-	//******************************Liste des plages de numérotation dispo
-	
-	//******************************Liste des plages de numérotation
-	
+	@OneToMany(targetEntity = PlageNumDispo.class, mappedBy = "article")
+	public List<PlageNumDispo> plagesDispoDunArticle;
+
+	@OneToMany(targetEntity = PlageNumArticle.class, mappedBy = "article")
+	public List<PlageNumArticle> plageDunArticle;
+		
 	public Article() {
 		super();
 	}
@@ -162,28 +166,29 @@ public class Article implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + (consommableArticle ? 1231 : 1237);
-		result = prime * result + ((couleurArticle == null) ? 0 : couleurArticle.hashCode());
-		result = prime * result + ((libArticle == null) ? 0 : libArticle.hashCode());
-		result = prime * result + (livrableArticle ? 1231 : 1237);
-		result = prime * result + (numSerieArticle ? 1231 : 1237);
-		result = prime * result + ((prixVenteArticle == null) ? 0 : prixVenteArticle.hashCode());
-		result = prime * result + (stockerArticle ? 1231 : 1237);
-		return result;
-	}
-
-
-	public boolean equalsIgnoreCase(String anotherString) {
-		return codeArticle.equalsIgnoreCase(anotherString);
+		return Objects.hash(codeArticle, commandesDunArticle, consommableArticle, couleurArticle, famille, libArticle,
+				livrableArticle, numSerieArticle, prixVenteArticle, stockerArticle, unite);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Article other = (Article) obj;
+		return Objects.equals(codeArticle, other.codeArticle)
+				&& Objects.equals(commandesDunArticle, other.commandesDunArticle)
+				&& consommableArticle == other.consommableArticle
+				&& Objects.equals(couleurArticle, other.couleurArticle) && Objects.equals(famille, other.famille)
+				&& Objects.equals(libArticle, other.libArticle) && livrableArticle == other.livrableArticle
+				&& numSerieArticle == other.numSerieArticle && Objects.equals(prixVenteArticle, other.prixVenteArticle)
+				&& stockerArticle == other.stockerArticle && Objects.equals(unite, other.unite);
 	}
 
 	@Override
@@ -191,8 +196,12 @@ public class Article implements Serializable {
 		return "Article [codeArticle=" + codeArticle + ", libArticle=" + libArticle + ", stockerArticle="
 				+ stockerArticle + ", numSerieArticle=" + numSerieArticle + ", livrableArticle=" + livrableArticle
 				+ ", consommableArticle=" + consommableArticle + ", prixVenteArticle=" + prixVenteArticle
-				+ ", couleurArticle=" + couleurArticle + ", codeFamille=" + famille + "]";
+				+ ", couleurArticle=" + couleurArticle + ", famille=" + famille + ", unite=" + unite
+				+ ", commandesDunArticle=" + commandesDunArticle + ", DemandesDunArticle=" + DemandesDunArticle
+				+ ", placementsDunArticle=" + placementsDunArticle + ", ventesDunArticle=" + ventesDunArticle
+				+ ", recollementsDunArticle=" + recollementsDunArticle + ", reversementDunArticle="
+				+ reversementDunArticle + ", stocksDunArticle=" + stocksDunArticle + ", plagesDispoDunArticle="
+				+ plagesDispoDunArticle + ", plageDunArticle=" + plageDunArticle + "]";
 	}
-	
-	
+
 }

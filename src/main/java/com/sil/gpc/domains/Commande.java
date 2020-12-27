@@ -3,13 +3,12 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +19,7 @@ import javax.persistence.OneToMany;
 public class Commande implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)//*******************************Pourquoi ça ?
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE)//*******************************Pourquoi ça ?
 	@Column(name = "numCommande", length = 8, updatable = false)
 	private String numCommande;
 	private Date dateCommande;
@@ -30,9 +29,9 @@ public class Commande implements Serializable {
 	private Fournisseur frs;
 	
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneCommande.class,fetch = FetchType.EAGER,mappedBy = "numCommande")
-	public List<LigneCommande> lignesParCommande;
+	public List<LigneCommande> lignesDuneCommande;
 	
-	//Liaison à venir avec la table Exercice
+	//Liaison avec la table Exercice
 	@ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
@@ -101,40 +100,27 @@ public class Commande implements Serializable {
 		this.exercice = exercice;
 	}
 
-	public List<LigneCommande> getLignesParCommande() {
-		return lignesParCommande;
-	}
-
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
+	public int hashCode() {
+		return Objects.hash(dateCommande, delaiLivraison, description, exercice, frs, numCommande);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Commande other = (Commande) obj;
+		return Objects.equals(dateCommande, other.dateCommande) && delaiLivraison == other.delaiLivraison
+				&& Objects.equals(description, other.description) && Objects.equals(exercice, other.exercice)
+				&& Objects.equals(frs, other.frs) && Objects.equals(numCommande, other.numCommande);
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();
-	}
 
-	@Override
-	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
-	}
-
-	
 }

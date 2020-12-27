@@ -31,8 +31,8 @@ public class Immeuble implements Serializable{
 		private TypeImmeuble typeImmeuble;
 		
 		//Liaison  avec PrixImmeuble
-		@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Immeuble.class,mappedBy = "immeuble")
-		public List<Immeuble> immeuble;//*****************************Erreur, c'est prix Immeuble
+		@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = PrixImmeuble.class,mappedBy = "immeuble")
+		public List<PrixImmeuble> prixImmeuble;//*****************************Erreur, c'est prix Immeuble
 	
 	public Immeuble() {
 		super();

@@ -17,16 +17,14 @@ public class LigneAppro implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long idLigneAppro;
+	private Long idLigneAppro;
 	private Long quantiteLigneAppro;
 	private Long PULigneAppro;
 	
-	//************************Liste des numéros de plage
-	
 	//Liaison avec Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
-	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
-	public Article article;
+	//@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	//@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
+	//public Article article;
 
 	//Liaison avec Approvisionnement
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Approvisionnement.class)
@@ -36,21 +34,20 @@ public class LigneAppro implements Serializable {
 	//Liaison avec LigneDemmandeAppro
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = LigneDemandeAppro.class)
 	@JoinColumn(name = "numidDA", referencedColumnName = "idLigneDA",nullable = false)
-	public LigneDemandeAppro ligneDA;//*********************Ceci....... Si il est là, alors code article n'est plus nécéssaire	
+	public LigneDemandeAppro ligneDA;	
 	
 	public LigneAppro() {
 		super();
 	}
 
-	public LigneAppro(Long idLigneAppro, Long quantiteLigneAppro, Long pULigneAppro, Article article,
-			Approvisionnement appro) {
+
+	public LigneAppro(Long quantiteLigneAppro, Long pULigneAppro, LigneDemandeAppro ligneDA) {
 		super();
-		this.idLigneAppro = idLigneAppro;
 		this.quantiteLigneAppro = quantiteLigneAppro;
 		PULigneAppro = pULigneAppro;
-		this.article = article;
-		this.appro = appro;
+		this.ligneDA = ligneDA;
 	}
+
 
 	public Long getIdLigneAppro() {
 		return idLigneAppro;
@@ -74,22 +71,6 @@ public class LigneAppro implements Serializable {
 
 	public void setPULigneAppro(Long pULigneAppro) {
 		PULigneAppro = pULigneAppro;
-	}
-
-	public Article getArticle() {
-		return article;
-	}
-
-	public void setArticle(Article article) {
-		this.article = article;
-	}
-
-	public Approvisionnement getAppro() {
-		return appro;
-	}
-
-	public void setAppro(Approvisionnement appro) {
-		this.appro = appro;
 	}
 
 	@Override

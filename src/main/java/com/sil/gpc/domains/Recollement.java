@@ -15,36 +15,45 @@ import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
-public class Recollement implements Serializable{
+public class Recollement implements Serializable {
 
 	@Id
 	private String numRecollement;
 	private String descriptionRecollement;
 	private Date dateRecollement;
-	private Long numMagasinier;//*****************************Il reste cette liaison à faire
-	
-	//Liaison  avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
-	@JoinColumn(name="codeExercice", referencedColumnName = "codeExercice", nullable = false)
+
+	// Liaison avec Magasin
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Magasin.class)
+	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin", nullable = false)
+	private Magasin magasin;
+
+	// Liaison avec Regisseur
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Regisseur.class)
+	@JoinColumn(name = "idRegisseur", referencedColumnName = "idRegisseur", nullable = false)
+	private Regisseur regisseur;
+
+	// Liaison avec Exercice
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Exercice.class)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
 
-	//Liaison à la table LigneRecollement
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneRecollement.class, mappedBy = "recollement")
+	// Liaison à la table LigneRecollement
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = LigneRecollement.class, mappedBy = "recollement")
 	public List<LigneRecollement> ArticlesParRecollement;
 
 	public Recollement() {
 		super();
 	}
 
-	public Recollement(String numRecollement, String descriptionRecollement, Date dateRecollement, Long numMagasinier,
-			Exercice exercice, List<LigneRecollement> articlesParRecollement) {
+	public Recollement(String numRecollement, String descriptionRecollement, Date dateRecollement, Magasin magasin,
+			Regisseur regisseur, Exercice exercice) {
 		super();
 		this.numRecollement = numRecollement;
 		this.descriptionRecollement = descriptionRecollement;
 		this.dateRecollement = dateRecollement;
-		this.numMagasinier = numMagasinier;
+		this.magasin = magasin;
+		this.regisseur = regisseur;
 		this.exercice = exercice;
-		ArticlesParRecollement = articlesParRecollement;
 	}
 
 	/**
@@ -90,17 +99,31 @@ public class Recollement implements Serializable{
 	}
 
 	/**
-	 * @return the numMagasinier
+	 * @return the magasin
 	 */
-	public Long getNumMagasinier() {
-		return numMagasinier;
+	public Magasin getMagasin() {
+		return magasin;
 	}
 
 	/**
-	 * @param numMagasinier the numMagasinier to set
+	 * @param magasin the magasin to set
 	 */
-	public void setNumMagasinier(Long numMagasinier) {
-		this.numMagasinier = numMagasinier;
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
+	}
+
+	/**
+	 * @return the regisseur
+	 */
+	public Regisseur getRegisseur() {
+		return regisseur;
+	}
+
+	/**
+	 * @param regisseur the regisseur to set
+	 */
+	public void setRegisseur(Regisseur regisseur) {
+		this.regisseur = regisseur;
 	}
 
 	/**
@@ -124,17 +147,9 @@ public class Recollement implements Serializable{
 		return ArticlesParRecollement;
 	}
 
-	/**
-	 * @param articlesParRecollement the articlesParRecollement to set
-	 */
-	public void setArticlesParRecollement(List<LigneRecollement> articlesParRecollement) {
-		ArticlesParRecollement = articlesParRecollement;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(ArticlesParRecollement, dateRecollement, descriptionRecollement, exercice, numMagasinier,
-				numRecollement);
+		return Objects.hash(dateRecollement, descriptionRecollement, exercice, magasin, numRecollement, regisseur);
 	}
 
 	@Override
@@ -149,18 +164,16 @@ public class Recollement implements Serializable{
 			return false;
 		}
 		Recollement other = (Recollement) obj;
-		return Objects.equals(ArticlesParRecollement, other.ArticlesParRecollement)
-				&& Objects.equals(dateRecollement, other.dateRecollement)
+		return Objects.equals(dateRecollement, other.dateRecollement)
 				&& Objects.equals(descriptionRecollement, other.descriptionRecollement)
-				&& Objects.equals(exercice, other.exercice) && Objects.equals(numMagasinier, other.numMagasinier)
-				&& Objects.equals(numRecollement, other.numRecollement);
+				&& Objects.equals(exercice, other.exercice) && Objects.equals(magasin, other.magasin)
+				&& Objects.equals(numRecollement, other.numRecollement) && Objects.equals(regisseur, other.regisseur);
 	}
 
 	@Override
 	public String toString() {
 		return "Recollement [numRecollement=" + numRecollement + ", descriptionRecollement=" + descriptionRecollement
-				+ ", dateRecollement=" + dateRecollement + ", numMagasinier=" + numMagasinier + ", exercice=" + exercice
-				+ ", ArticlesParRecollement=" + ArticlesParRecollement + "]";
+				+ ", dateRecollement=" + dateRecollement + ", magasin=" + magasin + ", regisseur=" + regisseur
+				+ ", exercice=" + exercice + ", ArticlesParRecollement=" + ArticlesParRecollement + "]";
 	}
-
 }

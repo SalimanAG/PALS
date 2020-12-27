@@ -29,8 +29,6 @@ public class LigneReception implements Serializable {
 	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande")
 	private LigneCommande ligneCommande;
 	
-	//****************************Article a été esquivé. Est-ce rassurant ?
-	
 	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Reception.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numReception", referencedColumnName = "numReception")
 	private Reception reception;

@@ -37,8 +37,16 @@ public class PointVente implements Serializable{
 	@JoinColumn(name = "idCorrepondant",referencedColumnName = "idCorrespondant",nullable = false)
 	private Correspondant correspondant;
 
-
 	//*********************************Il reste l'opération de caisse
+	//Liaison avec OpCaisse
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = OpCaisse.class)
+	@JoinColumn(name = "numOpCaisse",referencedColumnName = "numOpCaisse",nullable = false)
+	private OpCaisse opCaisse;
+
+	// Liaison avec la table Echeance
+	@OneToMany( cascade = CascadeType.ALL,targetEntity = Echeance.class, mappedBy = "opCaisse")
+	private List<Echeance> echeancesOpCaisse;
+	
 	
 	//Liaison avec Regisseur
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)

@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -9,33 +10,34 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
 @Entity
-public class Correspondant implements Serializable{
+public class Correspondant implements Serializable {
 
 	@Id
 	private String idCorrespondant;
 	private boolean imputableCorres;
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Magasinier.class)
-	@JoinColumn(name ="numMagasinier", referencedColumnName = "numMagasinier",nullable = false )
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Magasinier.class)
+	@JoinColumn(name = "numMagasinier", referencedColumnName = "numMagasinier", nullable = false)
 	private Magasinier magasinier;
 
 	// Liaison à typeCorresspondant
-		@ManyToOne(cascade = CascadeType.ALL,targetEntity = TypCorres.class, fetch =FetchType.LAZY )
-		@JoinColumn(name = "codeTypCorres",referencedColumnName = "codeTypCorres",nullable = false)
-		public TypCorres typecorres;
-		
-		// Liaison à Utilisateur
-		@OneToOne(cascade = CascadeType.ALL,targetEntity = Utilisateur.class, fetch =FetchType.LAZY )
-		@JoinColumn(name = "idUtilisateur",referencedColumnName = "idUtilisateur",nullable = true)
-		public Utilisateur utilisateur;
-		
-		
-		//**********************************Liste des points de vente
-		
-		
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = TypCorres.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "codeTypCorres", referencedColumnName = "codeTypCorres", nullable = false)
+	public TypCorres typecorres;
+
+	// Liaison à Utilisateur
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = PointVente.class, fetch = FetchType.LAZY, mappedBy = "correspondant")
+	public List<PointVente> pointsParCorrespondant;
+
+	// Liaison à Utilisateur
+	@OneToOne(cascade = CascadeType.ALL, targetEntity = Utilisateur.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
+	public Utilisateur utilisateur;
+
 	public Correspondant() {
 		super();
 	}
@@ -147,5 +149,5 @@ public class Correspondant implements Serializable{
 		return "Correspondant [idCorrespondant=" + idCorrespondant + ", imputableCorres=" + imputableCorres
 				+ ", magasinier=" + magasinier + ", typecorres=" + typecorres + ", utilisateur=" + utilisateur + "]";
 	}
-	
+
 }

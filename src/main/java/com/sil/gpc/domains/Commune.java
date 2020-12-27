@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -68,46 +69,30 @@ public class Commune implements Serializable{
 	public void setAdresseMairie(String adresseMairie) {
 		this.adresseMairie = adresseMairie;
 	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((adresseMairie == null) ? 0 : adresseMairie.hashCode());
-		result = prime * result + ((codeCommune == null) ? 0 : codeCommune.hashCode());
-		result = prime * result + ((nomCommune == null) ? 0 : nomCommune.hashCode());
-		result = prime * result + ((numTelMairie == null) ? 0 : numTelMairie.hashCode());
-		return result;
+		return Objects.hash(adresseMairie, arrondissementsParCommune, codeCommune, codeDepartement, nomCommune,
+				numTelMairie);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Commune other = (Commune) obj;
-		if (adresseMairie == null) {
-			if (other.adresseMairie != null)
-				return false;
-		} else if (!adresseMairie.equals(other.adresseMairie))
-			return false;
-		if (codeCommune == null) {
-			if (other.codeCommune != null)
-				return false;
-		} else if (!codeCommune.equals(other.codeCommune))
-			return false;
-		if (nomCommune == null) {
-			if (other.nomCommune != null)
-				return false;
-		} else if (!nomCommune.equals(other.nomCommune))
-			return false;
-		if (numTelMairie == null) {
-			if (other.numTelMairie != null)
-				return false;
-		} else if (!numTelMairie.equals(other.numTelMairie))
-			return false;
-		return true;
+		return Objects.equals(adresseMairie, other.adresseMairie)
+				&& Objects.equals(arrondissementsParCommune, other.arrondissementsParCommune)
+				&& Objects.equals(codeCommune, other.codeCommune)
+				&& Objects.equals(codeDepartement, other.codeDepartement)
+				&& Objects.equals(nomCommune, other.nomCommune) && Objects.equals(numTelMairie, other.numTelMairie);
 	}
 	@Override
 	public String toString() {

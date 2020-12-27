@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ public class Locataire implements Serializable {
 	private String identiteLocataire;
 	private String adresseLocataire;
 	private String telLocataire;
-	private String ifuLocataire;//**************Modification
+	private String ifuLocataire;
 	private String personneAContacter;
 	@OneToMany(targetEntity = Contrat.class, mappedBy = "locataire")
 	List<Contrat> contratLocataire;
@@ -80,6 +81,40 @@ public class Locataire implements Serializable {
 
 	public List<Contrat> getContratLocataire() {
 		return contratLocataire;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(adresseLocataire, idLocataire, identiteLocataire, ifuLocataire, personneAContacter,
+				telLocataire);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Locataire other = (Locataire) obj;
+		return Objects.equals(adresseLocataire, other.adresseLocataire)
+				&& Objects.equals(idLocataire, other.idLocataire)
+				&& Objects.equals(identiteLocataire, other.identiteLocataire)
+				&& Objects.equals(ifuLocataire, other.ifuLocataire)
+				&& Objects.equals(personneAContacter, other.personneAContacter)
+				&& Objects.equals(telLocataire, other.telLocataire);
+	}
+
+	@Override
+	public String toString() {
+		return "Locataire [idLocataire=" + idLocataire + ", identiteLocataire=" + identiteLocataire
+				+ ", adresseLocataire=" + adresseLocataire + ", telLocataire=" + telLocataire + ", ifuLocataire="
+				+ ifuLocataire + ", personneAContacter=" + personneAContacter + ", contratLocataire=" + contratLocataire
+				+ "]";
 	}
 	
 	

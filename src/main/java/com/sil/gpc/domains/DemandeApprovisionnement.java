@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -27,8 +29,10 @@ public class DemandeApprovisionnement implements Serializable{
 	@ManyToOne(cascade =CascadeType.ALL,targetEntity = Exercice.class,fetch = FetchType.LAZY)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice",nullable = false)
 	public Exercice exercice;
-	
-	//***********************************Liste des lignes demandes Appro
+
+	// Liaison à Utilisateur
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneDemandeAppro.class, fetch =FetchType.LAZY,mappedBy = "appro" )
+	public List<LigneDemandeAppro> articlesDeLaDemande;
 
 	public DemandeApprovisionnement() {
 		super();

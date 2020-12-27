@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
@@ -25,8 +27,14 @@ public class Regisseur implements Serializable{
 	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
 	private Utilisateur utilisateur;
 	
-	
 	//**********************************Liste des points de vente
+	// Liaison à la table Recollement
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Recollement.class, mappedBy = "regisseur")
+	public List<Recollement> recollementsParRegisseur;
+
+	// Liaison à la table PointVente
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = PointVente.class, mappedBy = "regisseur")
+	public List<PointVente> pointsParRegisseur;
 	
 	
 	public Regisseur() {

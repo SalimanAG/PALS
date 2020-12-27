@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -26,9 +24,24 @@ public class PlageNumArticle implements Serializable {
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
 	
-	private String numRecollement;//*****************************Liaison à effectuer
-	private String numPlacement;//*****************************Liaison à effectuer
-	private String numAppro;//*****************************Liaison à effectuer
+	//private String numRecollement;//*****************************Liaison à effectuer
+	//Liaison à la table "Recollement"
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity =LigneRecollement.class)
+	@JoinColumn(name = "idLigneRecollement", referencedColumnName = "idLigneRecollement", nullable = true)
+	private LigneRecollement ligneRecollement;
+
+	//private String numPlacement;//*****************************Liaison à effectuer
+	//Liaison à la table "ligneplacement"
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = LignePlacement.class)
+	@JoinColumn(name = "idLignePlacement", referencedColumnName = "idLignePlacement", nullable = true)
+	private LignePlacement lignePlacement;
+
+	//private String numAppro;//*****************************Liaison à effectuer
+	//Liaison à la table "Utilisateur"
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = LigneAppro.class)
+	@JoinColumn(name = "idLigneAppro", referencedColumnName = "idLigneAppro", nullable = true)
+	private LigneAppro ligneAppro;
+
 	
 	public PlageNumArticle() {
 		super();

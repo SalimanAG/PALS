@@ -22,12 +22,18 @@ public class Exercice implements Serializable{
 	private String etatExo;
 	private boolean exoSelectionner;
 
-	
-	//**********************************Liste de ces opérations de caisse
-	
-	//**********************************Liste des points de vente
-	
-	//**********************************Liste des demandes d'appro
+
+	// Liaison à Point vente
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = PointVente.class, fetch =FetchType.LAZY,mappedBy = "exercice" )
+	public List<PointVente> ventesCorrespondantDeLannee;
+
+	// Liaison à operation de caisse
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class, fetch =FetchType.LAZY,mappedBy = "exercice" )
+	public List<PointVente> opCaisseDeLannee;
+
+	// Liaison à la demande d'approvisionnement
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = DemandeApprovisionnement.class, fetch =FetchType.LAZY,mappedBy = "exercice" )
+	public List<DemandeApprovisionnement> demadeApproDeLannee;
 	
 	//Liaison à l'approvisionnement
 	@OneToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER, targetEntity = Approvisionnement.class,mappedBy = "exercice")
@@ -52,10 +58,6 @@ public class Exercice implements Serializable{
 	//Liaison au recollement
 	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Recollement.class,mappedBy = "exercice")
 	public List<Recollement> recollementsParExercice;
-
-	//Liaison à la plage disponible
-	@OneToMany(cascade = CascadeType.DETACH,targetEntity = PlageNumDispo.class,mappedBy = "exercice")
-	public List<PlageNumDispo> plagesParExercice;
 	
 	public Exercice() {
 		super();

@@ -20,7 +20,12 @@ public class Placement implements Serializable{
 	@Id
 	private String numPlacement;
 	private Date datePlacement;
-	
+
+	//Liaison avec correspondatnt
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Correspondant.class)
+	@JoinColumn(name = "idCorrespondant",referencedColumnName = "idCorrespondant",nullable = false)
+	private Correspondant correspondant;
+
 	//Liaison avec Exercice
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)

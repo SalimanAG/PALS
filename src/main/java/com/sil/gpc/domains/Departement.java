@@ -23,6 +23,7 @@ public class Departement implements Serializable{
 	//Migration de la clé du département vers les communes
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Commune.class,mappedBy = "codeDepartement", fetch = FetchType.EAGER)
 	public List<Commune> communesParDepartement;
+	
 	@ManyToOne(cascade = CascadeType.ALL,targetEntity = Pays.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "codePays", referencedColumnName = "codePays", nullable = false)
 	public Pays pays;

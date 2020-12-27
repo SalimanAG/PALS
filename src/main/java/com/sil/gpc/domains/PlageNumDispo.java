@@ -20,11 +20,7 @@ public class PlageNumDispo implements Serializable {
 	private String numDebPlageDispo; //le premier numero disponible
 	private String numFinPlage;//Le dernier numéro réceptionné dans l'année
 	private String numFinPlageDispo; //Le dernier numéro réceptionné dans l'année
-
-	//Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
-	private Exercice exercice; //***************************Pourquoi cette modification ?
+	private int annee;
 
 	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.LAZY)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
@@ -36,14 +32,14 @@ public class PlageNumDispo implements Serializable {
 	}
 
 	public PlageNumDispo(String codePlageDispo, String numDebPlage, String numDebPlageDispo, String numFinPlage,
-			String numFinPlageDispo, Exercice exercice, Article article) {
+			String numFinPlageDispo, int exercice, Article article) {
 		super();
 		this.codePlageDispo = codePlageDispo;
 		this.numDebPlage = numDebPlage;
 		this.numDebPlageDispo = numDebPlageDispo;
 		this.numFinPlage = numFinPlage;
 		this.numFinPlageDispo = numFinPlageDispo;
-		this.exercice = exercice;
+		this.annee = exercice;
 		this.article = article;
 	}
 
@@ -118,17 +114,17 @@ public class PlageNumDispo implements Serializable {
 	}
 
 	/**
-	 * @return the exercice
+	 * @return the annee
 	 */
-	public Exercice getExercice() {
-		return exercice;
+	public int getAnnee() {
+		return annee;
 	}
 
 	/**
-	 * @param exercice the exercice to set
+	 * @param annee the annee to set
 	 */
-	public void setExercice(Exercice exercice) {
-		this.exercice = exercice;
+	public void setAnnee(int annee) {
+		this.annee = annee;
 	}
 
 	/**
@@ -147,7 +143,7 @@ public class PlageNumDispo implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(article, codePlageDispo, exercice, numDebPlage, numDebPlageDispo, numFinPlage,
+		return Objects.hash(annee, article, codePlageDispo, numDebPlage, numDebPlageDispo, numFinPlage,
 				numFinPlageDispo);
 	}
 
@@ -163,18 +159,12 @@ public class PlageNumDispo implements Serializable {
 			return false;
 		}
 		PlageNumDispo other = (PlageNumDispo) obj;
-		return Objects.equals(article, other.article) && Objects.equals(codePlageDispo, other.codePlageDispo)
-				&& Objects.equals(exercice, other.exercice) && Objects.equals(numDebPlage, other.numDebPlage)
+		return annee == other.annee && Objects.equals(article, other.article)
+				&& Objects.equals(codePlageDispo, other.codePlageDispo)
+				&& Objects.equals(numDebPlage, other.numDebPlage)
 				&& Objects.equals(numDebPlageDispo, other.numDebPlageDispo)
 				&& Objects.equals(numFinPlage, other.numFinPlage)
 				&& Objects.equals(numFinPlageDispo, other.numFinPlageDispo);
-	}
-
-	@Override
-	public String toString() {
-		return "PlageNumDispo [codePlageDispo=" + codePlageDispo + ", numDebPlage=" + numDebPlage
-				+ ", numDebPlageDispo=" + numDebPlageDispo + ", numFinPlage=" + numFinPlage + ", numFinPlageDispo="
-				+ numFinPlageDispo + ", exercice=" + exercice + ", article=" + article + "]";
 	}
 
 }

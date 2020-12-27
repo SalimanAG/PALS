@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,13 +20,17 @@ public class Echeance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idEcheance;
-	private String mois;//*******************A conformer avec celui de la BDD
+	private String moisEcheance;
 	private Date dateEcheance;
 	private boolean payeEcheance;
+	@ManyToOne(targetEntity = Contrat.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinColumn(name = "numContrat",referencedColumnName = "numContrat", nullable = false)
+	private Contrat contrat;
 
-	@ManyToOne(targetEntity = Contrat.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "numContrat")
-	Contrat contrat;
+	// Migration de lab clé du contrat vers l'échéance
+	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Contrat.class)
+//	@JoinColumn(name = "numContra", referencedColumnName = "numContrat", nullable = false)
+	//private Contrat contrat;
 
 	//Liaison avec la table OpCaisse
 	@ManyToOne(targetEntity = OpCaisse.class,fetch = FetchType.EAGER,cascade = CascadeType.REFRESH,optional = true)
@@ -39,10 +44,10 @@ public class Echeance implements Serializable {
 
 	public Echeance(String mois, Date dateEcheance, boolean payeEcheance, Contrat contrat) {
 		super();
-		this.mois = mois;
+		this.moisEcheance = mois;
 		this.dateEcheance = dateEcheance;
 		this.payeEcheance = payeEcheance;
-		this.contrat = contrat;
+		//this.contrat = contrat;
 	}
 
 	public Long getIdEcheance() {
@@ -54,11 +59,11 @@ public class Echeance implements Serializable {
 	}
 
 	public String getMois() {
-		return mois;
+		return moisEcheance;
 	}
 
 	public void setMois(String mois) {
-		this.mois = mois;
+		this.moisEcheance = mois;
 	}
 
 	public Date getDateEcheance() {
@@ -83,6 +88,35 @@ public class Echeance implements Serializable {
 
 	public void setContrat(Contrat contrat) {
 		this.contrat = contrat;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(contrat, dateEcheance, idEcheance, moisEcheance, opCaisse, payeEcheance);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Echeance other = (Echeance) obj;
+		return Objects.equals(contrat, other.contrat) && Objects.equals(dateEcheance, other.dateEcheance)
+				&& Objects.equals(idEcheance, other.idEcheance) && Objects.equals(moisEcheance, other.moisEcheance)
+				&& Objects.equals(opCaisse, other.opCaisse) && payeEcheance == other.payeEcheance;
+	}
+
+	@Override
+	public String toString() {
+		return "Echeance [idEcheance=" + idEcheance + ", moisEcheance=" + moisEcheance + ", dateEcheance="
+				+ dateEcheance + ", payeEcheance=" + payeEcheance + ", contrat=" + contrat + ", opCaisse=" + opCaisse
+				+ "]";
 	}
 
 }

@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +16,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class TypeRecette implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//private Long idTypRec;
-	
-	@PrimaryKeyJoinColumn(columnDefinition = "codeTypRec")//****************Pourquoi ceci encore ici
 	private String codeTypRec;
 	private String libeTypRec;
 	
@@ -51,6 +48,33 @@ public class TypeRecette implements Serializable{
 
 	public void setLibeTypRec(String libeTypRec) {
 		this.libeTypRec = libeTypRec;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codeTypRec, libeTypRec, opérationstype);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		TypeRecette other = (TypeRecette) obj;
+		return Objects.equals(codeTypRec, other.codeTypRec) && Objects.equals(libeTypRec, other.libeTypRec)
+				&& Objects.equals(opérationstype, other.opérationstype);
+	}
+
+	@Override
+	public String toString() {
+		return "TypeRecette [codeTypRec=" + codeTypRec + ", libeTypRec=" + libeTypRec + ", opérationstype="
+				+ opérationstype + "]";
 	}
 	
 }

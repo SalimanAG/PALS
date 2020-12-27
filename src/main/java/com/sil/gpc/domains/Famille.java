@@ -19,7 +19,7 @@ public class Famille implements Serializable {
 	
 	//List des article d'une famille
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Article.class, mappedBy = "famille")
-	List<Article> articlesParFamille;
+	List<Article> articlesDuneFamille;
 	
 	public Famille() {
 		super();
@@ -49,7 +49,7 @@ public class Famille implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(articlesParFamille, codeFamille, libFamille);
+		return Objects.hash(codeFamille, libFamille);
 	}
 
 	@Override
@@ -64,14 +64,13 @@ public class Famille implements Serializable {
 			return false;
 		}
 		Famille other = (Famille) obj;
-		return Objects.equals(articlesParFamille, other.articlesParFamille)
-				&& Objects.equals(codeFamille, other.codeFamille) && Objects.equals(libFamille, other.libFamille);
+		return Objects.equals(codeFamille, other.codeFamille) && Objects.equals(libFamille, other.libFamille);
 	}
 
 	@Override
 	public String toString() {
-		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + "]";
+		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + ", articlesDuneFamille="
+				+ articlesDuneFamille + "]";
 	}
-	
-	
+
 }

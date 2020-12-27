@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -11,8 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Stocker {
+public class Stocker implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,8 +28,8 @@ public class Stocker {
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	private Article article;
-	
-	//Liaison au magasin
+
+	//Liaison à l'article
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Magasin.class)
 	@JoinColumn(name = "codeMagasin",referencedColumnName = "codeMagasin",nullable = false)
 	private Magasin magasin;
