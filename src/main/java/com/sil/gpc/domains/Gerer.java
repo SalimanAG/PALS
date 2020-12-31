@@ -19,7 +19,7 @@ public class Gerer implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int idGerer;
+	private Long idGerer;
 	private Date dateDebGerer;
 	private Date dateFinGerer;
 
@@ -48,14 +48,14 @@ public class Gerer implements Serializable{
 	/**
 	 * @return the idGerer
 	 */
-	public int getIdGerer() {
+	public Long getIdGerer() {
 		return idGerer;
 	}
 
 	/**
 	 * @param idGerer the idGerer to set
 	 */
-	public void setIdGerer(int idGerer) {
+	public void setIdGerer(Long idGerer) {
 		this.idGerer = idGerer;
 	}
 

@@ -72,6 +72,27 @@ public class LigneAppro implements Serializable {
 	public void setPULigneAppro(Long pULigneAppro) {
 		PULigneAppro = pULigneAppro;
 	}
+	
+
+	public Approvisionnement getAppro() {
+		return appro;
+	}
+
+
+	public void setAppro(Approvisionnement appro) {
+		this.appro = appro;
+	}
+
+
+	public LigneDemandeAppro getLigneDA() {
+		return ligneDA;
+	}
+
+
+	public void setLigneDA(LigneDemandeAppro ligneDA) {
+		this.ligneDA = ligneDA;
+	}
+
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
