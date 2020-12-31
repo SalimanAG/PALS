@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "ModePaiement")
+@Table(name = "ModePaiementRepository")
 public class ModePaiement implements Serializable {
 	@Id
 	@Column(name = "codeModPay", length = 5)
@@ -77,7 +77,7 @@ public class ModePaiement implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ModePaiement [codeModPay=" + codeModPay + ", libeModPay=" + libeModPay + ", opérationsMode="
+		return "ModePaiementRepository [codeModPay=" + codeModPay + ", libeModPay=" + libeModPay + ", opérationsMode="
 				+ opérationsMode + "]";
 	}
 	

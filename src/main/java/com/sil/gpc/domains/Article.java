@@ -65,7 +65,7 @@ public class Article implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneRecollement.class,mappedBy = "article")
 	public List<LigneRecollement> recollementsDunArticle;
 
-	// Liaison à LigneReversement
+	// Liaison à LigneReversementService
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneReversement.class,mappedBy = "article")
 	public List<LigneReversement> reversementDunArticle;
 

@@ -20,7 +20,7 @@ public class Immeuble implements Serializable{
 	private String codeIm;
 	private String localisationIm;
 	private boolean etatIm;
-	//Liaison avec Quartier
+	//Liaison avec QuartierRepository
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Quartier.class)
 	@JoinColumn(name="codeQuartier", referencedColumnName = "codeQuartier", nullable = false)
 	private Quartier quartier;

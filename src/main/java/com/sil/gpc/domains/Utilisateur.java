@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -26,7 +25,7 @@ public class Utilisateur {
 	private String codeService; //***************************Code Service A Etablir
 	
 	//**************************Les affecters de l'utilisateur
-	// Liaison à la table LigneRecollement
+	// Liaison à la table Affecter
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = Affecter.class, mappedBy = "utilisateur")
 	public List<Utilisateur> affectationsDunUtilisateur;
 

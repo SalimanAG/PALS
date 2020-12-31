@@ -78,6 +78,62 @@ public class PlageNumArticle implements Serializable {
 		this.numFinPlage = numFinPlage;
 	}
 
+	/**
+	 * @return the article
+	 */
+	public Article getArticle() {
+		return article;
+	}
+
+	/**
+	 * @param article the article to set
+	 */
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
+	/**
+	 * @return the ligneRecollement
+	 */
+	public LigneRecollement getLigneRecollement() {
+		return ligneRecollement;
+	}
+
+	/**
+	 * @param ligneRecollement the ligneRecollement to set
+	 */
+	public void setLigneRecollement(LigneRecollement ligneRecollement) {
+		this.ligneRecollement = ligneRecollement;
+	}
+
+	/**
+	 * @return the lignePlacement
+	 */
+	public LignePlacement getLignePlacement() {
+		return lignePlacement;
+	}
+
+	/**
+	 * @param lignePlacement the lignePlacement to set
+	 */
+	public void setLignePlacement(LignePlacement lignePlacement) {
+		this.lignePlacement = lignePlacement;
+	}
+
+	/**
+	 * @return the ligneAppro
+	 */
+	public LigneAppro getLigneAppro() {
+		return ligneAppro;
+	}
+
+	/**
+	 * @param ligneAppro the ligneAppro to set
+	 */
+	public void setLigneAppro(LigneAppro ligneAppro) {
+		this.ligneAppro = ligneAppro;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

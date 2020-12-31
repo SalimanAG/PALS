@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,7 +23,8 @@ public class LigneReversement implements Serializable{
 	//private String numReversement;
 	private Long quantiteLigneReversement;
 	private Long PULigneReversement;
-	private String dateQuittanceReversement;
+	private String quittanceReversement;
+	private Date dateQuittanceReversement;
 	private String beneficiaire;
 	private String observation;
 
@@ -40,12 +42,13 @@ public class LigneReversement implements Serializable{
 		super();
 	}
 
-	public LigneReversement(Long quantiteLigneReversement, Long pULigneReversement, String dateQuittanceReversement,
-			String beneficiaire, String observation, Reversement numReversement, Article article) {
+	public LigneReversement(Long quantiteLigneReversement, Long pULigneReversement, Date dateQuittanceReversement,
+			String quittanceReversement,String beneficiaire, String observation, Reversement numReversement, Article article) {
 		super();
 		this.quantiteLigneReversement = quantiteLigneReversement;
 		PULigneReversement = pULigneReversement;
 		this.dateQuittanceReversement = dateQuittanceReversement;
+		this.quittanceReversement=quittanceReversement;
 		this.beneficiaire = beneficiaire;
 		this.observation = observation;
 		this.numReversement = numReversement;
@@ -98,15 +101,29 @@ public class LigneReversement implements Serializable{
 	/**
 	 * @return the dateQuittanceReversement
 	 */
-	public String getDateQuittanceReversement() {
+	public Date getDateQuittanceReversement() {
 		return dateQuittanceReversement;
 	}
 
 	/**
 	 * @param dateQuittanceReversement the dateQuittanceReversement to set
 	 */
-	public void setDateQuittanceReversement(String dateQuittanceReversement) {
+	public void setDateQuittanceReversement(Date dateQuittanceReversement) {
 		this.dateQuittanceReversement = dateQuittanceReversement;
+	}
+
+	/**
+	 * @return the quittanceReversement
+	 */
+	public String getQuittanceReversement() {
+		return quittanceReversement;
+	}
+
+	/**
+	 * @param quittanceReversement the quittanceReversement to set
+	 */
+	public void setQuittanceReversement(String quittanceReversement) {
+		this.quittanceReversement = quittanceReversement;
 	}
 
 	/**
@@ -167,7 +184,7 @@ public class LigneReversement implements Serializable{
 
 	@Override
 	public String toString() {
-		return "LigneReversement [idLigneReversement=" + idLigneReversement + ", quantiteLigneReversement="
+		return "LigneReversementService [idLigneReversement=" + idLigneReversement + ", quantiteLigneReversement="
 				+ quantiteLigneReversement + ", PULigneReversement=" + PULigneReversement
 				+ ", dateQuittanceReversement=" + dateQuittanceReversement + ", beneficiaire=" + beneficiaire
 				+ ", observation=" + observation + ", numReversement=" + numReversement + ", article=" + article

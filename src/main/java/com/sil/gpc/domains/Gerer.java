@@ -23,7 +23,7 @@ public class Gerer implements Serializable{
 	private Date dateDebGerer;
 	private Date dateFinGerer;
 
-	//Liaison avec Magasinier
+	//Liaison avec MagasinierService
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Magasinier.class)
 	@JoinColumn(name = "numMagasinier", referencedColumnName ="numMagasinier",nullable = false)
 	private Magasinier magasinier;
