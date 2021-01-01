@@ -27,9 +27,9 @@ public class OpCaisse implements Serializable {
 	private boolean valideOpCaisse;
 	@Column(length = 150)
 	private String ObservationOpCaisse;
+	private Date dateSaisie;
 
 	//Liaison à la caisse
-	private Date dateSaisie;
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Caisse.class)
 	@JoinColumn(name = "codeCaisse", referencedColumnName = "codeCaisse", nullable = false)
 	private Caisse caisse;
@@ -39,7 +39,7 @@ public class OpCaisse implements Serializable {
 	@JoinColumn(name = "codeTypRec", referencedColumnName = "codeTypRec", nullable = false)
 	private TypeRecette typeRecette;
 
-	//Liaison à la table "ModePaiement"
+	//Liaison à la table "ModePaiementRepository"
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = ModePaiement.class)
 	@JoinColumn(name = "codeModPay", referencedColumnName = "codeModPay", nullable = false)
 	private ModePaiement modePaiement;
