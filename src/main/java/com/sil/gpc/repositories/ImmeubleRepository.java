@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sil.gpc.domains.Immeuble;
 import com.sil.gpc.domains.TypeImmeuble;
+import com.sil.gpc.domains.Quartier;
 
 @Repository
 public interface ImmeubleRepository extends JpaRepository<Immeuble, String> {

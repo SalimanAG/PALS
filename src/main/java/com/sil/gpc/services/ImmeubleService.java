@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Immeuble;
 import com.sil.gpc.domains.TypeImmeuble;
+import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.repositories.ImmeubleRepository;
-import com.sil.gpc.repositories.Quartier;
 
 @Service
 public class ImmeubleService {

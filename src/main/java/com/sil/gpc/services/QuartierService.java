@@ -1,6 +1,6 @@
 package com.sil.gpc.services;
 
-//import etatcivil.utils.Constantes;
+
 import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.repositories.QuartierRepository;
 import java.util.List;
@@ -39,5 +39,11 @@ public class QuartierService {
     public void delete(Quartier quartier) {
          this.quartierRepository.delete(quartier);
     }   
+    
+    //liste par libelle
+    public List<Quartier> findBylibelle(String libQuartier){
+		
+		return this.quartierRepository.findBylibQuartier(libQuartier);
+	}
 
 }
