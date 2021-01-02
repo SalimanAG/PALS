@@ -111,7 +111,7 @@ public class Magasinier implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Magasinier [numMAgasinier=" + numMAgasinier + ", nomMagasinier=" + nomMagasinier + ", prenomMagasinier="
+		return "MagasinierService [numMAgasinier=" + numMAgasinier + ", nomMagasinier=" + nomMagasinier + ", prenomMagasinier="
 				+ prenomMagasinier + ", telMagasinier=" + telMagasinier + "]";
 	}
 	
