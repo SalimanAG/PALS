@@ -1,12 +1,16 @@
 package com.sil.gpc.domains;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Utilisateur {
 
-	@Id
+	@Id  //*******************A générer automatiquement
 	private Long idUtilisateur;
 	private String login;
 	private String motDePass;
@@ -14,7 +18,17 @@ public class Utilisateur {
 	private String prenomUtilisateur;
 	private String fonctionUtilisateur;
 	private boolean activeUtilisateur;
-	private String codeService;
+	
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class,mappedBy = "utilisateur")
+	public List<OpCaisse> opCaisseParUtilisateur;
+	
+	private String codeService; //***************************Code Service A Etablir
+	
+	//**************************Les affecters de l'utilisateur
+	// Liaison à la table Affecter
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Affecter.class, mappedBy = "utilisateur")
+	public List<Utilisateur> affectationsDunUtilisateur;
+
 	
 	public Utilisateur() {
 		super();

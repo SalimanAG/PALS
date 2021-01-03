@@ -1,32 +1,42 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class Immeuble {
+public class Immeuble implements Serializable{
 
 	@Id
 	private String codeIm;
 	private String localisationIm;
 	private boolean etatIm;
-	private String codeTypIm;
-	private String codeQuartier;
+	//Liaison avec QuartierRepository
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Quartier.class)
+	@JoinColumn(name="codeQuartier", referencedColumnName = "codeQuartier", nullable = false)
+	private Quartier quartier;
+	
+	//Liaison  avec TypeImmeuble
+		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = TypeImmeuble.class)
+		@JoinColumn(name="codeTypImm", referencedColumnName = "codeTypIm", nullable = false)
+		private TypeImmeuble typeImmeuble;
+		
+		//Liaison  avec PrixImmeuble
+		@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = PrixImmeuble.class,mappedBy = "immeuble")
+		public List<PrixImmeuble> prixImmeuble;//*****************************Erreur, c'est prix Immeuble
 	
 	public Immeuble() {
 		super();
 	}
-
-
-	public Immeuble(String codeIm, String localisationIm, boolean etatIm, String codeTypIm, String codeQuartier) {
-		super();
-		this.codeIm = codeIm;
-		this.localisationIm = localisationIm;
-		this.etatIm = etatIm;
-		this.codeTypIm = codeTypIm;
-		this.codeQuartier = codeQuartier;
-	}
-
 
 
 	public String getCodeIm() {
@@ -53,59 +63,59 @@ public class Immeuble {
 		this.etatIm = etatIm;
 	}
 
-	public String getCodeTypIm() {
-		return codeTypIm;
+
+	/**
+	 * @return the quartier
+	 */
+	public Quartier getQuartier() {
+		return quartier;
 	}
 
-	public void setCodeTypIm(String codeTypIm) {
-		this.codeTypIm = codeTypIm;
+
+	/**
+	 * @param quartier the quartier to set
+	 */
+	public void setQuartier(Quartier quartier) {
+		this.quartier = quartier;
 	}
+
+
+	/**
+	 * @return the typeImmeuble
+	 */
+	public TypeImmeuble getTypeImmeuble() {
+		return typeImmeuble;
+	}
+
+
+	/**
+	 * @param typeImmeuble the typeImmeuble to set
+	 */
+	public void setTypeImmeuble(TypeImmeuble typeImmeuble) {
+		this.typeImmeuble = typeImmeuble;
+	}
+
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeIm == null) ? 0 : codeIm.hashCode());
-		result = prime * result + ((codeTypIm == null) ? 0 : codeTypIm.hashCode());
-		result = prime * result + (etatIm ? 1231 : 1237);
-		result = prime * result + ((localisationIm == null) ? 0 : localisationIm.hashCode());
-		return result;
+		return Objects.hash(codeIm, etatIm, localisationIm, quartier, typeImmeuble);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Immeuble other = (Immeuble) obj;
-		if (codeIm == null) {
-			if (other.codeIm != null)
-				return false;
-		} else if (!codeIm.equals(other.codeIm))
-			return false;
-		if (codeTypIm == null) {
-			if (other.codeTypIm != null)
-				return false;
-		} else if (!codeTypIm.equals(other.codeTypIm))
-			return false;
-		if (etatIm != other.etatIm)
-			return false;
-		if (localisationIm == null) {
-			if (other.localisationIm != null)
-				return false;
-		} else if (!localisationIm.equals(other.localisationIm))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Immeuble [codeIm=" + codeIm + ", localisationIm=" + localisationIm + ", etatIm=" + etatIm
-				+ ", codeTypIm=" + codeTypIm + "]";
-	}
-	
-	
+		return Objects.equals(codeIm, other.codeIm) && etatIm == other.etatIm
+				&& Objects.equals(localisationIm, other.localisationIm) && Objects.equals(quartier, other.quartier)
+				&& Objects.equals(typeImmeuble, other.typeImmeuble);
+	}	
 }

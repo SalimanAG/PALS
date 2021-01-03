@@ -1,10 +1,13 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@SuppressWarnings("serial")
 @Entity
-public class Service {
+public class Service implements Serializable {
 
 	@Id
 	private String codeService;

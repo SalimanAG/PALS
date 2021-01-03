@@ -1,111 +1,207 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class PointVente {
+public class PointVente implements Serializable{
 
 	@Id
-	private String numpointVente;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name="numPointVente", length = 15)
+	private String numPointVente; 
 	private Date datePointVente;
-	private String codeExercice;
-	private String idCorrespondant;
+	private boolean payerPoint;
+
+	//Liaison avec Exercice
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
+	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
+	private Exercice exercice;
+
+	//Liaison avec Correspondant
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Correspondant.class)
+	@JoinColumn(name = "idCorrepondant",referencedColumnName = "idCorrespondant",nullable = false)
+	private Correspondant correspondant;
+
+	//*********************************Il reste l'opération de caisse
+	//Liaison avec OpCaisse
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = OpCaisse.class)
+	@JoinColumn(name = "numOpCaisse",referencedColumnName = "numOpCaisse",nullable = false)
+	private OpCaisse opCaisse;
+
+	// Liaison avec la table Echeance
+	@OneToMany( cascade = CascadeType.ALL,targetEntity = Echeance.class, mappedBy = "opCaisse")
+	private List<Echeance> echeancesOpCaisse;
+	
+	
+	//Liaison avec Regisseur
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)
+	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)
+	private Regisseur regisseur;
+
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, targetEntity = LignePointVente.class,mappedBy = "pointVente")
+	public List<LignePointVente> lignesParPoint;
 	
 	public PointVente() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public PointVente(String numpointVente, Date datePointVente, String codeExercice, String idCorrespondant) {
+	public PointVente(String numPointVente, Date datePointVente, boolean payerPoint, Exercice exercice,
+			Correspondant correspondant, Regisseur regisseur, List<LignePointVente> lignesParPoint) {
 		super();
-		this.numpointVente = numpointVente;
+		this.numPointVente = numPointVente;
 		this.datePointVente = datePointVente;
-		this.codeExercice = codeExercice;
-		this.idCorrespondant = idCorrespondant;
+		this.payerPoint = payerPoint;
+		this.exercice = exercice;
+		this.correspondant = correspondant;
+		this.regisseur = regisseur;
+		this.lignesParPoint = lignesParPoint;
 	}
 
-	public String getNumpointVente() {
-		return numpointVente;
+	/**
+	 * @return the numPointVente
+	 */
+	public String getNumPointVente() {
+		return numPointVente;
 	}
 
-	public void setNumpointVente(String numpointVente) {
-		this.numpointVente = numpointVente;
+	/**
+	 * @param numPointVente the numPointVente to set
+	 */
+	public void setNumPointVente(String numPointVente) {
+		this.numPointVente = numPointVente;
 	}
 
+	/**
+	 * @return the datePointVente
+	 */
 	public Date getDatePointVente() {
 		return datePointVente;
 	}
 
+	/**
+	 * @param datePointVente the datePointVente to set
+	 */
 	public void setDatePointVente(Date datePointVente) {
 		this.datePointVente = datePointVente;
 	}
 
-	public String getCodeExercice() {
-		return codeExercice;
+	/**
+	 * @return the payerPoint
+	 */
+	public boolean isPayerPoint() {
+		return payerPoint;
 	}
 
-	public void setCodeExercice(String codeExercice) {
-		this.codeExercice = codeExercice;
+	/**
+	 * @param payerPoint the payerPoint to set
+	 */
+	public void setPayerPoint(boolean payerPoint) {
+		this.payerPoint = payerPoint;
 	}
 
-	public String getIdCorrespondant() {
-		return idCorrespondant;
+	/**
+	 * @return the exercice
+	 */
+	public Exercice getExercice() {
+		return exercice;
 	}
 
-	public void setIdCorrespondant(String idCorrespondant) {
-		this.idCorrespondant = idCorrespondant;
+	/**
+	 * @param exercice the exercice to set
+	 */
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
+	}
+
+	/**
+	 * @return the correspondant
+	 */
+	public Correspondant getCorrespondant() {
+		return correspondant;
+	}
+
+	/**
+	 * @param correspondant the correspondant to set
+	 */
+	public void setCorrespondant(Correspondant correspondant) {
+		this.correspondant = correspondant;
+	}
+
+	/**
+	 * @return the regisseur
+	 */
+	public Regisseur getRegisseur() {
+		return regisseur;
+	}
+
+	/**
+	 * @param regisseur the regisseur to set
+	 */
+	public void setRegisseur(Regisseur regisseur) {
+		this.regisseur = regisseur;
+	}
+
+	/**
+	 * @return the lignesParPoint
+	 */
+	public List<LignePointVente> getLignesParPoint() {
+		return lignesParPoint;
+	}
+
+	/**
+	 * @param lignesParPoint the lignesParPoint to set
+	 */
+	public void setLignesParPoint(List<LignePointVente> lignesParPoint) {
+		this.lignesParPoint = lignesParPoint;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeExercice == null) ? 0 : codeExercice.hashCode());
-		result = prime * result + ((datePointVente == null) ? 0 : datePointVente.hashCode());
-		result = prime * result + ((idCorrespondant == null) ? 0 : idCorrespondant.hashCode());
-		result = prime * result + ((numpointVente == null) ? 0 : numpointVente.hashCode());
-		return result;
+		return Objects.hash(correspondant, datePointVente, exercice, lignesParPoint, numPointVente, payerPoint,
+				regisseur);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		PointVente other = (PointVente) obj;
-		if (codeExercice == null) {
-			if (other.codeExercice != null)
-				return false;
-		} else if (!codeExercice.equals(other.codeExercice))
-			return false;
-		if (datePointVente == null) {
-			if (other.datePointVente != null)
-				return false;
-		} else if (!datePointVente.equals(other.datePointVente))
-			return false;
-		if (idCorrespondant == null) {
-			if (other.idCorrespondant != null)
-				return false;
-		} else if (!idCorrespondant.equals(other.idCorrespondant))
-			return false;
-		if (numpointVente == null) {
-			if (other.numpointVente != null)
-				return false;
-		} else if (!numpointVente.equals(other.numpointVente))
-			return false;
-		return true;
+		return Objects.equals(correspondant, other.correspondant)
+				&& Objects.equals(datePointVente, other.datePointVente) && Objects.equals(exercice, other.exercice)
+				&& Objects.equals(lignesParPoint, other.lignesParPoint)
+				&& Objects.equals(numPointVente, other.numPointVente) && payerPoint == other.payerPoint
+				&& Objects.equals(regisseur, other.regisseur);
 	}
 
 	@Override
 	public String toString() {
-		return "PointVente [numpointVente=" + numpointVente + ", datePointVente=" + datePointVente + ", codeExercice="
-				+ codeExercice + ", idCorrespondant=" + idCorrespondant + "]";
+		return "PointVente [numPointVente=" + numPointVente + ", datePointVente=" + datePointVente + ", payerPoint="
+				+ payerPoint + ", exercice=" + exercice + ", correspondant=" + correspondant + ", regisseur="
+				+ regisseur + ", lignesParPoint=" + lignesParPoint + "]";
 	}
-	
-	
+
+
 }

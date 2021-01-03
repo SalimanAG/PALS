@@ -1,124 +1,153 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@SuppressWarnings("serial")
 @Entity
-public class Correspondant {
+public class Correspondant implements Serializable {
 
 	@Id
 	private String idCorrespondant;
 	private boolean imputableCorres;
-	private Long numMagasinier;
-	private String codeTypeCorres;
-	private String idUtilisateur;
-	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Magasinier.class)
+	@JoinColumn(name = "numMagasinier", referencedColumnName = "numMagasinier", nullable = false)
+	private Magasinier magasinier;
+
+	// Liaison à typeCorresspondant
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = TypCorres.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "codeTypCorres", referencedColumnName = "codeTypCorres", nullable = false)
+	public TypCorres typecorres;
+
+	// Liaison à Utilisateur
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = PointVente.class, fetch = FetchType.LAZY, mappedBy = "correspondant")
+	public List<PointVente> pointsParCorrespondant;
+
+	// Liaison à Utilisateur
+	@OneToOne(cascade = CascadeType.ALL, targetEntity = Utilisateur.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
+	public Utilisateur utilisateur;
+
 	public Correspondant() {
 		super();
 	}
 
-	public Correspondant(String idCorrespondant, boolean imputableCorres, Long numMagasinier, String codeTypeCorres,
-			String idUtilisateur) {
+	public Correspondant(String idCorrespondant, boolean imputableCorres, Magasinier magasinier, TypCorres typecorres,
+			Utilisateur utilisateur) {
 		super();
 		this.idCorrespondant = idCorrespondant;
 		this.imputableCorres = imputableCorres;
-		this.numMagasinier = numMagasinier;
-		this.codeTypeCorres = codeTypeCorres;
-		this.idUtilisateur = idUtilisateur;
+		this.magasinier = magasinier;
+		this.typecorres = typecorres;
+		this.utilisateur = utilisateur;
 	}
 
+	/**
+	 * @return the idCorrespondant
+	 */
 	public String getIdCorrespondant() {
 		return idCorrespondant;
 	}
 
+	/**
+	 * @param idCorrespondant the idCorrespondant to set
+	 */
 	public void setIdCorrespondant(String idCorrespondant) {
 		this.idCorrespondant = idCorrespondant;
 	}
 
+	/**
+	 * @return the imputableCorres
+	 */
 	public boolean isImputableCorres() {
 		return imputableCorres;
 	}
 
+	/**
+	 * @param imputableCorres the imputableCorres to set
+	 */
 	public void setImputableCorres(boolean imputableCorres) {
 		this.imputableCorres = imputableCorres;
 	}
 
-	public Long getNumMagasinier() {
-		return numMagasinier;
+	/**
+	 * @return the magasinier
+	 */
+	public Magasinier getMagasinier() {
+		return magasinier;
 	}
 
-	public void setNumMagasinier(Long numMagasinier) {
-		this.numMagasinier = numMagasinier;
+	/**
+	 * @param magasinier the magasinier to set
+	 */
+	public void setMagasinier(Magasinier magasinier) {
+		this.magasinier = magasinier;
 	}
 
-	public String getCodeTypeCorres() {
-		return codeTypeCorres;
+	/**
+	 * @return the typecorres
+	 */
+	public TypCorres getTypecorres() {
+		return typecorres;
 	}
 
-	public void setCodeTypeCorres(String codeTypeCorres) {
-		this.codeTypeCorres = codeTypeCorres;
+	/**
+	 * @param typecorres the typecorres to set
+	 */
+	public void setTypecorres(TypCorres typecorres) {
+		this.typecorres = typecorres;
 	}
 
-	public String getIdUtilisateur() {
-		return idUtilisateur;
+	/**
+	 * @return the utilisateur
+	 */
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setIdUtilisateur(String idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
+	/**
+	 * @param utilisateur the utilisateur to set
+	 */
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeTypeCorres == null) ? 0 : codeTypeCorres.hashCode());
-		result = prime * result + ((idCorrespondant == null) ? 0 : idCorrespondant.hashCode());
-		result = prime * result + ((idUtilisateur == null) ? 0 : idUtilisateur.hashCode());
-		result = prime * result + (imputableCorres ? 1231 : 1237);
-		result = prime * result + ((numMagasinier == null) ? 0 : numMagasinier.hashCode());
-		return result;
+		return Objects.hash(idCorrespondant, imputableCorres, magasinier, typecorres, utilisateur);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Correspondant other = (Correspondant) obj;
-		if (codeTypeCorres == null) {
-			if (other.codeTypeCorres != null)
-				return false;
-		} else if (!codeTypeCorres.equals(other.codeTypeCorres))
-			return false;
-		if (idCorrespondant == null) {
-			if (other.idCorrespondant != null)
-				return false;
-		} else if (!idCorrespondant.equals(other.idCorrespondant))
-			return false;
-		if (idUtilisateur == null) {
-			if (other.idUtilisateur != null)
-				return false;
-		} else if (!idUtilisateur.equals(other.idUtilisateur))
-			return false;
-		if (imputableCorres != other.imputableCorres)
-			return false;
-		if (numMagasinier == null) {
-			if (other.numMagasinier != null)
-				return false;
-		} else if (!numMagasinier.equals(other.numMagasinier))
-			return false;
-		return true;
+		return Objects.equals(idCorrespondant, other.idCorrespondant) && imputableCorres == other.imputableCorres
+				&& Objects.equals(magasinier, other.magasinier) && Objects.equals(typecorres, other.typecorres)
+				&& Objects.equals(utilisateur, other.utilisateur);
 	}
 
 	@Override
 	public String toString() {
 		return "Correspondant [idCorrespondant=" + idCorrespondant + ", imputableCorres=" + imputableCorres
-				+ ", numMagasinier=" + numMagasinier + ", codeTypeCorres=" + codeTypeCorres + ", idUtilisateur="
-				+ idUtilisateur + "]";
+				+ ", magasinier=" + magasinier + ", typecorres=" + typecorres + ", utilisateur=" + utilisateur + "]";
 	}
-	
-	
+
 }

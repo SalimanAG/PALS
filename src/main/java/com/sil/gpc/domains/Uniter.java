@@ -1,14 +1,24 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class Uniter {
+public class Uniter implements Serializable{
 
 	@Id
 	private String codeUniter;
 	private String libUniter;
+	
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class,mappedBy = "unite")
+	public List<Article> articleParUniter;
 	
 	public Uniter() {
 		super();
@@ -45,26 +55,19 @@ public class Uniter {
 		return result;
 	}
 
+
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Uniter other = (Uniter) obj;
-		if (codeUniter == null) {
-			if (other.codeUniter != null)
-				return false;
-		} else if (!codeUniter.equals(other.codeUniter))
-			return false;
-		if (libUniter == null) {
-			if (other.libUniter != null)
-				return false;
-		} else if (!libUniter.equals(other.libUniter))
-			return false;
-		return true;
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
 	}
 
 	@Override

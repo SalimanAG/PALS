@@ -1,15 +1,30 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class Magasin {
+public class Magasin implements Serializable{
 
 	@Id
 	private String codeMagasin;
 	private String libMagasin;
 	
+	//Liaison à la  table Gerer
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Gerer.class,mappedBy = "magasin")
+	public List<Gerer> affectationsParMagasin;
+
+	// Liaison à Stocker
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Stocker.class,mappedBy = "magasin")
+	public List<Stocker> stocksParMagasin;
+
 	public Magasin() {
 		super();
 	}
@@ -71,7 +86,5 @@ public class Magasin {
 	public String toString() {
 		return "Magasin [codeMagasin=" + codeMagasin + ", libMagasin=" + libMagasin + "]";
 	}
-	
-	
 	
 }

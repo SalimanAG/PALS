@@ -1,16 +1,27 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class Magasinier {
+public class Magasinier implements Serializable {
 
 	@Id
 	private Long numMAgasinier;
 	private String nomMagasinier;
 	private String prenomMagasinier;
 	private String telMagasinier;
+	
+	//Liaison à la  table Gerer
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Gerer.class,mappedBy = "magasinier")
+	public List<Gerer> affectationsParMagasin;
+	
 	
 	public Magasinier() {
 		super();
@@ -100,7 +111,7 @@ public class Magasinier {
 
 	@Override
 	public String toString() {
-		return "Magasinier [numMAgasinier=" + numMAgasinier + ", nomMagasinier=" + nomMagasinier + ", prenomMagasinier="
+		return "MagasinierService [numMAgasinier=" + numMAgasinier + ", nomMagasinier=" + nomMagasinier + ", prenomMagasinier="
 				+ prenomMagasinier + ", telMagasinier=" + telMagasinier + "]";
 	}
 	

@@ -1,14 +1,24 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class TypCorres {
+public class TypCorres implements Serializable {
 
 	@Id
 	private String codeTypCorres;
 	private String libTypeCorres;
+
+	// Liaison à Correspondant
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Correspondant.class,mappedBy = "typecorres")
+	public List<Correspondant> correspondantsParType;
 	
 	public TypCorres() {
 		super();

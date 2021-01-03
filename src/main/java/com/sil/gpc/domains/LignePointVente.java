@@ -1,143 +1,136 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@SuppressWarnings("serial")
 @Entity
-public class LignePointVente {
+public class LignePointVente implements Serializable{
 
 	@Id
-	private String codeArticle;
-	private String numPointVente;
-	private Long quantiteLignePointVente;
-	private Long PULignePointVente;
-	private String numDebLignePointVente;
-	private String numFinLignePointVente;
+	@GeneratedValue
+	private Long idLignePointVente;
+	private double quantiteLignePointVente;
+	private double PULignePointVente;
+	private int numDebLignePointVente;
+	private int numFinLignePointVente;
 	
+	//Liaison avec Point vente
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,targetEntity = PointVente.class)
+	@JoinColumn(name = "numPointVente", referencedColumnName = "numPointVente")
+	PointVente pointVente;
+	
+	//Liaison avec Article
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,targetEntity =Article.class)
+	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle")
+	Article article;
+
 	public LignePointVente() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public LignePointVente(String codeArticle, String numPointVente, Long quantiteLignePointVente,
-			Long pULignePointVente, String numDebLignePointVente, String numFinLignePointVente) {
+	public LignePointVente(Long idLignePointVente, double quantiteLignePointVente, double pULignePointVente,
+			int numDebLignePointVente, int numFinLignePointVente, PointVente pontVente, Article article) {
 		super();
-		this.codeArticle = codeArticle;
-		this.numPointVente = numPointVente;
+		this.idLignePointVente = idLignePointVente;
 		this.quantiteLignePointVente = quantiteLignePointVente;
 		PULignePointVente = pULignePointVente;
 		this.numDebLignePointVente = numDebLignePointVente;
 		this.numFinLignePointVente = numFinLignePointVente;
+		this.pointVente = pontVente;
+		this.article = article;
 	}
 
-	public String getCodeArticle() {
-		return codeArticle;
-	}
-
-	public void setCodeArticle(String codeArticle) {
-		this.codeArticle = codeArticle;
-	}
-
-	public String getNumPointVente() {
-		return numPointVente;
-	}
-
-	public void setNumPointVente(String numPointVente) {
-		this.numPointVente = numPointVente;
-	}
-
-	public Long getQuantiteLignePointVente() {
+	/**
+	 * @return the quantiteLignePointVente
+	 */
+	public double getQuantiteLignePointVente() {
 		return quantiteLignePointVente;
 	}
 
-	public void setQuantiteLignePointVente(Long quantiteLignePointVente) {
+	/**
+	 * @param quantiteLignePointVente the quantiteLignePointVente to set
+	 */
+	public void setQuantiteLignePointVente(double quantiteLignePointVente) {
 		this.quantiteLignePointVente = quantiteLignePointVente;
 	}
 
-	public Long getPULignePointVente() {
+	/**
+	 * @return the pULignePointVente
+	 */
+	public double getPULignePointVente() {
 		return PULignePointVente;
 	}
 
-	public void setPULignePointVente(Long pULignePointVente) {
+	/**
+	 * @param pULignePointVente the pULignePointVente to set
+	 */
+	public void setPULignePointVente(double pULignePointVente) {
 		PULignePointVente = pULignePointVente;
 	}
 
-	public String getNumDebLignePointVente() {
+	/**
+	 * @return the numDebLignePointVente
+	 */
+	public int getNumDebLignePointVente() {
 		return numDebLignePointVente;
 	}
 
-	public void setNumDebLignePointVente(String numDebLignePointVente) {
+	/**
+	 * @param numDebLignePointVente the numDebLignePointVente to set
+	 */
+	public void setNumDebLignePointVente(int numDebLignePointVente) {
 		this.numDebLignePointVente = numDebLignePointVente;
 	}
 
-	public String getNumFinLignePointVente() {
+	/**
+	 * @return the numFinLignePointVente
+	 */
+	public int getNumFinLignePointVente() {
 		return numFinLignePointVente;
 	}
 
-	public void setNumFinLignePointVente(String numFinLignePointVente) {
+	/**
+	 * @param numFinLignePointVente the numFinLignePointVente to set
+	 */
+	public void setNumFinLignePointVente(int numFinLignePointVente) {
 		this.numFinLignePointVente = numFinLignePointVente;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((PULignePointVente == null) ? 0 : PULignePointVente.hashCode());
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((numDebLignePointVente == null) ? 0 : numDebLignePointVente.hashCode());
-		result = prime * result + ((numFinLignePointVente == null) ? 0 : numFinLignePointVente.hashCode());
-		result = prime * result + ((numPointVente == null) ? 0 : numPointVente.hashCode());
-		result = prime * result + ((quantiteLignePointVente == null) ? 0 : quantiteLignePointVente.hashCode());
-		return result;
+	/**
+	 * @return the pontVente
+	 */
+	public PointVente getPontVente() {
+		return pointVente;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LignePointVente other = (LignePointVente) obj;
-		if (PULignePointVente == null) {
-			if (other.PULignePointVente != null)
-				return false;
-		} else if (!PULignePointVente.equals(other.PULignePointVente))
-			return false;
-		if (codeArticle == null) {
-			if (other.codeArticle != null)
-				return false;
-		} else if (!codeArticle.equals(other.codeArticle))
-			return false;
-		if (numDebLignePointVente == null) {
-			if (other.numDebLignePointVente != null)
-				return false;
-		} else if (!numDebLignePointVente.equals(other.numDebLignePointVente))
-			return false;
-		if (numFinLignePointVente == null) {
-			if (other.numFinLignePointVente != null)
-				return false;
-		} else if (!numFinLignePointVente.equals(other.numFinLignePointVente))
-			return false;
-		if (numPointVente == null) {
-			if (other.numPointVente != null)
-				return false;
-		} else if (!numPointVente.equals(other.numPointVente))
-			return false;
-		if (quantiteLignePointVente == null) {
-			if (other.quantiteLignePointVente != null)
-				return false;
-		} else if (!quantiteLignePointVente.equals(other.quantiteLignePointVente))
-			return false;
-		return true;
+	/**
+	 * @param pontVente the pontVente to set
+	 */
+	public void setPontVente(PointVente pointVente) {
+		this.pointVente = pointVente;
 	}
 
-	@Override
-	public String toString() {
-		return "LignePointVente [codeArticle=" + codeArticle + ", numPointVente=" + numPointVente
-				+ ", quantiteLignePointVente=" + quantiteLignePointVente + ", PULignePointVente=" + PULignePointVente
-				+ ", numDebLignePointVente=" + numDebLignePointVente + ", numFinLignePointVente="
-				+ numFinLignePointVente + "]";
+	/**
+	 * @return the article
+	 */
+	public Article getArticle() {
+		return article;
+	}
+
+	/**
+	 * @param article the article to set
+	 */
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 	
 }

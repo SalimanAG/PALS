@@ -1,14 +1,25 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
-public class Famille {
+public class Famille implements Serializable {
 
 	@Id
 	private String codeFamille;
 	private String libFamille;
+	
+	//List des article d'une famille
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Article.class, mappedBy = "famille")
+	List<Article> articlesDuneFamille;
 	
 	public Famille() {
 		super();
@@ -38,39 +49,28 @@ public class Famille {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeFamille == null) ? 0 : codeFamille.hashCode());
-		result = prime * result + ((libFamille == null) ? 0 : libFamille.hashCode());
-		return result;
+		return Objects.hash(codeFamille, libFamille);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Famille other = (Famille) obj;
-		if (codeFamille == null) {
-			if (other.codeFamille != null)
-				return false;
-		} else if (!codeFamille.equals(other.codeFamille))
-			return false;
-		if (libFamille == null) {
-			if (other.libFamille != null)
-				return false;
-		} else if (!libFamille.equals(other.libFamille))
-			return false;
-		return true;
+		return Objects.equals(codeFamille, other.codeFamille) && Objects.equals(libFamille, other.libFamille);
 	}
 
 	@Override
 	public String toString() {
-		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + "]";
+		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + ", articlesDuneFamille="
+				+ articlesDuneFamille + "]";
 	}
-	
-	
+
 }

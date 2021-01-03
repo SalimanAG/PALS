@@ -1,126 +1,140 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class PrixImmeuble {
+public class PrixImmeuble implements Serializable {
 
 	@Id
 	private Long idPrixIm;
 	private Date dateDebPrixIm;
 	private Date dateFinPrixIm;
 	private Long prixIm;
-	private String codeIm;
+
+	//Liaison avec immeuble
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Immeuble.class)
+	@JoinColumn(name = "codeIm",referencedColumnName = "codeIm",nullable = false)
+	private Immeuble immeuble;
 	
 	public PrixImmeuble() {
 		super();
 	}
 
-	public PrixImmeuble(Date dateDebPrixIm, Date dateFinPrixIm, Long prixIm, String codeIm) {
+	public PrixImmeuble(Long idPrixIm, Date dateDebPrixIm, Date dateFinPrixIm, Long prixIm, Immeuble immeuble) {
 		super();
+		this.idPrixIm = idPrixIm;
 		this.dateDebPrixIm = dateDebPrixIm;
 		this.dateFinPrixIm = dateFinPrixIm;
 		this.prixIm = prixIm;
-		this.codeIm = codeIm;
+		this.immeuble = immeuble;
 	}
 
+	/**
+	 * @return the idPrixIm
+	 */
 	public Long getIdPrixIm() {
 		return idPrixIm;
 	}
 
+	/**
+	 * @param idPrixIm the idPrixIm to set
+	 */
 	public void setIdPrixIm(Long idPrixIm) {
 		this.idPrixIm = idPrixIm;
 	}
 
+	/**
+	 * @return the dateDebPrixIm
+	 */
 	public Date getDateDebPrixIm() {
 		return dateDebPrixIm;
 	}
 
+	/**
+	 * @param dateDebPrixIm the dateDebPrixIm to set
+	 */
 	public void setDateDebPrixIm(Date dateDebPrixIm) {
 		this.dateDebPrixIm = dateDebPrixIm;
 	}
 
+	/**
+	 * @return the dateFinPrixIm
+	 */
 	public Date getDateFinPrixIm() {
 		return dateFinPrixIm;
 	}
 
+	/**
+	 * @param dateFinPrixIm the dateFinPrixIm to set
+	 */
 	public void setDateFinPrixIm(Date dateFinPrixIm) {
 		this.dateFinPrixIm = dateFinPrixIm;
 	}
 
+	/**
+	 * @return the prixIm
+	 */
 	public Long getPrixIm() {
 		return prixIm;
 	}
 
+	/**
+	 * @param prixIm the prixIm to set
+	 */
 	public void setPrixIm(Long prixIm) {
 		this.prixIm = prixIm;
 	}
 
-	public String getCodeIm() {
-		return codeIm;
+	/**
+	 * @return the immeuble
+	 */
+	public Immeuble getImmeuble() {
+		return immeuble;
 	}
 
-	public void setCodeIm(String codeIm) {
-		this.codeIm = codeIm;
+	/**
+	 * @param immeuble the immeuble to set
+	 */
+	public void setImmeuble(Immeuble immeuble) {
+		this.immeuble = immeuble;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeIm == null) ? 0 : codeIm.hashCode());
-		result = prime * result + ((dateDebPrixIm == null) ? 0 : dateDebPrixIm.hashCode());
-		result = prime * result + ((dateFinPrixIm == null) ? 0 : dateFinPrixIm.hashCode());
-		result = prime * result + ((idPrixIm == null) ? 0 : idPrixIm.hashCode());
-		result = prime * result + ((prixIm == null) ? 0 : prixIm.hashCode());
-		return result;
+		return Objects.hash(dateDebPrixIm, dateFinPrixIm, idPrixIm, immeuble, prixIm);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		PrixImmeuble other = (PrixImmeuble) obj;
-		if (codeIm == null) {
-			if (other.codeIm != null)
-				return false;
-		} else if (!codeIm.equals(other.codeIm))
-			return false;
-		if (dateDebPrixIm == null) {
-			if (other.dateDebPrixIm != null)
-				return false;
-		} else if (!dateDebPrixIm.equals(other.dateDebPrixIm))
-			return false;
-		if (dateFinPrixIm == null) {
-			if (other.dateFinPrixIm != null)
-				return false;
-		} else if (!dateFinPrixIm.equals(other.dateFinPrixIm))
-			return false;
-		if (idPrixIm == null) {
-			if (other.idPrixIm != null)
-				return false;
-		} else if (!idPrixIm.equals(other.idPrixIm))
-			return false;
-		if (prixIm == null) {
-			if (other.prixIm != null)
-				return false;
-		} else if (!prixIm.equals(other.prixIm))
-			return false;
-		return true;
+		return Objects.equals(dateDebPrixIm, other.dateDebPrixIm) && Objects.equals(dateFinPrixIm, other.dateFinPrixIm)
+				&& Objects.equals(idPrixIm, other.idPrixIm) && Objects.equals(immeuble, other.immeuble)
+				&& Objects.equals(prixIm, other.prixIm);
 	}
 
 	@Override
 	public String toString() {
 		return "PrixImmeuble [idPrixIm=" + idPrixIm + ", dateDebPrixIm=" + dateDebPrixIm + ", dateFinPrixIm="
-				+ dateFinPrixIm + ", prixIm=" + prixIm + ", codeIm=" + codeIm + "]";
+				+ dateFinPrixIm + ", prixIm=" + prixIm + ", immeuble=" + immeuble + "]";
 	}
-	
 	
 }

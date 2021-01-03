@@ -1,45 +1,90 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Gerer {
+public class Gerer implements Serializable{
 
 	@Id
-	private Long numMagasinier;
-	private String codeMagasin;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int idGerer;
 	private Date dateDebGerer;
 	private Date dateFinGerer;
+
+	//Liaison avec MagasinierService
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Magasinier.class)
+	@JoinColumn(name = "numMagasinier", referencedColumnName ="numMagasinier",nullable = false)
+	private Magasinier magasinier;
+	
+	//Liaison avec Magasin
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Magasin.class)
+	@JoinColumn(name = "codeMagasin", referencedColumnName ="codeMagasin",nullable = false)
+	private Magasin magasin;
 	
 	public Gerer() {
 		super();
 	}
-
-	public Gerer(Long numMagasinier, String codeMagasin, Date dateDebGerer, Date dateFinGerer) {
+	
+	public Gerer(Date dateDebGerer, Date dateFinGerer, Magasinier magasinier, Magasin magasin) {
 		super();
-		this.numMagasinier = numMagasinier;
-		this.codeMagasin = codeMagasin;
 		this.dateDebGerer = dateDebGerer;
 		this.dateFinGerer = dateFinGerer;
+		this.magasinier = magasinier;
+		this.magasin = magasin;
 	}
 
-	public Long getNumMagasinier() {
-		return numMagasinier;
+	/**
+	 * @return the idGerer
+	 */
+	public int getIdGerer() {
+		return idGerer;
 	}
 
-	public void setNumMagasinier(Long numMagasinier) {
-		this.numMagasinier = numMagasinier;
+	/**
+	 * @param idGerer the idGerer to set
+	 */
+	public void setIdGerer(int idGerer) {
+		this.idGerer = idGerer;
 	}
 
-	public String getCodeMagasin() {
-		return codeMagasin;
+	/**
+	 * @return the magasinier
+	 */
+	public Magasinier getMagasinier() {
+		return magasinier;
 	}
 
-	public void setCodeMagasin(String codeMagasin) {
-		this.codeMagasin = codeMagasin;
+	/**
+	 * @param magasinier the magasinier to set
+	 */
+	public void setMagasinier(Magasinier magasinier) {
+		this.magasinier = magasinier;
+	}
+
+	/**
+	 * @return the magasin
+	 */
+	public Magasin getMagasin() {
+		return magasin;
+	}
+
+	/**
+	 * @param magasin the magasin to set
+	 */
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
 	}
 
 	public Date getDateDebGerer() {
@@ -60,53 +105,31 @@ public class Gerer {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeMagasin == null) ? 0 : codeMagasin.hashCode());
-		result = prime * result + ((dateDebGerer == null) ? 0 : dateDebGerer.hashCode());
-		result = prime * result + ((dateFinGerer == null) ? 0 : dateFinGerer.hashCode());
-		result = prime * result + ((numMagasinier == null) ? 0 : numMagasinier.hashCode());
-		return result;
+		return Objects.hash(dateDebGerer, dateFinGerer, idGerer, magasin, magasinier);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Gerer other = (Gerer) obj;
-		if (codeMagasin == null) {
-			if (other.codeMagasin != null)
-				return false;
-		} else if (!codeMagasin.equals(other.codeMagasin))
-			return false;
-		if (dateDebGerer == null) {
-			if (other.dateDebGerer != null)
-				return false;
-		} else if (!dateDebGerer.equals(other.dateDebGerer))
-			return false;
-		if (dateFinGerer == null) {
-			if (other.dateFinGerer != null)
-				return false;
-		} else if (!dateFinGerer.equals(other.dateFinGerer))
-			return false;
-		if (numMagasinier == null) {
-			if (other.numMagasinier != null)
-				return false;
-		} else if (!numMagasinier.equals(other.numMagasinier))
-			return false;
-		return true;
+		return Objects.equals(dateDebGerer, other.dateDebGerer) && Objects.equals(dateFinGerer, other.dateFinGerer)
+				&& idGerer == other.idGerer && Objects.equals(magasin, other.magasin)
+				&& Objects.equals(magasinier, other.magasinier);
 	}
 
 	@Override
 	public String toString() {
-		return "Gerer [numMagasinier=" + numMagasinier + ", codeMagasin=" + codeMagasin + ", dateDebGerer="
-				+ dateDebGerer + ", dateFinGerer=" + dateFinGerer + "]";
-	}
-	
+		return "Gerer [idGerer=" + idGerer + ", dateDebGerer=" + dateDebGerer + ", dateFinGerer=" + dateFinGerer
+				+ ", magasinier=" + magasinier + ", magasin=" + magasin + "]";
+	}	
 	
 	
 }

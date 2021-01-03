@@ -1,159 +1,194 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.sql.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@SuppressWarnings("serial")
 @Entity
-public class LigneReversement {
+public class LigneReversement implements Serializable{
 
 	@Id
-	private String codeArticle;
-	private String numReversement;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long idLigneReversement;
+	//private String codeArticle;
+	//private String numReversement;
 	private Long quantiteLigneReversement;
 	private Long PULigneReversement;
-	private String dateQuittanceReversement;
+	private String quittanceReversement;
+	private Date dateQuittanceReversement;
 	private String beneficiaire;
 	private String observation;
-	
+
+	//Liaison à la table Reversement
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Reversement.class)
+	@JoinColumn(name = "numReversement", nullable = false, referencedColumnName = "numReversement")
+	public Reversement numReversement;
+
+	//Liaison à la table Article
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
+	public Article article;
+
 	public LigneReversement() {
 		super();
 	}
 
-	public LigneReversement(String codeArticle, String numReversement, Long quantiteLigneReversement,
-			Long pULigneReversement, String dateQuittanceReversement, String beneficiaire, String observation) {
+	public LigneReversement(Long quantiteLigneReversement, Long pULigneReversement, Date dateQuittanceReversement,
+			String quittanceReversement,String beneficiaire, String observation, Reversement numReversement, Article article) {
 		super();
-		this.codeArticle = codeArticle;
-		this.numReversement = numReversement;
 		this.quantiteLigneReversement = quantiteLigneReversement;
 		PULigneReversement = pULigneReversement;
 		this.dateQuittanceReversement = dateQuittanceReversement;
+		this.quittanceReversement=quittanceReversement;
 		this.beneficiaire = beneficiaire;
 		this.observation = observation;
-	}
-
-	public String getCodeArticle() {
-		return codeArticle;
-	}
-
-	public void setCodeArticle(String codeArticle) {
-		this.codeArticle = codeArticle;
-	}
-
-	public String getNumReversement() {
-		return numReversement;
-	}
-
-	public void setNumReversement(String numReversement) {
 		this.numReversement = numReversement;
+		this.article = article;
+	}
+	
+
+	/**
+	 * @return the idLigneReversement
+	 */
+	public Long getIdLigneReversement() {
+		return idLigneReversement;
 	}
 
+	/**
+	 * @param idLigneReversement the idLigneReversement to set
+	 */
+	public void setIdLigneReversement(Long idLigneReversement) {
+		this.idLigneReversement = idLigneReversement;
+	}
+
+	/**
+	 * @return the quantiteLigneReversement
+	 */
 	public Long getQuantiteLigneReversement() {
 		return quantiteLigneReversement;
 	}
 
+	/**
+	 * @param quantiteLigneReversement the quantiteLigneReversement to set
+	 */
 	public void setQuantiteLigneReversement(Long quantiteLigneReversement) {
 		this.quantiteLigneReversement = quantiteLigneReversement;
 	}
 
+	/**
+	 * @return the pULigneReversement
+	 */
 	public Long getPULigneReversement() {
 		return PULigneReversement;
 	}
 
+	/**
+	 * @param pULigneReversement the pULigneReversement to set
+	 */
 	public void setPULigneReversement(Long pULigneReversement) {
 		PULigneReversement = pULigneReversement;
 	}
 
-	public String getDateQuittanceReversement() {
+	/**
+	 * @return the dateQuittanceReversement
+	 */
+	public Date getDateQuittanceReversement() {
 		return dateQuittanceReversement;
 	}
 
-	public void setDateQuittanceReversement(String dateQuittanceReversement) {
+	/**
+	 * @param dateQuittanceReversement the dateQuittanceReversement to set
+	 */
+	public void setDateQuittanceReversement(Date dateQuittanceReversement) {
 		this.dateQuittanceReversement = dateQuittanceReversement;
 	}
 
+	/**
+	 * @return the quittanceReversement
+	 */
+	public String getQuittanceReversement() {
+		return quittanceReversement;
+	}
+
+	/**
+	 * @param quittanceReversement the quittanceReversement to set
+	 */
+	public void setQuittanceReversement(String quittanceReversement) {
+		this.quittanceReversement = quittanceReversement;
+	}
+
+	/**
+	 * @return the beneficiaire
+	 */
 	public String getBeneficiaire() {
 		return beneficiaire;
 	}
 
+	/**
+	 * @param beneficiaire the beneficiaire to set
+	 */
 	public void setBeneficiaire(String beneficiaire) {
 		this.beneficiaire = beneficiaire;
 	}
 
+	/**
+	 * @return the observation
+	 */
 	public String getObservation() {
 		return observation;
 	}
 
+	/**
+	 * @param observation the observation to set
+	 */
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((PULigneReversement == null) ? 0 : PULigneReversement.hashCode());
-		result = prime * result + ((beneficiaire == null) ? 0 : beneficiaire.hashCode());
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((dateQuittanceReversement == null) ? 0 : dateQuittanceReversement.hashCode());
-		result = prime * result + ((numReversement == null) ? 0 : numReversement.hashCode());
-		result = prime * result + ((observation == null) ? 0 : observation.hashCode());
-		result = prime * result + ((quantiteLigneReversement == null) ? 0 : quantiteLigneReversement.hashCode());
-		return result;
+	/**
+	 * @return the numReversement
+	 */
+	public Reversement getNumReversement() {
+		return numReversement;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LigneReversement other = (LigneReversement) obj;
-		if (PULigneReversement == null) {
-			if (other.PULigneReversement != null)
-				return false;
-		} else if (!PULigneReversement.equals(other.PULigneReversement))
-			return false;
-		if (beneficiaire == null) {
-			if (other.beneficiaire != null)
-				return false;
-		} else if (!beneficiaire.equals(other.beneficiaire))
-			return false;
-		if (codeArticle == null) {
-			if (other.codeArticle != null)
-				return false;
-		} else if (!codeArticle.equals(other.codeArticle))
-			return false;
-		if (dateQuittanceReversement == null) {
-			if (other.dateQuittanceReversement != null)
-				return false;
-		} else if (!dateQuittanceReversement.equals(other.dateQuittanceReversement))
-			return false;
-		if (numReversement == null) {
-			if (other.numReversement != null)
-				return false;
-		} else if (!numReversement.equals(other.numReversement))
-			return false;
-		if (observation == null) {
-			if (other.observation != null)
-				return false;
-		} else if (!observation.equals(other.observation))
-			return false;
-		if (quantiteLigneReversement == null) {
-			if (other.quantiteLigneReversement != null)
-				return false;
-		} else if (!quantiteLigneReversement.equals(other.quantiteLigneReversement))
-			return false;
-		return true;
+	/**
+	 * @param numReversement the numReversement to set
+	 */
+	public void setNumReversement(Reversement numReversement) {
+		this.numReversement = numReversement;
+	}
+
+	/**
+	 * @return the article
+	 */
+	public Article getArticle() {
+		return article;
+	}
+
+	/**
+	 * @param article the article to set
+	 */
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	@Override
 	public String toString() {
-		return "LigneReversement [codeArticle=" + codeArticle + ", numReversement=" + numReversement
-				+ ", quantiteLigneReversement=" + quantiteLigneReversement + ", PULigneReversement="
-				+ PULigneReversement + ", dateQuittanceReversement=" + dateQuittanceReversement + ", beneficiaire="
-				+ beneficiaire + ", observation=" + observation + "]";
+		return "LigneReversementService [idLigneReversement=" + idLigneReversement + ", quantiteLigneReversement="
+				+ quantiteLigneReversement + ", PULigneReversement=" + PULigneReversement
+				+ ", dateQuittanceReversement=" + dateQuittanceReversement + ", beneficiaire=" + beneficiaire
+				+ ", observation=" + observation + ", numReversement=" + numReversement + ", article=" + article
+				+ "]";
 	}
-	
+
 }

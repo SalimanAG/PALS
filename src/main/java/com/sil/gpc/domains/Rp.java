@@ -1,92 +1,107 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@SuppressWarnings("serial")
 @Entity
-public class Rp {
+public class Rp implements Serializable{
 
 	@Id
 	private String idRp;
-	private Long numMagasinier;
-	private Long idUtilisateur;
-	
-	public Rp() {
-		super();
-	}
 
-	public Rp(String idRp, Long numMagasinier, Long idUtilisateur) {
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Magasinier.class)
+	@JoinColumn(name ="numMagasinier", referencedColumnName = "numMagasinier",nullable = false )
+	private Magasinier magasinier;
+
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Utilisateur.class)
+	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
+	private Utilisateur utilisateur;
+	
+	public Rp(String idRp, Magasinier magasinier, Utilisateur utilisateur) {
 		super();
 		this.idRp = idRp;
-		this.numMagasinier = numMagasinier;
-		this.idUtilisateur = idUtilisateur;
+		this.magasinier = magasinier;
+		this.utilisateur = utilisateur;
 	}
 
+	/**
+	 * @return the idRp
+	 */
 	public String getIdRp() {
 		return idRp;
 	}
 
+	/**
+	 * @param idRp the idRp to set
+	 */
 	public void setIdRp(String idRp) {
 		this.idRp = idRp;
 	}
 
-	public Long getNumMagasinier() {
-		return numMagasinier;
+	/**
+	 * @return the magasinier
+	 */
+	public Magasinier getMagasinier() {
+		return magasinier;
 	}
 
-	public void setNumMagasinier(Long numMagasinier) {
-		this.numMagasinier = numMagasinier;
+	/**
+	 * @param magasinier the magasinier to set
+	 */
+	public void setMagasinier(Magasinier magasinier) {
+		this.magasinier = magasinier;
 	}
 
-	public Long getIdUtilisateur() {
-		return idUtilisateur;
+	/**
+	 * @return the utilisateur
+	 */
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setIdUtilisateur(Long idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
+	/**
+	 * @param utilisateur the utilisateur to set
+	 */
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public Rp() {
+		super();
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idRp == null) ? 0 : idRp.hashCode());
-		result = prime * result + ((idUtilisateur == null) ? 0 : idUtilisateur.hashCode());
-		result = prime * result + ((numMagasinier == null) ? 0 : numMagasinier.hashCode());
-		return result;
+		return Objects.hash(idRp, magasinier, utilisateur);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Rp other = (Rp) obj;
-		if (idRp == null) {
-			if (other.idRp != null)
-				return false;
-		} else if (!idRp.equals(other.idRp))
-			return false;
-		if (idUtilisateur == null) {
-			if (other.idUtilisateur != null)
-				return false;
-		} else if (!idUtilisateur.equals(other.idUtilisateur))
-			return false;
-		if (numMagasinier == null) {
-			if (other.numMagasinier != null)
-				return false;
-		} else if (!numMagasinier.equals(other.numMagasinier))
-			return false;
-		return true;
+		return Objects.equals(idRp, other.idRp) && Objects.equals(magasinier, other.magasinier)
+				&& Objects.equals(utilisateur, other.utilisateur);
 	}
 
 	@Override
 	public String toString() {
-		return "Rp [idRp=" + idRp + ", numMagasinier=" + numMagasinier + ", idUtilisateur=" + idUtilisateur + "]";
+		return "Rp [idRp=" + idRp + ", magasinier=" + magasinier + ", utilisateur=" + utilisateur + "]";
 	}
-	
 	
 }

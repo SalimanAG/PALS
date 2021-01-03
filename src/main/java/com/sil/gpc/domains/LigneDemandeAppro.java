@@ -1,93 +1,148 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class LigneDemandeAppro {
+public class LigneDemandeAppro implements Serializable{
 
 	@Id
-	private String codeArticle;
-	private String numDA;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long idLigneDA;
 	private Long quantiteDemandee;
+
+	
+	//Liaison avec Article
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
+	public Article article;
+
+	//Liaison avec Approvisionnement
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = DemandeApprovisionnement.class)
+	@JoinColumn(name = "numDA", referencedColumnName = "numDA",nullable = false)
+	public DemandeApprovisionnement appro;
+
+	//Liaison avec LigneAppro
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = LigneAppro.class,mappedBy = "ligneDA")
+	public List<LigneAppro> ligneDA;
 	
 	public LigneDemandeAppro() {
 		super();
 	}
 
-	public LigneDemandeAppro(String codeArticle, String numDA, Long quantiteDemandee) {
+	public LigneDemandeAppro(Long idLigneDA, Long quantiteDemandee, Article article, DemandeApprovisionnement appro,
+			List<LigneAppro> ligneApproParDA) {
 		super();
-		this.codeArticle = codeArticle;
-		this.numDA = numDA;
+		this.idLigneDA = idLigneDA;
 		this.quantiteDemandee = quantiteDemandee;
+		this.article = article;
+		this.appro = appro;
 	}
 
-	public String getCodeArticle() {
-		return codeArticle;
+	/**
+	 * @return the idLigneDA
+	 */
+	public Long getIdLigneDA() {
+		return idLigneDA;
 	}
 
-	public void setCodeArticle(String codeArticle) {
-		this.codeArticle = codeArticle;
+	/**
+	 * @param idLigneDA the idLigneDA to set
+	 */
+	public void setIdLigneDA(Long idLigneDA) {
+		this.idLigneDA = idLigneDA;
 	}
 
-	public String getNumDA() {
-		return numDA;
-	}
-
-	public void setNumDA(String numDA) {
-		this.numDA = numDA;
-	}
-
+	/**
+	 * @return the quantiteDemandee
+	 */
 	public Long getQuantiteDemandee() {
 		return quantiteDemandee;
 	}
 
+	/**
+	 * @param quantiteDemandee the quantiteDemandee to set
+	 */
 	public void setQuantiteDemandee(Long quantiteDemandee) {
 		this.quantiteDemandee = quantiteDemandee;
 	}
 
+	/**
+	 * @return the article
+	 */
+	public Article getArticle() {
+		return article;
+	}
+
+	/**
+	 * @param article the article to set
+	 */
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
+	/**
+	 * @return the appro
+	 */
+	public DemandeApprovisionnement getAppro() {
+		return appro;
+	}
+
+	/**
+	 * @param appro the appro to set
+	 */
+	public void setAppro(DemandeApprovisionnement appro) {
+		this.appro = appro;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((numDA == null) ? 0 : numDA.hashCode());
-		result = prime * result + ((quantiteDemandee == null) ? 0 : quantiteDemandee.hashCode());
-		return result;
+		return Objects.hash(appro, article, idLigneDA, ligneDA, quantiteDemandee);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		LigneDemandeAppro other = (LigneDemandeAppro) obj;
-		if (codeArticle == null) {
-			if (other.codeArticle != null)
-				return false;
-		} else if (!codeArticle.equals(other.codeArticle))
-			return false;
-		if (numDA == null) {
-			if (other.numDA != null)
-				return false;
-		} else if (!numDA.equals(other.numDA))
-			return false;
-		if (quantiteDemandee == null) {
-			if (other.quantiteDemandee != null)
-				return false;
-		} else if (!quantiteDemandee.equals(other.quantiteDemandee))
-			return false;
-		return true;
+		return Objects.equals(appro, other.appro) && Objects.equals(article, other.article)
+				&& Objects.equals(idLigneDA, other.idLigneDA) && Objects.equals(ligneDA, other.ligneDA)
+				&& Objects.equals(quantiteDemandee, other.quantiteDemandee);
 	}
 
-	@Override
-	public String toString() {
-		return "LigneDemandeAppro [codeArticle=" + codeArticle + ", numDA=" + numDA + ", quantiteDemandee="
-				+ quantiteDemandee + "]";
-	}
-	
-	
+	/**
+	 * @return the ligneApproParDA
+	 */
+	//public List<LigneAppro> getLigneApproParDA() {
+//		return ligneApproParDA;
+//	}
+
+	/**
+	 * @param ligneApproParDA the ligneApproParDA to set
+	 */
+	//public void setLigneApproParDA(List<LigneAppro> ligneApproParDA) {
+//		this.ligneApproParDA = ligneApproParDA;
+//	}
+
+
+
 }

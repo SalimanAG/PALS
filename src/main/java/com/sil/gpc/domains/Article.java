@@ -1,10 +1,21 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@SuppressWarnings("serial")
 @Entity
-public class Article {
+
+public class Article implements Serializable {
 
 	@Id
 	private String codeArticle;
@@ -15,16 +26,67 @@ public class Article {
 	private boolean consommableArticle;
 	private Long prixVenteArticle;
 	private String couleurArticle;
-	private String codeFamille;
-	private String codeUniter;
 	
+	//Migration du code de la famille vers l'article
+	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+	@JoinColumn(name = "famille",referencedColumnName = "codeFamille")
+	private Famille famille;
+
+	//Migration de la clé de l'unité vers l'article
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Uniter.class)
+	@JoinColumn(name = "unite", referencedColumnName = "codeUniter",nullable = false)
+	public Uniter unite;
+
+	// Liaison à LigneAppro
+	//@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneAppro.class,mappedBy = "article")
+	//public List<LigneAppro> articlesApprovisionnes;
+
+	// Liaison à LigneCommande
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneCommande.class,mappedBy = "article")
+	public List<LigneCommande> commandesDunArticle;
+
+	// Liaison à LigneDemmadeAppro
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneDemandeAppro.class,mappedBy = "article")
+	public List<LigneDemandeAppro> DemandesDunArticle;
+
+	// Liaison à LignePlacement
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LignePlacement.class,mappedBy = "article")
+	public List<LignePlacement> placementsDunArticle;
+
+	// Liaison à LigneCommande
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LignePointVente.class,mappedBy = "article")
+	public List<LignePointVente> ventesDunArticle;
+
+	// Liaison à LigneReception
+	//@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneReception.class,mappedBy = "article")
+	//public List<LigneReception> articlesReceptionnes;
+
+	// Liaison à LigneRecollement
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneRecollement.class,mappedBy = "article")
+	public List<LigneRecollement> recollementsDunArticle;
+
+	// Liaison à LigneReversementService
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneReversement.class,mappedBy = "article")
+	public List<LigneReversement> reversementDunArticle;
+
+	// Liaison à Stocker
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Stocker.class,mappedBy = "article")
+	public List<Stocker> stocksDunArticle;
+	
+
+	@OneToMany(targetEntity = PlageNumDispo.class, mappedBy = "article")
+	public List<PlageNumDispo> plagesDispoDunArticle;
+
+	@OneToMany(targetEntity = PlageNumArticle.class, mappedBy = "article")
+	public List<PlageNumArticle> plageDunArticle;
+		
 	public Article() {
 		super();
 	}
 
 	public Article(String codeArticle, String libArticle, boolean stockerArticle, boolean numSerieArticle,
 			boolean livrableArticle, boolean consommableArticle, Long prixVenteArticle, String couleurArticle,
-			String codeFamille, String codeUniter) {
+			Famille famille, Uniter uniter) {
 		super();
 		this.codeArticle = codeArticle;
 		this.libArticle = libArticle;
@@ -34,8 +96,8 @@ public class Article {
 		this.consommableArticle = consommableArticle;
 		this.prixVenteArticle = prixVenteArticle;
 		this.couleurArticle = couleurArticle;
-		this.codeFamille = codeFamille;
-		this.codeUniter = codeUniter;
+		this.famille = famille;
+		this.unite = uniter;
 	}
 
 	public String getCodeArticle() {
@@ -102,87 +164,31 @@ public class Article {
 		this.couleurArticle = couleurArticle;
 	}
 
-	public String getCodeFamille() {
-		return codeFamille;
-	}
-
-	public void setCodeFamille(String codeFamille) {
-		this.codeFamille = codeFamille;
-	}
-
-	public String getCodeUniter() {
-		return codeUniter;
-	}
-
-	public void setCodeUniter(String codeUniter) {
-		this.codeUniter = codeUniter;
-	}
-
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeArticle == null) ? 0 : codeArticle.hashCode());
-		result = prime * result + ((codeFamille == null) ? 0 : codeFamille.hashCode());
-		result = prime * result + ((codeUniter == null) ? 0 : codeUniter.hashCode());
-		result = prime * result + (consommableArticle ? 1231 : 1237);
-		result = prime * result + ((couleurArticle == null) ? 0 : couleurArticle.hashCode());
-		result = prime * result + ((libArticle == null) ? 0 : libArticle.hashCode());
-		result = prime * result + (livrableArticle ? 1231 : 1237);
-		result = prime * result + (numSerieArticle ? 1231 : 1237);
-		result = prime * result + ((prixVenteArticle == null) ? 0 : prixVenteArticle.hashCode());
-		result = prime * result + (stockerArticle ? 1231 : 1237);
-		return result;
+		return Objects.hash(codeArticle, commandesDunArticle, consommableArticle, couleurArticle, famille, libArticle,
+				livrableArticle, numSerieArticle, prixVenteArticle, stockerArticle, unite);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Article other = (Article) obj;
-		if (codeArticle == null) {
-			if (other.codeArticle != null)
-				return false;
-		} else if (!codeArticle.equals(other.codeArticle))
-			return false;
-		if (codeFamille == null) {
-			if (other.codeFamille != null)
-				return false;
-		} else if (!codeFamille.equals(other.codeFamille))
-			return false;
-		if (codeUniter == null) {
-			if (other.codeUniter != null)
-				return false;
-		} else if (!codeUniter.equals(other.codeUniter))
-			return false;
-		if (consommableArticle != other.consommableArticle)
-			return false;
-		if (couleurArticle == null) {
-			if (other.couleurArticle != null)
-				return false;
-		} else if (!couleurArticle.equals(other.couleurArticle))
-			return false;
-		if (libArticle == null) {
-			if (other.libArticle != null)
-				return false;
-		} else if (!libArticle.equals(other.libArticle))
-			return false;
-		if (livrableArticle != other.livrableArticle)
-			return false;
-		if (numSerieArticle != other.numSerieArticle)
-			return false;
-		if (prixVenteArticle == null) {
-			if (other.prixVenteArticle != null)
-				return false;
-		} else if (!prixVenteArticle.equals(other.prixVenteArticle))
-			return false;
-		if (stockerArticle != other.stockerArticle)
-			return false;
-		return true;
+		return Objects.equals(codeArticle, other.codeArticle)
+				&& Objects.equals(commandesDunArticle, other.commandesDunArticle)
+				&& consommableArticle == other.consommableArticle
+				&& Objects.equals(couleurArticle, other.couleurArticle) && Objects.equals(famille, other.famille)
+				&& Objects.equals(libArticle, other.libArticle) && livrableArticle == other.livrableArticle
+				&& numSerieArticle == other.numSerieArticle && Objects.equals(prixVenteArticle, other.prixVenteArticle)
+				&& stockerArticle == other.stockerArticle && Objects.equals(unite, other.unite);
 	}
 
 	@Override
@@ -190,9 +196,12 @@ public class Article {
 		return "Article [codeArticle=" + codeArticle + ", libArticle=" + libArticle + ", stockerArticle="
 				+ stockerArticle + ", numSerieArticle=" + numSerieArticle + ", livrableArticle=" + livrableArticle
 				+ ", consommableArticle=" + consommableArticle + ", prixVenteArticle=" + prixVenteArticle
-				+ ", couleurArticle=" + couleurArticle + ", codeFamille=" + codeFamille + ", codeUniter=" + codeUniter
-				+ "]";
+				+ ", couleurArticle=" + couleurArticle + ", famille=" + famille + ", unite=" + unite
+				+ ", commandesDunArticle=" + commandesDunArticle + ", DemandesDunArticle=" + DemandesDunArticle
+				+ ", placementsDunArticle=" + placementsDunArticle + ", ventesDunArticle=" + ventesDunArticle
+				+ ", recollementsDunArticle=" + recollementsDunArticle + ", reversementDunArticle="
+				+ reversementDunArticle + ", stocksDunArticle=" + stocksDunArticle + ", plagesDispoDunArticle="
+				+ plagesDispoDunArticle + ", plageDunArticle=" + plageDunArticle + "]";
 	}
-	
-	
+
 }

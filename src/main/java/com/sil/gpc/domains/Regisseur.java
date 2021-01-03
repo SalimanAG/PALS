@@ -1,94 +1,121 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@SuppressWarnings("serial")
 @Entity
-public class Regisseur {
+public class Regisseur implements Serializable{
 
 	@Id
 	private String idRegisseur;
-	private Long numMagasinier;
-	private Long idUtilisateur;
+
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Magasinier.class)
+	@JoinColumn(name ="numMagasinier", referencedColumnName = "numMagasinier",nullable = false )
+	private Magasinier magasinier;
+
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Utilisateur.class)
+	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
+	private Utilisateur utilisateur;
+	
+	//**********************************Liste des points de vente
+	// Liaison à la table Recollement
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Recollement.class, mappedBy = "regisseur")
+	public List<Recollement> recollementsParRegisseur;
+
+	// Liaison à la table PointVente
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = PointVente.class, mappedBy = "regisseur")
+	public List<PointVente> pointsParRegisseur;
+	
 	
 	public Regisseur() {
 		super();
 	}
 
-	public Regisseur(String idRegisseur, Long numMagasinier, Long idUtilisateur) {
+	public Regisseur(String idRegisseur, Magasinier magasinier, Utilisateur utilisateur) {
 		super();
 		this.idRegisseur = idRegisseur;
-		this.numMagasinier = numMagasinier;
-		this.idUtilisateur = idUtilisateur;
+		this.magasinier = magasinier;
+		this.utilisateur = utilisateur;
 	}
 
+	/**
+	 * @return the idRegisseur
+	 */
 	public String getIdRegisseur() {
 		return idRegisseur;
 	}
 
+	/**
+	 * @param idRegisseur the idRegisseur to set
+	 */
 	public void setIdRegisseur(String idRegisseur) {
 		this.idRegisseur = idRegisseur;
 	}
 
-	public Long getNumMagasinier() {
-		return numMagasinier;
+	/**
+	 * @return the magasinier
+	 */
+	public Magasinier getMagasinier() {
+		return magasinier;
 	}
 
-	public void setNumMagasinier(Long numMagasinier) {
-		this.numMagasinier = numMagasinier;
+	/**
+	 * @param magasinier the magasinier to set
+	 */
+	public void setMagasinier(Magasinier magasinier) {
+		this.magasinier = magasinier;
 	}
 
-	public Long getIdUtilisateur() {
-		return idUtilisateur;
+	/**
+	 * @return the utilisateur
+	 */
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setIdUtilisateur(Long idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
+	/**
+	 * @param utilisateur the utilisateur to set
+	 */
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idRegisseur == null) ? 0 : idRegisseur.hashCode());
-		result = prime * result + ((idUtilisateur == null) ? 0 : idUtilisateur.hashCode());
-		result = prime * result + ((numMagasinier == null) ? 0 : numMagasinier.hashCode());
-		return result;
+		return Objects.hash(idRegisseur, magasinier, utilisateur);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Regisseur other = (Regisseur) obj;
-		if (idRegisseur == null) {
-			if (other.idRegisseur != null)
-				return false;
-		} else if (!idRegisseur.equals(other.idRegisseur))
-			return false;
-		if (idUtilisateur == null) {
-			if (other.idUtilisateur != null)
-				return false;
-		} else if (!idUtilisateur.equals(other.idUtilisateur))
-			return false;
-		if (numMagasinier == null) {
-			if (other.numMagasinier != null)
-				return false;
-		} else if (!numMagasinier.equals(other.numMagasinier))
-			return false;
-		return true;
+		return Objects.equals(idRegisseur, other.idRegisseur) && Objects.equals(magasinier, other.magasinier)
+				&& Objects.equals(utilisateur, other.utilisateur);
 	}
 
 	@Override
 	public String toString() {
-		return "Regisseur [idRegisseur=" + idRegisseur + ", numMagasinier=" + numMagasinier + ", idUtilisateur="
-				+ idUtilisateur + "]";
+		return "Regisseur [idRegisseur=" + idRegisseur + ", magasinier=" + magasinier + ", utilisateur=" + utilisateur
+				+ "]";
 	}
 	
-	
-	
+
 }
