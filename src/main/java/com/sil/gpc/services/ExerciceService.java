@@ -46,7 +46,7 @@ public class ExerciceService {
 			this.repo.deleteById(id);
 	}
 	
-	public Optional<Exercice> getbyId(String id){
+	public Optional<Exercice> getById(String id){
 		
 		return this.repo.findById(id);
 	}
