@@ -40,9 +40,10 @@ public class PrixImmeubleService {
        }
     
     // Supprimer 
-    public void delete(Long  id) {
-    	if(this.prixImmeubleRepository.existsById(id))
+    public boolean delete(Long  id) {
             this.prixImmeubleRepository.deleteById(id);
+    	
+    	if(this.prixImmeubleRepository.existsById(id)) return false; else return true;
     }
     
     // 

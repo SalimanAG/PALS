@@ -34,9 +34,10 @@ public class UniterService {
     }
     
  // Supprimer  
-    public void delete(String id) {
-    	if(this.uniterRepository.existsById(id))
+    public boolean delete(String id) {
          this.uniterRepository.deleteById(id);
+    	
+    	if(this.uniterRepository.existsById(id)) return false; else return true;
     }   
     
  // Renvoie un Uniter par son code

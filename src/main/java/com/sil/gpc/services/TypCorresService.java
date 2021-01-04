@@ -36,9 +36,10 @@ public class TypCorresService {
     
     
     // Supprimer  
-    public void delete(String id) {
-    	if(this.typCorresRepository.existsById(id))
+    public boolean delete(String id) {
          this.typCorresRepository.deleteById(id);
+    	
+    	if(this.typCorresRepository.existsById(id)) return false; else return true;
     }   
     
     // 

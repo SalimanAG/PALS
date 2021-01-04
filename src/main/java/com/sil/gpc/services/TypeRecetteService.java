@@ -37,9 +37,10 @@ public class TypeRecetteService {
     }
     
  // Supprimer un TypeRecette
-    public void delete(String id) {
-    	if(this.typeRecetteRepository.existsById(id))
+    public boolean delete(String id) {
 			this.typeRecetteRepository.deleteById(id);
+    	
+    	if(this.typeRecetteRepository.existsById(id)) return false; else return true;
     }   
     
  // Renvoie un TypeRecette par son code

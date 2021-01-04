@@ -41,9 +41,10 @@ public class RecollementService {
     
    
     // Supprimer 
-    public void delete(String  id) {
-    	if(this.recollementRepository.existsById(id))
+    public boolean delete(String  id) {
             this.recollementRepository.deleteById(id);
+    	
+    	if(this.recollementRepository.existsById(id)) return false; else return true;
 
     } 
     

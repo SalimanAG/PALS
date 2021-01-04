@@ -39,9 +39,10 @@ public class UtilisateurService {
        }
     
     // Supprimer
-    public void delete(Long  id) {
-    	if(this.userRepository.existsById(id))
+    public boolean delete(Long  id) {
             this.userRepository.deleteById(id);
+            
+    	if(this.userRepository.existsById(id)) return false; else return true;
     }   
 
     

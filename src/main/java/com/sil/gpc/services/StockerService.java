@@ -41,9 +41,10 @@ public class StockerService {
        }
     
     // Supprimer 
-    public void delete(Long id) {
-    	if(this.stockerRepository.existsById(id))
+    public boolean delete(Long id) {
             this.stockerRepository.deleteById(id);
+    	
+    	if(this.stockerRepository.existsById(id)) return false; else return true;
     }   
 
     

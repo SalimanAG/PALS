@@ -42,9 +42,9 @@ public class PointVenteService {
     
     
     // Supprimer 
-    public void delete(String  id) {
-    	if(this.pointVenteRepository.existsById(id))
+    public boolean delete(String  id) {
             this.pointVenteRepository.deleteById(id);
+    	if(this.pointVenteRepository.existsById(id)) return false; else return true;
     }
     
     // Liste 
