@@ -40,13 +40,15 @@ public class ExerciceService {
 		return null;
 	}
 	
-	public void delete(String id) {
+	public boolean delete(String id) {
 		
-		if(this.repo.existsById(id))
+		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
+		
+		return !this.repo.existsById(id);
 	}
 	
-	public Optional<Exercice> getbyId(String id){
+	public Optional<Exercice> getById(String id){
 		
 		return this.repo.findById(id);
 	}

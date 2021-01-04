@@ -44,10 +44,12 @@ public class EcheanceService {
 		return null;
 	}
 	
-	public void delete(Long id) {
+	public boolean delete(Long id) {
 		
-		if(this.repo.existsById(id))
+		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
+		
+		return !this.repo.existsById(id);
 	}
 	
 	public Optional<Echeance> getById(Long id){

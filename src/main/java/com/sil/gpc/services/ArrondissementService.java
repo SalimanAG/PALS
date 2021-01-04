@@ -39,12 +39,15 @@ public class ArrondissementService {
 		
 	}
 	
-	public void delete(String id) {
+	public boolean delete(String id) {
 		
 		Arrondissement entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			this.repo.deleteById(id);
 		}
+		
+		return !this.repo.existsById(id);
+		
 	}
 	
 	public Optional<Arrondissement> getById(String id){

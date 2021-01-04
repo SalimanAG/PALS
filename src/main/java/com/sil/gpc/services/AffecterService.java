@@ -41,12 +41,13 @@ public class AffecterService {
 		return null;
 	}
 	
-	public void delete(Long id) {
+	public boolean delete(Long id) {
 		
 		Affecter entiter = this.repos.getOne(id);
 		if(entiter != null) {
 			this.repos.deleteById(id);
 		}
+		return !this.repos.existsById(id);
 	}
 	
 	public Optional<Affecter> getByid(Long id){

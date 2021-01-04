@@ -41,10 +41,12 @@ public class CorrespondantService {
 		return null;
 	}
 	
-	public void delete(String id) {
+	public boolean delete(String id) {
 		
-		if(this.repo.existsById(id))
+		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
+		
+		return !this.repo.existsById(id);
 	}
 	
 	public Optional<Correspondant> getById(String id){

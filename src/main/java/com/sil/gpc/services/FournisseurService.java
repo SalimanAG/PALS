@@ -40,10 +40,12 @@ public class FournisseurService {
 		return null;
 	}
 	
-	public void delete (String id) {
+	public boolean delete (String id) {
 		
 		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
+		
+		return !this.repo.existsById(id);
 	}
 	
 	public Optional<Fournisseur> getById(String id){

@@ -37,12 +37,14 @@ public class CaisseService {
 		return null;		
 	}
 	
-	public void delete(String id) {
+	public boolean delete(String id) {
 		
 		Caisse entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			this.repo.deleteById(id);
 		}
+		
+		return !this.repo.existsById(id);
 	}
 	
 	public Optional<Caisse> getById(String id){
