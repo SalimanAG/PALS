@@ -37,7 +37,7 @@ public class Reception {
 		this.numReception = numReception;
 		this.observation = observation;
 		DateReception = dateReception;
-		this.lignesParReception = lignesParReception;
+		this.lignesParReception = lignesParReception;  
 	}
 
 	public String getNumReception() {

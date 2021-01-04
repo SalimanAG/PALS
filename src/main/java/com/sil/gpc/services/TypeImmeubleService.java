@@ -4,6 +4,7 @@ import com.sil.gpc.domains.TypeImmeuble;
 
 import com.sil.gpc.repositories.TypeImmeubleRepository;
 import java.util.List;
+import java.util.Optional;
 
 public class TypeImmeubleService {
 
@@ -14,17 +15,8 @@ public class TypeImmeubleService {
         this.typeImmeubleRepository = typeImmeubleRepository;
     }
 
-    // Liste 
-    public List<TypeImmeuble> findAll() {
-        return  this.typeImmeubleRepository.findAll();
-    }
     
-    // Renvoie 
-    public TypeImmeuble findById(String codeTypIm) {
-        return this.typeImmeubleRepository.getOne(codeTypIm);
-    }
-    
-    // Sauvegarder
+ // Sauvegarder
     public TypeImmeuble save(TypeImmeuble Im) {
         return   this.typeImmeubleRepository.save(Im);
     }
@@ -34,23 +26,42 @@ public class TypeImmeubleService {
     	
     	TypeImmeuble typImmod = this.typeImmeubleRepository.getOne(codeTypIm);
 		if(typImmod != null) {
-			typImmod.setCodeTypIm(typImmod.getCodeTypIm());
-			typImmod.setLibTypIm(typImmod.getLibTypIm());
+			typImmod.setCodeTypIm(TypI.getCodeTypIm());
+			typImmod.setLibTypIm(TypI.getLibTypIm());
 			
 			return this.typeImmeubleRepository.save(typImmod);
     }
 		return null;
     }
     
-   //supprimer
-    public void delete(TypeImmeuble Im) {;
-         this.typeImmeubleRepository.delete(Im);
+    // Supprimer un TypeImmeuble
+    public void delete(String id) {
+    	if(this.typeImmeubleRepository.existsById(id))
+			this.typeImmeubleRepository.deleteById(id);
     }   
     
-    //liste par libelle
-    public List<TypeImmeuble> findBylibelle(String libeTypIm){
+    // Typeimmeuble par Id
+    public Optional <TypeImmeuble> findById(String id) {
+        return this.typeImmeubleRepository.findById(id);
+    }
+    
+    
+    // Liste de tous les TypeImmeuble
+    public List<TypeImmeuble> getAll() {
+        return  this.typeImmeubleRepository.findAll();
+    }
+    
+   
+    //liste par code
+    public List<TypeImmeuble> findByCodeTypeImmeuble(String CodeTypeImmeuble){
 		
-		return this.typeImmeubleRepository.findByLibeTypIm(libeTypIm);
+		return this.typeImmeubleRepository.findByCodeTypeImmeuble(CodeTypeImmeuble);
+	}
+    
+  //liste par libelle
+    public List<TypeImmeuble> findByLibelleTypeImmeuble(String libelleTypImmeuble){
+		
+		return this.typeImmeubleRepository.findByLibelleTypImmeuble(libelleTypImmeuble);
 	}
 
 }

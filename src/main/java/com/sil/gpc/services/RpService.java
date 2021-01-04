@@ -1,10 +1,10 @@
 package com.sil.gpc.services;
 
-
 import com.sil.gpc.domains.Rp;
 
 import com.sil.gpc.repositories.RpRepository;
 import java.util.List;
+import java.util.Optional;
 
 public class RpService {
 
@@ -14,30 +14,49 @@ public class RpService {
         this.rpRepository = rpRepository;
     }
 
-    // Liste Uniter
-    public List<Rp> findAll() {
+    
+    // Sauvegarder
+    public Rp save(Rp receptPercep) {
+        return   this.rpRepository.save(receptPercep);
+    }
+    
+  //Editer
+    public Rp edit(String idRp, Rp recepPercept) {
+       	
+    	Rp rpmod = this.rpRepository.getOne(idRp);
+   		if(rpmod != null) {
+   			rpmod.setIdRp(recepPercept.getIdRp());
+   			rpmod.setMagasinier(recepPercept.getMagasinier());
+   			rpmod.setUtilisateur(recepPercept.getUtilisateur());
+   			return this.rpRepository.save(rpmod);
+       }
+   		return null;
+       }
+    
+    // Supprimer 
+    public void delete(String  id) {
+    	if(this.rpRepository.existsById(id))
+            this.rpRepository.deleteById(id);
+    }   
+    
+    // 
+    public Optional<Rp> findById(String idRp) {
+        return this.rpRepository.findById(idRp);
+    }
+    
+    // Liste 
+    public List<Rp> getAll() {
         return  this.rpRepository.findAll();
     }
     
-    // Renvoie un Uniter par son code
-    public Rp findById(String idRp) {
-        return this.rpRepository.getOne(idRp);
-    }
     
-    // Sauvegarder un Uniter
-    public Rp save(Rp receptPercep) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.rpRepository.save(receptPercep);
-    }
+    //
+    public List<Rp> findByIdrp(String idRp){
+		
+		return this.rpRepository.findByIdRp(idRp);
+	}
+
     
-    // Editer un Uniter
-    public Rp edit(Rp receptPercep) {
-        return   this.rpRepository.save(receptPercep);
-    }
-    
-    // Supprimer un Uniter
-    public void delete(Rp  receptPercep) {
-         this.rpRepository.delete(receptPercep);
-    }   
+   
 
 }

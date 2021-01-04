@@ -1,10 +1,12 @@
 package com.sil.gpc.services;
 
-
 import com.sil.gpc.domains.Reception;
 
 import com.sil.gpc.repositories.ReceptionRepository;
+
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class ReceptionService {
 
@@ -14,30 +16,62 @@ public class ReceptionService {
         this.receptionRepository = receptionRepository;
     }
 
-    // Liste Uniter
-    public List<Reception> findAll() {
+    
+    // Sauvegarder 
+    public Reception save(Reception rep) {
+        return   this.receptionRepository.save(rep);
+    }
+    
+    // Editer 
+    public Reception edit(String numReception, Reception recept) {
+       	
+    	Reception receptmod = this.receptionRepository.getOne(numReception);
+   		if(receptmod != null) {
+   			receptmod.setNumReception(recept.getNumReception());
+   			receptmod.setObservation(recept.getObservation());
+   			receptmod.setDateReception(recept.getDateReception());
+   			return this.receptionRepository.save(receptmod);
+       }
+   		return null;
+       }
+    
+    // Supprimer 
+    public void delete(String  id) {
+    	if(this.receptionRepository.existsById(id))
+            this.receptionRepository.deleteById(id);
+    }   
+    
+    // 
+    public Optional<Reception> findById(String numReception) {
+        return this.receptionRepository.findById(numReception);
+    }
+    
+    
+    // Liste 
+    public List<Reception> getAll() {
         return  this.receptionRepository.findAll();
     }
     
-    // Renvoie un Uniter par son code
-    public Reception findById(String numReception) {
-        return this.receptionRepository.getOne(numReception);
-    }
+ //
+    public List<Reception> findByNumReception(String NumReception){
+		
+		return this.receptionRepository.findByNumReception(NumReception);
+	}
     
-    // Sauvegarder un Uniter
-    public Reception save(Reception rep) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.receptionRepository.save(rep);
-    }
+    //
+    public List<Reception> findByObservation(String Observation ){
+		
+		return this.receptionRepository.findByObservation(Observation);
+	}
     
-    // Editer un Uniter
-    public Reception edit(Reception rep) {
-        return   this.receptionRepository.save(rep);
-    }
+    //
+    public List<Reception> findByDateReception(Date DateReception ){
+		
+		return this.receptionRepository.findByDateReception(DateReception);
+	}
+
     
-    // Supprimer un Uniter
-    public void delete(Reception  rep) {
-         this.receptionRepository.delete(rep);
-    }   
+    
+   
 
 }

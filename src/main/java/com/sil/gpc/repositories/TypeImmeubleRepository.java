@@ -9,6 +9,9 @@ import com.sil.gpc.domains.TypeImmeuble;
 
 @Repository
 public interface TypeImmeubleRepository extends JpaRepository<TypeImmeuble, String> {
-	public List<TypeImmeuble> findByLibeTypIm(String libTypIM);
+	
+	public List<TypeImmeuble> findByCodeTypeImmeuble(String CodeTypeImmeuble);
+	
+	public List<TypeImmeuble> findByLibelleTypImmeuble(String libelleTypImmeuble);
 
 }

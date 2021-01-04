@@ -1,10 +1,13 @@
 package com.sil.gpc.services;
 
 
+import com.sil.gpc.domains.Article;
+import com.sil.gpc.domains.Magasin;
 import com.sil.gpc.domains.Stocker;
 
 import com.sil.gpc.repositories.StockerRepository;
 import java.util.List;
+import java.util.Optional;
 
 public class StockerService {
 
@@ -15,30 +18,90 @@ public class StockerService {
         this.stockerRepository = stockerRepository;
     }
 
-    // Liste Uniter
-    public List<Stocker> findAll() {
+    // Sauvegarder 
+    public Stocker save(Stocker stock) {
+        return   this.stockerRepository.save(stock);
+    }
+    
+    //Editer
+    public Stocker edit(Long idStocker, Stocker stock) {
+       	
+    	Stocker stockmod = this.stockerRepository.getOne(idStocker);
+   		if(stockmod != null) {
+   			stockmod.setIdStocker(stock.getIdStocker());
+   			stockmod.setQuantiterStocker(stock.getQuantiterStocker());
+   			stockmod.setStockDeSecuriter(stock.getStockDeSecuriter());
+   			stockmod.setstockMinimal(stock.getStockMinimal());
+   			stockmod.setCmup(stock.getCmup());
+   			stockmod.setArticle(stock.getArticle());
+   			stockmod.setMagasin(stock.getMagasin());
+   			return this.stockerRepository.save(stockmod);
+       }
+   		return null;
+       }
+    
+    // Supprimer 
+    public void delete(Long id) {
+    	if(this.stockerRepository.existsById(id))
+            this.stockerRepository.deleteById(id);
+    }   
+
+    
+    //
+    public Optional<Stocker> findById(Long idStocker) {
+        return this.stockerRepository.findById(idStocker);
+    }
+    
+    
+    // Liste 
+    public List<Stocker> getAll() {
         return  this.stockerRepository.findAll();
     }
     
-    // Renvoie un Uniter par son code
-    public Stocker findById(Long idStocker) {
-        return this.stockerRepository.getOne(idStocker);
-    }
+    //
+    public List<Stocker> findByIdStocker(Long IdStocker){
+		
+		return this.stockerRepository.findByIdStocker(IdStocker);
+	}
     
-    // Sauvegarder un Uniter
-    public Stocker save(Stocker stock) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.stockerRepository.save(stock);
-    }
+    //
+    public List<Stocker> findByQuantiterStocker(Long QuantiterStocker){
+		
+		return this.stockerRepository.findByQuantiterStocker(QuantiterStocker);
+	}
     
-    // Editer un Uniter
-    public Stocker edit(Stocker stock) {
-        return   this.stockerRepository.save(stock);
-    }
+    //
+    public List<Stocker> findByStockDeSecuriter(Long StockDeSecuriter){
+		
+		return this.stockerRepository.findByStockDeSecuriter(StockDeSecuriter);
+	}
     
-    // Supprimer un Uniter
-    public void delete(Stocker stock) {
-         this.stockerRepository.delete(stock);
-    }   
+    //
+    public List<Stocker> findByStockMinimal(Long StockMinimal){
+		
+		return this.stockerRepository.findByStockMinimal(StockMinimal);
+	}
+    
+    //
+    public List<Stocker> findByCmup(Long Cmup){
+		
+		return this.stockerRepository.findByCmup(Cmup);
+	}
+    
+    //
+    public List<Stocker> findByStockerArticle(Article art){
+		
+		return this.stockerRepository.findByStockerArticle(art);
+	}
+    
+    //
+    public List<Stocker> findByStockerMagasin(Magasin mag){
+		
+		return this.stockerRepository.findByStockerMagasin(mag);
+	}
 
+    
+   
+    
+   
 }

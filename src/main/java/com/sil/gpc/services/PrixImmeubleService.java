@@ -1,10 +1,14 @@
 package com.sil.gpc.services;
 
 
+import com.sil.gpc.domains.Immeuble;
 import com.sil.gpc.domains.PrixImmeuble;
 
 import com.sil.gpc.repositories.PrixImmeubleRepository;
+
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class PrixImmeubleService {
 
@@ -14,31 +18,67 @@ public class PrixImmeubleService {
     public PrixImmeubleService(PrixImmeubleRepository prixImmeubleRepository) {
         this.prixImmeubleRepository = prixImmeubleRepository;
     }
-
-    // Liste Uniter
-    public List<PrixImmeuble> findAll() {
+    
+    // Sauvegarder 
+    public PrixImmeuble save(PrixImmeuble prixIm) {
+        return   this.prixImmeubleRepository.save(prixIm);
+    }
+    
+    // Editer 
+    public PrixImmeuble edit(Long idPrixImmeuble, PrixImmeuble prixIm) {
+       	
+    	PrixImmeuble pimod = this.prixImmeubleRepository.getOne(idPrixImmeuble);
+   		if(pimod != null) {
+   			pimod.setIdPrixIm(prixIm.getIdPrixIm());
+   			pimod.setDateDebPrixIm(prixIm.getDateDebPrixIm());
+   			pimod.setDateFinPrixIm(prixIm.getDateFinPrixIm());
+   			pimod.setPrixIm(prixIm.getIdPrixIm());
+   			pimod.setImmeuble(prixIm.getImmeuble());			
+   			return this.prixImmeubleRepository.save(pimod);
+       }
+   		return null;
+       }
+    
+    // Supprimer 
+    public void delete(Long  id) {
+    	if(this.prixImmeubleRepository.existsById(id))
+            this.prixImmeubleRepository.deleteById(id);
+    }
+    
+    // 
+    public Optional<PrixImmeuble> findById(Long id) {
+        return this.prixImmeubleRepository.findById(id);
+    }
+   
+    // Liste 
+    public List<PrixImmeuble> getAll() {
         return  this.prixImmeubleRepository.findAll();
     }
     
-    // Renvoie un Service par son code
-    public PrixImmeuble findById(Long idPrixIm) {
-        return this.prixImmeubleRepository.getOne(idPrixIm);
+    //
+    public List<PrixImmeuble> findByDateDebPrixIm(Date DateDebPrixIm )
+    {
+    	return this.prixImmeubleRepository.findByDateDebPrixIm(DateDebPrixIm);
     }
     
-    // Sauvegarder un Service
-    public PrixImmeuble save(PrixImmeuble prixIm) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.prixImmeubleRepository.save(prixIm);
+    //
+    public List<PrixImmeuble> findByDateFinPrixIm(Date DateFinPrixIm )
+    {
+    	return this.prixImmeubleRepository.findByDateFinPrixIm(DateFinPrixIm);
     }
     
-    // Editer un Service
-    public PrixImmeuble edit(PrixImmeuble prixIm) {
-        return   this.prixImmeubleRepository.save(prixIm);
+    //
+    public List<PrixImmeuble> findByPrixIm(Long PrixIm )
+    {
+    	return this.prixImmeubleRepository.findByPrixIm(PrixIm);
     }
-    
-    // Supprimer un Service
-    public void delete(PrixImmeuble prixIm) {;
-         this.prixImmeubleRepository.delete(prixIm);
-    }   
+   
+    //
+    public List<PrixImmeuble> findByImeublem(Immeuble im )
+    {
+    	return this.prixImmeubleRepository.findByImmeuble(im);
+    }
+   
+   
 
 }

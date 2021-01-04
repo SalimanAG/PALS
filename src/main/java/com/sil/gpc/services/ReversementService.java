@@ -1,10 +1,12 @@
 package com.sil.gpc.services;
 
-
 import com.sil.gpc.domains.Reversement;
 
 import com.sil.gpc.repositories.ReversementRepository;
+
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class ReversementService {
 
@@ -13,31 +15,56 @@ public class ReversementService {
     public ReversementService(ReversementRepository reversementRepository) {
         this.reversementRepository = reversementRepository;
     }
+    
+ // Sauvegarder 
+    public Reversement save(Reversement rev) {
+        return   this.reversementRepository.save(rev);
+    }
+    
+    //Editer
+    public Reversement edit(String numReversement, Reversement revers) {
+       	
+    	Reversement revertmod = this.reversementRepository.getOne(numReversement);
+   		if(revertmod != null) {
+   			revertmod.setNumReversement(revers.getNumReversement());
+   			revertmod.setDateVersement(revers.getDateVersement());
+   			return this.reversementRepository.save(revertmod);
+       }
+   		return null;
+       }
+    
+    
+    // Supprimer 
+    public void delete(String  id) {
+    	if(this.reversementRepository.existsById(id))
+            this.reversementRepository.deleteById(id);
+    }   
+    
+    // 
+    public Optional<Reversement> findById(String numReversement) {
+        return this.reversementRepository.findById(numReversement);
+    }
+    
 
-    // Liste Uniter
-    public List<Reversement> findAll() {
+    // Liste 
+    public List<Reversement> getAll() {
         return  this.reversementRepository.findAll();
     }
     
-    // Renvoie un Uniter par son code
-    public Reversement findById(String numReversement) {
-        return this.reversementRepository.getOne(numReversement);
-    }
+    //
+    public List<Reversement> findByNumReversement(String NumReversement){
+		
+		return this.reversementRepository.findByNumReversement(NumReversement);
+	}
+
+    //
+    public List<Reversement> findByDateReversement(Date DateReversement){
+		
+		return this.reversementRepository.findByDateReversement(DateReversement);
+	}
     
-    // Sauvegarder un Uniter
-    public Reversement save(Reversement rev) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.reversementRepository.save(rev);
-    }
     
-    // Editer un Uniter
-    public Reversement edit(Reversement rev) {
-        return   this.reversementRepository.save(rev);
-    }
+ 
     
-    // Supprimer un Uniter
-    public void delete(Reversement  rev) {
-         this.reversementRepository.delete(rev);
-    }   
 
 }

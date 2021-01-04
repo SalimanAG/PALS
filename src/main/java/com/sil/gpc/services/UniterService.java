@@ -1,9 +1,10 @@
 package com.sil.gpc.services;
 
-import com.sil.gpc.domains.Uniter;
 
+import com.sil.gpc.domains.Uniter;
 import com.sil.gpc.repositories.UniterRepository;
 import java.util.List;
+import java.util.Optional;
 
 public class UniterService {
 
@@ -14,19 +15,8 @@ public class UniterService {
         this.uniterRepository = uniterRepository;
     }
 
-    // Liste Uniter
-    public List<Uniter> findAll() {
-        return  this.uniterRepository.findAll();
-    }
-    
-    // Renvoie un Uniter par son code
-    public Uniter findById(String codeUniter) {
-        return this.uniterRepository.getOne(codeUniter);
-    }
-    
-    // Sauvegarder un Uniter
+ // Sauvegarder un Uniter
     public Uniter save(Uniter uniter) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
         return   this.uniterRepository.save(uniter);
     }
     
@@ -35,23 +25,43 @@ public class UniterService {
     	
     	Uniter unitemod = this.uniterRepository.getOne(codeUniter);
 		if(unitemod != null) {
-			unitemod.setCodeUniter(unitemod.getCodeUniter());
-			unitemod.setLibUniter(unitemod.getLibUniter());
+			unitemod.setCodeUniter(uniter.getCodeUniter());
+			unitemod.setLibUniter(uniter.getLibUniter());
 			
 			return this.uniterRepository.save(unitemod);
     }
 		return null;
     }
     
-    // Supprimer un Uniter
-    public void delete(Uniter uniter) {
-         this.uniterRepository.delete(uniter);
+ // Supprimer  
+    public void delete(String id) {
+    	if(this.uniterRepository.existsById(id))
+         this.uniterRepository.deleteById(id);
     }   
     
-    //liste par libelle
-    public List<Uniter> findBylibelle(String libUniter){
+ // Renvoie un Uniter par son code
+    public Optional <Uniter> findById(String id) {
+        return this.uniterRepository.findById(id);
+    }
+    
+    
+    // Liste Uniter
+    public List<Uniter> getAll() {
+        return  this.uniterRepository.findAll();
+    }
+    
+    
+  //liste par code
+    public List<Uniter> findByCodeUniter(String CodeUniter){
 		
-		return this.uniterRepository.findBylibUniter(libUniter);
+		return this.uniterRepository.findByCodeUniter(CodeUniter);
 	}
+    
+  //liste par libelle
+    public List<Uniter> findByLibelleUniter(String LibelleUniter){
+		
+		return this.uniterRepository.findByLibelleUniter(LibelleUniter);
+	}
+    
 
 }

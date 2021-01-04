@@ -4,6 +4,7 @@ package com.sil.gpc.services;
 import com.sil.gpc.domains.Service;
 import com.sil.gpc.repositories.ServiceRepository;
 import java.util.List;
+import java.util.Optional;
 
 public class ServiceService {
 
@@ -14,29 +15,20 @@ public class ServiceService {
         this.serviceRepository = serviceRepository;
     }
 
-    // Liste Uniter
-    public List<Service> findAll() {
-        return  this.serviceRepository.findAll();
-    }
     
-    // Renvoie un Service par son code
-    public Service findById(String codeService) {
-        return this.serviceRepository.getOne(codeService);
-    }
-    
-    // Sauvegarder un Service
+ // Sauvegarder un Service
     public Service save(Service service) {
     	//quartier.setCodeQuartier(quartier.getCodeQuartier());
         return   this.serviceRepository.save(service);
     }
     
     // Editer un Service
- public Service edit(String codeService,Service sev) {
+ public Service edit(String codeService, Service sev) {
     	
     	Service sevmod = this.serviceRepository.getOne(codeService);
 		if(sevmod != null) {
-			sevmod.setCodeService(sevmod.getCodeService());
-			sevmod.setLibService(sevmod.getLibService());
+			sevmod.setCodeService(sev.getCodeService());
+			sevmod.setLibService(sev.getLibService());
 			
 			return this.serviceRepository.save(sevmod);
     }
@@ -44,17 +36,34 @@ public class ServiceService {
     }
  
     
-    // Supprimer un Service
-    public void delete(Service service) {;
-         this.serviceRepository.delete(service);
-    }   
+ // Supprimer un Service
+ public void delete(String id) {
+	 if(this.serviceRepository.existsById(id))
+         this.serviceRepository.deleteById(id);
+ }   
+ 
+ // Renvoie un Service par son id
+ public Optional <Service> findById(String id) {
+     return this.serviceRepository.findById(id);
+ }
+ 
+ 
+ 
+    // Liste 
+    public List<Service> getAll() {
+        return  this.serviceRepository.findAll();
+    }
     
-    
-    ////
-    //liste par libelle
-    public List<Service> findBylibelle(String libService){
+  //liste par code
+    public List<Service> findByCodeService(String CodeService){
 		
-		return this.serviceRepository.findByLibService(libService);
+		return this.serviceRepository.findByCodeService(CodeService);
 	}
-
+    
+  //liste par libelle
+    public List<Service> findByLibelleServicer(String LibelleService){
+		
+		return this.serviceRepository.findByLibelleService(LibelleService);
+	}
+    
 }

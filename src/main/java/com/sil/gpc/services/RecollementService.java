@@ -1,10 +1,14 @@
 package com.sil.gpc.services;
 
-
+import com.sil.gpc.domains.Exercice;
+import com.sil.gpc.domains.Magasin;
 import com.sil.gpc.domains.Recollement;
-
+import com.sil.gpc.domains.Regisseur;
 import com.sil.gpc.repositories.RecollementRepository;
+
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class RecollementService {
 
@@ -13,31 +17,81 @@ public class RecollementService {
     public RecollementService(RecollementRepository recollementRepository) {
         this.recollementRepository = recollementRepository;
     }
+    
+    // Sauvegarder 
+    public Recollement save(Recollement recolle) {
+        return   this.recollementRepository.save(recolle);
+    }
+    
+    //Editer
+    public Recollement edit(String numRecollement, Recollement recoll) {
+       	
+	 Recollement receptmod = this.recollementRepository.getOne(numRecollement);
+   		if(receptmod != null) {
+   			receptmod.setNumRecollement(recoll.getNumRecollement());
+   			receptmod.setDescriptionRecollement(recoll.getDescriptionRecollement());
+   			receptmod.setDateRecollement(recoll.getDateRecollement());
+   			receptmod.setMagasin(recoll.getMagasin());
+   			receptmod.setRegisseur(recoll.getRegisseur());
+   			receptmod.setExercice(recoll.getExercice());
+   			return this.recollementRepository.save(receptmod);
+       }
+   		return null;
+       }
+    
+   
+    // Supprimer 
+    public void delete(String  id) {
+    	if(this.recollementRepository.existsById(id))
+            this.recollementRepository.deleteById(id);
 
-    // Liste Uniter
-    public List<Recollement> findAll() {
+    } 
+    
+ // Renvoie par id
+    public Optional<Recollement> findById(String numRecollement) {
+        return this.recollementRepository.findById(numRecollement);
+    }
+
+    // Liste 
+    public List<Recollement> getAll() {
         return  this.recollementRepository.findAll();
     }
     
-    // Renvoie un Uniter par son code
-    public Recollement findById(String numRecollement) {
-        return this.recollementRepository.getOne(numRecollement);
-    }
+    //
+    public List<Recollement> findByNumRecollement(String NumRecollement){
+		
+		return this.recollementRepository.findByNumRecollement(NumRecollement);
+	}
     
-    // Sauvegarder un Uniter
-    public Recollement save(Recollement recolle) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.recollementRepository.save(recolle);
-    }
+    //
+    public List<Recollement> findByDescriptionRecollement(String DescriptionRecollement){
+		
+		return this.recollementRepository.findByDescriptionRecollement(DescriptionRecollement);
+	}
     
-    // Editer un Uniter
-    public Recollement edit(Recollement recolle) {
-        return   this.recollementRepository.save(recolle);
-    }
+    //
+    public List<Recollement> findByDateRecollement(Date DateRecollement){
+		
+		return this.recollementRepository.findByDateRecollement(DateRecollement);
+	}
     
-    // Supprimer un Uniter
-    public void delete(Recollement  recolle) {
-         this.recollementRepository.delete(recolle);
-    }   
+    //
+    public List<Recollement> findByMagasinRecollement(Magasin mag){
+		
+		return this.recollementRepository.findByMagasinRecollement(mag);
+	}
+    
+    //
+    public List<Recollement> findByRegisseurRecollement(Regisseur reg){
+		
+		return this.recollementRepository.findByRegisseurRecollement(reg);
+	}
+    
+    //
+    public List<Recollement> findByExerciceRecollement(Exercice exo){
+		
+		return this.recollementRepository.findByExerciceRecollement(exo);
+	}
+    
 
 }

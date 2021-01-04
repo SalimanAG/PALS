@@ -10,6 +10,8 @@ import com.sil.gpc.domains.Uniter;
 @Repository
 public interface UniterRepository extends JpaRepository<Uniter, String> {
 	
-	public List<Uniter> findBylibUniter(String libUniter);
+	public List<Uniter> findByCodeUniter(String CodeUniter);
+	
+	public List<Uniter> findByLibelleUniter(String LibelleUniter);
 
 }

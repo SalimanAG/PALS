@@ -49,7 +49,106 @@ public class Stocker implements Serializable{
 		this.article = article;
 		this.magasin = magasin;
 	}
+	
+	/**
+	 * @return the numRecollement
+	 */
+	public Long getIdStocker() {
+		return idStocker;
+	}
 
+	/**
+	 * @param
+	 */
+	public void setIdStocker(Long idStocker) {
+		this.idStocker = idStocker;
+	}
+	
+	
+	/**
+	 * @return 
+	 */
+	public Long getStockDeSecuriter() {
+		return stockDeSecuriter;
+	}
+
+	/**
+	 * @param 
+	 */
+	public void setStockDeSecuriter(Long stockDeSecuriter) {
+		this.stockDeSecuriter = stockDeSecuriter;
+	}
+	
+	/**
+	 * @return 
+	 */
+	public Long getCmup() {
+		return cmup;
+	}
+
+	/**
+	 * @param 
+	 */
+	public void setCmup(Long cmup) {
+		this.cmup = cmup;
+	}
+	
+	/**
+	 * @return 
+	 */
+	public Long getStockMinimal() {
+		return stockMinimal;
+	}
+
+	/**
+	 * @param 
+	 */
+	public void setstockMinimal(Long stockMinimal) {
+		this.stockMinimal = stockDeSecuriter;
+	}
+	
+	/**
+	 * @return 
+	 */
+	public Long getQuantiterStocker() {
+		return quantiterStocker;
+	}
+
+	/**
+	 * @param 
+	 */
+	public void setQuantiterStocker(Long quantiterStocker) {
+		this.quantiterStocker = quantiterStocker;
+	}
+	
+	
+	
+	/**
+	 * @return the magasin
+	 */
+	public Magasin getMagasin() {
+		return magasin;
+	}
+
+	/**
+	 * @param magasin the magasin to set
+	 */
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
+	}
+	
+	//
+	public Article getArticle() {
+		return article;
+	}
+	
+	//
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+	
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(article, cmup, idStocker, magasin, quantiterStocker, stockDeSecuriter, stockMinimal);
