@@ -36,9 +36,10 @@ public class TypeImmeubleService {
     
     // Supprimer un TypeImmeuble
     public boolean delete(String id) {
+    	if(this.typeImmeubleRepository.existsById(id))
 			this.typeImmeubleRepository.deleteById(id);
     	
-    	if(this.typeImmeubleRepository.existsById(id)) return false; else return true;
+    	return this.typeImmeubleRepository.existsById(id);
     }   
     
     // Typeimmeuble par Id

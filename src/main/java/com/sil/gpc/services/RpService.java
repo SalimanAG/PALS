@@ -35,9 +35,10 @@ public class RpService {
     
     // Supprimer 
     public boolean delete(String  id) {
+    	if(this.rpRepository.existsById(id))
             this.rpRepository.deleteById(id);
     	
-    	if(this.rpRepository.existsById(id)) return false; else return true;
+            return this.rpRepository.existsById(id);
     }   
     
     // 

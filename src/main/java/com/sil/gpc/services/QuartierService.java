@@ -37,9 +37,10 @@ public class QuartierService {
     
     // Supprimer 
     public boolean delete(String  id) {
+    	if(this.quartierRepository.existsById(id))
             this.quartierRepository.deleteById(id);
     	
-    	if(this.quartierRepository.existsById(id)) return false; else return true;
+            return this.quartierRepository.existsById(id);
     }
     
     // 

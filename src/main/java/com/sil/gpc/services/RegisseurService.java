@@ -34,9 +34,10 @@ public class RegisseurService {
     
     // Supprimer 
     public boolean delete(String  id) {
+    	if(this.regisseurRepository.existsById(id))
             this.regisseurRepository.deleteById(id);
     	
-    	if(this.regisseurRepository.existsById(id)) return false; else return true;
+    	return this.regisseurRepository.existsById(id);
     }   
 
     // Renvoie par id

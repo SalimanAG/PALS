@@ -37,9 +37,10 @@ public class ReceptionService {
     
     // Supprimer 
     public boolean delete(String  id) {
+    	if(this.receptionRepository.existsById(id))
             this.receptionRepository.deleteById(id);
     	
-    	if(this.receptionRepository.existsById(id)) return false; else return true;
+    	return this.receptionRepository.existsById(id);
     }   
     
     // 

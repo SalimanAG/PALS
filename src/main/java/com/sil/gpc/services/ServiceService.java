@@ -38,9 +38,10 @@ public class ServiceService {
     
  // Supprimer un Service
  public boolean delete(String id) {
+	 if(this.serviceRepository.existsById(id))
          this.serviceRepository.deleteById(id);
 	 
-	 if(this.serviceRepository.existsById(id)) return false; else return true;
+	return this.serviceRepository.existsById(id);
  }   
  
  // Renvoie un Service par son id

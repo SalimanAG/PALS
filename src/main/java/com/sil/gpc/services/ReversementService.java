@@ -36,9 +36,10 @@ public class ReversementService {
     
     // Supprimer 
     public boolean delete(String  id) {
+    		if(this.reversementRepository.existsById(id))
             this.reversementRepository.deleteById(id);
     	
-    	if(this.reversementRepository.existsById(id)) return false; else return true;
+    	return this.reversementRepository.existsById(id);
     }   
     
     // 
