@@ -67,9 +67,9 @@ public class CorrespondantController {
 	}
 	
 	@DeleteMapping(path = "correspondant/byCodCor/{id}")
-	public void deleteCorrespondant(@PathVariable(name = "id") String id) {
+	public Boolean deleteCorrespondant(@PathVariable(name = "id") String id) {
 		
-		this.correspondantService.delete(id);
+		return this.correspondantService.delete(id);
 	}
 	
 	

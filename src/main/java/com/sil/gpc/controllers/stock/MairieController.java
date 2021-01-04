@@ -81,9 +81,9 @@ public class MairieController {
 	}
 	
 	@DeleteMapping(path = "approvisionnement/byCodApp/{id}")
-	public void deleteApprovisionnement(@PathVariable(name = "id") String id) {
+	public Boolean deleteApprovisionnement(@PathVariable(name = "id") String id) {
 		
-		this.approvisionnementService.delete(id);
+		return this.approvisionnementService.delete(id);
 	}	
 	
 	
@@ -119,9 +119,9 @@ public class MairieController {
 	}
 	
 	@DeleteMapping(path = "ligneAppro/byCodLigApp/{id}")
-	public void deleteLigneAppro(@PathVariable(name = "id") Long id) {
+	public Boolean deleteLigneAppro(@PathVariable(name = "id") Long id) {
 		
-		this.ligneApproService.delete(id);
+		return this.ligneApproService.delete(id);
 	}
 	
 	

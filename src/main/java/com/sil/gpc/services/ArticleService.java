@@ -45,13 +45,14 @@ public class ArticleService {
 		return null;
 	}
 	
-	public void delete(String id) {
+	public boolean delete(String id) {
 		
 		Article entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			this.repo.deleteById(id);
 		}
 		
+		return !this.repo.existsById(id);
 	}
 	
 	public Optional<Article> getById(String id){

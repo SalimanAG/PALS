@@ -105,9 +105,9 @@ public class TresorController {
 	}
 	
 	@DeleteMapping(path = "commande/byCodCom/{id}")
-	public void deleteCommande(@PathVariable(name = "id") String id) {
+	public Boolean deleteCommande(@PathVariable(name = "id") String id) {
 		
-		this.commandeService.delete(id);
+		return this.commandeService.delete(id);
 	}
 	
 	
@@ -142,9 +142,9 @@ public class TresorController {
 	}
 	
 	@DeleteMapping(path = "ligneCommande/byCodLigCom/{id}")
-	public void deleteLigneCommande(@PathVariable(name = "id") Long id) {
+	public Boolean deleteLigneCommande(@PathVariable(name = "id") Long id) {
 		
-		this.ligneCommandeService.delete(id);
+		return this.ligneCommandeService.delete(id);
 	}
 	
 	
@@ -230,9 +230,9 @@ public class TresorController {
 	}
 	
 	@DeleteMapping(path = "demandeAppro/byCodDemApp/{id}")
-	public void deleteDemandeAppro(@PathVariable(name = "id") String id) {
+	public Boolean deleteDemandeAppro(@PathVariable(name = "id") String id) {
 		
-		this.demandeApproService.delete(id);
+		return this.demandeApproService.delete(id);
 	}
 	
 	
@@ -267,9 +267,9 @@ public class TresorController {
 	}
 	
 	@DeleteMapping(path = "ligneDemandeAppro/byCodLigDemApp/{id}")
-	public void deleteLigneDemandeAppro(@PathVariable(name = "id") Long id) {
+	public Boolean deleteLigneDemandeAppro(@PathVariable(name = "id") Long id) {
 		
-		this.ligneDemandeApproService.delete(id);
+		return this.ligneDemandeApproService.delete(id);
 	}
 	
 	

@@ -140,9 +140,9 @@ public class MagasinController {
 	}
 	
 	@DeleteMapping(path = "famille/byCodFam/{id}")
-	public void deleteFamille(@PathVariable(name = "id") String id) {
+	public Boolean deleteFamille(@PathVariable(name = "id") String id) {
 		
-		this.familleService.delete(id);
+		return this.familleService.delete(id);
 	}
 	
 	
@@ -176,9 +176,9 @@ public class MagasinController {
 	}
 	
 	@DeleteMapping(path = "caisse/byCodArt/{id}")
-	public void deleteArticle(@PathVariable(name = "id") String id) {
+	public Boolean deleteArticle(@PathVariable(name = "id") String id) {
 		
-		this.articleService.delete(id);
+		return this.articleService.delete(id);
 	}
 	
 	
@@ -233,9 +233,9 @@ public class MagasinController {
 	}
 	
 	@DeleteMapping(path = "gerer/byCodGer/{id}")
-	public void deleteGerer(@PathVariable(name = "id") Long id) {
+	public Boolean deleteGerer(@PathVariable(name = "id") Long id) {
 		
-		this.gererService.delete(id);
+		return this.gererService.delete(id);
 	}
 
 	

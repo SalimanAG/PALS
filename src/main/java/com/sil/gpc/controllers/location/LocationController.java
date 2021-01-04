@@ -78,9 +78,9 @@ public class LocationController {
 	}
 	
 	@DeleteMapping(path = "contrat/byCodCon/{id}")
-	public void deleteContrat(@PathVariable(name = "id") String id) {
+	public Boolean deleteContrat(@PathVariable(name = "id") String id) {
 		
-		this.contratService.delete(id);
+		return this.contratService.delete(id);
 	}
 	
 	
@@ -114,9 +114,9 @@ public class LocationController {
 	}
 	
 	@DeleteMapping(path = "echeance/byCodEch/{id}")
-	public void deleteEcheance(@PathVariable(name = "id") Long id) {
+	public Boolean deleteEcheance(@PathVariable(name = "id") Long id) {
 		
-		this.echeanceService.delete(id);
+		return this.echeanceService.delete(id);
 	}
 	
 	
@@ -173,9 +173,9 @@ public class LocationController {
 	}
 	
 	@DeleteMapping(path = "immeuble/byCodImm/{id}")
-	public void deleteImmeuble(@PathVariable(name = "id") String id) {
+	public Boolean deleteImmeuble(@PathVariable(name = "id") String id) {
 		
-		this.immeubleService.delete(id);
+		return this.immeubleService.delete(id);
 	}
 
 	

@@ -88,9 +88,9 @@ public class CommuneController {
 	}
 	
 	@DeleteMapping(path = "exercice/byCodExe/{id}")
-	public void deleteExercice(@PathVariable(name = "id") String id) {
+	public Boolean deleteExercice(@PathVariable(name = "id") String id) {
 		
-		this.exerciceService.delete(id);
+		return this.exerciceService.delete(id);
 	}
 	
 	
@@ -125,9 +125,9 @@ public class CommuneController {
 	}
 	
 	@DeleteMapping(path = "fournisseur/byCodFou/{id}")
-	public void deleteFournisseur(@PathVariable(name = "id") String id) {
+	public Boolean deleteFournisseur(@PathVariable(name = "id") String id) {
 		
-		this.fournisseurService.delete(id);
+		return this.fournisseurService.delete(id);
 	}	
 	
 	
@@ -216,9 +216,9 @@ public class CommuneController {
 	}
 	
 	@DeleteMapping(path = "departement/byCodDep/{id}")
-	public void deleteDepartement(@PathVariable(name = "id") String id) {
+	public Boolean deleteDepartement(@PathVariable(name = "id") String id) {
 		
-		this.departementService.delete(id);
+		return this.departementService.delete(id);
 	}	
 	
 	
@@ -252,9 +252,9 @@ public class CommuneController {
 	}
 	
 	@DeleteMapping(path = "commune/byCodCom/{id}")
-	public void deleteCommune(@PathVariable(name = "id") String id) {
+	public Boolean deleteCommune(@PathVariable(name = "id") String id) {
 		
-		this.communeService.delete(id);
+		return this.communeService.delete(id);
 	}	
 	
 	
@@ -290,9 +290,9 @@ public class CommuneController {
 	}
 	
 	@DeleteMapping(path = "arrondissement/byCodArr/{id}")
-	public void deleteArrondissement(@PathVariable(name = "id") String id) {
+	public Boolean deleteArrondissement(@PathVariable(name = "id") String id) {
 		
-		this.arrondissementService.delete(id);
+		return this.arrondissementService.delete(id);
 	}
 	
 	

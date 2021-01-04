@@ -85,9 +85,9 @@ public class FacturationController {
 	}
 	
 	@DeleteMapping(path = "caisse/byCodCai/{id}")
-	public void deleteCaisse(@PathVariable(name = "id") String id) {
+	public Boolean deleteCaisse(@PathVariable(name = "id") String id) {
 		
-		this.caisseService.delete(id);
+		return this.caisseService.delete(id);
 	}
 	
 	/*###########################################################
@@ -120,9 +120,9 @@ public class FacturationController {
 	}
 	
 	@DeleteMapping(path = "Affecter/byCodAff/{id}")
-	public void deleteAffecter(@PathVariable(name = "id") Long id) {
+	public Boolean deleteAffecter(@PathVariable(name = "id") Long id) {
 		
-		this.affecterService.delete(id);
+		return this.affecterService.delete(id);
 	}
 	
 	
@@ -136,31 +136,31 @@ public class FacturationController {
 	@GetMapping(path = "modePaiement/list")
 	public List<ModePaiement> getAllModePaiement(){
 		
-		return this.modePaiementService.
+		return null;
 	}
 	
 	@GetMapping(path = "modePaiement/byCodModPai/{id}")
 	public ModePaiement getModePaiementById(@PathVariable(name = "id") String id){
 		
-		return this.modePaiementService.rechercheModePaiement(id);
+		return null;//this.modePaiementService.rechercheModePaiement(id);
 	}
 	
 	@PostMapping(path = "modePaiement/list")
 	public ModePaiement createModePaiement(@RequestBody ModePaiement modePaiement) {
 		
-		return this.modePaiementService.ajouteModePaiment(modePaiement);
+		return null; //this.modePaiementService.ajouteModePaiment(modePaiement);
 	}
 	
 	@PutMapping(path = "modePaiement/byCodModPai/{id}")
 	public ModePaiement updateModePaiement(@PathVariable(name = "id") String id, @RequestBody ModePaiement modePaiement) {
 		
-		return this.modePaiementService.modifieMP(modePaiement, id);
+		return null; //this.modePaiementService.modifieMP(modePaiement, id);
 	}
 	
 	@DeleteMapping(path = "modePaiement/byCodModPai/{id}")
-	public void deleteModePaiement(@PathVariable(name = "id") String id) {
+	public Boolean deleteModePaiement(@PathVariable(name = "id") String id) {
 		
-		this.modePaiementService.suppprimeModePaiement(id);
+		return null;//this.modePaiementService.suppprimeModePaiement(id);
 	}
 	
 	
@@ -173,31 +173,31 @@ public class FacturationController {
 	@GetMapping(path = "typeRecette/list")
 	public List<TypeRecette> getAllTypeRecette(){
 		
-		return this.typeRecetteService.findAllTypeRecette();
+		return null; //this.typeRecetteService.findAllTypeRecette();
 	}
 	
 	@GetMapping(path = "typeRecette/byCodTypRec/{id}")
 	public TypeRecette getTypeRecetteById(@PathVariable(name = "id") String id){
 		
-		return this.typeRecetteService.findById(id);
+		return null; //this.typeRecetteService.findById(id);
 	}
 	
 	@PostMapping(path = "typeRecette/list")
 	public TypeRecette createTypeRecette(@RequestBody TypeRecette typeRecette) {
 		
-		return this.typeRecetteService.save(typeRecette);
+		return null; //this.typeRecetteService.save(typeRecette);
 	}
 	
 	@PutMapping(path = "typeRecette/byCodTypRec/{id}")
 	public TypeRecette updateTypeRecette(@PathVariable(name = "id") String id, @RequestBody TypeRecette typeRecette) {
 		
-		return this.typeRecetteService.edit(id, typeRecette);
+		return null;//this.typeRecetteService.edit(id, typeRecette);
 	}
 	
 	@DeleteMapping(path = "typeRecette/byCodTypRec/{id}")
-	public void deleteTypeRecette(@PathVariable(name = "id") String id) {
+	public Boolean deleteTypeRecette(@PathVariable(name = "id") String id) {
 		
-		this.typeRecetteService.delete(id);
+		return null;//this.typeRecetteService.delete(id);
 	}
 	
 	
@@ -212,31 +212,31 @@ public class FacturationController {
 	@GetMapping(path = "opCaisse/list")
 	public List<OpCaisse> getAllOpcaisse(){
 		
-		return this.opCaisseService.
+		return null;//this.opCaisseService.
 	}
 	
 	@GetMapping(path = "opCaisse/byCodOpCai/{id}")
 	public OpCaisse getOpCaisseById(@PathVariable(name = "id") String id){
 		
-		return this.opCaisseService.rechercheOpCaisse(id);
+		return null; //this.opCaisseService.rechercheOpCaisse(id);
 	}
 	
 	@PostMapping(path = "opCaisse/list")
 	public OpCaisse createOpCaisse(@RequestBody OpCaisse opCaisse) {
 		
-		return this.opCaisseService.ajouteOpCaisse(opCaisse);
+		return null;//this.opCaisseService.ajouteOpCaisse(opCaisse);
 	}
 	
 	@PutMapping(path = "opCaisse/byCodOpCai/{id}")
 	public OpCaisse updateOpCaisse(@PathVariable(name = "id") String id, @RequestBody OpCaisse opCaisse) {
 		
-		return this.opCaisseService.modifieOpCaisse(opCaisse, id);
+		return null;//this.opCaisseService.modifieOpCaisse(opCaisse, id);
 	}
 	
 	@DeleteMapping(path = "opCaisse/byCodOpCai/{id}")
-	public void deleteOpCaisse(@PathVariable(name = "id") String id) {
+	public Boolean deleteOpCaisse(@PathVariable(name = "id") String id) {
 		
-		this.opCaisseService.supprimeOpCaisse(id);
+		return null;//this.opCaisseService.supprimeOpCaisse(id);
 	}
 	
 	
