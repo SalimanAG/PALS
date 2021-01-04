@@ -3,10 +3,13 @@ package com.sil.gpc.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LigneRecollement;
 import com.sil.gpc.repositories.LigneRecollementRepository;
 
+@Service
 public class LigneRecollementService {
 
 	private final LigneRecollementRepository repos;

@@ -6,6 +6,9 @@ import com.sil.gpc.repositories.TypeImmeubleRepository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class TypeImmeubleService {
 
 	// @Autowired

@@ -8,6 +8,9 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ReceptionService {
 
 	private final ReceptionRepository receptionRepository;

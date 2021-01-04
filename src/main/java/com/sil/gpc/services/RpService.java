@@ -6,6 +6,9 @@ import com.sil.gpc.repositories.RpRepository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class RpService {
 
 	private final RpRepository rpRepository;

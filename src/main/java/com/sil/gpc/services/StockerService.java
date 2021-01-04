@@ -9,6 +9,9 @@ import com.sil.gpc.repositories.StockerRepository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class StockerService {
 
 	// @Autowired

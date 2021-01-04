@@ -3,10 +3,13 @@ package com.sil.gpc.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.PlageNumArticle;
 import com.sil.gpc.repositories.PlageNumArticleRepository;
 
+@Service
 public class PlageNumArticleService {
 
 	private final PlageNumArticleRepository repos;

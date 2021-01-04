@@ -10,6 +10,9 @@ import java.util.List;
 import java.sql.Date;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class PointVenteService {
 
 	private final PointVenteRepository pointVenteRepository;

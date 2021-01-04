@@ -7,6 +7,7 @@ import com.sil.gpc.repositories.UtilisateurRepository;
 import java.util.List;
 import java.util.Optional;
 
+@org.springframework.stereotype.Service
 public class UtilisateurService {
 
 	private final UtilisateurRepository userRepository;

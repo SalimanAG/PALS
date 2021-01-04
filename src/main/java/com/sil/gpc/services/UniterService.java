@@ -6,6 +6,9 @@ import com.sil.gpc.repositories.UniterRepository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class UniterService {
 
 	// @Autowired

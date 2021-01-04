@@ -4,9 +4,12 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.sil.gpc.domains.OpCaisse;
 import com.sil.gpc.repositories.OpCaisseRepository;
 
+@Service
 public class OpCaisseService {
 
 	private final OpCaisseRepository repos;
