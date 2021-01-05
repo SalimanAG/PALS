@@ -12,6 +12,6 @@ import com.sil.gpc.domains.LignePointVente;
 public interface LignePointVenteRepository extends JpaRepository<LignePointVente, Long>{
 
 	public List<LignePointVente> findByArticle(Article article);
-	public List<LignePointVente> findByQte(double qte);
-	public List<LignePointVente> findByPrix(double prix); 
+	public List<LignePointVente> findByQuantiteLignePointVente(double qte);
+	public List<LignePointVente> findByPULignePointVente(double prix); 
 }

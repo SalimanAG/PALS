@@ -13,6 +13,6 @@ public interface TypCorresRepository extends JpaRepository<TypCorres, String> {
 	
 	public List<TypCorres> findByCodeTypCorres(String TypCorres);
 	
-	public List<TypCorres> findByLibelleTypCorres(String libelleTypCorres);
+	public List<TypCorres> findByLibTypeCorres(String libelleTypCorres);
 
 }

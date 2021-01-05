@@ -35,11 +35,11 @@ public class LignePointVenteService {
 	}
 
 	public List<LignePointVente> findByQte(double qte) {
-		return repos.findByQte(qte);
+		return repos.findByQuantiteLignePointVente(qte);
 	}
 
 	public List<LignePointVente> findByPrix(double prix) {
-		return repos.findByPrix(prix);
+		return repos.findByPULignePointVente(prix);
 	}
 
 	public List<LignePointVente> save(LignePointVente ligne) {

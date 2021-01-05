@@ -12,6 +12,6 @@ import com.sil.gpc.domains.LignePlacement;
 public interface LignePlacementRepository extends JpaRepository<LignePlacement, Long>{
 
 	public List<LignePlacement> findByArticle(Article article);
-	public List<LignePlacement> findByQte(double qte);
-	public List<LignePlacement> findByPrix(double prix);
+	public List<LignePlacement> findByQuantiteLignePlacement(double qte);
+	public List<LignePlacement> findByPULignePlacement(double prix);
 	}

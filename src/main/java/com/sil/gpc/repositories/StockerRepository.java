@@ -23,8 +23,8 @@ public interface StockerRepository extends JpaRepository<Stocker, Long> {
 	
 	public List<Stocker> findByCmup(Long Cmup);
 	
-	public List<Stocker> findByStockerArticle(Article art);
+	public List<Stocker> findByArticle(Article art);
 	
-	public List<Stocker> findByStockerMagasin(Magasin mag);
+	public List<Stocker> findByMagasin(Magasin mag);
 
 }

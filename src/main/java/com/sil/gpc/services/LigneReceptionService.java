@@ -25,9 +25,6 @@ public class LigneReceptionService {
 		return repos.findById(id);
 	}
 
-	public List<LigneReception> findByArticle(Article article) {
-		return repos.findByArticle(article);
-	}
 
 	public List<LigneReception> findByQte (double qte){
 		return repos.findByQuantiteLigneReception(qte);

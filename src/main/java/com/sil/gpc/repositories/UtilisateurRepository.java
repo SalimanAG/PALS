@@ -22,7 +22,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	
 	public List<Utilisateur> findByActiveUtilisateur(boolean ActiveUser);
 	
-	public List<Utilisateur> findByServiceUtilisateur(Service ServiceUser);
+	public List<Utilisateur> findByService(Service ServiceUser);
 	
 	
 

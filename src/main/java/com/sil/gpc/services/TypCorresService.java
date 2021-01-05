@@ -65,7 +65,7 @@ public class TypCorresService {
   //liste par libelle
     public List<TypCorres> findByLibelleTypCorres(String LibelleTypCorres){
 		
-		return this.typCorresRepository.findByLibelleTypCorres(LibelleTypCorres);
+		return this.typCorresRepository.findByLibTypeCorres(LibelleTypCorres);
 	}
     
    

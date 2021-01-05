@@ -35,7 +35,7 @@ public class LignePlacementService {
 	}
 
 	public List<LignePlacement> findByPrix(double prix) {
-		return repos.findByPrix(prix);
+		return repos.findByPULignePlacement(prix);
 	}
 
 	public LignePlacement save(LignePlacement ligne) {

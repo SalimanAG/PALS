@@ -78,7 +78,7 @@ public class PointVenteService {
     //
     public List<PointVente> findByDatePv(Date datePayerPV){
 		
-		return this.pointVenteRepository.findByDate(datePayerPV);
+		return this.pointVenteRepository.findByDatePointVente(datePayerPV);
 	}
     
     //Liste PointVente par exercice

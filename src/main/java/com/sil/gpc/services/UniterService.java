@@ -65,7 +65,7 @@ public class UniterService {
   //liste par libelle
     public List<Uniter> findByLibelleUniter(String LibelleUniter){
 		
-		return this.uniterRepository.findByLibelleUniter(LibelleUniter);
+		return this.uniterRepository.findByLibUniter(LibelleUniter);
 	}
     
 

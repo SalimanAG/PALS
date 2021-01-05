@@ -60,13 +60,13 @@ public class TypeImmeubleService {
     //liste par code
     public List<TypeImmeuble> findByCodeTypeImmeuble(String CodeTypeImmeuble){
 		
-		return this.typeImmeubleRepository.findByCodeTypeImmeuble(CodeTypeImmeuble);
+		return this.typeImmeubleRepository.findByCodeTypIm(CodeTypeImmeuble);
 	}
     
   //liste par libelle
     public List<TypeImmeuble> findByLibelleTypeImmeuble(String libelleTypImmeuble){
 		
-		return this.typeImmeubleRepository.findByLibelleTypImmeuble(libelleTypImmeuble);
+		return this.typeImmeubleRepository.findByLibTypIm(libelleTypImmeuble);
 	}
 
 }

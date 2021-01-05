@@ -17,7 +17,7 @@ public interface PointVenteRepository extends JpaRepository<PointVente, String> 
 	
 	public List<PointVente> findBypayerPoint(boolean payerPV);
 	
-	public List<PointVente> findByDate(Date datePayerPV);
+	public List<PointVente> findByDatePointVente(Date datePayerPV);
 	
 	public List<PointVente> findByExercice(Exercice exo);
 	

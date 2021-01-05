@@ -20,10 +20,10 @@ public interface RecollementRepository extends JpaRepository<Recollement, String
 	
 	public List<Recollement> findByDateRecollement(Date DateRecollement);
 	
-	public List<Recollement> findByMagasinRecollement(Magasin mag);
+	public List<Recollement> findByMagasin(Magasin mag);
 	
-	public List<Recollement> findByRegisseurRecollement(Regisseur reg);
+	public List<Recollement> findByRegisseur(Regisseur reg);
 	
-	public List<Recollement> findByExerciceRecollement(Exercice exo);
+	public List<Recollement> findByExercice(Exercice exo);
 
 }

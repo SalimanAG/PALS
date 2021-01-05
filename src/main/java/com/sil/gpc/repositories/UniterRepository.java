@@ -12,6 +12,6 @@ public interface UniterRepository extends JpaRepository<Uniter, String> {
 	
 	public List<Uniter> findByCodeUniter(String CodeUniter);
 	
-	public List<Uniter> findByLibelleUniter(String LibelleUniter);
+	public List<Uniter> findByLibUniter(String LibelleUniter);
 
 }

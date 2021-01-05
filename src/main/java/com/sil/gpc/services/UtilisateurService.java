@@ -33,7 +33,7 @@ public class UtilisateurService {
    			usermod.setMotDePass(user.getMotDePass());
    			usermod.setActiveUtilisateur(user.isActiveUtilisateur());
    			usermod.setFonctionUtilisateur(user.getFonctionUtilisateur());
-   			usermod.setCodeService(user.getCodeService());
+   			usermod.setService(user.getService());
    			return this.userRepository.save(usermod);
        }
    		return null;
@@ -98,7 +98,7 @@ public class UtilisateurService {
     //
     public List<Utilisateur> findByServiceUtilisateur(Service ServiceUser){
 		
-		return this.userRepository.findByServiceUtilisateur(ServiceUser);
+		return this.userRepository.findByService(ServiceUser);
 	}
   
     

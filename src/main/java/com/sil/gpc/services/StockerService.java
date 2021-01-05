@@ -96,13 +96,13 @@ public class StockerService {
     //
     public List<Stocker> findByStockerArticle(Article art){
 		
-		return this.stockerRepository.findByStockerArticle(art);
+		return this.stockerRepository.findByArticle(art);
 	}
     
     //
     public List<Stocker> findByStockerMagasin(Magasin mag){
 		
-		return this.stockerRepository.findByStockerMagasin(mag);
+		return this.stockerRepository.findByMagasin(mag);
 	}
 
     

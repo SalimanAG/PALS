@@ -83,19 +83,19 @@ public class RecollementService {
     //
     public List<Recollement> findByMagasinRecollement(Magasin mag){
 		
-		return this.recollementRepository.findByMagasinRecollement(mag);
+		return this.recollementRepository.findByMagasin(mag);
 	}
     
     //
     public List<Recollement> findByRegisseurRecollement(Regisseur reg){
 		
-		return this.recollementRepository.findByRegisseurRecollement(reg);
+		return this.recollementRepository.findByRegisseur(reg);
 	}
     
     //
     public List<Recollement> findByExerciceRecollement(Exercice exo){
 		
-		return this.recollementRepository.findByExerciceRecollement(exo);
+		return this.recollementRepository.findByExercice(exo);
 	}
     
 
