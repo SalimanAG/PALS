@@ -9,7 +9,7 @@ import com.sil.gpc.domains.TypeRecette;
 @Repository
 public interface TypeRecetteRepository extends JpaRepository<TypeRecette, String>{
 	
-	public List<TypeRecette> findByCodeTypeRecette(String CodeTypeRecette);
-	public List<TypeRecette> findByLibelleTypRec(String LibelleTypRecette);
+	public List<TypeRecette> findByCodeTypRec(String CodeTypeRecette);
+	public List<TypeRecette> findByLibeTypRec(String LibelleTypRecette);
 	
 }

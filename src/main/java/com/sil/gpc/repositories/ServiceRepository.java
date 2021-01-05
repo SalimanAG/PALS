@@ -12,6 +12,6 @@ public interface ServiceRepository extends JpaRepository<Service, String> {
 	
 	public List<Service> findByCodeService(String CodeService);
 	
-	public List<Service> findByLibelleService(String LibelleService);
+	public List<Service> findByLibService(String LibelleService);
 
 }

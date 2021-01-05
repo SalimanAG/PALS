@@ -21,7 +21,7 @@ public class Reception {
 	private String numReception;
 	@Column(length = 150)
 	private String observation;
-	private Date DateReception;
+	private Date dateReception;
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneReception.class, mappedBy = "reception")
 	public List<Reception> lignesParReception;
 	
@@ -36,7 +36,7 @@ public class Reception {
 		super();
 		this.numReception = numReception;
 		this.observation = observation;
-		DateReception = dateReception;
+		this.dateReception = dateReception;
 		this.lignesParReception = lignesParReception;  
 	}
 
@@ -57,11 +57,11 @@ public class Reception {
 	}
 
 	public Date getDateReception() {
-		return DateReception;
+		return dateReception;
 	}
 
 	public void setDateReception(Date dateReception) {
-		DateReception = dateReception;
+		this.dateReception = dateReception;
 	}
 
 	public List<Reception> getLignesParReception() {

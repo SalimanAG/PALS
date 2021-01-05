@@ -29,19 +29,19 @@ public class PlageNumDispoService {
 	}
 	
 	public List<PlageNumDispo> findByNumFinDispo(String num){
-		return repos.findBynumFinDispo(num);
+		return repos.findByNumFinPlageDispo(num);
 	}
 	
 	public List<PlageNumDispo> findByNumDebDispo(String num){
-		return repos.findByNumDebDispo(num);
+		return repos.findByNumDebPlageDispo(num);
 	}
 	
 	public List<PlageNumDispo> findByNumDeb(String num){
-		return repos.findByNumDeb(num);
+		return repos.findByNumDebPlage(num);
 	}
 	
 	public List<PlageNumDispo> findByNumFin(String num){
-		return repos.findByNumFin(num);
+		return repos.findByNumFinPlage(num);
 	}
 	
 	public List<PlageNumDispo> findAll(){

@@ -61,13 +61,13 @@ public class TypeRecetteService {
     //liste par code
 	public List<TypeRecette> findByCodeTypeRecette(String CodeTypeRecette){
 		
-		return this.typeRecetteRepository.findByCodeTypeRecette(CodeTypeRecette);
+		return this.typeRecetteRepository.findByCodeTypRec(CodeTypeRecette);
 	}
 	
 	//liste par libelle
 	public List<TypeRecette> findByLibelleTypeRecette(String LibelleTypeRecette){
 		
-		return this.typeRecetteRepository.findByLibelleTypRec(LibelleTypeRecette);
+		return this.typeRecetteRepository.findByLibeTypRec(LibelleTypeRecette);
 	}
 
 }

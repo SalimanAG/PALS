@@ -30,11 +30,11 @@ public class LigneReceptionService {
 	}
 
 	public List<LigneReception> findByQte (double qte){
-		return repos.findByQte(qte);
+		return repos.findByQuantiteLigneReception(qte);
 	}
 
 	public List<LigneReception> findByPrix (double prix){
-		return repos.findByPrix(prix);
+		return repos.findByPULigneReception(prix);
 	}
 
 	public List<LigneReception> findAll() {

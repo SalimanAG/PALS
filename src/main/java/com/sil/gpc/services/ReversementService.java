@@ -65,7 +65,7 @@ public class ReversementService {
     //
     public List<Reversement> findByDateReversement(Date DateReversement){
 		
-		return this.reversementRepository.findByDateReversement(DateReversement);
+		return this.reversementRepository.findByDateVersement(DateReversement);
 	}
     
     

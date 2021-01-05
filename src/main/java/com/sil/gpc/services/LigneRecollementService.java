@@ -34,11 +34,11 @@ public class LigneRecollementService {
 	}
 
 	public List<LigneRecollement> findByQte(double qte) {
-		return repos.findByQte(qte);
+		return repos.findByQuantiteLigneRecollement(qte);
 	}
 
 	public List<LigneRecollement> findByPrix(double prix) {
-		return repos.findByPrix(prix);
+		return repos.findByPULigneRecollement(prix);
 	}
 
 	public List<LigneRecollement> save(LigneRecollement ligne){

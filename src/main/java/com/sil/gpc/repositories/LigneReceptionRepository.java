@@ -12,6 +12,6 @@ import com.sil.gpc.domains.LigneReception;
 public interface LigneReceptionRepository extends JpaRepository<LigneReception, Long>{
 
 	List<LigneReception> findByArticle(Article article);
-	List<LigneReception> findByQte(double qte);
-	List<LigneReception> findByPrix(double prix);
+	List<LigneReception> findByQuantiteLigneReception(double qte);
+	List<LigneReception> findByPULigneReception(double prix);
 }

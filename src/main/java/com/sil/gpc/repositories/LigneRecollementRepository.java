@@ -12,6 +12,6 @@ import com.sil.gpc.domains.LigneRecollement;
 public interface LigneRecollementRepository extends JpaRepository<LigneRecollement, Long>{
 
 	List<LigneRecollement> findByArticle(Article article);
-	List<LigneRecollement> findByQte(double qte);
-	List<LigneRecollement> findByPrix(double prix);
+	List<LigneRecollement> findByQuantiteLigneRecollement(double qte);
+	List<LigneRecollement> findByPULigneRecollement(double prix);
 }

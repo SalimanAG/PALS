@@ -66,7 +66,7 @@ public class ServiceService {
   //liste par libelle
     public List<Service> findByLibelleServicer(String LibelleService){
 		
-		return this.serviceRepository.findByLibelleService(LibelleService);
+		return this.serviceRepository.findByLibService(LibelleService);
 	}
     
 }

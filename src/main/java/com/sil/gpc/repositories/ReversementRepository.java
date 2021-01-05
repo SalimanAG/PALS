@@ -13,6 +13,6 @@ public interface ReversementRepository extends JpaRepository<Reversement, String
 	
 	public List<Reversement> findByNumReversement(String NumReversement);
 	
-	public List<Reversement> findByDateReversement(Date DateReversement);
+	public List<Reversement> findByDateVersement(Date DateReversement);
 
 }

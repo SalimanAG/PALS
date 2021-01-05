@@ -33,7 +33,7 @@ public class LigneOpCaisseService {
 	}
 
 	public List<LigneOpCaisse> getByPrixLigne(double prix) {
-		return repos.findByPrix(prix);
+		return repos.findByPrixLigneOperCaisse(prix);
 	}
 
 	public List<LigneOpCaisse> getAll() {

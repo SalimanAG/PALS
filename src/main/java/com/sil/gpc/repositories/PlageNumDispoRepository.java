@@ -11,8 +11,8 @@ import com.sil.gpc.domains.PlageNumDispo;
 public interface PlageNumDispoRepository extends JpaRepository<PlageNumDispo, String>{
 
 	List<PlageNumDispo>findByArticle(String codArt);
-	List<PlageNumDispo>findByNumDeb(String num);
-	List<PlageNumDispo>findByNumFin(String num);
-	List<PlageNumDispo>findByNumDebDispo(String num);
-	List<PlageNumDispo>findBynumFinDispo(String num);
+	List<PlageNumDispo>findByNumDebPlage(String num);
+	List<PlageNumDispo>findByNumFinPlage(String num);
+	List<PlageNumDispo>findByNumDebPlageDispo(String num);
+	List<PlageNumDispo>findByNumFinPlageDispo(String num);
 }
