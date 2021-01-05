@@ -1,42 +1,65 @@
 package com.sil.gpc.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.repositories.LigneReceptionRepository;
 
 @Service
 public class LigneReceptionService {
 
-	private final LigneReceptionRepository lrr;
+	private final LigneReceptionRepository repos;
 
 	/**
-	 * @param lr
+	 * @param repos
 	 */
 	public LigneReceptionService(LigneReceptionRepository lrr) {
-		this.lrr = lrr;
+		this.repos = lrr;
 	}
 
-	public List<LigneReception> ajouteLigneReception(LigneReception ligne){
-		lrr.save(ligne);
-		return lrr.findAll();
+	public Optional<LigneReception> findById(Long id) {
+		return repos.findById(id);
 	}
 
-	public LigneReception modifieLigneReception(LigneReception ligne, Long id) {
-		LigneReception lr=lrr.getOne(id);
-		lr.setQuantiteLigneReception(ligne.getQuantiteLigneReception());
-		lr.setPULigneReception(ligne.getPULigneReception());
-		lr.setNumSerieDebLigneReception(ligne.getNumSerieDebLigneReception());
-		lr.setNumSerieFinLigneReception(ligne.getNumSerieFinLigneReception());
-		lr.setQuantiteLigneReception(ligne.getQuantiteLigneReception());
-		lr.setObservationLigneReception(ligne.getObservationLigneReception());
-		return lrr.save(lr);
+
+	public List<LigneReception> findByQte (double qte){
+		return repos.findByQuantiteLigneReception(qte);
 	}
 
-	public List<LigneReception> supprimeLigneReception(Long id) {
-		lrr.deleteById(id);
-		return lrr.findAll();
+	public List<LigneReception> findByPrix (double prix){
+		return repos.findByPULigneReception(prix);
+	}
+
+	public List<LigneReception> findAll() {
+		return repos.findAll();
+	}
+
+	public List<LigneReception> save(LigneReception ligne){
+		repos.save(ligne);
+		return repos.findAll();
+	}
+
+	public LigneReception edit(LigneReception ligne, Long id) {
+		LigneReception cible=repos.getOne(id);
+		if (cible!=null) {
+		cible.setQuantiteLigneReception(ligne.getQuantiteLigneReception());
+		cible.setPULigneReception(ligne.getPULigneReception());
+		cible.setNumSerieDebLigneReception(ligne.getNumSerieDebLigneReception());
+		cible.setNumSerieFinLigneReception(ligne.getNumSerieFinLigneReception());
+		cible.setQuantiteLigneReception(ligne.getQuantiteLigneReception());
+		cible.setObservationLigneReception(ligne.getObservationLigneReception());
+		return repos.save(cible);
+		}
+		else 
+			return null;
+	}
+
+	public boolean delete(Long id) {
+		repos.deleteById(id);
+		return repos.existsById(id);
 	}
 }

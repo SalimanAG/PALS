@@ -1,39 +1,58 @@
 package com.sil.gpc.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LignePlacement;
 import com.sil.gpc.repositories.LignePlacementRepository;
 
 @Service
 public class LignePlacementService {
 
-	private final LignePlacementRepository lpr;
+	private final LignePlacementRepository repos;
 
 	/**
-	 * @param lpr
+	 * @param repos
 	 */
 	public LignePlacementService(LignePlacementRepository lpr) {
-		this.lpr = lpr;
+		this.repos = lpr;
 	}
 
-	public LignePlacement ajoutLignePlacement(LignePlacement ligne) {
-		return lpr.save(ligne);
+
+	public Optional<LignePlacement> findById(Long id) {
+		return repos.findById(id);
 	}
 
-	public LignePlacement modifieLignePlacement(LignePlacement ligne, Long id) {
-		LignePlacement lp=lpr.getOne(id);
+	public List<LignePlacement> findAll() {
+		return repos.findAll();
+	}
+
+	public List<LignePlacement> findByArticle(Article art) {
+		return repos.findByArticle(art);
+	}
+
+	public List<LignePlacement> findByPrix(double prix) {
+		return repos.findByPULignePlacement(prix);
+	}
+
+	public LignePlacement save(LignePlacement ligne) {
+		return repos.save(ligne);
+	}
+
+	public LignePlacement edit(LignePlacement ligne, Long id) {
+		LignePlacement lp=repos.getOne(id);
 		lp.setArticle(ligne.getArticle());
 		lp.setPULignePlacement(ligne.getPULignePlacement());
 		lp.setQuantiteLignePlacement(ligne.getQuantiteLignePlacement());
-		return lpr.save(lp);
+		return repos.save(lp);
 	}
 
-	public List<LignePlacement> supprimeLignePlacements(Long id) {
-		lpr.deleteById(id);
-		return lpr.findAll();
+	public boolean delete(Long id) {
+		repos.deleteById(id);
+		return repos.existsById(id);
 	}
 	
 }

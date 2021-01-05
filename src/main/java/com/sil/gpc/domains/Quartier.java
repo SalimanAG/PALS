@@ -43,7 +43,7 @@ public class Quartier implements Serializable {
 		this.nomQuartier = nomQuartier;
 		this.numTelQuartier = numTelQuartier;
 		this.adresseQuartier = adresseQuartier;
-		this.immeublesParQuartier = immeublesParQuartier;
+		this.immeublesParQuartier = immeublesParQuartier; 
 		this.arrondissement = arrondissement;
 	}
 

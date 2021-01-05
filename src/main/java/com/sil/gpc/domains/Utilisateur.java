@@ -2,9 +2,12 @@ package com.sil.gpc.domains;
 
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -21,8 +24,11 @@ public class Utilisateur {
 	
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class,mappedBy = "utilisateur")
 	public List<OpCaisse> opCaisseParUtilisateur;
+
 	
-	private String codeService; //***************************Code Service A Etablir
+	@ManyToOne(cascade = CascadeType.ALL,targetEntity = Service.class)
+	@JoinColumn(name = "codeService", referencedColumnName = "codeService", nullable = true)
+	public Service service;
 	
 	//**************************Les affecters de l'utilisateur
 	// Liaison à la table Affecter
@@ -35,7 +41,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(String login, String motDePass, String nomUtilisateur, String prenomUtilisateur,
-			String fonctionUtilisateur, boolean activeUtilisateur, String codeService) {
+			String fonctionUtilisateur, boolean activeUtilisateur, Service service) {
 		super();
 		this.login = login;
 		this.motDePass = motDePass;
@@ -43,7 +49,7 @@ public class Utilisateur {
 		this.prenomUtilisateur = prenomUtilisateur;
 		this.fonctionUtilisateur = fonctionUtilisateur;
 		this.activeUtilisateur = activeUtilisateur;
-		this.codeService = codeService;
+		this.service = service;
 	}
 
 	public Long getIdUtilisateur() {
@@ -102,76 +108,12 @@ public class Utilisateur {
 		this.activeUtilisateur = activeUtilisateur;
 	}
 
-	public String getCodeService() {
-		return codeService;
+	public Service getService() {
+		return service;
 	}
 
-	public void setCodeService(String codeService) {
-		this.codeService = codeService;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (activeUtilisateur ? 1231 : 1237);
-		result = prime * result + ((codeService == null) ? 0 : codeService.hashCode());
-		result = prime * result + ((fonctionUtilisateur == null) ? 0 : fonctionUtilisateur.hashCode());
-		result = prime * result + ((idUtilisateur == null) ? 0 : idUtilisateur.hashCode());
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((motDePass == null) ? 0 : motDePass.hashCode());
-		result = prime * result + ((nomUtilisateur == null) ? 0 : nomUtilisateur.hashCode());
-		result = prime * result + ((prenomUtilisateur == null) ? 0 : prenomUtilisateur.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Utilisateur other = (Utilisateur) obj;
-		if (activeUtilisateur != other.activeUtilisateur)
-			return false;
-		if (codeService == null) {
-			if (other.codeService != null)
-				return false;
-		} else if (!codeService.equals(other.codeService))
-			return false;
-		if (fonctionUtilisateur == null) {
-			if (other.fonctionUtilisateur != null)
-				return false;
-		} else if (!fonctionUtilisateur.equals(other.fonctionUtilisateur))
-			return false;
-		if (idUtilisateur == null) {
-			if (other.idUtilisateur != null)
-				return false;
-		} else if (!idUtilisateur.equals(other.idUtilisateur))
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (motDePass == null) {
-			if (other.motDePass != null)
-				return false;
-		} else if (!motDePass.equals(other.motDePass))
-			return false;
-		if (nomUtilisateur == null) {
-			if (other.nomUtilisateur != null)
-				return false;
-		} else if (!nomUtilisateur.equals(other.nomUtilisateur))
-			return false;
-		if (prenomUtilisateur == null) {
-			if (other.prenomUtilisateur != null)
-				return false;
-		} else if (!prenomUtilisateur.equals(other.prenomUtilisateur))
-			return false;
-		return true;
+	public void setService(Service service) {
+		this.service = service;
 	}
 
 	@Override
@@ -179,8 +121,11 @@ public class Utilisateur {
 		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", login=" + login + ", motDePass=" + motDePass
 				+ ", nomUtilisateur=" + nomUtilisateur + ", prenomUtilisateur=" + prenomUtilisateur
 				+ ", fonctionUtilisateur=" + fonctionUtilisateur + ", activeUtilisateur=" + activeUtilisateur
-				+ ", codeService=" + codeService + "]";
+				+ ", opCaisseParUtilisateur=" + opCaisseParUtilisateur + ", service=" + service
+				+ ", affectationsDunUtilisateur=" + affectationsDunUtilisateur + "]";
 	}
+
 	
+
 	
 }

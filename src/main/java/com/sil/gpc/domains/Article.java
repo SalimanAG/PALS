@@ -164,6 +164,22 @@ public class Article implements Serializable {
 		this.couleurArticle = couleurArticle;
 	}
 
+	public Famille getFamille() {
+		return famille;
+	}
+
+	public void setFamille(Famille famille) {
+		this.famille = famille;
+	}
+
+	public Uniter getUnite() {
+		return unite;
+	}
+
+	public void setUnite(Uniter unite) {
+		this.unite = unite;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(codeArticle, commandesDunArticle, consommableArticle, couleurArticle, famille, libArticle,

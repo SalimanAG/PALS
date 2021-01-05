@@ -24,7 +24,7 @@ public class LigneCommande implements Serializable{
 	private Long idLigneCommande;
 	private double qteLigneCommande;
 	private double PULigneCommande;
-	private double Remise;
+	private double REmise;
 	private double TVA;
 
 	//Liaison à la table Commande
@@ -52,7 +52,7 @@ public class LigneCommande implements Serializable{
 		this.idLigneCommande = idLigneCommande;
 		this.qteLigneCommande = qteLigneCommande;
 		PULigneCommande = pULigneCommande;
-		Remise = remise;
+		REmise = remise;
 		TVA = tVA;
 		this.numCommande = cmde;
 	}
@@ -84,11 +84,11 @@ public class LigneCommande implements Serializable{
 	}
 
 	public double getRemise() {
-		return Remise;
+		return REmise;
 	}
 
 	public void setRemise(double remise) {
-		Remise = remise;
+		REmise = remise;
 	}
 
 	public double getTVA() {
@@ -98,5 +98,23 @@ public class LigneCommande implements Serializable{
 	public void setTVA(double tVA) {
 		TVA = tVA;
 	}
+
+	public Commande getNumCommande() {
+		return numCommande;
+	}
+
+	public void setNumCommande(Commande numCommande) {
+		this.numCommande = numCommande;
+	}
+
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+	
+	
  	
 }
