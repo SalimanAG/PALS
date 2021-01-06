@@ -69,9 +69,9 @@ public class OpCaisseService {
 		return repos.save(oc);
 	}
 
-	public List<OpCaisse> delete(String num){
+	public boolean delete(String num){
 		repos.deleteById(num);
-		return repos.findAll();
+		return !repos.existsById(num);
 	}
 	
 }

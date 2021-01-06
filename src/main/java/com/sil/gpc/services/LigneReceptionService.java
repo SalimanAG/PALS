@@ -38,9 +38,8 @@ public class LigneReceptionService {
 		return repos.findAll();
 	}
 
-	public List<LigneReception> save(LigneReception ligne){
-		repos.save(ligne);
-		return repos.findAll();
+	public LigneReception save(LigneReception ligne){
+		return repos.save(ligne);
 	}
 
 	public LigneReception edit(LigneReception ligne, Long id) {

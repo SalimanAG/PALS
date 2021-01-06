@@ -64,5 +64,9 @@ public class LocataireService {
 	public List<Locataire> findByTelephone(String tel) {
 		return repos.findByTelLocataire(tel);
 	}
+	
+	public List<Locataire> findAll() {
+		return repos.findAll();
+	}
 
 }
