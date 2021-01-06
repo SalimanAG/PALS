@@ -1,5 +1,6 @@
 package com.sil.gpc.controllers.stock;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,10 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sil.gpc.domains.Approvisionnement;
-import com.sil.gpc.domains.Arrondissement;
-import com.sil.gpc.domains.Caisse;
 import com.sil.gpc.domains.LigneAppro;
-import com.sil.gpc.repositories.ApprovisionementRepository;
+import com.sil.gpc.domains.Placement;
+import com.sil.gpc.domains.Regisseur;
+import com.sil.gpc.domains.Exercice;
+import com.sil.gpc.domains.Recollement;
+import com.sil.gpc.domains.LignePlacement;
+import com.sil.gpc.domains.Article;
+import com.sil.gpc.domains.Magasin;
+import com.sil.gpc.domains.LigneRecollement;
 import com.sil.gpc.services.ApprovisionnementService;
 import com.sil.gpc.services.LigneApproService;
 import com.sil.gpc.services.LignePlacementService;
@@ -130,8 +136,47 @@ public class MairieController {
 	#############	Partie réservée pour Placement
 	###########################################################
 	*/
+	@GetMapping(path = "placement/list")
+	public List<Placement> getAllPlacement(){
+		
+		return this.placementService.findAll();
+	}
 	
+	@GetMapping(path = "placement/byCodPla/{id}")
+	public Optional<Placement> getPlacementById(@PathVariable(name = "id") String id){
+		
+		return this.placementService.findById(id);
+	}
 	
+	@GetMapping(path = "placement/byExo/{exo}")
+	public List<Placement> getPlacementByExercice(@PathVariable(name = "exo") Exercice exo){
+		
+		return  null;//this.placementService.findByExercice(exo); // utiliser l'objet Exercice et non int
+	}
+	
+	@GetMapping(path = "placement/byDatePla/{datePla}")
+	public List<Placement> getPlacementByDate(@PathVariable(name = "datePla") Date datePla){
+		
+		return this.placementService.findByDatePlacement(datePla); //nom de methode mal defini
+	}
+	
+	@PostMapping(path = "placement/list")
+	public Placement createPlacement( @RequestBody Placement placement) {
+		
+		return this.placementService.save(placement);
+	}
+	
+	@PutMapping(path = "placement/byCodPla/{id}")
+	public Placement updatePlacement(@PathVariable(name = "id") String id, @RequestBody Placement placement) {
+		
+		return this.placementService.edit(placement, id);
+	}
+	
+	@DeleteMapping(path = "placement/byCodPla/{id}")
+	public Boolean deletePlacement(@PathVariable(name = "id") String id) {
+		
+		return this.placementService.delete(id);
+	}
 	
 	
 	
@@ -140,12 +185,47 @@ public class MairieController {
 	#############	Partie réservée pour Ligne placement
 	###########################################################
 	*/
+	@GetMapping(path = "lignePla/list")
+	public List<LignePlacement> getAllLignePla(){
+		
+		return this.lignePlacementService.findAll();
+	}
 	
+	@GetMapping(path = "lignePla/byCodLigPla/{id}")
+	public Optional<LignePlacement> getLignePlaById(@PathVariable(name = "id") Long id){
+		
+		return this.lignePlacementService.findById(id);
+	}
 	
+	@GetMapping(path = "lignePla/Prix/{prix}")
+	public List<LignePlacement> getLignePlaByPrix(@PathVariable(name = "prix") double prix){
+		
+		return this.lignePlacementService.findByPrix(prix);
+	}
 	
+	@GetMapping(path = "lignePla/Article/{art}")
+	public List<LignePlacement> getLignePlaByArticle(@PathVariable(name = "art") Article art){
+		
+		return this.lignePlacementService.findByArticle(art);
+	}
 	
+	@PostMapping(path = "lignePla/list")
+	public LignePlacement createLignePla( @RequestBody LignePlacement lignePla) {
+		
+		return this.lignePlacementService.save(lignePla);
+	}
 	
+	@PutMapping(path = "lignePla/byCodLigPla/{id}")
+	public LignePlacement updateLignePla(@PathVariable(name = "id") Long id, @RequestBody LignePlacement lignePla) {
+		
+		return this.lignePlacementService.edit(lignePla, id);
+	}
 	
+	@DeleteMapping(path = "lignePla/byCodLiPla/{id}")
+	public Boolean deleteLignePla(@PathVariable(name = "id") Long id) {
+		
+		return this.lignePlacementService.delete(id);
+	}
 	
 	
 	
@@ -153,18 +233,59 @@ public class MairieController {
 	#############	Partie réservée pour Recollement
 	###########################################################
 	*/
+	@GetMapping(path = "recollement/list")
+	public List<Recollement> getAllRecollement(){
+		
+		return this.recollementService.getAll();
+	}
 	
+	@GetMapping(path = "recollement/byCodReco/{id}")
+	public Optional<Recollement> getRecollementById(@PathVariable(name = "id") String id){
+		
+		return this.recollementService.findById(id);
+	}
 	
+	@GetMapping(path = "recollement/byDateReco/{dateReco}")
+	public List<Recollement> getRecollementByDateRecollement(@PathVariable(name = "dateReco") Date dateReco){
+		
+		return this.recollementService.findByDateRecollement(dateReco);
+	}
 	
+	@GetMapping(path = "recollement/byMag/{mag}")
+	public List<Recollement> getRecollementByMagasin(@PathVariable(name = "mag") Magasin mag){
+		
+		return this.recollementService.findByMagasinRecollement(mag);
+	}
 	
+	@GetMapping(path = "recollement/byReg/{reg}")
+	public List<Recollement> getRecollementByRegisseur(@PathVariable(name = "reg") Regisseur reg){
+		
+		return this.recollementService.findByRegisseurRecollement(reg);
+	}
 	
+	@GetMapping(path = "recollement/byExo/{exo}")
+	public List<Recollement> getRecollementByExercice(@PathVariable(name = "exo") Exercice exo){
+		
+		return this.recollementService.findByExerciceRecollement(exo);
+	}
 	
+	@PostMapping(path = "recollement/list")
+	public Recollement createRecollement( @RequestBody Recollement recollement) {
+		
+		return this.recollementService.save(recollement);
+	}
 	
+	@PutMapping(path = "recollement/byCodReco/{id}")
+	public Recollement updateRecollement(@PathVariable(name = "id") String id, @RequestBody Recollement recollement) {
+		
+		return this.recollementService.edit(id, recollement);
+	}
 	
-	
-	
-	
-	
+	@DeleteMapping(path = "recollement/byCodReco/{id}")
+	public Boolean deleteRecollement(@PathVariable(name = "id") String id) {
+		
+		return this.recollementService.delete(id);
+	}
 	
 	
 	
@@ -173,19 +294,53 @@ public class MairieController {
 	#############	Partie réservée pour Ligne Recollement
 	###########################################################
 	*/
+	@GetMapping(path = "ligneRecoll/list")
+	public List<LigneRecollement> getAllLigneRecoll(){
+		
+		return this.ligneRecollementService.findAll();
+	}
 	
+	@GetMapping(path = "ligneRecoll/byCodLigRecoll/{id}")
+	public Optional<LigneRecollement> getLigneRecollById(@PathVariable(name = "id") Long id){
+		
+		return this.ligneRecollementService.FindById(id);
+	}
 	
+	@GetMapping(path = "ligneRecoll/byPrixLigRecoll/{prix}")
+	public List<LigneRecollement> getLigneRecollByPrix(@PathVariable(name = "prix") double prix){
+		
+		return this.ligneRecollementService.findByPrix(prix);
+	}
 	
+	@GetMapping(path = "ligneRecoll/byQteLigRecoll/{qte}")
+	public List<LigneRecollement> getLigneRecollByQuantite(@PathVariable(name = "qte") double qte){
+		
+		return this.ligneRecollementService.findByQte(qte);
+	}
 	
+	@GetMapping(path = "ligneRecoll/byArticle/{art}")
+	public List<LigneRecollement> getLigneRecollByQuantite(@PathVariable(name = "art") Article art){
+		
+		return this.ligneRecollementService.findByArtice(art);
+	}
 	
+	@PostMapping(path = "ligneRecoll/list")
+	public LigneRecollement createLigneRecollement( @RequestBody LigneRecollement ligneRecoll) {
+		
+		return this.ligneRecollementService.save(ligneRecoll);
+	}
 	
+	@PutMapping(path = "ligneRecoll/byCodLigRecoll/{id}")
+	public LigneRecollement updateLigneRecollement(@PathVariable(name = "id") Long id, @RequestBody LigneRecollement ligneRecoll) {
+		
+		return this.ligneRecollementService.edit(ligneRecoll, id);
+	}
 	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "ligneRecoll/byCodLigRecoll/{id}")
+	public Boolean deleteLigneRecollement(@PathVariable(name = "id") Long id) {
+		
+		return this.ligneRecollementService.delete(id);
+	}	
 	
 	
 	
@@ -194,18 +349,35 @@ public class MairieController {
 	#############	Partie réservée pour Régisseur
 	###########################################################
 	*/
+	@GetMapping(path = "regisseur/list")
+	public List<Regisseur> getAllRegisseur(){
+		
+		return this.regisseurService.getAll();
+	}
 	
+	@GetMapping(path = "regisseur/byCodReg/{id}")
+	public Optional<Regisseur> getRegisseurById(@PathVariable(name = "id") String id){
+		
+		return this.regisseurService.findById(id);
+	}
 	
+	@PostMapping(path = "regisseur/list")
+	public Regisseur createRegisseur( @RequestBody Regisseur regisseur) {
+		
+		return this.regisseurService.save(regisseur);
+	}
 	
+	@PutMapping(path = "regisseur/byCodReg/{id}")
+	public Regisseur updateApprovisionnement(@PathVariable(name = "id") String id, @RequestBody Regisseur regisseur) {
+		
+		return this.regisseurService.edit(id, regisseur);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "regisseur/byCodApp/{id}")
+	public Boolean deleteRegisseur(@PathVariable(name = "id") String id) {
+		
+		return this.approvisionnementService.delete(id);
+	}	
 	
 	
 	
