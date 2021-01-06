@@ -17,6 +17,9 @@ import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneDemandeAppro;
+import com.sil.gpc.domains.LigneReception;
+import com.sil.gpc.domains.Reception;
+import com.sil.gpc.domains.Rp;
 import com.sil.gpc.services.CommandeService;
 import com.sil.gpc.services.DemandeApproService;
 import com.sil.gpc.services.LigneCommandeService;
@@ -56,21 +59,35 @@ public class TresorController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "rp/list")
+	public List<Rp> getAllRp(){
+		
+		return this.rpService.getAll();
+	}
 	
+	@GetMapping(path = "rp/byCodRp/{id}")
+	public Optional<Rp> getRpById(@PathVariable(name = "id") String id){
+		
+		return this.rpService.findById(id);
+	}
 	
+	@PostMapping(path = "rp/list")
+	public Rp createRp( @RequestBody Rp rp) {
+		
+		return this.rpService.save(rp);
+	}
 	
+	@PutMapping(path = "rp/byCodRp/{id}")
+	public Rp updateRp(@PathVariable(name = "id") String id, @RequestBody Rp rp) {
+		
+		return this.rpService.edit(id, rp);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "rp/byCodRp/{id}")
+	public Boolean deleteRp(@PathVariable(name = "id") String id) {
+		
+		return this.rpService.delete(id);
+	}
 	
 	
 	
@@ -154,23 +171,35 @@ public class TresorController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "reception/list")
+	public List<Reception> getAllReception(){
+		
+		return this.receptionService.getAll();
+	}
 	
+	@GetMapping(path = "reception/byCodRec/{id}")
+	public Optional<Reception> getReceptionById(@PathVariable(name = "id") String id){
+		
+		return this.receptionService.findById(id);
+	}
 	
+	@PostMapping(path = "reception/list")
+	public Reception createReception( @RequestBody Reception reception) {
+		
+		return this.receptionService.save(reception);
+	}
 	
+	@PutMapping(path = "reception/byCodRec/{id}")
+	public Reception updateReception(@PathVariable(name = "id") String id, @RequestBody Reception reception) {
+		
+		return this.receptionService.edit(id, reception);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "reception/byCodRec/{id}")
+	public Boolean deleteReception(@PathVariable(name = "id") String id) {
+		
+		return this.receptionService.delete(id);
+	}	
 	
 	
 	
@@ -179,24 +208,35 @@ public class TresorController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "ligneReception/list")
+	public List<LigneReception> getAllLigneReception(){
+		
+		return this.ligneReceptionService.findAll();
+	}
 	
+	@GetMapping(path = "ligneReception/byCodLigRec/{id}")
+	public Optional<LigneReception> getLigneReceptionById(@PathVariable(name = "id") Long id){
+		
+		return this.ligneReceptionService.findById(id);
+	}
 	
+	@PostMapping(path = "ligneReception/list")
+	public LigneReception createLigneReception( @RequestBody LigneReception ligneReception) {
+		
+		return this.ligneReceptionService.save(ligneReception);
+	}
 	
+	@PutMapping(path = "ligneReception/byCodLigRec/{id}")
+	public LigneReception updateLigneReception(@PathVariable(name = "id") Long id, @RequestBody LigneReception ligneReception) {
+		
+		return this.ligneReceptionService.edit(ligneReception, id);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "ligneReception/byCodLigRec/{id}")
+	public Boolean deleteLigneReception(@PathVariable(name = "id") Long id) {
+		
+		return this.ligneReceptionService.delete(id);
+	}		
 	
 	
 	

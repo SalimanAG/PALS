@@ -1,5 +1,7 @@
 package com.sil.gpc.controllers.facturaction;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sil.gpc.domains.Affecter;
 import com.sil.gpc.domains.Caisse;
+import com.sil.gpc.domains.LigneOpCaisse;
+import com.sil.gpc.domains.LigneReversement;
 import com.sil.gpc.domains.ModePaiement;
 import com.sil.gpc.domains.OpCaisse;
+import com.sil.gpc.domains.Reversement;
 import com.sil.gpc.domains.TypeRecette;
 import com.sil.gpc.services.AffecterService;
+import com.sil.gpc.services.ArrondissementService;
+import com.sil.gpc.services.ArticleService;
 import com.sil.gpc.services.CaisseService;
 import com.sil.gpc.services.LigneOpCaisseService;
 import com.sil.gpc.services.LigneReversementService;
@@ -25,6 +32,7 @@ import com.sil.gpc.services.ModePaiementService;
 import com.sil.gpc.services.OpCaisseService;
 import com.sil.gpc.services.ReversementService;
 import com.sil.gpc.services.TypeRecetteService;
+import com.sil.gpc.services.UtilisateurService;
 
 @RestController
 @RequestMapping(path = "/perfora-gpc/v1/facturation/")
@@ -38,12 +46,15 @@ public class FacturationController {
 	private final OpCaisseService opCaisseService;
 	private final ReversementService reversementService;
 	private final TypeRecetteService typeRecetteService;
+	private final ArrondissementService arrondissementService;
+	private final UtilisateurService utilisateurService;
+	private final ArticleService articleService;
 	
 	
 	public FacturationController(CaisseService caisseService, AffecterService affecterService,
 			LigneOpCaisseService ligneOpCaisseService, LigneReversementService ligneReversementService,
 			ModePaiementService modePaiementService, OpCaisseService opCaisseService,
-			ReversementService reversementService, TypeRecetteService typeRecetteService) {
+			ReversementService reversementService, TypeRecetteService typeRecetteService, ArrondissementService arrondissementService, UtilisateurService utilisateurService, ArticleService articleService) {
 		super();
 		this.caisseService = caisseService;
 		this.affecterService = affecterService;
@@ -53,6 +64,9 @@ public class FacturationController {
 		this.opCaisseService = opCaisseService;
 		this.reversementService = reversementService;
 		this.typeRecetteService = typeRecetteService;
+		this.arrondissementService = arrondissementService;
+		this.utilisateurService = utilisateurService;
+		this.articleService = articleService;
 	}
 	
 	/*###########################################################
@@ -90,6 +104,27 @@ public class FacturationController {
 		return this.caisseService.delete(id);
 	}
 	
+	
+	@GetMapping(path = "caisse/byCodArrondi/{valeur}")
+	public List<Caisse> getCaisseByCodeArrondissement(@PathVariable(name = "valeur") String valeur){
+		
+		List<Caisse> res = new ArrayList<Caisse>();
+		if(this.arrondissementService.findByCodeArrondi(valeur).isEmpty()==false) {
+			res = this.caisseService.findByArrondissement(this.arrondissementService.findByCodeArrondi(valeur).get(0));
+			return res;
+		}
+		
+		return res;
+	}
+	
+	@GetMapping(path = "caisse/byLibCai/{valeur}")
+	public List<Caisse> getCaisseByLibeCaisse(@PathVariable(name = "valeur") String valeur){
+		
+			return this.caisseService.findByLibeCaisse(valeur);
+			
+	}
+	
+	
 	/*###########################################################
 	#############	Partie réservée pour Affecter
 	###########################################################
@@ -119,13 +154,47 @@ public class FacturationController {
 		return this.affecterService.edit(id, affecter);
 	}
 	
-	@DeleteMapping(path = "Affecter/byCodAff/{id}")
+	@DeleteMapping(path = "affecter/byCodAff/{id}")
 	public Boolean deleteAffecter(@PathVariable(name = "id") Long id) {
 		
 		return this.affecterService.delete(id);
 	}
 	
+	@GetMapping(path = "affecter/byCodCaiss/{valeur}")
+	public List<Affecter> getAffecterByCodeCaisse(@PathVariable(name = "valeur") String valeur){
+		
+		List<Affecter> res = new ArrayList<Affecter>();
+		if(this.caisseService.findByCodeCaisse(valeur).isEmpty()==false) {
+			res = this.affecterService.findByCaisse(this.caisseService.findByCodeCaisse(valeur).get(0));
+			return res;
+		}
+		
+		return res;
+	}
 	
+	@GetMapping(path = "affecter/byCodUtilisa/{valeur}")
+	public List<Affecter> getAffecterByCodeUtilisateur(@PathVariable(name = "valeur") Long valeur){
+		
+		List<Affecter> res = new ArrayList<Affecter>();
+		if(this.utilisateurService.findByIdUtilisateur(valeur).isEmpty()==false) {
+			res = this.affecterService.findByUtilisateur(this.utilisateurService.findByIdUtilisateur(valeur).get(0));
+			return res;
+		}
+		
+		return res;
+	}
+	
+	@GetMapping(path = "affecter/byDateDebAff/{valeur}")
+	public List<Affecter> getAffecterByDateDebAffecter(@PathVariable(name = "valeur") Date valeur){
+		
+			return this.affecterService.findByDateDebAffecter(valeur);
+	}
+	
+	@GetMapping(path = "affecter/byDateFinAff/{valeur}")
+	public List<Affecter> getAffecterByDateFinAffecter(@PathVariable(name = "valeur") Date valeur){
+		
+			return this.affecterService.findByDateFinAffecter(valeur);
+	}
 	
 	
 	/*###########################################################
@@ -136,33 +205,38 @@ public class FacturationController {
 	@GetMapping(path = "modePaiement/list")
 	public List<ModePaiement> getAllModePaiement(){
 		
-		return null;
+		return this.modePaiementService.findAll();
 	}
 	
 	@GetMapping(path = "modePaiement/byCodModPai/{id}")
-	public ModePaiement getModePaiementById(@PathVariable(name = "id") String id){
+	public Optional<ModePaiement> getModePaiementById(@PathVariable(name = "id") String id){
 		
-		return null;//this.modePaiementService.rechercheModePaiement(id);
+		return this.modePaiementService.findById(id);
 	}
 	
 	@PostMapping(path = "modePaiement/list")
 	public ModePaiement createModePaiement(@RequestBody ModePaiement modePaiement) {
 		
-		return null; //this.modePaiementService.ajouteModePaiment(modePaiement);
+		return this.modePaiementService.save(modePaiement);
 	}
 	
 	@PutMapping(path = "modePaiement/byCodModPai/{id}")
 	public ModePaiement updateModePaiement(@PathVariable(name = "id") String id, @RequestBody ModePaiement modePaiement) {
 		
-		return null; //this.modePaiementService.modifieMP(modePaiement, id);
+		return this.modePaiementService.edit(modePaiement, id);
 	}
 	
 	@DeleteMapping(path = "modePaiement/byCodModPai/{id}")
 	public Boolean deleteModePaiement(@PathVariable(name = "id") String id) {
 		
-		return null;//this.modePaiementService.suppprimeModePaiement(id);
+		return this.modePaiementService.delete(id);
 	}
 	
+	@GetMapping(path = "modePaiement/byLib/{valeur}")
+	public List<ModePaiement> getModePaiementByLibelle(@PathVariable(name = "valeur") String valeur){
+		
+			return this.modePaiementService.findByLibelle(valeur);
+	}
 	
 	
 	/*###########################################################
@@ -173,34 +247,38 @@ public class FacturationController {
 	@GetMapping(path = "typeRecette/list")
 	public List<TypeRecette> getAllTypeRecette(){
 		
-		return null; //this.typeRecetteService.findAllTypeRecette();
+		return this.typeRecetteService.getAll();
 	}
 	
 	@GetMapping(path = "typeRecette/byCodTypRec/{id}")
-	public TypeRecette getTypeRecetteById(@PathVariable(name = "id") String id){
+	public Optional<TypeRecette> getTypeRecetteById(@PathVariable(name = "id") String id){
 		
-		return null; //this.typeRecetteService.findById(id);
+		return this.typeRecetteService.findById(id);
 	}
 	
 	@PostMapping(path = "typeRecette/list")
 	public TypeRecette createTypeRecette(@RequestBody TypeRecette typeRecette) {
 		
-		return null; //this.typeRecetteService.save(typeRecette);
+		return this.typeRecetteService.save(typeRecette);
 	}
 	
 	@PutMapping(path = "typeRecette/byCodTypRec/{id}")
 	public TypeRecette updateTypeRecette(@PathVariable(name = "id") String id, @RequestBody TypeRecette typeRecette) {
 		
-		return null;//this.typeRecetteService.edit(id, typeRecette);
+		return this.typeRecetteService.edit(id, typeRecette);
 	}
 	
 	@DeleteMapping(path = "typeRecette/byCodTypRec/{id}")
 	public Boolean deleteTypeRecette(@PathVariable(name = "id") String id) {
 		
-		return null;//this.typeRecetteService.delete(id);
+		return this.typeRecetteService.delete(id);
 	}
 	
-	
+	@GetMapping(path = "typeRecette/byLibTypRec/{valeur}")
+	public List<TypeRecette> getTypeRecetteByLibelleTypeRecette(@PathVariable(name = "valeur") String valeur){
+		
+			return this.typeRecetteService.findByLibelleTypeRecette(valeur);
+	}
 	
 	
 	
@@ -212,32 +290,57 @@ public class FacturationController {
 	@GetMapping(path = "opCaisse/list")
 	public List<OpCaisse> getAllOpcaisse(){
 		
-		return null;//this.opCaisseService.
+		return this.opCaisseService.findAll();
 	}
 	
 	@GetMapping(path = "opCaisse/byCodOpCai/{id}")
-	public OpCaisse getOpCaisseById(@PathVariable(name = "id") String id){
+	public Optional<OpCaisse> getOpCaisseById(@PathVariable(name = "id") String id){
 		
-		return null; //this.opCaisseService.rechercheOpCaisse(id);
+		return this.opCaisseService.findById(id);
 	}
 	
 	@PostMapping(path = "opCaisse/list")
 	public OpCaisse createOpCaisse(@RequestBody OpCaisse opCaisse) {
 		
-		return null;//this.opCaisseService.ajouteOpCaisse(opCaisse);
+		return this.opCaisseService.save(opCaisse);
 	}
 	
 	@PutMapping(path = "opCaisse/byCodOpCai/{id}")
 	public OpCaisse updateOpCaisse(@PathVariable(name = "id") String id, @RequestBody OpCaisse opCaisse) {
 		
-		return null;//this.opCaisseService.modifieOpCaisse(opCaisse, id);
+		return this.opCaisseService.edit(opCaisse, id);
 	}
 	
 	@DeleteMapping(path = "opCaisse/byCodOpCai/{id}")
 	public Boolean deleteOpCaisse(@PathVariable(name = "id") String id) {
 		
-		return null;//this.opCaisseService.supprimeOpCaisse(id);
+		return this.opCaisseService.delete(id);
 	}
+	
+	@GetMapping(path = "opCaisse/byContribu/{valeur}")
+	public List<OpCaisse> getOpCaisseByContribuable(@PathVariable(name = "valeur") String valeur){
+		
+			return this.opCaisseService.findByContribuale(valeur);
+	}
+	
+	@GetMapping(path = "opCaisse/byDatOpCai/{valeur}")
+	public List<OpCaisse> getOpCaisseByDateOpCaisse(@PathVariable(name = "valeur") Date valeur){
+		
+			return this.opCaisseService.findByDateOpCaisse(valeur);
+	}
+	
+	@GetMapping(path = "opCaisse/byModPaiem/{valeur}")
+	public List<OpCaisse> getOpCaisseByModePaiement(@PathVariable(name = "valeur") String valeur){
+		
+			return this.opCaisseService.findByModePaiement(valeur);
+	}
+	
+	@GetMapping(path = "opCaisse/byTypRecet/{valeur}")
+	public List<OpCaisse> getOpCaisseByTypeRecette(@PathVariable(name = "valeur") String valeur){
+		
+			return this.opCaisseService.findByTypeRecette(valeur);
+	}
+	
 	
 	
 	/*###########################################################
@@ -245,9 +348,58 @@ public class FacturationController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "ligneOpCaisse/list")
+	public List<LigneOpCaisse> getAllLigneOpCaisse(){
+		
+		return this.ligneOpCaisseService.getAll();
+	}
 	
+	@GetMapping(path = "ligneOpCaisse/byCodLigOpCai/{id}")
+	public LigneOpCaisse getLigneOpCaisseById(@PathVariable(name = "id") Long id){
+		
+		return this.ligneOpCaisseService.getByid(id);
+	}
 	
+	@PostMapping(path = "ligneOpCaisse/list")
+	public LigneOpCaisse createLigneOpCaisse(@RequestBody LigneOpCaisse ligneOpCaisse) {
+		
+		return this.ligneOpCaisseService.save(ligneOpCaisse);
+	}
 	
+	@PutMapping(path = "ligneOpCaisse/byCodLigOpCai/{id}")
+	public LigneOpCaisse updateLigneOpCaisse(@PathVariable(name = "id") Long id, @RequestBody LigneOpCaisse ligneOpCaisse) {
+		
+		return this.ligneOpCaisseService.edit(ligneOpCaisse, id);
+	}
+	
+	@DeleteMapping(path = "ligneOpCaisse/byCodLigOpCai/{id}")
+	public Boolean deleteLigneOpCaisse(@PathVariable(name = "id") Long id) {
+		
+		return this.ligneOpCaisseService.delete(id);
+	}
+	
+	@GetMapping(path = "ligneOpCaisse/byCodArti/{valeur}")
+	public List<LigneOpCaisse> getLigneOpCaisseByArticle(@PathVariable(name = "valeur") String valeur){
+		
+		List<LigneOpCaisse> res = new ArrayList<LigneOpCaisse>();
+		if(this.articleService.findByCodeArticle(valeur).isEmpty()==false) {
+			res = this.ligneOpCaisseService.getByArticle(this.articleService.findByCodeArticle(valeur).get(0));
+			return res;
+		}
+			return res;
+	}
+	
+	@GetMapping(path = "ligneOpCaisse/byPriLig/{valeur}")
+	public List<LigneOpCaisse> getLigneOpCaisseByPrixLigne(@PathVariable(name = "valeur") Long valeur){
+		
+			return this.ligneOpCaisseService.getByPrixLigne(valeur);
+	}
+	
+	@GetMapping(path = "ligneOpCaisse/byQteLig/{valeur}")
+	public List<LigneOpCaisse> getLigneOpCaisseByQteLigne(@PathVariable(name = "valeur") Long valeur){
+		
+			return this.ligneOpCaisseService.getByQteLigne(valeur);
+	}
 	
 	
 	/*###########################################################
@@ -255,17 +407,105 @@ public class FacturationController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "reversement/list")
+	public List<Reversement> getAllReversement(){
+		
+		return this.reversementService.getAll();
+	}
 	
+	@GetMapping(path = "reversement/byCodRev/{id}")
+	public Optional<Reversement> getReversementById(@PathVariable(name = "id") String id){
+		
+		return this.reversementService.findById(id);
+	}
 	
+	@PostMapping(path = "reversement/list")
+	public Reversement createReversement(@RequestBody Reversement reversement) {
+		
+		return this.reversementService.save(reversement);
+	}
 	
+	@PutMapping(path = "reversement/byCodRev/{id}")
+	public Reversement updateReversement(@PathVariable(name = "id") String id, @RequestBody Reversement reversement) {
+		
+		return this.reversementService.edit(id, reversement);
+	}
+	
+	@DeleteMapping(path = "reversement/byCodRev/{id}")
+	public Boolean deleteReversement(@PathVariable(name = "id") String id) {
+		
+		return this.reversementService.delete(id);
+	}
+	
+	@GetMapping(path = "reversement/byDatRev/{valeur}")
+	public List<Reversement> getReversementByDateReversement(@PathVariable(name = "valeur") Date valeur){
+		
+			return this.reversementService.findByDateReversement(valeur);
+	}
 	
 	/*###########################################################
 	#############	Partie réservée pour ligne reversement
 	###########################################################
 	*/
 	
+	@GetMapping(path = "ligneReversement/list")
+	public List<LigneReversement> getAllLigneReversement(){
+		
+		return this.ligneReversementService.findAll();
+	}
 	
+	@GetMapping(path = "ligneReversement/byCodLigRev/{id}")
+	public Optional<LigneReversement> getLigneReversementById(@PathVariable(name = "id") Long id){
+		
+		return this.ligneReversementService.findById(id);
+	}
 	
+	@PostMapping(path = "ligneReversement/list")
+	public LigneReversement createLigneReversement(@RequestBody LigneReversement ligneReversement) {
+		
+		return this.ligneReversementService.save(ligneReversement);
+	}
 	
+	@PutMapping(path = "ligneReversement/byCodLigRev/{id}")
+	public LigneReversement updateLigneReversement(@PathVariable(name = "id") Long id, @RequestBody LigneReversement ligneReversement) {
+		
+		return this.ligneReversementService.edit(ligneReversement, id);
+	}
+	
+	@DeleteMapping(path = "ligneReversement/byCodLigRev/{id}")
+	public Boolean deleteLigneReversement(@PathVariable(name = "id") Long id) {
+		
+		return this.ligneReversementService.delete(id);
+	}
+	
+	@GetMapping(path = "ligneReversement/byBeneficiai/{valeur}")
+	public List<LigneReversement> getLigneReversementByBeneficiaire(@PathVariable(name = "valeur") String valeur){
+		
+			return this.ligneReversementService.findBybeneficiairex(valeur);
+	}
+	
+	@GetMapping(path = "ligneReversement/byPriLig/{valeur}")
+	public List<LigneReversement> getLigneReversementByPrixLigne(@PathVariable(name = "valeur") Long valeur){
+		
+			return this.ligneReversementService.findByPrix(valeur);
+	}
+	
+	@GetMapping(path = "ligneReversement/byQuittance/{valeur}")
+	public List<LigneReversement> getLigneReversementByQuittance(@PathVariable(name = "valeur") String valeur){
+		
+			return this.ligneReversementService.findByQuittance(valeur);
+	}
+	
+	@GetMapping(path = "ligneReversement/byQteLigRev/{valeur}")
+	public List<LigneReversement> getLigneReversementByQteLigne(@PathVariable(name = "valeur") Long valeur){
+		
+			return this.ligneReversementService.findByQte(valeur);
+	}
+	
+	@GetMapping(path = "ligneReversement/byDatQuittanc/{valeur}")
+	public List<LigneReversement> getLigneReversementByDateQuittance(@PathVariable(name = "valeur") Date valeur){
+		
+			return this.ligneReversementService.findByDate(valeur);
+	}
 	
 }

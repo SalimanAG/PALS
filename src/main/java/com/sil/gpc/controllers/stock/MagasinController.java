@@ -16,6 +16,12 @@ import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.Caisse;
 import com.sil.gpc.domains.Famille;
 import com.sil.gpc.domains.Gerer;
+import com.sil.gpc.domains.Magasin;
+import com.sil.gpc.domains.Magasinier;
+import com.sil.gpc.domains.PlageNumArticle;
+import com.sil.gpc.domains.PlageNumDispo;
+import com.sil.gpc.domains.Stocker;
+import com.sil.gpc.domains.Uniter;
 import com.sil.gpc.services.ArticleService;
 import com.sil.gpc.services.FamilleService;
 import com.sil.gpc.services.GererService;
@@ -61,27 +67,35 @@ public class MagasinController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "magasin/list")
+	public List<Magasin> getAllMagasin(){
+		
+		return this.magasinService.
+	}
 	
+	@GetMapping(path = "magasin/byCodMag/{id}")
+	public Optional<Magasin> getMagasinById(@PathVariable(name = "id") String id){
+		
+		return this.magasinService.
+	}
 	
+	@PostMapping(path = "magasin/list")
+	public Magasin createMagasin( @RequestBody Magasin magasin) {
+		
+		return this.magasinService.save(magasin);
+	}
 	
+	@PutMapping(path = "magasin/byCodMag/{id}")
+	public Magasin updateMagasin(@PathVariable(name = "id") String id, @RequestBody Magasin magasin) {
+		
+		return this.magasinService.edit(magasin, id);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "magasin/byCodMag/{id}")
+	public Boolean deleteMagasin(@PathVariable(name = "id") String id) {
+		
+		return this.magasinService.delete(id);
+	}	
 	
 	
 	
@@ -90,23 +104,35 @@ public class MagasinController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "magasinier/list")
+	public List<Magasinier> getAllMagasinier(){
+		
+		return this.magasinierService.findAll();
+	}
 	
+	@GetMapping(path = "magasinier/byCodMag/{id}")
+	public Optional<Magasinier> getMagasinierById(@PathVariable(name = "id") Long id){
+		
+		return this.magasinierService.findById(id);
+	}
 	
+	@PostMapping(path = "magasinier/list")
+	public Magasinier createMagasinier( @RequestBody Magasinier magasinier) {
+		
+		return this.magasinierService.save(magasinier);
+	}
 	
+	@PutMapping(path = "magasinier/byCodMag/{id}")
+	public Magasinier updateMagasinier(@PathVariable(name = "id") Long id, @RequestBody Magasinier magasinier) {
+		
+		return this.magasinierService.edit(magasinier, id);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "magasinier/byCodMag/{id}")
+	public Boolean deleteMagasinier(@PathVariable(name = "id") Long id) {
+		
+		return this.magasinierService.delete(id);
+	}
 	
 	
 	
@@ -188,18 +214,35 @@ public class MagasinController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "uniter/list")
+	public List<Uniter> getAllUniter(){
+		
+		return this.uniterService.getAll();
+	}
 	
+	@GetMapping(path = "uniter/byCodUni/{id}")
+	public Optional<Uniter> getUniterById(@PathVariable(name = "id") String id){
+		
+		return this.uniterService.findById(id);
+	}
 	
+	@PostMapping(path = "uniter/list")
+	public Uniter createUniter( @RequestBody Uniter uniter) {
+		
+		return this.uniterService.save(uniter);
+	}
 	
+	@PutMapping(path = "uniter/byCodUni/{id}")
+	public Uniter updateUniter(@PathVariable(name = "id") String id, @RequestBody Uniter uniter) {
+		
+		return this.uniterService.edit(id, uniter);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "uniter/byCodUni/{id}")
+	public Boolean deleteUniter(@PathVariable(name = "id") String id) {
+		
+		return this.uniterService.delete(id);
+	}	
 	
 	
 	
@@ -244,13 +287,35 @@ public class MagasinController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "plageNumArticle/list")
+	public List<PlageNumArticle> getAllPlageNumArticle(){
+		
+		return this.plageNumArticleService.findAll();
+	}
 	
+	@GetMapping(path = "plageNumArticle/byCodPlaNumArt/{id}")
+	public Optional<PlageNumArticle> getPlageNumArticleById(@PathVariable(name = "id") Long id){
+		
+		return this.plageNumArticleService.recherchePlage(id);
+	}
 	
+	@PostMapping(path = "plageNumArticle/list")
+	public PlageNumArticle createPlageNumArticle( @RequestBody PlageNumArticle plageNumArticle) {
+		
+		return this.plageNumArticleService.save(plageNumArticle);
+	}
 	
+	@PutMapping(path = "plageNumArticle/byCodPlaNumArt/{id}")
+	public PlageNumArticle updatePlageNumArticle(@PathVariable(name = "id") Long id, @RequestBody PlageNumArticle plageNumArticle) {
+		
+		return this.plageNumArticleService.edit(plageNumArticle, id);
+	}
 	
-	
-	
-	
+	@DeleteMapping(path = "plageNumArticle/byCodPlaNumArt/{id}")
+	public Boolean deletePlageNumArticle(@PathVariable(name = "id") Long id) {
+		
+		return this.plageNumArticleService.delete(id);
+	}
 	
 	
 	
@@ -259,10 +324,35 @@ public class MagasinController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "plageNumDispo/list")
+	public List<PlageNumDispo> getAllPlageNumDispo(){
+		
+		return this.plageNumDispoService.findAll();
+	}
 	
+	@GetMapping(path = "plageNumDispo/byCodPlaNumDis/{id}")
+	public Optional<PlageNumDispo> getPlageNumDispoById(@PathVariable(name = "id") String id){
+		
+		return this.plageNumDispoService.findById(id);
+	}
 	
+	@PostMapping(path = "plageNumDispo/list")
+	public PlageNumDispo createPlageNumDispo( @RequestBody PlageNumDispo plageNumDispo) {
+		
+		return this.plageNumDispoService.save(plageNumDispo);
+	}
 	
+	@PutMapping(path = "plageNumDispo/byCodPlaNumDis/{id}")
+	public PlageNumDispo updatePlageNumDispo(@PathVariable(name = "id") String id, @RequestBody PlageNumDispo plageNumDispo) {
+		
+		return this.plageNumDispoService.edit(plageNumDispo, id);
+	}
 	
+	@DeleteMapping(path = "plageNumDispo/byCodPlaNumDis/{id}")
+	public Boolean deletePlageNumDispo(@PathVariable(name = "id") String id) {
+		
+		return this.plageNumDispoService.delete(id);
+	}	
 	
 	
 	
@@ -271,10 +361,35 @@ public class MagasinController {
 	###########################################################
 	*/
 	
+	@GetMapping(path = "stocker/list")
+	public List<Stocker> getAllStocker(){
+		
+		return this.stockerService.getAll();
+	}
 	
+	@GetMapping(path = "stocker/byCodSto/{id}")
+	public Optional<Stocker> getStockerById(@PathVariable(name = "id") Long id){
+		
+		return this.stockerService.findById(id);
+	}
 	
+	@PostMapping(path = "stocker/list")
+	public Stocker createStocker( @RequestBody Stocker stocker) {
+		
+		return this.stockerService.save(stocker);
+	}
 	
+	@PutMapping(path = "stocker/byCodSto/{id}")
+	public Stocker updateStocker(@PathVariable(name = "id") Long id, @RequestBody Stocker stocker) {
+		
+		return this.stockerService.edit(id, stocker);
+	}
 	
+	@DeleteMapping(path = "stocker/byCodSto/{id}")
+	public Boolean deleteStocker(@PathVariable(name = "id") Long id) {
+		
+		return this.stockerService.delete(id);
+	}	
 	
 	
 	
