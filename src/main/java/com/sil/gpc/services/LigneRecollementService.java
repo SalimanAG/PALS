@@ -41,9 +41,8 @@ public class LigneRecollementService {
 		return repos.findByPULigneRecollement(prix);
 	}
 
-	public List<LigneRecollement> save(LigneRecollement ligne){
-		repos.save(ligne);
-		return repos.findAll();
+	public LigneRecollement save(LigneRecollement ligne){
+		return repos.save(ligne);
 	}
 
 	public LigneRecollement edit(LigneRecollement ligne, Long id) {
