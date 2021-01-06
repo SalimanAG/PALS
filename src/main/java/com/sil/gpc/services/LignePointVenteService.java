@@ -42,9 +42,9 @@ public class LignePointVenteService {
 		return repos.findByPULignePointVente(prix);
 	}
 
-	public List<LignePointVente> save(LignePointVente ligne) {
-		repos.save(ligne);
-		return repos.findAll();
+	public LignePointVente save(LignePointVente ligne) {
+		return repos.save(ligne);
+		//return repos.findAll();
 	}
 
 	public LignePointVente edit(LignePointVente ligne, Long id) {
