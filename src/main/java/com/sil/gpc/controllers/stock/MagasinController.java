@@ -70,13 +70,13 @@ public class MagasinController {
 	@GetMapping(path = "magasin/list")
 	public List<Magasin> getAllMagasin(){
 		
-		return this.magasinService.
+		return this.magasinService.findAll();
 	}
 	
 	@GetMapping(path = "magasin/byCodMag/{id}")
 	public Optional<Magasin> getMagasinById(@PathVariable(name = "id") String id){
 		
-		return this.magasinService.
+		return this.magasinService.findById(id);
 	}
 	
 	@PostMapping(path = "magasin/list")
