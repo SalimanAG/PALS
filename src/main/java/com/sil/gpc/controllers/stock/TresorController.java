@@ -89,9 +89,7 @@ public class TresorController {
 		return this.rpService.delete(id);
 	}
 	
-	
-	
-	
+
 	/*###########################################################
 	#############	Partie réservée pour commande
 	###########################################################
