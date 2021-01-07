@@ -57,14 +57,14 @@ public class PlageNumArticleService {
 		return repos.save(p);
 	}
 	
-	public List<PlageNumArticle> edit(PlageNumArticle plage, Long id){
+	public PlageNumArticle edit(PlageNumArticle plage, Long id){
 		PlageNumArticle pla=repos.getOne(id);
 		pla.setNumDebPlage(plage.getNumDebPlage());
 		pla.setNumFinPlage(plage.getNumFinPlage());
 		pla.setLigneAppro(plage.getLigneAppro());
 		pla.setLignePlacement(plage.getLignePlacement());
 		pla.setLigneRecollement(plage.getLigneRecollement());
-		return repos.findAll();
+		return repos.save(pla);
 	}
 	
 	public boolean delete(Long id){

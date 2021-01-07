@@ -23,7 +23,6 @@ public class MagasinService {
 	public Magasin save(Magasin mg){
 		return repos.save(mg);
 	}
-
 	
 	public Magasin edit(Magasin mg, String cm){
 		Magasin mag=repos.getOne(cm);
@@ -40,15 +39,15 @@ public class MagasinService {
 		return repos.existsById(cm);
 	}
 
-	Optional<Magasin> findById(String cm){
+	public Optional<Magasin> findById(String cm){
 		return repos.findById(cm);
 	}
 
-	List<Magasin> findByLibelle(String lib){
+	public List<Magasin> findByLibelle(String lib){
 		return repos.findByLibMagasin(lib);
 	}
 
-	List<Magasin> findAll(){
+	public List<Magasin> findAll(){
 		return repos.findAll();
 	}
 

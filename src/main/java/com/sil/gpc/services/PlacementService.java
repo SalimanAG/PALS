@@ -45,7 +45,7 @@ public class PlacementService {
 		return repos.findByExercice(exo);
 	}
 	
-	public List<Placement> findById(Date dateP){
+	public List<Placement> findByDatePlacement(Date dateP){
 		return repos.findByDatePlacement(dateP);
 	}
 	

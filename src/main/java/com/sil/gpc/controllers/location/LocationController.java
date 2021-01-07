@@ -1,5 +1,6 @@
 package com.sil.gpc.controllers.location;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,10 @@ import com.sil.gpc.domains.Caisse;
 import com.sil.gpc.domains.Contrat;
 import com.sil.gpc.domains.Echeance;
 import com.sil.gpc.domains.Immeuble;
+import com.sil.gpc.domains.Locataire;
+import com.sil.gpc.domains.PrixImmeuble;
+import com.sil.gpc.domains.Quartier;
+import com.sil.gpc.domains.TypeImmeuble;
 import com.sil.gpc.services.ContratService;
 import com.sil.gpc.services.EcheanceService;
 import com.sil.gpc.services.ImmeubleService;
@@ -47,7 +52,6 @@ public class LocationController {
 		this.locataireService = locataireService;
 	}
 	
-	
 	/*###########################################################
 	#############	Partie réservée pour contrat
 	###########################################################
@@ -55,19 +59,31 @@ public class LocationController {
 	
 	@GetMapping(path = "contrat/list")
 	public List<Contrat> getAllContrat(){
-		
 		return this.contratService.getAll();
 	}
 	
 	@GetMapping(path = "contrat/byCodCon/{id}")
 	public Optional<Contrat> getContratById(@PathVariable(name = "id") String id){
-		
 		return this.contratService.getById(id);
+	}
+	
+	@GetMapping(path = "contrat/byImm/{imm}")
+	public List<Contrat> getContratByImmeuble(@PathVariable(name = "imm") Immeuble imm){
+		return this.contratService.findByImmeuble(imm);
+	}
+	
+	@GetMapping(path = "contrat/byLoc/{loc}")
+	public List<Contrat> getContratByImmeuble(@PathVariable(name = "loc") Locataire loc){
+		return this.contratService.findByLocataire(loc);
+	}
+	
+	@GetMapping(path = "contrat/byDatEff/{dateEffet}")
+	public List<Contrat> getContratByDate(@PathVariable(name = "effet") Date dateEffet){
+		return this.contratService.findByDateEffetContrat(dateEffet);
 	}
 	
 	@PostMapping(path = "contrat/list")
 	public Contrat createContrat( @RequestBody Contrat contrat) {
-		
 		return this.contratService.save(contrat);
 	}
 	
@@ -79,7 +95,6 @@ public class LocationController {
 	
 	@DeleteMapping(path = "contrat/byCodCon/{id}")
 	public Boolean deleteContrat(@PathVariable(name = "id") String id) {
-		
 		return this.contratService.delete(id);
 	}
 	
@@ -101,6 +116,24 @@ public class LocationController {
 		return this.echeanceService.getById(id);
 	}
 	
+	@GetMapping(path = "echeance/byCon/{contrat}")
+	public List<Echeance> findByContrat(@PathVariable(name = "contrat") Contrat contrat){
+		
+		return this.echeanceService.findByContrat(contrat);
+	}
+	
+	@GetMapping(path = "echeancesPayeesParContrat")
+	public List<Echeance> findByEcheancesPayees(){
+		
+		return this.echeanceService.findByPayeEcheance(true);
+	}
+	
+	@GetMapping(path = "echeancesNonPayeesParContrat")
+	public List<Echeance> findByEcheancesNonPayees(){
+		
+		return this.echeanceService.findByPayeEcheance(false);
+	}
+	
 	@PostMapping(path = "echeance/list")
 	public Echeance createEcheance( @RequestBody Echeance echeance) {
 		
@@ -120,28 +153,41 @@ public class LocationController {
 	}
 	
 	
-	
 	/*###########################################################
 	#############	Partie réservée pour type immeuble
 	###########################################################
 	*/
 	
+	@GetMapping(path = "typeimmeuble/list")
+	public List<TypeImmeuble> getAllTypeImmeubles(){
+		
+		return this.typeImmeubleService.getAll();
+	}
 	
+	@GetMapping(path = "typeimmeuble/byCodImm/{id}")
+	public Optional<TypeImmeuble> getTypeImmeubleById(@PathVariable(name = "id") String id){
+		
+		return this.typeImmeubleService.findById(id);
+	}
 	
+	@PostMapping(path = "typeimmeuble/list")
+	public TypeImmeuble createTypeImmeuble( @RequestBody TypeImmeuble tym) {
+		
+		return this.typeImmeubleService.save(tym);
+	}
 	
+	@PutMapping(path = "typeimmeuble/byCodImm/{id}")
+	public TypeImmeuble updateTypeImmeuble(@PathVariable(name = "id") String codeTym, @RequestBody TypeImmeuble tym) {
+		
+		return this.typeImmeubleService.edit(codeTym, tym);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "typeimmeuble/byCodImm/{id}")
+	public Boolean deleteTypeImmeuble(@PathVariable(name = "id") String id) {
+		
+		return this.typeImmeubleService.delete(id);
+	}
+
 	
 	/*###########################################################
 	#############	Partie réservée pour immeuble
@@ -158,6 +204,24 @@ public class LocationController {
 	public Optional<Immeuble> getImmeubleById(@PathVariable(name = "id") String id){
 		
 		return this.immeubleService.getById(id);
+	}
+	
+	@GetMapping(path = "immeuble/byQua/{quartier}")
+	public List<Immeuble> getImmeubleByQuartier(@PathVariable(name = "quartier") Quartier quartier){
+		
+		return this.immeubleService.findByQuartier(quartier);
+	}
+	
+	@GetMapping(path = "immeuble/byEta/{etat}")
+	public List<Immeuble> getImmeubleByEtat(@PathVariable(name = "etat") Boolean etat){
+		
+		return this.immeubleService.findByEtatIm(etat);
+	}
+	
+	@GetMapping(path = "immeuble/byTypImm/{typImm}")
+	public List<Immeuble> getImmeubleByQuartier(@PathVariable(name = "quartier") TypeImmeuble typImm){
+		
+		return this.immeubleService.findByTypeImmeuble(typImm);
 	}
 	
 	@PostMapping(path = "immeuble/list")
@@ -178,47 +242,86 @@ public class LocationController {
 		return this.immeubleService.delete(id);
 	}
 
-	
 	/*###########################################################
 	#############	Partie réservée pour prix immeuble
 	###########################################################
 	*/
 	
+	@GetMapping(path = "priximmeuble/list")
+	public List<PrixImmeuble> getAllPrixImmeuble(){
+		
+		return this.prixImmeubleService.getAll();
+	}
 	
+	@GetMapping(path = "priximmeuble/byCodImm/{id}")
+	public Optional<PrixImmeuble> getPrixImmeubleById(@PathVariable(name = "id") Long id){
+		
+		return this.prixImmeubleService.findById(id);
+	}
+
+	@GetMapping(path = "priximmeuble/byImm/{imm}")
+	public List<PrixImmeuble> getPrixImmeubleById(@PathVariable(name = "imm") Immeuble imm){
+		
+		return this.prixImmeubleService.findByImeublem(imm);
+	}
 	
+	@PostMapping(path = "priximmeuble/list")
+	public PrixImmeuble createPrixImmeuble( @RequestBody PrixImmeuble priImm) {
+		
+		return this.prixImmeubleService.save(priImm);
+	}
 	
+	@PutMapping(path = "priximmeuble/byCodImm/{id}")
+	public PrixImmeuble updatePrixImmeuble(@PathVariable(name = "id") Long id, @RequestBody PrixImmeuble priImm) {
+		
+		return this.prixImmeubleService.edit(id, priImm);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "priximmeuble/byCodImm/{id}")
+	public Boolean deletePrixImmeuble(@PathVariable(name = "id") Long id) {
+		
+		return this.prixImmeubleService.delete(id);
+	}
+	 
 	/*###########################################################
 	#############	Partie réservée pour locataire
 	###########################################################
 	*/
 	
+	@GetMapping(path = "locataire/list")
+	public List<Locataire> getAllLocataire(){
+		
+		return this.locataireService.findAll();
+	}
 	
+	@GetMapping(path = "locataire/byCodImm/{id}")
+	public Optional<Locataire> getLocataireById(@PathVariable(name = "id") Long id){
+		
+		return this.locataireService.findById(id);
+	}
 	
+	@GetMapping(path = "locataire/byide/{identite}")
+	public List<Locataire> getLocataireByIdentite(@PathVariable(name = "identite") String identite){
+		
+		return this.locataireService.findByidentite(identite);
+	}
 	
+	@PostMapping(path = "locataire/list")
+	public Locataire createLocataire( @RequestBody Locataire loc) {
+		
+		return this.locataireService.save(loc);
+	}
 	
+	@PutMapping(path = "locataire/byCodImm/{id}")
+	public Locataire updateLocataire(@PathVariable(name = "id") Long id, @RequestBody Locataire loc) {
+		
+		return this.locataireService.edit(loc, id);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	@DeleteMapping(path = "locataire/byCodImm/{id}")
+	public Boolean deleteLocataire(@PathVariable(name = "id") Long id) {
+		
+		return this.locataireService.delete(id);
+	}
+	 
 }
