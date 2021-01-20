@@ -21,7 +21,8 @@ public class Commune implements Serializable{
 	private String nomCommune;
 	private String numTelMairie;
 	private String adresseMairie;
-	//private String codeDepartement;
+	private String entetePage;
+	private String piedPage;
 	
 	//Migration de la clé du département vers la commune
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Departement.class)
@@ -98,6 +99,18 @@ public class Commune implements Serializable{
 	public String toString() {
 		return "Commune [codeCommune=" + codeCommune + ", nomCommune=" + nomCommune + ", numTelMairie=" + numTelMairie
 				+ ", adresseMairie=" + adresseMairie + ", codeDepartement=" + codeDepartement + "]";
+	}
+	public String getEntetePage() {
+		return entetePage;
+	}
+	public void setEntetePage(String entetePage) {
+		this.entetePage = entetePage;
+	}
+	public String getPiedPage() {
+		return piedPage;
+	}
+	public void setPiedPage(String piedPage) {
+		this.piedPage = piedPage;
 	}
 	
 }
