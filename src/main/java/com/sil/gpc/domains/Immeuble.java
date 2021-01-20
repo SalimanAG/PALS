@@ -18,6 +18,7 @@ public class Immeuble implements Serializable{
 
 	@Id
 	private String codeIm;
+	private String libIm;
 	private String localisationIm;
 	private boolean etatIm;
 	//Liaison avec QuartierRepository
@@ -29,6 +30,11 @@ public class Immeuble implements Serializable{
 		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = TypeImmeuble.class)
 		@JoinColumn(name="codeTypImm", referencedColumnName = "codeTypIm", nullable = false)
 		private TypeImmeuble typeImmeuble;
+		
+	//Liaison  avec Site
+			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = SiteMarcher.class)
+			@JoinColumn(name="codeSite", referencedColumnName = "codeSite", nullable = false)
+			private SiteMarcher siteMarcher;
 		
 		//Liaison  avec PrixImmeuble
 		@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = PrixImmeuble.class,mappedBy = "immeuble")
@@ -117,5 +123,15 @@ public class Immeuble implements Serializable{
 		return Objects.equals(codeIm, other.codeIm) && etatIm == other.etatIm
 				&& Objects.equals(localisationIm, other.localisationIm) && Objects.equals(quartier, other.quartier)
 				&& Objects.equals(typeImmeuble, other.typeImmeuble);
+	}
+
+
+	public String getLibIm() {
+		return libIm;
+	}
+
+
+	public void setLibIm(String libIm) {
+		this.libIm = libIm;
 	}	
 }

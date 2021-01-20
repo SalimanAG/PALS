@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -21,6 +22,8 @@ public class Utilisateur {
 	private String prenomUtilisateur;
 	private String fonctionUtilisateur;
 	private boolean activeUtilisateur;
+	private String dateLastConnex;
+	private boolean askMdp1erLance;
 	
 	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class,mappedBy = "utilisateur")
 	public List<OpCaisse> opCaisseParUtilisateur;
@@ -49,6 +52,23 @@ public class Utilisateur {
 		this.prenomUtilisateur = prenomUtilisateur;
 		this.fonctionUtilisateur = fonctionUtilisateur;
 		this.activeUtilisateur = activeUtilisateur;
+		this.service = service;
+	}
+	
+	
+
+	public Utilisateur(String login, String motDePass, String nomUtilisateur, String prenomUtilisateur,
+			String fonctionUtilisateur, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,
+			Service service) {
+		super();
+		this.login = login;
+		this.motDePass = motDePass;
+		this.nomUtilisateur = nomUtilisateur;
+		this.prenomUtilisateur = prenomUtilisateur;
+		this.fonctionUtilisateur = fonctionUtilisateur;
+		this.activeUtilisateur = activeUtilisateur;
+		this.dateLastConnex = dateLastConnex;
+		this.askMdp1erLance = askMdp1erLance;
 		this.service = service;
 	}
 
@@ -123,6 +143,22 @@ public class Utilisateur {
 				+ ", fonctionUtilisateur=" + fonctionUtilisateur + ", activeUtilisateur=" + activeUtilisateur
 				+ ", opCaisseParUtilisateur=" + opCaisseParUtilisateur + ", service=" + service
 				+ ", affectationsDunUtilisateur=" + affectationsDunUtilisateur + "]";
+	}
+
+	public String getDateLastConnex() {
+		return dateLastConnex;
+	}
+
+	public void setDateLastConnex(String dateLastConnex) {
+		this.dateLastConnex = dateLastConnex;
+	}
+
+	public boolean isAskMdp1erLance() {
+		return askMdp1erLance;
+	}
+
+	public void setAskMdp1erLance(boolean askMdp1erLance) {
+		this.askMdp1erLance = askMdp1erLance;
 	}
 
 	
