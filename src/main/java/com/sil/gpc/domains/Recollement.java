@@ -27,6 +27,11 @@ public class Recollement implements Serializable {
 	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin", nullable = false)
 	private Magasin magasin;
 
+	// Liaison avec Correspondant
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Correspondant.class)
+	@JoinColumn(name = "idCorrespondant", referencedColumnName = "idCorrespondant", nullable = true)
+	private Correspondant corres;
+
 	// Liaison avec Regisseur
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur", referencedColumnName = "idRegisseur", nullable = false)

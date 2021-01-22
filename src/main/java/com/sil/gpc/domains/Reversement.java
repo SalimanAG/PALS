@@ -26,6 +26,11 @@ public class Reversement implements Serializable{
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
 	private Exercice exercice;
 	
+	//Liaison avec Reversement
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)
+	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)
+	private Regisseur regisseur;
+	
 	//************************************Liste des lignes reversements
 	// Liaison à la table LigneRecollement
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = LigneReversement.class, mappedBy = "numReversement")

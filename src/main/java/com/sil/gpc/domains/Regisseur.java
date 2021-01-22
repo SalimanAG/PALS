@@ -26,15 +26,22 @@ public class Regisseur implements Serializable{
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Utilisateur.class)
 	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
 	private Utilisateur utilisateur;
-	
-	//**********************************Liste des points de vente
+
 	// Liaison à la table Recollement
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Recollement.class, mappedBy = "regisseur")
 	public List<Recollement> recollementsParRegisseur;
+	
+	// Liaison à la table Recollement
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Reversement.class, mappedBy = "regisseur")
+	public List<Reversement> reversementsParRegisseur;
 
 	// Liaison à la table PointVente
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = PointVente.class, mappedBy = "regisseur")
 	public List<PointVente> pointsParRegisseur;
+
+	// Liaison à la table Placement
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Placement.class, mappedBy = "regisseur")
+	public List<PointVente> placementsParRegisseur;
 	
 	
 	public Regisseur() {

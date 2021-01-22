@@ -1,5 +1,6 @@
 package com.sil.gpc.controllers.commune;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sil.gpc.domains.Arrondissement;
 import com.sil.gpc.domains.Commune;
 import com.sil.gpc.domains.Departement;
+import com.sil.gpc.domains.EtreAffecte;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.Fournisseur;
 import com.sil.gpc.domains.Service;
@@ -24,6 +26,7 @@ import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.services.ArrondissementService;
 import com.sil.gpc.services.CommuneService;
 import com.sil.gpc.services.DepartementService;
+import com.sil.gpc.services.EtreAffeccteService;
 import com.sil.gpc.services.ExerciceService;
 import com.sil.gpc.services.FournisseurService;
 import com.sil.gpc.services.PaysService;
@@ -44,10 +47,11 @@ public class CommuneController {
 	private final CommuneService communeService;
 	private final ArrondissementService arrondissementService;
 	private final QuartierService quartierService;
+	private final EtreAffeccteService etreAffecterService;
 	
 	public CommuneController(ExerciceService exerciceService, FournisseurService fournisseurService,
 			ServiceService serviceService, UtilisateurService utilisateurService, PaysService paysService,
-			DepartementService departementService, CommuneService communeService,
+			DepartementService departementService, CommuneService communeService, EtreAffeccteService etreAffecterService,
 			ArrondissementService arrondissementService, QuartierService quartierService) {
 		super();
 		this.exerciceService = exerciceService;
@@ -59,9 +63,10 @@ public class CommuneController {
 		this.communeService = communeService;
 		this.arrondissementService = arrondissementService;
 		this.quartierService = quartierService;
+		this.etreAffecterService = etreAffecterService;
 	}
 	
-	
+
 	/*###########################################################
 	#############	Partie réservée pour exercice
 	###########################################################
@@ -101,6 +106,49 @@ public class CommuneController {
 	public Boolean deleteExercice(@PathVariable(name = "id") String id) {
 		
 		return this.exerciceService.delete(id);
+	}
+	
+	
+
+	/*###########################################################
+	#############	Partie réservée pour EtreAffecte
+	###########################################################
+	*/
+	
+	@GetMapping(path = "Affect/list")
+	public List<EtreAffecte> getAllAffectation(){
+		
+		return this.etreAffecterService.getAllAffect();
+	}
+	
+	@GetMapping(path = "Affect/byId/{id}")
+	public Optional<EtreAffecte> getAffectationById(@PathVariable(name = "id") Long id){
+		
+		return this.etreAffecterService.findById(id);
+	}
+	
+@GetMapping(path = "Affect/bydatArr/{exoSel}")
+	public List<EtreAffecte> findAffectationByDA(@PathVariable(name = "exoSel") Date da){
+		
+		return this.etreAffecterService.findByDateArrivee(da);
+	}
+	
+	@PostMapping(path = "Affect/list")
+	public EtreAffecte createAffectation( @RequestBody EtreAffecte affect) {
+		
+		return this.etreAffecterService.save(affect);
+	}
+	
+	@PutMapping(path = "Affect/byId/{id}")
+	public EtreAffecte updateAffectation(@PathVariable(name = "id") Long id, @RequestBody EtreAffecte affect) {
+		
+		return this.etreAffecterService.edit(id, affect);
+	}
+	
+	@DeleteMapping(path = "Affect/byId/{id}")
+	public Boolean deleteAffectation(@PathVariable(name = "id") Long id) {
+		
+		return this.etreAffecterService.delete(id);
 	}
 	
 	

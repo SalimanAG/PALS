@@ -19,7 +19,6 @@ public class ReceptionService {
         this.receptionRepository = receptionRepository;
     }
 
-    
     // Sauvegarder 
     public Reception save(Reception rep) {
         return   this.receptionRepository.save(rep);
@@ -74,9 +73,5 @@ public class ReceptionService {
 		
 		return this.receptionRepository.findByDateReception(DateReception);
 	}
-
-    
-    
-   
 
 }

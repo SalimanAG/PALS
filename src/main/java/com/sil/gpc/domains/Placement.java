@@ -21,7 +21,13 @@ public class Placement implements Serializable{
 	private String numPlacement;
 	private Date datePlacement;
 
-	//Liaison avec correspondatnt
+	//Liaison avec Regisseur
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)
+	@JoinColumn(name = "idRegisseur",referencedColumnName = "IdRegisseur",nullable = false)
+	private Regisseur regisseur;
+
+
+	//Liaison avec correspondant
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrespondant",referencedColumnName = "idCorrespondant",nullable = false)
 	private Correspondant correspondant;

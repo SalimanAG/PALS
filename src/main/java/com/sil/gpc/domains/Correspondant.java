@@ -34,6 +34,10 @@ public class Correspondant implements Serializable {
 	public List<PointVente> pointsParCorrespondant;
 
 	// Liaison à Utilisateur
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = Recollement.class, fetch = FetchType.LAZY, mappedBy = "corres")
+	public List<Recollement> recollementsParCorrespondant;
+
+	// Liaison à Utilisateur
 	@OneToOne(cascade = CascadeType.ALL, targetEntity = Utilisateur.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
 	public Utilisateur utilisateur;
