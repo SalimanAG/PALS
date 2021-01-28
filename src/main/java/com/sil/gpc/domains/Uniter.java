@@ -1,13 +1,9 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -16,9 +12,6 @@ public class Uniter implements Serializable{
 	@Id
 	private String codeUniter;
 	private String libUniter;
-	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class,mappedBy = "unite")
-	public List<Article> articleParUniter;
 	
 	public Uniter() {
 		super();

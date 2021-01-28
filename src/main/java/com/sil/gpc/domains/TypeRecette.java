@@ -1,12 +1,10 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -16,10 +14,6 @@ public class TypeRecette implements Serializable{
 	private String codeTypRec;
 	private String libeTypRec;
 	
-
-	@OneToMany(targetEntity = OpCaisse.class, mappedBy = "typeRecette")
-	public List<OpCaisse> opérationstype;
-		
 	public TypeRecette() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -49,7 +43,7 @@ public class TypeRecette implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codeTypRec, libeTypRec, opérationstype);
+		return Objects.hash(codeTypRec, libeTypRec);
 	}
 
 	@Override
@@ -64,14 +58,12 @@ public class TypeRecette implements Serializable{
 			return false;
 		}
 		TypeRecette other = (TypeRecette) obj;
-		return Objects.equals(codeTypRec, other.codeTypRec) && Objects.equals(libeTypRec, other.libeTypRec)
-				&& Objects.equals(opérationstype, other.opérationstype);
+		return Objects.equals(codeTypRec, other.codeTypRec) && Objects.equals(libeTypRec, other.libeTypRec);
 	}
 
 	@Override
 	public String toString() {
-		return "TypeRecette [codeTypRec=" + codeTypRec + ", libeTypRec=" + libeTypRec + ", opérationstype="
-				+ opérationstype + "]";
+		return "TypeRecette [codeTypRec=" + codeTypRec + ", libeTypRec=" + libeTypRec + "]";
 	}
 	
 }

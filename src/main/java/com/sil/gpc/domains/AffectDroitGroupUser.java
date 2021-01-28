@@ -16,11 +16,11 @@ public class AffectDroitGroupUser {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAffectDroitGroup;
 	//Liaison  avec Droits des Utilisateurs
-		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = DroitUser.class)
+		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = DroitUser.class)
 		@JoinColumn(name="idDroitUser", referencedColumnName = "idDroitUser", nullable = false)
 		private DroitUser droitUser;
 	//Liaison  Groupe Utilisateur
-		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = GroupUser.class)
+		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = GroupUser.class)
 		@JoinColumn(name="idGroupUser", referencedColumnName = "idGroupUser", nullable = false)
 		private GroupUser groupUser ;
 		

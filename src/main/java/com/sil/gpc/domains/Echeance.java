@@ -23,7 +23,7 @@ public class Echeance implements Serializable {
 	private String moisEcheance;
 	private Date dateEcheance;
 	private boolean payeEcheance;
-	@ManyToOne(targetEntity = Contrat.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Contrat.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numContrat",referencedColumnName = "numContrat", nullable = false)
 	private Contrat contrat;
 

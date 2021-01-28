@@ -2,23 +2,19 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity(name = "OpCaisse")
 public class OpCaisse implements Serializable {
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "numOpCaisse", length = 20)
 	private String numOpCaisse;
 	private Date dateOpCaisse;
@@ -53,18 +49,6 @@ public class OpCaisse implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Utilisateur.class)
 	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
 	private Utilisateur utilisateur;
-
-	// Liaison avec la table OpCaisse
-	@OneToMany( cascade = CascadeType.ALL,targetEntity = PointVente.class, mappedBy = "opCaisse")
-	private List<PointVente> PointsDuneOpCaisse;
-
-	// Liaison avec la table Echeance
-	@OneToMany( cascade = CascadeType.ALL,targetEntity = Echeance.class, mappedBy = "opCaisse")
-	private List<Echeance> echeancesOpCaisse;
-	
-	//Liaison à la table Ligne opération
-	@OneToMany(targetEntity = LigneOpCaisse.class, mappedBy = "opCaisse")
-	List<LigneOpCaisse> lignesDuneOperationDeCaisse;
 
 	public OpCaisse() {
 		super();
@@ -144,18 +128,9 @@ public class OpCaisse implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "OpCaisse [numOpCaisse=" + numOpCaisse + ", dateOpCaisse=" + dateOpCaisse + ", contribuable="
-				+ contribuable + ", valideOpCaisse=" + valideOpCaisse + ", Observation=" + ObservationOpCaisse + ", dateSaisie="
-				+ dateSaisie + ", caisse=" + caisse + ", typeRecette=" + typeRecette + ", modePaiement=" + modePaiement
-				+ ", exercice=" + exercice + ", utilisateur=" + utilisateur + ", echeancesOpCaisse=" + echeancesOpCaisse
-				+ "]";
-	}
-
-	@Override
 	public int hashCode() {
-		return Objects.hash(ObservationOpCaisse, caisse, contribuable, dateOpCaisse, dateSaisie, echeancesOpCaisse,
-				exercice, modePaiement, numOpCaisse, typeRecette, utilisateur, valideOpCaisse);
+		return Objects.hash(ObservationOpCaisse, caisse, contribuable, dateOpCaisse, dateSaisie, exercice, modePaiement,
+				numOpCaisse, typeRecette, utilisateur, valideOpCaisse);
 	}
 
 	@Override
@@ -172,11 +147,18 @@ public class OpCaisse implements Serializable {
 		OpCaisse other = (OpCaisse) obj;
 		return Objects.equals(ObservationOpCaisse, other.ObservationOpCaisse) && Objects.equals(caisse, other.caisse)
 				&& Objects.equals(contribuable, other.contribuable) && Objects.equals(dateOpCaisse, other.dateOpCaisse)
-				&& Objects.equals(dateSaisie, other.dateSaisie)
-				&& Objects.equals(echeancesOpCaisse, other.echeancesOpCaisse)
-				&& Objects.equals(exercice, other.exercice) && Objects.equals(modePaiement, other.modePaiement)
-				&& Objects.equals(numOpCaisse, other.numOpCaisse) && Objects.equals(typeRecette, other.typeRecette)
-				&& Objects.equals(utilisateur, other.utilisateur) && valideOpCaisse == other.valideOpCaisse;
+				&& Objects.equals(dateSaisie, other.dateSaisie) && Objects.equals(exercice, other.exercice)
+				&& Objects.equals(modePaiement, other.modePaiement) && Objects.equals(numOpCaisse, other.numOpCaisse)
+				&& Objects.equals(typeRecette, other.typeRecette) && Objects.equals(utilisateur, other.utilisateur)
+				&& valideOpCaisse == other.valideOpCaisse;
+	}
+
+	@Override
+	public String toString() {
+		return "OpCaisse [numOpCaisse=" + numOpCaisse + ", dateOpCaisse=" + dateOpCaisse + ", contribuable="
+				+ contribuable + ", valideOpCaisse=" + valideOpCaisse + ", ObservationOpCaisse=" + ObservationOpCaisse
+				+ ", dateSaisie=" + dateSaisie + ", caisse=" + caisse + ", typeRecette=" + typeRecette
+				+ ", modePaiement=" + modePaiement + ", exercice=" + exercice + ", utilisateur=" + utilisateur + "]";
 	}
 
 }

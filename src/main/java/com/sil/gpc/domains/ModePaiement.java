@@ -1,13 +1,11 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -22,10 +20,6 @@ public class ModePaiement implements Serializable {
 	private String codeModPay;
 	@Column(name="libeModPay",nullable = false, length = 30, unique = true, updatable = true)
 	private String libeModPay;
-	
-
-	@OneToMany(targetEntity = OpCaisse.class, mappedBy = "modePaiement")
-	public List<OpCaisse> opérationsMode;
 	
 	public ModePaiement() {
 		super();
@@ -55,8 +49,13 @@ public class ModePaiement implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "ModePaiement [codeModPay=" + codeModPay + ", libeModPay=" + libeModPay + "]";
+	}
+
+	@Override
 	public int hashCode() {
-		return Objects.hash(codeModPay, libeModPay, opérationsMode);
+		return Objects.hash(codeModPay, libeModPay);
 	}
 
 	@Override
@@ -71,14 +70,7 @@ public class ModePaiement implements Serializable {
 			return false;
 		}
 		ModePaiement other = (ModePaiement) obj;
-		return Objects.equals(codeModPay, other.codeModPay) && Objects.equals(libeModPay, other.libeModPay)
-				&& Objects.equals(opérationsMode, other.opérationsMode);
-	}
-
-	@Override
-	public String toString() {
-		return "ModePaiementRepository [codeModPay=" + codeModPay + ", libeModPay=" + libeModPay + ", opérationsMode="
-				+ opérationsMode + "]";
+		return Objects.equals(codeModPay, other.codeModPay) && Objects.equals(libeModPay, other.libeModPay);
 	}
 	
 }

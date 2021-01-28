@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -30,22 +28,36 @@ public class Commune implements Serializable{
 	public Departement codeDepartement;
 	
 	//Migration de la clé de la commune vers les départements
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = Arrondissement.class,fetch = FetchType.EAGER,mappedBy = "commune")
-	public List<Arrondissement> arrondissementsParCommune;
+	//@OneToMany(cascade = CascadeType.ALL,targetEntity = Arrondissement.class,fetch = FetchType.EAGER,mappedBy = "commune")
+	//public List<Arrondissement> arrondissementsParCommune;
 	
 	public Commune() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Commune(String codeCommune, String nomCommune, String numTelMairie, String adresseMairie,
-			Departement codedepartement) {
-		super();
+
+	
+	/**
+	 * @param codeCommune
+	 * @param nomCommune
+	 * @param numTelMairie
+	 * @param adresseMairie
+	 * @param entetePage
+	 * @param piedPage
+	 * @param codeDepartement
+	 */
+	public Commune(String codeCommune, String nomCommune, String numTelMairie, String adresseMairie, String entetePage,
+			String piedPage, Departement codeDepartement) {
 		this.codeCommune = codeCommune;
 		this.nomCommune = nomCommune;
 		this.numTelMairie = numTelMairie;
 		this.adresseMairie = adresseMairie;
-		this.codeDepartement = codedepartement;
+		this.entetePage = entetePage;
+		this.piedPage = piedPage;
+		this.codeDepartement = codeDepartement;
 	}
+
+
 	public String getCodeCommune() {
 		return codeCommune;
 	}
@@ -70,36 +82,7 @@ public class Commune implements Serializable{
 	public void setAdresseMairie(String adresseMairie) {
 		this.adresseMairie = adresseMairie;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(adresseMairie, arrondissementsParCommune, codeCommune, codeDepartement, nomCommune,
-				numTelMairie);
-	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Commune other = (Commune) obj;
-		return Objects.equals(adresseMairie, other.adresseMairie)
-				&& Objects.equals(arrondissementsParCommune, other.arrondissementsParCommune)
-				&& Objects.equals(codeCommune, other.codeCommune)
-				&& Objects.equals(codeDepartement, other.codeDepartement)
-				&& Objects.equals(nomCommune, other.nomCommune) && Objects.equals(numTelMairie, other.numTelMairie);
-	}
-	@Override
-	public String toString() {
-		return "Commune [codeCommune=" + codeCommune + ", nomCommune=" + nomCommune + ", numTelMairie=" + numTelMairie
-				+ ", adresseMairie=" + adresseMairie + ", codeDepartement=" + codeDepartement + "]";
-	}
 	public String getEntetePage() {
 		return entetePage;
 	}
@@ -112,5 +95,38 @@ public class Commune implements Serializable{
 	public void setPiedPage(String piedPage) {
 		this.piedPage = piedPage;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(adresseMairie, codeCommune, codeDepartement, entetePage, nomCommune, numTelMairie,
+				piedPage);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Commune other = (Commune) obj;
+		return Objects.equals(adresseMairie, other.adresseMairie) && Objects.equals(codeCommune, other.codeCommune)
+				&& Objects.equals(codeDepartement, other.codeDepartement)
+				&& Objects.equals(entetePage, other.entetePage) && Objects.equals(nomCommune, other.nomCommune)
+				&& Objects.equals(numTelMairie, other.numTelMairie) && Objects.equals(piedPage, other.piedPage);
+	}
+
+	@Override
+	public String toString() {
+		return "Commune [codeCommune=" + codeCommune + ", nomCommune=" + nomCommune + ", numTelMairie=" + numTelMairie
+				+ ", adresseMairie=" + adresseMairie + ", entetePage=" + entetePage + ", piedPage=" + piedPage
+				+ ", codeDepartement=" + codeDepartement + "]";
+	}
+	
 	
 }

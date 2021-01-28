@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -28,57 +26,14 @@ public class Article implements Serializable {
 	private String couleurArticle;
 	
 	//Migration du code de la famille vers l'article
-	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
 	@JoinColumn(name = "famille",referencedColumnName = "codeFamille")
 	private Famille famille;
 
 	//Migration de la clé de l'unité vers l'article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Uniter.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Uniter.class)
 	@JoinColumn(name = "unite", referencedColumnName = "codeUniter",nullable = false)
 	public Uniter unite;
-
-	// Liaison à LigneAppro
-	//@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneAppro.class,mappedBy = "article")
-	//public List<LigneAppro> articlesApprovisionnes;
-
-	// Liaison à LigneCommande
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneCommande.class,mappedBy = "article")
-	public List<LigneCommande> commandesDunArticle;
-
-	// Liaison à LigneDemmadeAppro
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneDemandeAppro.class,mappedBy = "article")
-	public List<LigneDemandeAppro> DemandesDunArticle;
-
-	// Liaison à LignePlacement
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LignePlacement.class,mappedBy = "article")
-	public List<LignePlacement> placementsDunArticle;
-
-	// Liaison à LigneCommande
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LignePointVente.class,mappedBy = "article")
-	public List<LignePointVente> ventesDunArticle;
-
-	// Liaison à LigneReception
-	//@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneReception.class,mappedBy = "article")
-	//public List<LigneReception> articlesReceptionnes;
-
-	// Liaison à LigneRecollement
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneRecollement.class,mappedBy = "article")
-	public List<LigneRecollement> recollementsDunArticle;
-
-	// Liaison à LigneReversementService
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneReversement.class,mappedBy = "article")
-	public List<LigneReversement> reversementDunArticle;
-
-	// Liaison à Stocker
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = Stocker.class,mappedBy = "article")
-	public List<Stocker> stocksDunArticle;
-	
-
-	@OneToMany(targetEntity = PlageNumDispo.class, mappedBy = "article")
-	public List<PlageNumDispo> plagesDispoDunArticle;
-
-	@OneToMany(targetEntity = PlageNumArticle.class, mappedBy = "article")
-	public List<PlageNumArticle> plageDunArticle;
 		
 	public Article() {
 		super();
@@ -182,8 +137,8 @@ public class Article implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codeArticle, commandesDunArticle, consommableArticle, couleurArticle, famille, libArticle,
-				livrableArticle, numSerieArticle, prixVenteArticle, stockerArticle, unite);
+		return Objects.hash(codeArticle, consommableArticle, couleurArticle, famille, libArticle, livrableArticle,
+				numSerieArticle, prixVenteArticle, stockerArticle, unite);
 	}
 
 	@Override
@@ -198,9 +153,7 @@ public class Article implements Serializable {
 			return false;
 		}
 		Article other = (Article) obj;
-		return Objects.equals(codeArticle, other.codeArticle)
-				&& Objects.equals(commandesDunArticle, other.commandesDunArticle)
-				&& consommableArticle == other.consommableArticle
+		return Objects.equals(codeArticle, other.codeArticle) && consommableArticle == other.consommableArticle
 				&& Objects.equals(couleurArticle, other.couleurArticle) && Objects.equals(famille, other.famille)
 				&& Objects.equals(libArticle, other.libArticle) && livrableArticle == other.livrableArticle
 				&& numSerieArticle == other.numSerieArticle && Objects.equals(prixVenteArticle, other.prixVenteArticle)
@@ -212,12 +165,7 @@ public class Article implements Serializable {
 		return "Article [codeArticle=" + codeArticle + ", libArticle=" + libArticle + ", stockerArticle="
 				+ stockerArticle + ", numSerieArticle=" + numSerieArticle + ", livrableArticle=" + livrableArticle
 				+ ", consommableArticle=" + consommableArticle + ", prixVenteArticle=" + prixVenteArticle
-				+ ", couleurArticle=" + couleurArticle + ", famille=" + famille + ", unite=" + unite
-				+ ", commandesDunArticle=" + commandesDunArticle + ", DemandesDunArticle=" + DemandesDunArticle
-				+ ", placementsDunArticle=" + placementsDunArticle + ", ventesDunArticle=" + ventesDunArticle
-				+ ", recollementsDunArticle=" + recollementsDunArticle + ", reversementDunArticle="
-				+ reversementDunArticle + ", stocksDunArticle=" + stocksDunArticle + ", plagesDispoDunArticle="
-				+ plagesDispoDunArticle + ", plageDunArticle=" + plageDunArticle + "]";
+				+ ", couleurArticle=" + couleurArticle + ", famille=" + famille + ", unite=" + unite + "]";
 	}
-
+	 
 }

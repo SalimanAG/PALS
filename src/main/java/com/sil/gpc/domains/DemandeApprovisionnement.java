@@ -2,37 +2,28 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
 public class DemandeApprovisionnement implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 12)
 	private String numDA;
 	private Date dateDA;
 	
 	//Liaison avec Exercice
-	@ManyToOne(cascade =CascadeType.ALL,targetEntity = Exercice.class,fetch = FetchType.LAZY)
+	@ManyToOne(cascade =CascadeType.ALL,targetEntity = Exercice.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice",nullable = false)
 	public Exercice exercice;
-
-	// Liaison à Utilisateur
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneDemandeAppro.class, fetch =FetchType.LAZY,mappedBy = "appro" )
-	public List<LigneDemandeAppro> articlesDeLaDemande;
 
 	public DemandeApprovisionnement() {
 		super();

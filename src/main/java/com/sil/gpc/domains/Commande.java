@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -12,14 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity(name = "Commande")
 public class Commande implements Serializable {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE)//*******************************Pourquoi ça ?
 	@Column(name = "numCommande", length = 8, updatable = false)
 	private String numCommande;
 	private Date dateCommande;
@@ -27,12 +24,9 @@ public class Commande implements Serializable {
 	private int delaiLivraison;
 	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, targetEntity =Fournisseur.class)
 	private Fournisseur frs;
-	
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = LigneCommande.class,fetch = FetchType.EAGER,mappedBy = "numCommande")
-	public List<LigneCommande> lignesDuneCommande;
-	
+
 	//Liaison avec la table Exercice
-	@ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY,targetEntity = Exercice.class)
+	@ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
 

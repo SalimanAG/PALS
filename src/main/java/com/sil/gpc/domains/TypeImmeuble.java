@@ -1,13 +1,9 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -16,10 +12,6 @@ public class TypeImmeuble implements Serializable {
 	@Id
 	private String codeTypIm;
 	private String libTypIm;
-
-	// Liaison avec Immeuble
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Immeuble.class, mappedBy = "typeImmeuble")
-	public List<Immeuble> immeublesParType;
 
 	public TypeImmeuble() {
 		super();

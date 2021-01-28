@@ -2,8 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -13,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -32,18 +29,14 @@ public class Contrat implements Serializable {
 	private double cautionContrat;
 
 	// Migration de lab clé de l'immeuble vers le contrat
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Immeuble.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Immeuble.class)
 	@JoinColumn(name = "codeImm", referencedColumnName = "codeIm", nullable = false)
 	private Immeuble immeuble;
 
 	// Migration de lab clé du locataire vers le contrat
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Locataire.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Locataire.class)
 	@JoinColumn(name = "idLocataire", referencedColumnName = "idLocataire", nullable = false)
 	private Locataire locataire;
-
-	// Migration de la clé de l'échéance vers le contrat
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Echeance.class, mappedBy = "contrat")
-	List<Echeance> echeancesDunContrat = new ArrayList<>();
 
 	public Contrat() {
 		super();
@@ -168,13 +161,6 @@ public class Contrat implements Serializable {
 		this.locataire = locataire;
 	}
 
-	/**
-	 * @return the echeancesDunContrat
-	 */
-	public List<Echeance> getEcheancesDunContrat() {
-		return echeancesDunContrat;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(avanceContrat, cautionContrat, dateEffetContrat, dateSignatureContrat, immeuble, locataire,
@@ -205,8 +191,7 @@ public class Contrat implements Serializable {
 	public String toString() {
 		return "Contrat [numContrat=" + numContrat + ", dateSignatureContrat=" + dateSignatureContrat
 				+ ", dateEffetContrat=" + dateEffetContrat + ", avanceContrat=" + avanceContrat + ", cautionContrat="
-				+ cautionContrat + ", immeuble=" + immeuble + ", echeancesDunContrat=" + echeancesDunContrat
-				+ ", locataire=" + locataire + "]";
+				+ cautionContrat + ", immeuble=" + immeuble + ", locataire=" + locataire + "]";
 	}
 
 }

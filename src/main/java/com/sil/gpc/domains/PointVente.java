@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -14,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -28,41 +26,33 @@ public class PointVente implements Serializable{
 	private boolean payerPoint;
 
 	//Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
 	private Exercice exercice;
 
 	//Liaison avec Correspondant
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Correspondant.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrepondant",referencedColumnName = "idCorrespondant",nullable = false)
 	private Correspondant correspondant;
 
 	//*********************************Il reste l'opération de caisse
 	//Liaison avec OpCaisse
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = OpCaisse.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = OpCaisse.class)
 	@JoinColumn(name = "numOpCaisse",referencedColumnName = "numOpCaisse",nullable = false)
 	private OpCaisse opCaisse;
 
-	// Liaison avec la table Echeance
-	@OneToMany( cascade = CascadeType.ALL,targetEntity = Echeance.class, mappedBy = "opCaisse")
-	private List<Echeance> echeancesOpCaisse;
-	
-	
 	//Liaison avec Regisseur
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)
 	private Regisseur regisseur;
 
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, targetEntity = LignePointVente.class,mappedBy = "pointVente")
-	public List<LignePointVente> lignesParPoint;
-	
 	public PointVente() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public PointVente(String numPointVente, Date datePointVente, boolean payerPoint, Exercice exercice,
-			Correspondant correspondant, Regisseur regisseur, List<LignePointVente> lignesParPoint) {
+			Correspondant correspondant, Regisseur regisseur) {
 		super();
 		this.numPointVente = numPointVente;
 		this.datePointVente = datePointVente;
@@ -70,7 +60,6 @@ public class PointVente implements Serializable{
 		this.exercice = exercice;
 		this.correspondant = correspondant;
 		this.regisseur = regisseur;
-		this.lignesParPoint = lignesParPoint;
 	}
 
 	/**
@@ -157,24 +146,9 @@ public class PointVente implements Serializable{
 		this.regisseur = regisseur;
 	}
 
-	/**
-	 * @return the lignesParPoint
-	 */
-	public List<LignePointVente> getLignesParPoint() {
-		return lignesParPoint;
-	}
-
-	/**
-	 * @param lignesParPoint the lignesParPoint to set
-	 */
-	public void setLignesParPoint(List<LignePointVente> lignesParPoint) {
-		this.lignesParPoint = lignesParPoint;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(correspondant, datePointVente, exercice, lignesParPoint, numPointVente, payerPoint,
-				regisseur);
+		return Objects.hash(correspondant, datePointVente, exercice, numPointVente, opCaisse, payerPoint, regisseur);
 	}
 
 	@Override
@@ -191,17 +165,15 @@ public class PointVente implements Serializable{
 		PointVente other = (PointVente) obj;
 		return Objects.equals(correspondant, other.correspondant)
 				&& Objects.equals(datePointVente, other.datePointVente) && Objects.equals(exercice, other.exercice)
-				&& Objects.equals(lignesParPoint, other.lignesParPoint)
-				&& Objects.equals(numPointVente, other.numPointVente) && payerPoint == other.payerPoint
-				&& Objects.equals(regisseur, other.regisseur);
+				&& Objects.equals(numPointVente, other.numPointVente) && Objects.equals(opCaisse, other.opCaisse)
+				&& payerPoint == other.payerPoint && Objects.equals(regisseur, other.regisseur);
 	}
 
 	@Override
 	public String toString() {
 		return "PointVente [numPointVente=" + numPointVente + ", datePointVente=" + datePointVente + ", payerPoint="
-				+ payerPoint + ", exercice=" + exercice + ", correspondant=" + correspondant + ", regisseur="
-				+ regisseur + ", lignesParPoint=" + lignesParPoint + "]";
+				+ payerPoint + ", exercice=" + exercice + ", correspondant=" + correspondant + ", opCaisse=" + opCaisse
+				+ ", regisseur=" + regisseur + "]";
 	}
-
 
 }

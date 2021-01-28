@@ -294,7 +294,7 @@ public class LocationController {
 		return this.locataireService.findAll();
 	}
 	
-	@GetMapping(path = "locataire/byCodImm/{id}")
+	@GetMapping(path = "locataire/byCodLoc/{id}")
 	public Optional<Locataire> getLocataireById(@PathVariable(name = "id") Long id){
 		
 		return this.locataireService.findById(id);
@@ -312,13 +312,13 @@ public class LocationController {
 		return this.locataireService.save(loc);
 	}
 	
-	@PutMapping(path = "locataire/byCodImm/{id}")
+	@PutMapping(path = "locataire/byCodLoc/{id}")
 	public Locataire updateLocataire(@PathVariable(name = "id") Long id, @RequestBody Locataire loc) {
 		
 		return this.locataireService.edit(loc, id);
 	}
 	
-	@DeleteMapping(path = "locataire/byCodImm/{id}")
+	@DeleteMapping(path = "locataire/byCodLoc/{id}")
 	public Boolean deleteLocataire(@PathVariable(name = "id") Long id) {
 		
 		return this.locataireService.delete(id);

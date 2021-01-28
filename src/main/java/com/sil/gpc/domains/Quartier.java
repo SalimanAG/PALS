@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -22,12 +20,8 @@ public class Quartier implements Serializable {
 	private String numTelQuartier;
 	private String adresseQuartier;
 
-	//Liaison avec Immeuble
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Immeuble.class,mappedBy = "quartier")
-	public List<Immeuble> immeublesParQuartier;
-	
 	//Liaison  avec Arrondissement
-		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Arrondissement.class)
+		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Arrondissement.class)
 		@JoinColumn(name="codeArrondi", referencedColumnName = "codeArrondi", nullable = false)
 		private Arrondissement arrondissement;
 	
@@ -37,13 +31,12 @@ public class Quartier implements Serializable {
 	}
 
 	public Quartier(String codeQuartier, String nomQuartier, String numTelQuartier, String adresseQuartier,
-			List<Immeuble> immeublesParQuartier, Arrondissement arrondissement) {
+			 Arrondissement arrondissement) {
 		super();
 		this.codeQuartier = codeQuartier;
 		this.nomQuartier = nomQuartier;
 		this.numTelQuartier = numTelQuartier;
 		this.adresseQuartier = adresseQuartier;
-		this.immeublesParQuartier = immeublesParQuartier; 
 		this.arrondissement = arrondissement;
 	}
 
@@ -103,19 +96,6 @@ public class Quartier implements Serializable {
 		this.adresseQuartier = adresseQuartier;
 	}
 
-	/**
-	 * @return the immeublesParQuartier
-	 */
-	public List<Immeuble> getImmeublesParQuartier() {
-		return immeublesParQuartier;
-	}
-
-	/**
-	 * @param immeublesParQuartier the immeublesParQuartier to set
-	 */
-	public void setImmeublesParQuartier(List<Immeuble> immeublesParQuartier) {
-		this.immeublesParQuartier = immeublesParQuartier;
-	}
 
 	/**
 	 * @return the arrondissement
@@ -133,8 +113,7 @@ public class Quartier implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(adresseQuartier, arrondissement, codeQuartier, immeublesParQuartier, nomQuartier,
-				numTelQuartier);
+		return Objects.hash(adresseQuartier, arrondissement, codeQuartier, nomQuartier, numTelQuartier);
 	}
 
 	@Override
@@ -151,17 +130,13 @@ public class Quartier implements Serializable {
 		Quartier other = (Quartier) obj;
 		return Objects.equals(adresseQuartier, other.adresseQuartier)
 				&& Objects.equals(arrondissement, other.arrondissement)
-				&& Objects.equals(codeQuartier, other.codeQuartier)
-				&& Objects.equals(immeublesParQuartier, other.immeublesParQuartier)
-				&& Objects.equals(nomQuartier, other.nomQuartier)
+				&& Objects.equals(codeQuartier, other.codeQuartier) && Objects.equals(nomQuartier, other.nomQuartier)
 				&& Objects.equals(numTelQuartier, other.numTelQuartier);
 	}
 
 	@Override
 	public String toString() {
-		return "QuartierRepository [codeQuartier=" + codeQuartier + ", nomQuartier=" + nomQuartier + ", numTelQuartier="
-				+ numTelQuartier + ", adresseQuartier=" + adresseQuartier + ", immeublesParQuartier="
-				+ immeublesParQuartier + ", arrondissement=" + arrondissement + "]";
+		return "Quartier [codeQuartier=" + codeQuartier + ", nomQuartier=" + nomQuartier + ", numTelQuartier="
+				+ numTelQuartier + ", adresseQuartier=" + adresseQuartier + ", arrondissement=" + arrondissement + "]";
 	}
-	
 }

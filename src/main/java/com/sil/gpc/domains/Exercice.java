@@ -2,13 +2,8 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -21,43 +16,6 @@ public class Exercice implements Serializable{
 	private Date dateFin;
 	private String etatExo;
 	private boolean exoSelectionner;
-
-
-	// Liaison à Point vente
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = PointVente.class, fetch =FetchType.LAZY,mappedBy = "exercice" )
-	public List<PointVente> ventesCorrespondantDeLannee;
-
-	// Liaison à operation de caisse
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class, fetch =FetchType.LAZY,mappedBy = "exercice" )
-	public List<PointVente> opCaisseDeLannee;
-
-	// Liaison à la demande d'approvisionnement
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = DemandeApprovisionnement.class, fetch =FetchType.LAZY,mappedBy = "exercice" )
-	public List<DemandeApprovisionnement> demadeApproDeLannee;
-	
-	//Liaison à l'approvisionnement
-	@OneToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER, targetEntity = Approvisionnement.class,mappedBy = "exercice")
-	public List<Approvisionnement> approsParExercice;
-
-	//Liaison à la commande
-	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Commande.class,mappedBy = "exercice")
-	public List<Commande> commandesParExercice;
-
-	//Liaison au Placement
-	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Placement.class,mappedBy = "exercice")
-	public List<Placement> placementsParExercice;
-
-	//Liaison au point de vente
-	@OneToMany(cascade = CascadeType.DETACH,targetEntity = PointVente.class,mappedBy = "exercice")
-	public List<PointVente> PointsParExercice;
-
-	//Liaison au reversement
-	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Reversement.class,mappedBy = "exercice")
-	public List<Reversement> ReversementsParExercice;
-
-	//Liaison au recollement
-	@OneToMany(cascade = CascadeType.DETACH,targetEntity = Recollement.class,mappedBy = "exercice")
-	public List<Recollement> recollementsParExercice;
 	
 	public Exercice() {
 		super();

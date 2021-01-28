@@ -1,13 +1,9 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -18,9 +14,6 @@ public class Pays implements Serializable{
 	private String nomPays;
 	private String nomCompletPays;
 	
-	//Liaison avec les départements
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,targetEntity = Departement.class,mappedBy = "pays")
-	List<Departement> DepartemantsDuPays;
 	public Pays() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -89,6 +82,5 @@ public class Pays implements Serializable{
 	public String toString() {
 		return "Pays [codePays=" + codePays + ", nomPays=" + nomPays + ", nomCompletPays=" + nomCompletPays + "]";
 	}
-	
 	
 }

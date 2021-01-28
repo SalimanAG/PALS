@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -19,10 +17,6 @@ public class Departement implements Serializable{
 	@Id
 	private String codeDepartement;
 	private String nomDepartement;
-	
-	//Migration de la clé du département vers les communes
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = Commune.class,mappedBy = "codeDepartement", fetch = FetchType.EAGER)
-	public List<Commune> communesParDepartement;
 	
 	@ManyToOne(cascade = CascadeType.ALL,targetEntity = Pays.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "codePays", referencedColumnName = "codePays", nullable = false)
@@ -33,11 +27,14 @@ public class Departement implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Departement(String codeDepartement, String nomDepartement, List<Commune> communesParDepartement, Pays pays) {
-		super();
+	/**
+	 * @param codeDepartement
+	 * @param nomDepartement
+	 * @param pays
+	 */
+	public Departement(String codeDepartement, String nomDepartement, Pays pays) {
 		this.codeDepartement = codeDepartement;
 		this.nomDepartement = nomDepartement;
-		this.communesParDepartement = communesParDepartement;
 		this.pays = pays;
 	}
 
@@ -70,20 +67,6 @@ public class Departement implements Serializable{
 	}
 
 	/**
-	 * @return the communesParDepartement
-	 */
-	public List<Commune> getCommunesParDepartement() {
-		return communesParDepartement;
-	}
-
-	/**
-	 * @param communesParDepartement the communesParDepartement to set
-	 */
-	public void setCommunesParDepartement(List<Commune> communesParDepartement) {
-		this.communesParDepartement = communesParDepartement;
-	}
-
-	/**
 	 * @return the pays
 	 */
 	public Pays getPays() {
@@ -99,7 +82,7 @@ public class Departement implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codeDepartement, communesParDepartement, nomDepartement, pays);
+		return Objects.hash(codeDepartement, nomDepartement, pays);
 	}
 
 	@Override
@@ -115,13 +98,14 @@ public class Departement implements Serializable{
 		}
 		Departement other = (Departement) obj;
 		return Objects.equals(codeDepartement, other.codeDepartement)
-				&& Objects.equals(communesParDepartement, other.communesParDepartement)
 				&& Objects.equals(nomDepartement, other.nomDepartement) && Objects.equals(pays, other.pays);
 	}
 
 	@Override
 	public String toString() {
-		return "Departement [codeDepartement=" + codeDepartement + ", nomDepartement=" + nomDepartement
-				+ ", communesParDepartement=" + communesParDepartement + ", pays=" + pays + "]";
+		return "Departement [codeDepartement=" + codeDepartement + ", nomDepartement=" + nomDepartement + ", pays="
+				+ pays + "]";
 	}
+	
+	
 }

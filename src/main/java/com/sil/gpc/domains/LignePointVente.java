@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,12 +24,12 @@ public class LignePointVente implements Serializable{
 	private int numFinLignePointVente;
 	
 	//Liaison avec Point vente
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,targetEntity = PointVente.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,targetEntity = PointVente.class)
 	@JoinColumn(name = "numPointVente", referencedColumnName = "numPointVente")
 	PointVente pointVente;
 	
 	//Liaison avec Article
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,targetEntity =Article.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,targetEntity =Article.class)
 	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle")
 	Article article;
 
@@ -131,6 +132,40 @@ public class LignePointVente implements Serializable{
 	 */
 	public void setArticle(Article article) {
 		this.article = article;
+	}
+
+	@Override
+	public String toString() {
+		return "LignePointVente [idLignePointVente=" + idLignePointVente + ", quantiteLignePointVente="
+				+ quantiteLignePointVente + ", PULignePointVente=" + PULignePointVente + ", numDebLignePointVente="
+				+ numDebLignePointVente + ", numFinLignePointVente=" + numFinLignePointVente + ", pointVente="
+				+ pointVente + ", article=" + article + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(PULignePointVente, article, idLignePointVente, numDebLignePointVente, numFinLignePointVente,
+				pointVente, quantiteLignePointVente);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		LignePointVente other = (LignePointVente) obj;
+		return Double.doubleToLongBits(PULignePointVente) == Double.doubleToLongBits(other.PULignePointVente)
+				&& Objects.equals(article, other.article) && Objects.equals(idLignePointVente, other.idLignePointVente)
+				&& numDebLignePointVente == other.numDebLignePointVente
+				&& numFinLignePointVente == other.numFinLignePointVente && Objects.equals(pointVente, other.pointVente)
+				&& Double.doubleToLongBits(quantiteLignePointVente) == Double
+						.doubleToLongBits(other.quantiteLignePointVente);
 	}
 	
 }

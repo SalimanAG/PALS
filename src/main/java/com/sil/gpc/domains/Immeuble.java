@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -22,24 +20,20 @@ public class Immeuble implements Serializable{
 	private String localisationIm;
 	private boolean etatIm;
 	//Liaison avec QuartierRepository
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Quartier.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Quartier.class)
 	@JoinColumn(name="codeQuartier", referencedColumnName = "codeQuartier", nullable = false)
 	private Quartier quartier;
 	
 	//Liaison  avec TypeImmeuble
-		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = TypeImmeuble.class)
+		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = TypeImmeuble.class)
 		@JoinColumn(name="codeTypImm", referencedColumnName = "codeTypIm", nullable = false)
 		private TypeImmeuble typeImmeuble;
 		
 	//Liaison  avec Site
-			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = SiteMarcher.class)
+			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
 			@JoinColumn(name="codeSite", referencedColumnName = "codeSite", nullable = false)
 			private SiteMarcher siteMarcher;
 		
-		//Liaison  avec PrixImmeuble
-		@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = PrixImmeuble.class,mappedBy = "immeuble")
-		public List<PrixImmeuble> prixImmeuble;//*****************************Erreur, c'est prix Immeuble
-	
 	public Immeuble() {
 		super();
 	}

@@ -4,8 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.sil.gpc.domains.PourcenReverse;
+import com.sil.gpc.services.PourcenReverseService;
 
 @Repository
 public interface PourcenReverseRepository extends JpaRepository<PourcenReverse, Long> {
+ 
 
 }

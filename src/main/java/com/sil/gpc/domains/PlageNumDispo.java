@@ -22,7 +22,7 @@ public class PlageNumDispo implements Serializable {
 	private String numFinPlageDispo; //Le dernier numéro réceptionné dans l'année
 	private int annee;
 
-	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
 		

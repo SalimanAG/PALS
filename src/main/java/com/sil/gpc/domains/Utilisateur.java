@@ -1,15 +1,12 @@
 package com.sil.gpc.domains;
 
-import java.sql.Date;
-import java.util.List;
+import java.util.Objects;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Utilisateur {
@@ -25,19 +22,10 @@ public class Utilisateur {
 	private String dateLastConnex;
 	private boolean askMdp1erLance;
 	
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = OpCaisse.class,mappedBy = "utilisateur")
-	public List<OpCaisse> opCaisseParUtilisateur;
-
-	
 	@ManyToOne(cascade = CascadeType.ALL,targetEntity = Service.class)
 	@JoinColumn(name = "codeService", referencedColumnName = "codeService", nullable = true)
 	public Service service;
 	
-	//**************************Les affecters de l'utilisateur
-	// Liaison à la table Affecter
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = Affecter.class, mappedBy = "utilisateur")
-	public List<Utilisateur> affectationsDunUtilisateur;
-
 	
 	public Utilisateur() {
 		super();
@@ -136,15 +124,6 @@ public class Utilisateur {
 		this.service = service;
 	}
 
-	@Override
-	public String toString() {
-		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", login=" + login + ", motDePass=" + motDePass
-				+ ", nomUtilisateur=" + nomUtilisateur + ", prenomUtilisateur=" + prenomUtilisateur
-				+ ", fonctionUtilisateur=" + fonctionUtilisateur + ", activeUtilisateur=" + activeUtilisateur
-				+ ", opCaisseParUtilisateur=" + opCaisseParUtilisateur + ", service=" + service
-				+ ", affectationsDunUtilisateur=" + affectationsDunUtilisateur + "]";
-	}
-
 	public String getDateLastConnex() {
 		return dateLastConnex;
 	}
@@ -161,7 +140,39 @@ public class Utilisateur {
 		this.askMdp1erLance = askMdp1erLance;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", login=" + login + ", motDePass=" + motDePass
+				+ ", nomUtilisateur=" + nomUtilisateur + ", prenomUtilisateur=" + prenomUtilisateur
+				+ ", fonctionUtilisateur=" + fonctionUtilisateur + ", activeUtilisateur=" + activeUtilisateur
+				+ ", dateLastConnex=" + dateLastConnex + ", askMdp1erLance=" + askMdp1erLance + ", service=" + service
+				+ "]";
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(activeUtilisateur, askMdp1erLance, dateLastConnex, fonctionUtilisateur, idUtilisateur,
+				login, motDePass, nomUtilisateur, prenomUtilisateur, service);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Utilisateur other = (Utilisateur) obj;
+		return activeUtilisateur == other.activeUtilisateur && askMdp1erLance == other.askMdp1erLance
+				&& Objects.equals(dateLastConnex, other.dateLastConnex)
+				&& Objects.equals(fonctionUtilisateur, other.fonctionUtilisateur)
+				&& Objects.equals(idUtilisateur, other.idUtilisateur) && Objects.equals(login, other.login)
+				&& Objects.equals(motDePass, other.motDePass) && Objects.equals(nomUtilisateur, other.nomUtilisateur)
+				&& Objects.equals(prenomUtilisateur, other.prenomUtilisateur) && Objects.equals(service, other.service);
+	}
 	
 }

@@ -1,13 +1,10 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -16,11 +13,7 @@ public class Famille implements Serializable {
 	@Id
 	private String codeFamille;
 	private String libFamille;
-	
-	//List des article d'une famille
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = Article.class, mappedBy = "famille")
-	List<Article> articlesDuneFamille;
-	
+
 	public Famille() {
 		super();
 	}
@@ -69,8 +62,7 @@ public class Famille implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + ", articlesDuneFamille="
-				+ articlesDuneFamille + "]";
+		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + "]";
 	}
 
 }

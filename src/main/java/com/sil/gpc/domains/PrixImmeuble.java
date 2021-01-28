@@ -7,6 +7,8 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,13 +18,14 @@ import javax.persistence.ManyToOne;
 public class PrixImmeuble implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idPrixIm;
 	private Date dateDebPrixIm;
 	private Date dateFinPrixIm;
 	private Long prixIm;
 
 	//Liaison avec immeuble
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Immeuble.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Immeuble.class)
 	@JoinColumn(name = "codeIm",referencedColumnName = "codeIm",nullable = false)
 	private Immeuble immeuble;
 	

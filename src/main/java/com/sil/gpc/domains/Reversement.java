@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -11,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -22,20 +20,14 @@ public class Reversement implements Serializable{
 	private Date dateVersement;
 	
 	//Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Exercice.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
 	private Exercice exercice;
 	
 	//Liaison avec Reversement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)
 	private Regisseur regisseur;
-	
-	//************************************Liste des lignes reversements
-	// Liaison à la table LigneRecollement
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = LigneReversement.class, mappedBy = "numReversement")
-	public List<LigneRecollement> ArticleDunreversement;
-
 	
 	public Reversement() {
 		super();
@@ -87,9 +79,8 @@ public class Reversement implements Serializable{
 	@Override
 	public String toString() {
 		return "Reversement [numReversement=" + numReversement + ", dateVersement=" + dateVersement + ", exercice="
-				+ exercice + ", ArticleDunreversement=" + ArticleDunreversement + "]";
+				+ exercice + ", regisseur=" + regisseur + "]";
 	}
-
 
 	
 }

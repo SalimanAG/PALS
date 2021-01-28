@@ -24,12 +24,12 @@ public class LigneRecollement implements Serializable{
 	private String observationLigneRecollement;
 	
 	//Liaison à la table Recollement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Recollement.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Recollement.class)
 	@JoinColumn(name = "numRecollement", nullable = false, referencedColumnName = "numRecollement")
 	public Recollement recollement;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 

@@ -21,12 +21,12 @@ public class LigneOpCaisse implements Serializable {
 	private String CommentaireLigneOperCaisse;
 
 	//Liaison à la table OpCaisse
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = OpCaisse.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = OpCaisse.class)
 	@JoinColumn(name = "numOpCaisse", nullable = false, referencedColumnName = "numOpCaisse")
 	public OpCaisse opCaisse;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 

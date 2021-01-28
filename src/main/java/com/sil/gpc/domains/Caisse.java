@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @SuppressWarnings("serial")
@@ -24,16 +22,9 @@ public class Caisse implements Serializable {
 
 	
 	//Liaison à venir
-	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Arrondissement.class,fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Arrondissement.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeArrondi",referencedColumnName = "codeArrondi", nullable = false)
 	private Arrondissement arrondissement;
-	
-	@OneToMany(targetEntity = Affecter.class, mappedBy = "caisse")
-	public List<Affecter> utilisateursDuneCaisse;
-	
-	@OneToMany(targetEntity = OpCaisse.class, mappedBy = "caisse")
-	public List<OpCaisse> opérationsDuneCaisse;
-		
 	public Caisse() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -76,18 +67,10 @@ public class Caisse implements Serializable {
 		this.arrondissement = arrondissement;
 	}
 
-	/**
-	 * @return the affectationsDuneCaisse
-	 */
-	public List<Affecter> getAffectationsDuneCaisse() {
-		return utilisateursDuneCaisse;
-	}
-
-	/**
-	 * @return the opérationsDuneCaisse
-	 */
-	public List<OpCaisse> getOpérationsDuneCaisse() {
-		return opérationsDuneCaisse;
+	@Override
+	public String toString() {
+		return "Caisse [codeCaisse=" + codeCaisse + ", libeCaisse=" + libeCaisse + ", arrondissement=" + arrondissement
+				+ "]";
 	}
 
 	@Override
@@ -110,13 +93,6 @@ public class Caisse implements Serializable {
 		return Objects.equals(arrondissement, other.arrondissement) && Objects.equals(codeCaisse, other.codeCaisse)
 				&& Objects.equals(libeCaisse, other.libeCaisse);
 	}
-
-	@Override
-	public String toString() {
-		return "Caisse [codeCaisse=" + codeCaisse + ", libeCaisse=" + libeCaisse + ", arrondissement=" + arrondissement
-				+ ", affectationsDuneCaisse=" + utilisateursDuneCaisse + ", opérationsDuneCaisse="
-				+ opérationsDuneCaisse + "]";
-	}
-
+	
 
 }

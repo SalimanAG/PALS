@@ -1,24 +1,17 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity(name = "Fournisseur")
 public class Fournisseur implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(length = 4)
 	private String codeFrs;
 	@Column(length = 150)
@@ -33,9 +26,6 @@ public class Fournisseur implements Serializable{
 	private String telFRS;
 	@Column(length = 150)
 	private String description;
-	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Commande.class,mappedBy = "frs")
-	List<Commande> cmdesParFrs;
 	
 	public Fournisseur() {
 		super();
@@ -137,9 +127,7 @@ public class Fournisseur implements Serializable{
 	public String toString() {
 		return "Fournisseur [codeFrs=" + codeFrs + ", identiteFrs=" + identiteFrs + ", adresseFrs=" + adresseFrs
 				+ ", raisonSociale=" + raisonSociale + ", numIfuFrs=" + numIfuFrs + ", telFRS=" + telFRS
-				+ ", description=" + description + ", cmdesParFrs=" + cmdesParFrs + "]";
+				+ ", description=" + description + "]";
 	}
-	
-	
 
 }

@@ -18,11 +18,11 @@ public class PourcenReverse {
 	private double valPourcenRevers;
 	
 	//Liaison  avec Institution de reversement
-			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = InstituReverse.class)
+			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = InstituReverse.class)
 			@JoinColumn(name="codeInstRevers", referencedColumnName = "codeInstRevers", nullable = false)
 			private InstituReverse instituReverse;
 	//Liaison  avec article
-			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
 			@JoinColumn(name="codeArticle", referencedColumnName = "codeArticle", nullable = false)
 			private Article article ;
 			

@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
-import com.sil.gpc.domains.Rp;
+import com.sil.gpc.domains.TresCom;
 
 @Repository
-public interface RpRepository extends JpaRepository<Rp, String> {
+public interface RpRepository extends JpaRepository<TresCom, String> {
 	
-	public List<Rp> findByIdRp(String idRp);
+	public List<TresCom> findByIdRp(String idRp);
 
 
 }

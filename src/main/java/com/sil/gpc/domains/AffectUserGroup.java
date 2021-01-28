@@ -17,11 +17,12 @@ public class AffectUserGroup {
 	private Long idAffectUserGroup;
 	
 	//Liaison  avec Utilisateur
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Utilisateur.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Utilisateur.class)
 	@JoinColumn(name="idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
 	private Utilisateur utilisateur;
+	
 //Liaison  Groupe Utilisateur
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = GroupUser.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = GroupUser.class)
 	@JoinColumn(name="idGroupUser", referencedColumnName = "idGroupUser", nullable = false)
 	private GroupUser groupUser ;
 	

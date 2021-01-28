@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
 @Entity
-public class Rp implements Serializable{
+public class TresCom implements Serializable{
 
 	@Id
 	private String idRp;
@@ -25,7 +25,7 @@ public class Rp implements Serializable{
 	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
 	private Utilisateur utilisateur;
 	
-	public Rp(String idRp, Magasinier magasinier, Utilisateur utilisateur) {
+	public TresCom(String idRp, Magasinier magasinier, Utilisateur utilisateur) {
 		super();
 		this.idRp = idRp;
 		this.magasinier = magasinier;
@@ -74,7 +74,7 @@ public class Rp implements Serializable{
 		this.utilisateur = utilisateur;
 	}
 
-	public Rp() {
+	public TresCom() {
 		super();
 	}
 
@@ -94,14 +94,14 @@ public class Rp implements Serializable{
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Rp other = (Rp) obj;
+		TresCom other = (TresCom) obj;
 		return Objects.equals(idRp, other.idRp) && Objects.equals(magasinier, other.magasinier)
 				&& Objects.equals(utilisateur, other.utilisateur);
 	}
 
 	@Override
 	public String toString() {
-		return "Rp [idRp=" + idRp + ", magasinier=" + magasinier + ", utilisateur=" + utilisateur + "]";
+		return "TresCom [idRp=" + idRp + ", magasinier=" + magasinier + ", utilisateur=" + utilisateur + "]";
 	}
 	
 }

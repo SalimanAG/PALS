@@ -19,7 +19,7 @@ import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneDemandeAppro;
 import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.domains.Reception;
-import com.sil.gpc.domains.Rp;
+import com.sil.gpc.domains.TresCom;
 import com.sil.gpc.services.CommandeService;
 import com.sil.gpc.services.DemandeApproService;
 import com.sil.gpc.services.LigneCommandeService;
@@ -55,32 +55,32 @@ public class TresorController {
 	}
 	
 	/*###########################################################
-	#############	Partie réservée pour Rp
+	#############	Partie réservée pour TresCom
 	###########################################################
 	*/
 	
 	@GetMapping(path = "rp/list")
-	public List<Rp> getAllRp(){
+	public List<TresCom> getAllRp(){
 		
 		return this.rpService.getAll();
 	}
 	
 	@GetMapping(path = "rp/byCodRp/{id}")
-	public Optional<Rp> getRpById(@PathVariable(name = "id") String id){
+	public Optional<TresCom> getRpById(@PathVariable(name = "id") String id){
 		
 		return this.rpService.findById(id);
 	}
 	
 	@PostMapping(path = "rp/list")
-	public Rp createRp( @RequestBody Rp rp) {
+	public TresCom createRp( @RequestBody TresCom tresCom) {
 		
-		return this.rpService.save(rp);
+		return this.rpService.save(tresCom);
 	}
 	
 	@PutMapping(path = "rp/byCodRp/{id}")
-	public Rp updateRp(@PathVariable(name = "id") String id, @RequestBody Rp rp) {
+	public TresCom updateRp(@PathVariable(name = "id") String id, @RequestBody TresCom tresCom) {
 		
-		return this.rpService.edit(id, rp);
+		return this.rpService.edit(id, tresCom);
 	}
 	
 	@DeleteMapping(path = "rp/byCodRp/{id}")

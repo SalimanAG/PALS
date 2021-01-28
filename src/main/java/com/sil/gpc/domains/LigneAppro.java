@@ -20,11 +20,6 @@ public class LigneAppro implements Serializable {
 	private Long idLigneAppro;
 	private Long quantiteLigneAppro;
 	private Long PULigneAppro;
-	
-	//Liaison avec Article
-	//@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
-	//@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
-	//public Article article;
 
 	//Liaison avec Approvisionnement
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Approvisionnement.class)

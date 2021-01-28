@@ -23,12 +23,12 @@ public class Affecter implements Serializable{
 	private Date dateFinAffecter;
 	
 	//Liaison à la caisse
-	@ManyToOne(targetEntity = Caisse.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Caisse.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeCaisse", referencedColumnName = "codeCaisse", nullable = false)
 	private Caisse caisse;
 	
 	//Liaison à l'utilisateur
-	@ManyToOne(targetEntity = Utilisateur.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Utilisateur.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
 	private Utilisateur utilisateur;
 	

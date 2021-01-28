@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -9,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -24,22 +22,30 @@ public class Locataire implements Serializable {
 	private String telLocataire;
 	private String ifuLocataire;
 	private String personneAContacter;
-	@OneToMany(targetEntity = Contrat.class, mappedBy = "locataire")
-	List<Contrat> contratLocataire;
 	
 	public Locataire() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Locataire(String identiteLocataire, String adresseLocataire, String telLocataire,
-			String personneAContacter) {
-		super();
+
+	/**
+	 * @param idLocataire
+	 * @param identiteLocataire
+	 * @param adresseLocataire
+	 * @param telLocataire
+	 * @param ifuLocataire
+	 * @param personneAContacter
+	 */
+	public Locataire(Long idLocataire, String identiteLocataire, String adresseLocataire, String telLocataire,
+			String ifuLocataire, String personneAContacter) {
+		this.idLocataire = idLocataire;
 		this.identiteLocataire = identiteLocataire;
 		this.adresseLocataire = adresseLocataire;
 		this.telLocataire = telLocataire;
+		this.ifuLocataire = ifuLocataire;
 		this.personneAContacter = personneAContacter;
 	}
+
 	public Long getIdLocataire() {
 		return idLocataire;
 	}
@@ -79,10 +85,6 @@ public class Locataire implements Serializable {
 		this.ifuLocataire = ifuLocataire;
 	}
 
-	public List<Contrat> getContratLocataire() {
-		return contratLocataire;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(adresseLocataire, idLocataire, identiteLocataire, ifuLocataire, personneAContacter,
@@ -113,10 +115,7 @@ public class Locataire implements Serializable {
 	public String toString() {
 		return "Locataire [idLocataire=" + idLocataire + ", identiteLocataire=" + identiteLocataire
 				+ ", adresseLocataire=" + adresseLocataire + ", telLocataire=" + telLocataire + ", ifuLocataire="
-				+ ifuLocataire + ", personneAContacter=" + personneAContacter + ", contratLocataire=" + contratLocataire
-				+ "]";
+				+ ifuLocataire + ", personneAContacter=" + personneAContacter + "]";
 	}
-	
-	
 
 }

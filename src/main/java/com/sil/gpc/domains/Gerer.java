@@ -24,12 +24,12 @@ public class Gerer implements Serializable{
 	private Date dateFinGerer;
 
 	//Liaison avec MagasinierService
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Magasinier.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Magasinier.class)
 	@JoinColumn(name = "numMagasinier", referencedColumnName ="numMagasinier",nullable = false)
 	private Magasinier magasinier;
 	
 	//Liaison avec Magasin
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Magasin.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Magasin.class)
 	@JoinColumn(name = "codeMagasin", referencedColumnName ="codeMagasin",nullable = false)
 	private Magasin magasin;
 	

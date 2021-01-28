@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -11,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,29 +21,24 @@ public class Recollement implements Serializable {
 	private Date dateRecollement;
 
 	// Liaison avec Magasin
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Magasin.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Magasin.class)
 	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin", nullable = false)
 	private Magasin magasin;
 
 	// Liaison avec Correspondant
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Correspondant.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrespondant", referencedColumnName = "idCorrespondant", nullable = true)
 	private Correspondant corres;
 
 	// Liaison avec Regisseur
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Regisseur.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur", referencedColumnName = "idRegisseur", nullable = false)
 	private Regisseur regisseur;
 
 	// Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Exercice.class)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
-
-	// Liaison à la table LigneRecollement
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = LigneRecollement.class, mappedBy = "recollement")
-	public List<LigneRecollement> ArticlesParRecollement;
-
 	public Recollement() {
 		super();
 	}
@@ -144,14 +137,7 @@ public class Recollement implements Serializable {
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
-
-	/**
-	 * @return the articlesParRecollement
-	 */
-	public List<LigneRecollement> getArticlesParRecollement() {
-		return ArticlesParRecollement;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(dateRecollement, descriptionRecollement, exercice, magasin, numRecollement, regisseur);
@@ -178,7 +164,8 @@ public class Recollement implements Serializable {
 	@Override
 	public String toString() {
 		return "Recollement [numRecollement=" + numRecollement + ", descriptionRecollement=" + descriptionRecollement
-				+ ", dateRecollement=" + dateRecollement + ", magasin=" + magasin + ", regisseur=" + regisseur
-				+ ", exercice=" + exercice + ", ArticlesParRecollement=" + ArticlesParRecollement + "]";
+				+ ", dateRecollement=" + dateRecollement + ", magasin=" + magasin + ", corres=" + corres
+				+ ", regisseur=" + regisseur + ", exercice=" + exercice + "]";
 	}
+
 }

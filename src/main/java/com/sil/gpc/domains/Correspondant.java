@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
@@ -25,20 +23,12 @@ public class Correspondant implements Serializable {
 	private Magasinier magasinier;
 
 	// Liaison à typeCorresspondant
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = TypCorres.class, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = TypCorres.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeTypCorres", referencedColumnName = "codeTypCorres", nullable = false)
 	public TypCorres typecorres;
 
 	// Liaison à Utilisateur
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = PointVente.class, fetch = FetchType.LAZY, mappedBy = "correspondant")
-	public List<PointVente> pointsParCorrespondant;
-
-	// Liaison à Utilisateur
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = Recollement.class, fetch = FetchType.LAZY, mappedBy = "corres")
-	public List<Recollement> recollementsParCorrespondant;
-
-	// Liaison à Utilisateur
-	@OneToOne(cascade = CascadeType.ALL, targetEntity = Utilisateur.class, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, targetEntity = Utilisateur.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
 	public Utilisateur utilisateur;
 

@@ -29,12 +29,12 @@ public class LigneReversement implements Serializable{
 	private String observation;
 
 	//Liaison à la table Reversement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Reversement.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Reversement.class)
 	@JoinColumn(name = "numReversement", nullable = false, referencedColumnName = "numReversement")
 	public Reversement numReversement;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 

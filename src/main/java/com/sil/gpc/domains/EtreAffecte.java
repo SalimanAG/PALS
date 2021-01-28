@@ -20,12 +20,12 @@ public class EtreAffecte implements Serializable{
 	private Date dateDepart;
 	
 	//Liaison avec Correspondant
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Correspondant.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrespondant",referencedColumnName = "idCorrespondant",nullable = false)
 	private Correspondant corres;
 	
 	//Liaison avec Site
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = SiteMarcher.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
 	@JoinColumn(name = "codeSite",referencedColumnName = "codeSite",nullable = false)
 	private SiteMarcher site;
 

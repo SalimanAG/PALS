@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -28,18 +26,14 @@ public class LigneCommande implements Serializable{
 	private double TVA;
 
 	//Liaison à la table Commande
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Commande.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Commande.class)
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
 	public Commande numCommande;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
-	
-	//Liaison à la LigneReception
-	@OneToMany(cascade = CascadeType.ALL, targetEntity = LigneReception.class,fetch = FetchType.EAGER,mappedBy ="ligneCommande" )
-	public List<LigneReception> lignReceptionParCommande;
 	
 	public LigneCommande() {
 		super();

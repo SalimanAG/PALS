@@ -25,12 +25,12 @@ public class Stocker implements Serializable{
 	private Long cmup;
 
 	//Liaison à l'article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	private Article article;
 
 	//Liaison à l'article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Magasin.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Magasin.class)
 	@JoinColumn(name = "codeMagasin",referencedColumnName = "codeMagasin",nullable = false)
 	private Magasin magasin;
 	

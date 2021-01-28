@@ -1,43 +1,32 @@
 package com.sil.gpc.domains;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Reception {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length = 12)
 	private String numReception;
 	@Column(length = 150)
 	private String observation;
 	private Date dateReception;
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = LigneReception.class, mappedBy = "reception")
-	public List<Reception> lignesParReception;
-	
-	//L'attribut exercice ou code exercice à été ignoré
 	
 	public Reception() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reception(String numReception, String observation, Date dateReception, List<Reception> lignesParReception) {
+	public Reception(String numReception, String observation, Date dateReception) {
 		super();
 		this.numReception = numReception;
 		this.observation = observation;
-		this.dateReception = dateReception;
-		this.lignesParReception = lignesParReception;  
+		this.dateReception = dateReception; 
 	}
 
 	public String getNumReception() {
@@ -64,13 +53,31 @@ public class Reception {
 		this.dateReception = dateReception;
 	}
 
-	public List<Reception> getLignesParReception() {
-		return lignesParReception;
+	@Override
+	public String toString() {
+		return "Reception [numReception=" + numReception + ", observation=" + observation + ", dateReception="
+				+ dateReception + "]";
 	}
 
-	public void setLignesParReception(List<Reception> lignesParReception) {
-		this.lignesParReception = lignesParReception;
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateReception, numReception, observation);
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Reception other = (Reception) obj;
+		return Objects.equals(dateReception, other.dateReception) && Objects.equals(numReception, other.numReception)
+				&& Objects.equals(observation, other.observation);
+	}
 	
 }

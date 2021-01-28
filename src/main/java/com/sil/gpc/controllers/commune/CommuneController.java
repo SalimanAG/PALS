@@ -13,25 +13,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sil.gpc.domains.AffectDroitGroupUser;
+import com.sil.gpc.domains.AffectUserGroup;
 import com.sil.gpc.domains.Arrondissement;
 import com.sil.gpc.domains.Commune;
 import com.sil.gpc.domains.Departement;
+import com.sil.gpc.domains.DroitUser;
 import com.sil.gpc.domains.EtreAffecte;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.Fournisseur;
+import com.sil.gpc.domains.GroupUser;
+import com.sil.gpc.domains.InstituReverse;
 import com.sil.gpc.domains.Service;
+import com.sil.gpc.domains.SiteMarcher;
 import com.sil.gpc.domains.Pays;
+import com.sil.gpc.domains.PourcenReverse;
 import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.domains.Utilisateur;
+import com.sil.gpc.services.AffectDroitGroupUserService;
+import com.sil.gpc.services.AffectUserGroupService;
 import com.sil.gpc.services.ArrondissementService;
 import com.sil.gpc.services.CommuneService;
 import com.sil.gpc.services.DepartementService;
+import com.sil.gpc.services.DroitUserService;
 import com.sil.gpc.services.EtreAffeccteService;
 import com.sil.gpc.services.ExerciceService;
 import com.sil.gpc.services.FournisseurService;
+import com.sil.gpc.services.GroupUserService;
+import com.sil.gpc.services.InstituReverseService;
 import com.sil.gpc.services.PaysService;
+import com.sil.gpc.services.PourcenReverseService;
 import com.sil.gpc.services.QuartierService;
 import com.sil.gpc.services.ServiceService;
+import com.sil.gpc.services.SiteMarcherService;
 import com.sil.gpc.services.UtilisateurService;
 
 @RestController
@@ -48,12 +62,41 @@ public class CommuneController {
 	private final ArrondissementService arrondissementService;
 	private final QuartierService quartierService;
 	private final EtreAffeccteService etreAffecterService;
+	private final SiteMarcherService siMaS;
+	private final GroupUserService ug;
+	private final AffectDroitGroupUserService dgus;
+	private final AffectUserGroupService aug;
+	private final DroitUserService du;
+	private final InstituReverseService ir;
+	private final PourcenReverseService perce;
 	
+	
+	/**
+	 * @param exerciceService
+	 * @param fournisseurService
+	 * @param serviceService
+	 * @param utilisateurService
+	 * @param paysService
+	 * @param departementService
+	 * @param communeService
+	 * @param arrondissementService
+	 * @param quartierService
+	 * @param etreAffecterService
+	 * @param siMaS
+	 * @param gu
+	 * @param dgus
+	 * @param aug
+	 * @param du
+	 * @param ir
+	 * @param perce
+	 */
 	public CommuneController(ExerciceService exerciceService, FournisseurService fournisseurService,
 			ServiceService serviceService, UtilisateurService utilisateurService, PaysService paysService,
-			DepartementService departementService, CommuneService communeService, EtreAffeccteService etreAffecterService,
-			ArrondissementService arrondissementService, QuartierService quartierService) {
-		super();
+			DepartementService departementService, CommuneService communeService,
+			ArrondissementService arrondissementService, QuartierService quartierService,
+			EtreAffeccteService etreAffecterService, SiteMarcherService siMaS, GroupUserService ug,
+			AffectDroitGroupUserService dgus, AffectUserGroupService aug, DroitUserService du, InstituReverseService ir,
+			PourcenReverseService perce) {
 		this.exerciceService = exerciceService;
 		this.fournisseurService = fournisseurService;
 		this.serviceService = serviceService;
@@ -64,8 +107,14 @@ public class CommuneController {
 		this.arrondissementService = arrondissementService;
 		this.quartierService = quartierService;
 		this.etreAffecterService = etreAffecterService;
+		this.siMaS = siMaS;
+		this.ug = ug;
+		this.dgus = dgus;
+		this.aug = aug;
+		this.du = du;
+		this.ir = ir;
+		this.perce = perce;
 	}
-	
 
 	/*###########################################################
 	#############	Partie réservée pour exercice
@@ -305,6 +354,192 @@ public class CommuneController {
 		
 		return this.utilisateurService.delete(id);
 	}	
+
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour AffectDroitGroupeUser
+	###########################################################
+	*/
+	@GetMapping(path = "adgu/list")
+	public List<AffectDroitGroupUser> getAllDroitsGroup(){
+		
+		return this.dgus.getAll();
+	}
+	
+	@GetMapping(path = "adgu/byId/{id}")
+	public Optional<AffectDroitGroupUser> getDroitGroupeUser(@PathVariable(name = "id") Long id){
+		
+		return this.dgus.findById(id);
+	}
+	
+	@GetMapping(path = "adgu/bygro/{gu}")
+	public List<AffectDroitGroupUser> getDroitGroupByGroup(@PathVariable(name = "gu") GroupUser gu){
+		
+		return this.dgus.findByGroup(gu);
+	}
+	
+	@GetMapping(path = "adgu/bydro/{du}")
+	public List<AffectDroitGroupUser> getDroitGroupByDroit(@PathVariable(name = "du") DroitUser du){
+		
+		return this.dgus.findByDroit(du);
+	}
+	
+	@PostMapping(path = "adgu/list")
+	public AffectDroitGroupUser createaffectDroitGroup( @RequestBody AffectDroitGroupUser adgu) {
+		
+		return this.dgus.save(adgu);
+	}
+	
+	@PutMapping(path = "adgu/byid/{id}")
+	public AffectDroitGroupUser updatedroitGroup(@PathVariable(name = "id") Long id, @RequestBody AffectDroitGroupUser adgu) {
+		
+		return this.dgus.edit(id, adgu);
+	}
+	
+	@DeleteMapping(path = "user/byidr/{id}")
+	public Boolean deleteDroitGroup(@PathVariable(name = "id") Long id) {
+		
+		return this.dgus.delete(id);	
+	}
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour AffectUserGroup
+	###########################################################
+	*/
+
+	@GetMapping(path = "ug/list")
+	public List<AffectUserGroup> getAllgroups(){
+		
+		return this.aug.getAll();
+	}
+	
+	@GetMapping(path = "aug/byId/{id}")
+	public Optional<AffectUserGroup> getGroupeUser(@PathVariable(name = "id") Long id){
+		
+		return this.aug.findById(id);
+	}
+	
+	@GetMapping(path = "aug/bygro/{gro}")
+	public List<AffectUserGroup> getUserGroupBygroup(@PathVariable(name = "gu") GroupUser gu){
+		
+		return this.aug.findByGroups(gu);
+	}
+	
+	@GetMapping(path = "aug/byUse/{du}")
+	public List<AffectUserGroup> getUserByDroit(@PathVariable(name = "du") Utilisateur u){
+		
+		return this.aug.findByUser(u);
+	}
+	
+	@PostMapping(path = "aug/list")
+	public AffectUserGroup createAffectUserGroup( @RequestBody AffectUserGroup agu) {
+		
+		return this.aug.save(agu);
+	}
+	
+	@PutMapping(path = "aug/byid/{id}")
+	public AffectUserGroup updateAffectUserGroup(@PathVariable(name = "id") Long id, @RequestBody AffectUserGroup agu) {
+		
+		return this.aug.edit(id, agu);
+	}
+	
+	@DeleteMapping(path = "aug/byidAGU/{id}")
+	public Boolean deleteUserToGroup(@PathVariable(name = "id") Long id) {
+		
+		return this.aug.delete(id);
+}	
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour DroitUser
+	###########################################################
+	*/
+
+	@GetMapping(path = "du/list")
+	public List<DroitUser> getAllDroits(){
+		
+		return this.du.getAll();
+	}
+	
+	@GetMapping(path = "du/byId/{id}")
+	public Optional<DroitUser> getDroitUser(@PathVariable(name = "id") Long id){
+		
+		return this.du.findById(id);
+	}
+	
+	@GetMapping(path = "du/byCodDro/{cdu}")
+	public List<DroitUser> droitUserBycode(@PathVariable(name = "cdu") String cdu){
+		
+		return this.du.findByCodedroit(cdu);
+	}
+	
+	@GetMapping(path = "du/byLib/{lib}")
+	public List<DroitUser> getDroitByLib(@PathVariable(name = "lib") String lib){
+		
+		return this.du.findByLibDroitId(lib);
+	}
+	
+	@PostMapping(path = "du/list")
+	public DroitUser createDroitUser( @RequestBody DroitUser dus) {
+		
+		return this.du.save(dus);
+	}
+	
+	@PutMapping(path = "du/byid/{id}")
+	public DroitUser updateDroit(@PathVariable(name = "id") Long id, @RequestBody DroitUser du) {
+		
+		return this.du.edit(id, du);
+	}
+	
+	@DeleteMapping(path = "du/byid/{id}")
+	public Boolean deleteDroitUser(@PathVariable(name = "id") Long id) {
+		
+		return this.du.delete(id);
+}	
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour GoupUser
+	###########################################################
+	*/
+
+	@GetMapping(path = "gro/list")
+	public List<GroupUser> getAllGroups(){
+		
+		return this.ug.getAll();
+	}
+	
+	@GetMapping(path = "gro/byId/{id}")
+	public Optional<GroupUser> getGroupe(@PathVariable(name = "id") String id){
+		
+		return this.ug.findById(id);
+	}
+	
+	@GetMapping(path = "gro/byLib/{lib}")
+	public List<GroupUser> getGroupByLib(@PathVariable(name = "lib") String lib){
+		
+		return this.ug.findByLib(lib);
+	}
+	
+	@PostMapping(path = "gro/list")
+	public GroupUser createGroupUser( @RequestBody GroupUser group) {
+		
+		return this.ug.save(group);
+	}
+	
+	@PutMapping(path = "gro/byid/{id}")
+	public GroupUser updateGroup(@PathVariable(name = "id") String id, @RequestBody GroupUser g) {
+		
+		return this.ug.edit(id, g);
+	}
+	
+	@DeleteMapping(path = "gro/byid/{id}")
+	public Boolean deleteGroup(@PathVariable(name = "id") String id) {
+		
+		return this.ug.delete(id);
+}	
 	
 	
 	/*###########################################################
@@ -516,8 +751,6 @@ public class CommuneController {
 		return this.arrondissementService.delete(id);
 	}
 	
-	
-	
 	/*###########################################################
 	#############	Partie réservée pour quartier
 	###########################################################
@@ -553,7 +786,7 @@ public class CommuneController {
 	}
 	
 	@PostMapping(path = "quartier/list")
-	public Quartier createPays( @RequestBody Quartier quartier) {
+	public Quartier createQuartier( @RequestBody Quartier quartier) {
 		
 		return this.quartierService.save(quartier);
 	}
@@ -568,6 +801,124 @@ public class CommuneController {
 	public Boolean deleteQuartier(@PathVariable(name = "id") String id) {
 		
 		return this.quartierService.delete(id);
+	}	
+
+	
+	/*###########################################################
+	#############	Partie réservée pour siteMarcher
+	###########################################################
+	*/
+	@GetMapping(path = "site/list")
+	public List<SiteMarcher> getAllSite(){
+		
+		return this.siMaS.getAll();
+	}
+	
+	@GetMapping(path = "site/byCodSit/{id}")
+	public Optional<SiteMarcher> getSiteById(@PathVariable(name = "id") String id){
+		
+		return this.siMaS.findById(id);
+	}
+	
+	@GetMapping(path = "site/byLibSit/{lib}")
+	public List<SiteMarcher> getSiteByLibelle(@PathVariable(name = "nom") String lib){
+		
+		return this.siMaS.findByLibe(lib);
+	}
+	
+	@PostMapping(path = "site/list")
+	public SiteMarcher createSite( @RequestBody SiteMarcher site) {
+		
+		return this.siMaS.save(site);
+	}
+	
+	@PutMapping(path = "site/byCodQua/{id}")
+	public SiteMarcher updateSite(@PathVariable(name = "id") String id, @RequestBody SiteMarcher sit) {
+		
+		return this.siMaS.edit(id, sit);
+	}
+	
+	@DeleteMapping(path = "site/byCodSit/{id}")
+	public Boolean deleteSite(@PathVariable(name = "id") String id) {
+		
+		return this.siMaS.delete(id);
+	}		
+
+	
+	/*###########################################################
+	#############	Partie réservée pour InstituReverse
+	###########################################################
+	*/
+	
+	@GetMapping(path = "ins/list")
+	public List<InstituReverse> getAllInstitut(){
+		
+		return this.ir.findAll();
+	}
+	
+	@GetMapping(path = "ins/byCodSit/{id}")
+	public InstituReverse getInstById(@PathVariable(name = "id") String id){
+		
+		return this.ir.getByCod(id);
+	}
+	
+	@GetMapping(path = "ins/byLibSit/{lib}")
+	public List<InstituReverse> getInstByLibelle(@PathVariable(name = "nom") String lib){
+		
+		return this.ir.getByLib(lib);
+	}
+	
+	@PostMapping(path = "ins/list")
+	public InstituReverse createSite( @RequestBody InstituReverse ins) {
+		
+		return this.ir.saveInst(ins);
+	}
+	
+	@PutMapping(path = "ins/byCodQua/{id}")
+	public InstituReverse updateInst(@PathVariable(name = "id") String id, @RequestBody InstituReverse ins) {
+		
+		return this.ir.editInst(id, ins);
+	}
+	
+	@DeleteMapping(path = "ins/byCodSit/{id}")
+	public Boolean deleteInst(@PathVariable(name = "id") String id) {
+		
+		return this.ir.delIntByCod(id);
+	}		
+
+	
+	/*###########################################################
+	#############	Partie réservée pour siteMarcher
+	###########################################################
+	*/
+	@GetMapping(path = "pourcentage/list")
+	public List<PourcenReverse> getAllPourcentages(){
+		
+		return this.perce.getAll();
+	}
+	
+	@GetMapping(path = "pourcentage/byId/{id}")
+	public Optional<PourcenReverse> getPourcentageById(@PathVariable(name = "id") Long id){
+		
+		return this.perce.findById(id);
+	}
+	
+	@PostMapping(path = "pourcentage/list")
+	public PourcenReverse createSite( @RequestBody PourcenReverse pource) {
+		
+		return this.perce.save(pource);
+	}
+	
+	@PutMapping(path = "Pourcentage/byId/{id}")
+	public PourcenReverse updatePourcentage(@PathVariable(name = "id") Long id, @RequestBody PourcenReverse por) {
+		
+		return this.perce.save(por);
+	}
+	
+	@DeleteMapping(path = "pourcentage/byId/{id}")
+	public Boolean deleteSite(@PathVariable(name = "id") Long id) {
+		
+		return this.perce.delete(id);
 	}	
 	
 	
