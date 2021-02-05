@@ -29,7 +29,7 @@ public class OpCaisse implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Caisse.class)
 	@JoinColumn(name = "codeCaisse", referencedColumnName = "codeCaisse", nullable = false)
 	private Caisse caisse;
-	
+
 	//Liaison au type de recette
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = TypeRecette.class)
 	@JoinColumn(name = "codeTypRec", referencedColumnName = "codeTypRec", nullable = false)
@@ -39,16 +39,17 @@ public class OpCaisse implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = ModePaiement.class)
 	@JoinColumn(name = "codeModPay", referencedColumnName = "codeModPay", nullable = false)
 	private ModePaiement modePaiement;
-	
-	//Liaison à l'exercice
+
+	//Liaison au type de recette
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
 
-	//Liaison à la table "Utilisateur"
+	//Liaison à la table "ModePaiementRepository"
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Utilisateur.class)
-	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
+	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
 	private Utilisateur utilisateur;
+	
 
 	public OpCaisse() {
 		super();
