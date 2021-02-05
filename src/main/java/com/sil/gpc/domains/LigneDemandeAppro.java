@@ -23,12 +23,12 @@ public class LigneDemandeAppro implements Serializable{
 
 	
 	//Liaison avec Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Article.class)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
 
 	//Liaison avec Approvisionnement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = DemandeApprovisionnement.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = DemandeApprovisionnement.class)
 	@JoinColumn(name = "numDA", referencedColumnName = "numDA",nullable = false)
 	public DemandeApprovisionnement appro;
 	

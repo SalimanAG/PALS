@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import com.sil.gpc.services.LocataireService;
 import com.sil.gpc.services.PrixImmeubleService;
 import com.sil.gpc.services.TypeImmeubleService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-gpc/v1/location/")
 public class LocationController {
@@ -46,10 +48,19 @@ public class LocationController {
 		super();
 		this.contratService = contratService;
 		this.echeanceService = echeanceService;
-		this.typeImmeubleService = typeImmeubleService;
+		this.typeImmeubleService = typeImmeubleService;	
 		this.immeubleService = immeubleService;
 		this.prixImmeubleService = prixImmeubleService;
 		this.locataireService = locataireService;
+		
+		
+		TypeImmeuble typImm = this.typeImmeubleService.save(new TypeImmeuble("BT", "Boutique"));
+		//Immeuble im = this.immeubleService.save(new Immeuble("BT001", "Boutique 1", "Dans le Marché Dantopka", true, 30, 500, "SOCIMAT COOPERATIVE", "", arrondi, 
+		//new Quartier("QUTER001", "Quartier Gbégamey", "51457995", "", arrondi),typImm, new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arrondi)));
+		Locataire loca = new Locataire((long)1, "SOCIMAT COOPERATION", "", "", "02210001445", "DG");
+		
+		//Contrat contr = this.contratService.save( new Contrat("CL00001", new Date(2020, 11, 20), new Date(2020, 12, 1), 200000, 10000, im, loca));
+		
 	}
 	
 	/*###########################################################

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,22 +20,22 @@ public class Recollement implements Serializable {
 	private Date dateRecollement;
 
 	// Liaison avec Magasin
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Magasin.class)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Magasin.class)
 	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin", nullable = false)
 	private Magasin magasin;
 
 	// Liaison avec Correspondant
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Correspondant.class)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrespondant", referencedColumnName = "idCorrespondant", nullable = true)
 	private Correspondant corres;
 
 	// Liaison avec Regisseur
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Regisseur.class)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur", referencedColumnName = "idRegisseur", nullable = false)
 	private Regisseur regisseur;
 
 	// Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Exercice.class)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
 	public Recollement() {

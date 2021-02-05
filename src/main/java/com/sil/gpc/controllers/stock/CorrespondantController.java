@@ -3,6 +3,7 @@ package com.sil.gpc.controllers.stock;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.sil.gpc.services.LignePointVenteService;
 import com.sil.gpc.services.PointVenteService;
 import com.sil.gpc.services.TypCorresService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-gpc/v1/stock/")
 public class CorrespondantController {
@@ -38,6 +40,11 @@ public class CorrespondantController {
 		this.typCorresService = typCorresService;
 		this.pointVenteService = pointVenteService;
 		this.lignePointVenteService = lignePointVenteService;
+		
+		
+		this.typCorresService.save(new TypCorres("LIV", "Livreur(se)"));
+		this.typCorresService.save(new TypCorres("COE", "Agent Collecteur"));
+
 	}
 	
 	/*###########################################################

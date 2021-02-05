@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,12 +28,12 @@ public class LigneReversement implements Serializable{
 	private String observation;
 
 	//Liaison à la table Reversement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Reversement.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Reversement.class)
 	@JoinColumn(name = "numReversement", nullable = false, referencedColumnName = "numReversement")
 	public Reversement numReversement;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 

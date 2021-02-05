@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,12 +23,12 @@ public class LignePointVente implements Serializable{
 	private int numFinLignePointVente;
 	
 	//Liaison avec Point vente
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,targetEntity = PointVente.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = PointVente.class)
 	@JoinColumn(name = "numPointVente", referencedColumnName = "numPointVente")
 	PointVente pointVente;
 	
 	//Liaison avec Article
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,targetEntity =Article.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity =Article.class)
 	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle")
 	Article article;
 

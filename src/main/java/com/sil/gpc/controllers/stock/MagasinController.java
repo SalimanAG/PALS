@@ -3,6 +3,7 @@ package com.sil.gpc.controllers.stock;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ import com.sil.gpc.services.PlageNumDispoService;
 import com.sil.gpc.services.StockerService;
 import com.sil.gpc.services.UniterService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-gpc/v1/stock/")
 public class MagasinController {

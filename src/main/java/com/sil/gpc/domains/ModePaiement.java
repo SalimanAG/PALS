@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "ModePaiementRepository")
+@Table(name = "ModePaiement")
 public class ModePaiement implements Serializable {
 	@Id
 	@Column(name = "codeModPay", length = 5)

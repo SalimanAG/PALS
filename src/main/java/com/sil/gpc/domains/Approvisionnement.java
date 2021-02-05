@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -20,7 +19,7 @@ public class Approvisionnement implements Serializable {
 	private String descriptionAppro;
 	private Date dateAppro;
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
 	private Exercice exercice;
 	

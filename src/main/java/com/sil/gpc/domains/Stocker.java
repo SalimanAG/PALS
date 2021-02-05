@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,12 +24,12 @@ public class Stocker implements Serializable{
 	private Long cmup;
 
 	//Liaison à l'article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	private Article article;
 
 	//Liaison à l'article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Magasin.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Magasin.class)
 	@JoinColumn(name = "codeMagasin",referencedColumnName = "codeMagasin",nullable = false)
 	private Magasin magasin;
 	

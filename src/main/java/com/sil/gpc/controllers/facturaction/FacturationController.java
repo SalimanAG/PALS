@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sil.gpc.domains.Affecter;
+import com.sil.gpc.domains.Arrondissement;
 import com.sil.gpc.domains.Caisse;
+import com.sil.gpc.domains.Commune;
+import com.sil.gpc.domains.Departement;
+import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneOpCaisse;
 import com.sil.gpc.domains.LigneReversement;
 import com.sil.gpc.domains.ModePaiement;
 import com.sil.gpc.domains.OpCaisse;
+import com.sil.gpc.domains.Pays;
 import com.sil.gpc.domains.Reversement;
+import com.sil.gpc.domains.Service;
 import com.sil.gpc.domains.TypeRecette;
+import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.services.AffecterService;
 import com.sil.gpc.services.ArrondissementService;
 import com.sil.gpc.services.ArticleService;
@@ -35,6 +43,7 @@ import com.sil.gpc.services.TypeRecetteService;
 import com.sil.gpc.services.UtilisateurService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/perfora-gpc/v1/facturation/")
 public class FacturationController {
 
@@ -67,7 +76,21 @@ public class FacturationController {
 		this.arrondissementService = arrondissementService;
 		this.utilisateurService = utilisateurService;
 		this.articleService = articleService;
+		
+		ModePaiement mp = this.modePaiementService.save(new ModePaiement("V", "Virement bancaire"));
+		TypeRecette tp=typeRecetteService.save(new TypeRecette("VD", "Vente Directe"));
+		Caisse cais=caisseService.save(new Caisse("C2", "Caisse 2", new Arrondissement("080101", "Arrondissement 1", "Dans ...", "21454556", 
+				new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "",
+						new Departement("0801", "Littoral", 
+								new Pays("PAY001", "Bénin", "République Démocratique du Bénin")))) ));
+		
+		System.out.println(this.opCaisseService.save(new OpCaisse("2020-1", new Date(2020, 01, 28), "Didier", true, "RAS",  new Date(2020, 01, 28), cais, tp , mp, 
+			new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "encours", true),  
+			utilisateurService.trouveUn((long)1))));
+		
+		
 	}
+	
 	
 	/*###########################################################
 	#############	Partie réservée pour Caisse
@@ -287,55 +310,57 @@ public class FacturationController {
 	###########################################################
 	*/
 	
-	@GetMapping(path = "opCaisse/list")
+	@GetMapping(path = "opcaisse/list")
 	public List<OpCaisse> getAllOpcaisse(){
-		
+		System.out.println(this.opCaisseService.findAll());
 		return this.opCaisseService.findAll();
 	}
 	
-	@GetMapping(path = "opCaisse/byCodOpCai/{id}")
+	@GetMapping(path = "opcaisse/byCodOpCai/{id}")
 	public Optional<OpCaisse> getOpCaisseById(@PathVariable(name = "id") String id){
 		
 		return this.opCaisseService.findById(id);
 	}
 	
-	@PostMapping(path = "opCaisse/list")
+	@PostMapping(path = "opcaisse/list")
 	public OpCaisse createOpCaisse(@RequestBody OpCaisse opCaisse) {
-		
-		return this.opCaisseService.save(opCaisse);
+		System.out.println(opCaisse);
+		OpCaisse op=this.opCaisseService.save(opCaisse);
+		System.out.println("opéra"+op);
+		return op;
 	}
 	
-	@PutMapping(path = "opCaisse/byCodOpCai/{id}")
+	@PutMapping(path = "opcaisse/byCodOpCai/{id}")
 	public OpCaisse updateOpCaisse(@PathVariable(name = "id") String id, @RequestBody OpCaisse opCaisse) {
 		
 		return this.opCaisseService.edit(opCaisse, id);
 	}
 	
-	@DeleteMapping(path = "opCaisse/byCodOpCai/{id}")
+	@DeleteMapping(path = "opcaisse/byCodOpCai/{id}")
 	public Boolean deleteOpCaisse(@PathVariable(name = "id") String id) {
 		
 		return this.opCaisseService.delete(id);
 	}
 	
-	@GetMapping(path = "opCaisse/byContribu/{valeur}")
+	@GetMapping(path = "opcaisse/byContribu/{valeur}")
 	public List<OpCaisse> getOpCaisseByContribuable(@PathVariable(name = "valeur") String valeur){
 		
 			return this.opCaisseService.findByContribuale(valeur);
 	}
 	
-	@GetMapping(path = "opCaisse/byDatOpCai/{valeur}")
+	@GetMapping(path = "opcaisse/byDatOpCai/{valeur}")
 	public List<OpCaisse> getOpCaisseByDateOpCaisse(@PathVariable(name = "valeur") Date valeur){
 		
 			return this.opCaisseService.findByDateOpCaisse(valeur);
 	}
 	
-	@GetMapping(path = "opCaisse/byModPaiem/{valeur}")
+	@GetMapping(path = "opcaisse/byModPaiem/{valeur}")
 	public List<OpCaisse> getOpCaisseByModePaiement(@PathVariable(name = "valeur") String valeur){
 		
 			return this.opCaisseService.findByModePaiement(valeur);
 	}
 	
-	@GetMapping(path = "opCaisse/byTypRecet/{valeur}")
+	@GetMapping(path = "opcaisse/byTypRecet/{valeur}")
 	public List<OpCaisse> getOpCaisseByTypeRecette(@PathVariable(name = "valeur") String valeur){
 		
 			return this.opCaisseService.findByTypeRecette(valeur);
@@ -343,9 +368,9 @@ public class FacturationController {
 	
 	
 	
-	/*###########################################################
-	#############	Partie réservée pour ligne opération caisse
-	###########################################################
+	/*###########################################################################
+	#############	Partie réservée pour ligne opération caisse #################
+	#############################################################################
 	*/
 	
 	@GetMapping(path = "ligneOpCaisse/list")

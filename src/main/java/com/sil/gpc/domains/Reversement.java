@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -20,12 +19,12 @@ public class Reversement implements Serializable{
 	private Date dateVersement;
 	
 	//Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
 	private Exercice exercice;
 	
 	//Liaison avec Reversement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Regisseur.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)
 	private Regisseur regisseur;
 	

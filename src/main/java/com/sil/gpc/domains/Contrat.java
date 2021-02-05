@@ -29,7 +29,7 @@ public class Contrat implements Serializable {
 	private double cautionContrat;
 
 	// Migration de lab clé de l'immeuble vers le contrat
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Immeuble.class)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Immeuble.class)
 	@JoinColumn(name = "codeImm", referencedColumnName = "codeIm", nullable = false)
 	private Immeuble immeuble;
 

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,11 +21,11 @@ public class Commande implements Serializable {
 	private Date dateCommande;
 	private String description;
 	private int delaiLivraison;
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, targetEntity =Fournisseur.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity =Fournisseur.class)
 	private Fournisseur frs;
 
 	//Liaison avec la table Exercice
-	@ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
 

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,23 +25,23 @@ public class PointVente implements Serializable{
 	private boolean payerPoint;
 
 	//Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
 	private Exercice exercice;
 
 	//Liaison avec Correspondant
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Correspondant.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrepondant",referencedColumnName = "idCorrespondant",nullable = false)
 	private Correspondant correspondant;
 
 	//*********************************Il reste l'opération de caisse
 	//Liaison avec OpCaisse
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = OpCaisse.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = OpCaisse.class)
 	@JoinColumn(name = "numOpCaisse",referencedColumnName = "numOpCaisse",nullable = false)
 	private OpCaisse opCaisse;
 
 	//Liaison avec Regisseur
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Regisseur.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)
 	private Regisseur regisseur;
 

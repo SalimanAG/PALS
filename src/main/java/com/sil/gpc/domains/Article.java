@@ -26,7 +26,7 @@ public class Article implements Serializable {
 	private String couleurArticle;
 	
 	//Migration du code de la famille vers l'article
-	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
+	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "famille",referencedColumnName = "codeFamille")
 	private Famille famille;
 

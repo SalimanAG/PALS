@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,17 +17,17 @@ public class Correspondant implements Serializable {
 	@Id
 	private String idCorrespondant;
 	private boolean imputableCorres;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Magasinier.class)
+	@OneToOne(fetch = FetchType.EAGER, targetEntity = Magasinier.class)
 	@JoinColumn(name = "numMagasinier", referencedColumnName = "numMagasinier", nullable = false)
 	private Magasinier magasinier;
 
 	// Liaison à typeCorresspondant
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = TypCorres.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = TypCorres.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeTypCorres", referencedColumnName = "codeTypCorres", nullable = false)
 	public TypCorres typecorres;
 
 	// Liaison à Utilisateur
-	@OneToOne(cascade = CascadeType.ALL, targetEntity = Utilisateur.class, fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = Utilisateur.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
 	public Utilisateur utilisateur;
 

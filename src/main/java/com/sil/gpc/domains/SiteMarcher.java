@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,7 +17,7 @@ public class SiteMarcher implements Serializable{
 	private String libSite;
 	private String descriSite;
 	
-	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Arrondissement.class,fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Arrondissement.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeArrondi",referencedColumnName = "codeArrondi", nullable = false)
 	private Arrondissement arrondissement;
 	

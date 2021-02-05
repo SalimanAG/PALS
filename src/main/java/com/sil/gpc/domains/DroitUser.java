@@ -13,17 +13,26 @@ public class DroitUser {
 	private Long idDroitUser;
 	private String codeDroitUser;
 	private String libDroitUser;
+	private String DescriDroitUser;
 	
 	public DroitUser() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public DroitUser(String codeDroitUser, String libDroitUser) {
-		super();
+	/**
+	 * @param idDroitUser
+	 * @param codeDroitUser
+	 * @param libDroitUser
+	 * @param descriDroitUser
+	 */
+	public DroitUser(Long idDroitUser, String codeDroitUser, String libDroitUser, String descriDroitUser) {
+		this.idDroitUser = idDroitUser;
 		this.codeDroitUser = codeDroitUser;
 		this.libDroitUser = libDroitUser;
+		DescriDroitUser = descriDroitUser;
 	}
+
 
 	public Long getIdDroitUser() {
 		return idDroitUser;
@@ -47,6 +56,20 @@ public class DroitUser {
 
 	public void setLibDroitUser(String libDroitUser) {
 		this.libDroitUser = libDroitUser;
+	}
+
+	/**
+	 * @return the descriDroitUser
+	 */
+	public String getDescriDroitUser() {
+		return DescriDroitUser;
+	}
+
+	/**
+	 * @param descriDroitUser the descriDroitUser to set
+	 */
+	public void setDescriDroitUser(String descriDroitUser) {
+		DescriDroitUser = descriDroitUser;
 	}
 
 	@Override

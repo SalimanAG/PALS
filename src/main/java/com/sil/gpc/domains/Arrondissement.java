@@ -1,15 +1,12 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
@@ -22,17 +19,9 @@ public class Arrondissement implements Serializable{
 	private String numTelArrondi;
 	
 	//Migration de lab clé de la commune vers l'arrondissement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,targetEntity = Commune.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commune.class)
 	@JoinColumn(name = "commune", nullable = false, referencedColumnName = "codeCommune")
 	public Commune commune;
-	
-	//Migration de lab clé de l'arrondissement vers la caisse
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Caisse.class,mappedBy = "arrondissement")
-	List<Caisse> caissesDunArrondissement;
-
-	//Migration de lab clé de l'arrondissement vers le quartier
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = Quartier.class,mappedBy = "arrondissement")
-	List<Quartier> quartiersDunArrondissement;
 	
 	public Arrondissement() {
 		super();

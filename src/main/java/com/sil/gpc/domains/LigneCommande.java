@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,12 +25,12 @@ public class LigneCommande implements Serializable{
 	private double TVA;
 
 	//Liaison à la table Commande
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Commande.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
 	public Commande numCommande;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 	

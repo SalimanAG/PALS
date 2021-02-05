@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.services.AffectDroitGroupUserService;
 import com.sil.gpc.services.AffectUserGroupService;
 import com.sil.gpc.services.ArrondissementService;
+import com.sil.gpc.services.CaisseService;
 import com.sil.gpc.services.CommuneService;
 import com.sil.gpc.services.DepartementService;
 import com.sil.gpc.services.DroitUserService;
@@ -49,6 +51,7 @@ import com.sil.gpc.services.SiteMarcherService;
 import com.sil.gpc.services.UtilisateurService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/perfora-gpc/v1/commune/")
 public class CommuneController {
 
@@ -114,6 +117,29 @@ public class CommuneController {
 		this.du = du;
 		this.ir = ir;
 		this.perce = perce;
+		
+		
+		Pays pay = this.paysService.save(new Pays("PAY001", "Bénin", "République Démocratique du Bénin"));
+		
+		Departement depart = this.departementService.save(new Departement("0801", "Littoral", pay));
+		
+		Commune commun = this.communeService.save(new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "", depart));
+		
+		Arrondissement arrondi = this.arrondissementService.save(new Arrondissement("080101", "Arrondissement 1", "Dans ...", "21454556", commun));
+		
+		Quartier quart = this.quartierService.save(new Quartier("08010101", "Dandji", "Dans ...", "21454556", arrondi));
+		
+		 this.siMaS.save(new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arrondi));
+		 
+		 Service servic = this.serviceService.save(new Service("SAFEM", "Service des Affaires Financières et Economiques"));
+			
+		Utilisateur userr = this.utilisateurService.save(new Utilisateur("KAMI ABDO", "KAMI", "KAMI", "Abdorazine", "Caissière", false, "03-04-2021", true, servic));
+
+		this.quartierService.save(new Quartier("QUTER001", "Quartier Gbégamey", "51457995", "", arrondi));
+		this.exerciceService.save(new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "encours", true));
+		
+		
+		
 	}
 
 	/*###########################################################
@@ -832,7 +858,7 @@ public class CommuneController {
 		return this.siMaS.save(site);
 	}
 	
-	@PutMapping(path = "site/byCodQua/{id}")
+	@PutMapping(path = "site/byCodSit/{id}")
 	public SiteMarcher updateSite(@PathVariable(name = "id") String id, @RequestBody SiteMarcher sit) {
 		
 		return this.siMaS.edit(id, sit);
@@ -920,7 +946,6 @@ public class CommuneController {
 		
 		return this.perce.delete(id);
 	}	
-	
 	
 	
 }

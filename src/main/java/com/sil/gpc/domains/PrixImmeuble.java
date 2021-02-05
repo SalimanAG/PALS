@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,7 @@ public class PrixImmeuble implements Serializable {
 	private Long prixIm;
 
 	//Liaison avec immeuble
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Immeuble.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Immeuble.class)
 	@JoinColumn(name = "codeIm",referencedColumnName = "codeIm",nullable = false)
 	private Immeuble immeuble;
 	
@@ -33,9 +32,8 @@ public class PrixImmeuble implements Serializable {
 		super();
 	}
 
-	public PrixImmeuble(Long idPrixIm, Date dateDebPrixIm, Date dateFinPrixIm, Long prixIm, Immeuble immeuble) {
+	public PrixImmeuble(Date dateDebPrixIm, Date dateFinPrixIm, Long prixIm, Immeuble immeuble) {
 		super();
-		this.idPrixIm = idPrixIm;
 		this.dateDebPrixIm = dateDebPrixIm;
 		this.dateFinPrixIm = dateFinPrixIm;
 		this.prixIm = prixIm;

@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -17,11 +16,11 @@ public class Regisseur implements Serializable{
 	@Id
 	private String idRegisseur;
 
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Magasinier.class)
+	@OneToOne(fetch = FetchType.EAGER,targetEntity =Magasinier.class)
 	@JoinColumn(name ="numMagasinier", referencedColumnName = "numMagasinier",nullable = false )
 	private Magasinier magasinier;
 
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity =Utilisateur.class)
+	@OneToOne(fetch = FetchType.EAGER,targetEntity =Utilisateur.class)
 	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
 	private Utilisateur utilisateur;
 

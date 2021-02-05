@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ public class Echeance implements Serializable {
 	private String moisEcheance;
 	private Date dateEcheance;
 	private boolean payeEcheance;
-	@ManyToOne(targetEntity = Contrat.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Contrat.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numContrat",referencedColumnName = "numContrat", nullable = false)
 	private Contrat contrat;
 
@@ -33,7 +32,7 @@ public class Echeance implements Serializable {
 	//private Contrat contrat;
 
 	//Liaison avec la table OpCaisse
-	@ManyToOne(targetEntity = OpCaisse.class,fetch = FetchType.EAGER,cascade = CascadeType.REFRESH,optional = true)
+	@ManyToOne(targetEntity = OpCaisse.class,fetch = FetchType.EAGER,optional = true)
 	@JoinColumn(name = "numOpCaisse", referencedColumnName = "numOpCaisse",nullable = true)
 	private OpCaisse opCaisse ;
 

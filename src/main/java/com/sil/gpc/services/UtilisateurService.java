@@ -47,10 +47,15 @@ public class UtilisateurService {
     	return this.userRepository.existsById(id);
     }   
 
-    
+
     // 
     public Optional<Utilisateur> findById(Long id) {
         return this.userRepository.findById(id);
+    }
+
+    // 
+    public Utilisateur trouveUn(Long id) {
+        return this.userRepository.getOne(id);
     }
     
     

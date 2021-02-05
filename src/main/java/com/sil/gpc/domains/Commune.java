@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ public class Commune implements Serializable{
 	private String piedPage;
 	
 	//Migration de la clé du département vers la commune
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Departement.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Departement.class)
 	@JoinColumn(name = "codeDepartement",referencedColumnName = "codeDepartement")
 	public Departement codeDepartement;
 	

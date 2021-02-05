@@ -20,7 +20,7 @@ public class Placement implements Serializable{
 	private Date datePlacement;
 
 	//Liaison avec Regisseur
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Regisseur.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur",referencedColumnName = "IdRegisseur",nullable = false)
 	private Regisseur regisseur;
 

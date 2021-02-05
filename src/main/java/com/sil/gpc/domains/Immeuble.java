@@ -1,9 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -24,25 +22,34 @@ public class Immeuble implements Serializable{
 	private String stuctResp;
 	private String autre;
 	//Liaison avec Quartier
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Arrondissement.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Arrondissement.class)
 	@JoinColumn(name="codeArrondi", referencedColumnName = "codeArrondi", nullable = true)
 	private Arrondissement arrondissement;
 
 	//Liaison avec Arrondissement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Quartier.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Quartier.class)
 	@JoinColumn(name="codeQuartier", referencedColumnName = "codeQuartier", nullable = true)
 	private Quartier quartier;
 	
 	//Liaison  avec TypeImmeuble
-		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = TypeImmeuble.class)
+		@ManyToOne(fetch = FetchType.EAGER,targetEntity = TypeImmeuble.class)
 		@JoinColumn(name="codeTypImm", referencedColumnName = "codeTypIm", nullable = false)
 		private TypeImmeuble typeImmeuble;
 		
 	//Liaison  avec Site
-			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
+			@ManyToOne(fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
 			@JoinColumn(name="codeSite", referencedColumnName = "codeSite", nullable = false)
 			private SiteMarcher siteMarcher;
+			
 	
+	/**
+			 * 
+			 */
+			public Immeuble() {
+				super();
+				// TODO Auto-generated constructor stub
+			}
+
 	/**
 			 * @param codeIm
 			 * @param libIm

@@ -1,6 +1,5 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,12 +16,12 @@ public class AffectUserGroup {
 	private Long idAffectUserGroup;
 	
 	//Liaison  avec Utilisateur
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Utilisateur.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Utilisateur.class)
 	@JoinColumn(name="idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
 	private Utilisateur utilisateur;
 	
 //Liaison  Groupe Utilisateur
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = GroupUser.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = GroupUser.class)
 	@JoinColumn(name="idGroupUser", referencedColumnName = "idGroupUser", nullable = false)
 	private GroupUser groupUser ;
 	

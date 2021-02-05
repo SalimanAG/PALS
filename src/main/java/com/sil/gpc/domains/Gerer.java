@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,12 +23,12 @@ public class Gerer implements Serializable{
 	private Date dateFinGerer;
 
 	//Liaison avec MagasinierService
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Magasinier.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Magasinier.class)
 	@JoinColumn(name = "numMagasinier", referencedColumnName ="numMagasinier",nullable = false)
 	private Magasinier magasinier;
 	
 	//Liaison avec Magasin
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Magasin.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Magasin.class)
 	@JoinColumn(name = "codeMagasin", referencedColumnName ="codeMagasin",nullable = false)
 	private Magasin magasin;
 	

@@ -16,5 +16,6 @@ public interface OpCaisseRepository extends JpaRepository<OpCaisse, String>{
 	List<OpCaisse> findByDateOpCaisse(Date dateOpCaisse);
 	List<OpCaisse> findByModePaiement(String CodMP);
 	List<OpCaisse> findByTypeRecette(String codTR);
+	List<OpCaisse> findByNum(String num);
 	
 }

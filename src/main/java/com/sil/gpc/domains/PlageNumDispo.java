@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -22,7 +21,7 @@ public class PlageNumDispo implements Serializable {
 	private String numFinPlageDispo; //Le dernier numéro réceptionné dans l'année
 	private int annee;
 
-	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Article.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
 		

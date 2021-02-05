@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ public class PlageNumArticle implements Serializable {
 	private String numDebPlage;
 	private String numFinPlage;
 
-	@ManyToOne(cascade = CascadeType.DETACH,targetEntity = Article.class,fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Article.class,fetch = FetchType.LAZY)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
 	

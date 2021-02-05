@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,11 +24,11 @@ public class LigneReception implements Serializable {
 	private Long numSerieDebLigneReception;
 	private Long numSerieFinLigneReception;
 	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = LigneCommande.class,fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = LigneCommande.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande")
 	private LigneCommande ligneCommande;
 	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = Reception.class,fetch = FetchType.EAGER)
+	@ManyToOne( targetEntity = Reception.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numReception", referencedColumnName = "numReception")
 	private Reception reception;
 	

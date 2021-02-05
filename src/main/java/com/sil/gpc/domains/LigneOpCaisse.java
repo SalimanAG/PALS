@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -19,14 +18,15 @@ public class LigneOpCaisse implements Serializable {
 	private Long qteLigneOperCaisse;
 	private Long prixLigneOperCaisse;
 	private String CommentaireLigneOperCaisse;
+	private boolean livre;
 
 	//Liaison à la table OpCaisse
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = OpCaisse.class)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = OpCaisse.class)
 	@JoinColumn(name = "numOpCaisse", nullable = false, referencedColumnName = "numOpCaisse")
 	public OpCaisse opCaisse;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 
@@ -46,14 +46,14 @@ public class LigneOpCaisse implements Serializable {
 	 * @param opCaisse
 	 * @param article
 	 */
-	public LigneOpCaisse(Long idLigneOperCaisse, Long qteLigneOperCaisse, Long prixLigneOperCaisse,
+	public LigneOpCaisse(Long qteLigneOperCaisse, Long prixLigneOperCaisse,
 			String commentaireLigneOperCaisse, OpCaisse opCaisse, Article article) {
-		this.idLigneOperCaisse = idLigneOperCaisse;
 		this.qteLigneOperCaisse = qteLigneOperCaisse;
 		this.prixLigneOperCaisse = prixLigneOperCaisse;
 		CommentaireLigneOperCaisse = commentaireLigneOperCaisse;
 		this.opCaisse = opCaisse;
 		this.article = article;
+		this.livre = false;
 	}
 
 	/**
@@ -103,6 +103,20 @@ public class LigneOpCaisse implements Serializable {
 	 */
 	public String getCommentaireLigneOperCaisse() {
 		return CommentaireLigneOperCaisse;
+	}
+
+	/**
+	 * @return the livre
+	 */
+	public boolean isLivre() {
+		return livre;
+	}
+
+	/**
+	 * @param livre the livre to set
+	 */
+	public void setLivre(boolean livre) {
+		this.livre = livre;
 	}
 
 	/**

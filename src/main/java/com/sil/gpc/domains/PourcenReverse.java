@@ -1,6 +1,5 @@
 package com.sil.gpc.domains;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,11 +17,11 @@ public class PourcenReverse {
 	private double valPourcenRevers;
 	
 	//Liaison  avec Institution de reversement
-			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = InstituReverse.class)
+			@ManyToOne(fetch = FetchType.EAGER,targetEntity = InstituReverse.class)
 			@JoinColumn(name="codeInstRevers", referencedColumnName = "codeInstRevers", nullable = false)
 			private InstituReverse instituReverse;
 	//Liaison  avec article
-			@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
+			@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 			@JoinColumn(name="codeArticle", referencedColumnName = "codeArticle", nullable = false)
 			private Article article ;
 			

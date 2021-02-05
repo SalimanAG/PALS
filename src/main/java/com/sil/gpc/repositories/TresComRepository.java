@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.TresCom;
 
 @Repository
-public interface RpRepository extends JpaRepository<TresCom, String> {
+public interface TresComRepository extends JpaRepository<TresCom, String> {
 	
 	public List<TresCom> findByIdRp(String idRp);
 

@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,12 +22,12 @@ public class LignePlacement implements Serializable {
 	private Long PULignePlacement;
 
 	//Liaison à la table Placement
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Placement.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Placement.class)
 	@JoinColumn(name = "numPlacement", nullable = false, referencedColumnName = "numPlacement")
 	public Placement placement;
 
 	//Liaison à la table Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 

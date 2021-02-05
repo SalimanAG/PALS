@@ -2,7 +2,7 @@ package com.sil.gpc.services;
 
 import com.sil.gpc.domains.TresCom;
 
-import com.sil.gpc.repositories.RpRepository;
+import com.sil.gpc.repositories.TresComRepository;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,54 +11,54 @@ import org.springframework.stereotype.Service;
 @Service
 public class RpService {
 
-	private final RpRepository rpRepository;
+	private final TresComRepository tresComRepository;
 
-    public RpService(RpRepository rpRepository) {
-        this.rpRepository = rpRepository;
+    public RpService(TresComRepository tresComRepository) {
+        this.tresComRepository = tresComRepository;
     }
 
     
     // Sauvegarder
     public TresCom save(TresCom receptPercep) {
-        return   this.rpRepository.save(receptPercep);
+        return   this.tresComRepository.save(receptPercep);
     }
     
   //Editer
     public TresCom edit(String idRp, TresCom recepPercept) {
        	
-    	TresCom rpmod = this.rpRepository.getOne(idRp);
+    	TresCom rpmod = this.tresComRepository.getOne(idRp);
    		if(rpmod != null) {
    			rpmod.setIdRp(recepPercept.getIdRp());
    			rpmod.setMagasinier(recepPercept.getMagasinier());
    			rpmod.setUtilisateur(recepPercept.getUtilisateur());
-   			return this.rpRepository.save(rpmod);
+   			return this.tresComRepository.save(rpmod);
        }
    		return null;
        }
     
     // Supprimer 
     public boolean delete(String  id) {
-    	if(this.rpRepository.existsById(id))
-            this.rpRepository.deleteById(id);
+    	if(this.tresComRepository.existsById(id))
+            this.tresComRepository.deleteById(id);
     	
-            return this.rpRepository.existsById(id);
+            return this.tresComRepository.existsById(id);
     }   
     
     // 
     public Optional<TresCom> findById(String idRp) {
-        return this.rpRepository.findById(idRp);
+        return this.tresComRepository.findById(idRp);
     }
     
     // Liste 
     public List<TresCom> getAll() {
-        return  this.rpRepository.findAll();
+        return  this.tresComRepository.findAll();
     }
     
     
     //
     public List<TresCom> findByIdrp(String idRp){
 		
-		return this.rpRepository.findByIdRp(idRp);
+		return this.tresComRepository.findByIdRp(idRp);
 	}
 
     

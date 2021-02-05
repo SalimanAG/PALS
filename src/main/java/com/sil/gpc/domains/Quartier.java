@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,7 +20,7 @@ public class Quartier implements Serializable {
 	private String adresseQuartier;
 
 	//Liaison  avec Arrondissement
-		@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Arrondissement.class)
+		@ManyToOne(fetch = FetchType.EAGER,targetEntity = Arrondissement.class)
 		@JoinColumn(name="codeArrondi", referencedColumnName = "codeArrondi", nullable = false)
 		private Arrondissement arrondissement;
 	

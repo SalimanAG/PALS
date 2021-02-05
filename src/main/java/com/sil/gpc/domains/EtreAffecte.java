@@ -3,9 +3,10 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,17 +16,18 @@ import javax.persistence.ManyToOne;
 public class EtreAffecte implements Serializable{
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAffecte;
 	private Date dateArrivee;
 	private Date dateDepart;
 	
 	//Liaison avec Correspondant
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Correspondant.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrespondant",referencedColumnName = "idCorrespondant",nullable = false)
 	private Correspondant corres;
 	
 	//Liaison avec Site
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
 	@JoinColumn(name = "codeSite",referencedColumnName = "codeSite",nullable = false)
 	private SiteMarcher site;
 

@@ -42,18 +42,49 @@ public class OpCaisse implements Serializable {
 	
 	//Liaison à l'exercice
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
 	private Exercice exercice;
 
 	//Liaison à la table "Utilisateur"
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Utilisateur.class)
-	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
+	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
 	private Utilisateur utilisateur;
 
 	public OpCaisse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	/**
+	 * @param numOpCaisse
+	 * @param dateOpCaisse
+	 * @param contribuable
+	 * @param valideOpCaisse
+	 * @param observationOpCaisse
+	 * @param dateSaisie
+	 * @param caisse
+	 * @param typeRecette
+	 * @param modePaiement
+	 * @param exercice
+	 * @param utilisateur
+	 */
+	public OpCaisse(String numOpCaisse, Date dateOpCaisse, String contribuable, boolean valideOpCaisse,
+			String observationOpCaisse, Date dateSaisie, Caisse caisse, TypeRecette typeRecette,
+			ModePaiement modePaiement, Exercice exercice, Utilisateur utilisateur) {
+		this.numOpCaisse = numOpCaisse;
+		this.dateOpCaisse = dateOpCaisse;
+		this.contribuable = contribuable;
+		this.valideOpCaisse = valideOpCaisse;
+		ObservationOpCaisse = observationOpCaisse;
+		this.dateSaisie = dateSaisie;
+		this.caisse = caisse;
+		this.typeRecette = typeRecette;
+		this.modePaiement = modePaiement;
+		this.exercice = exercice;
+		this.utilisateur = utilisateur;
+	}
+
 
 	public String getNumOpCaisse() {
 		return numOpCaisse;

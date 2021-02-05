@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,7 +17,7 @@ public class Departement implements Serializable{
 	private String codeDepartement;
 	private String nomDepartement;
 	
-	@ManyToOne(cascade = CascadeType.ALL,targetEntity = Pays.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Pays.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "codePays", referencedColumnName = "codePays", nullable = false)
 	public Pays pays;
 	

@@ -2,8 +2,9 @@ package com.sil.gpc.domains;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 public class Utilisateur {
 
 	@Id  //*******************A générer automatiquement
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idUtilisateur;
 	private String login;
 	private String motDePass;
@@ -22,7 +24,7 @@ public class Utilisateur {
 	private String dateLastConnex;
 	private boolean askMdp1erLance;
 	
-	@ManyToOne(cascade = CascadeType.ALL,targetEntity = Service.class)
+	@ManyToOne(targetEntity = Service.class)
 	@JoinColumn(name = "codeService", referencedColumnName = "codeService", nullable = true)
 	public Service service;
 	
