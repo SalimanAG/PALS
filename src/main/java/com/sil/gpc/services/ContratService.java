@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sil.gpc.domains.Contrat;
 import com.sil.gpc.domains.Immeuble;
@@ -16,11 +17,18 @@ public class ContratService {
 
 	private final ContratRepository repo;
 
-	public ContratService(ContratRepository repo) {
-		super();
-		this.repo = repo;
-	}
+	private final LocataireService los;
+
 	
+	/**
+	 * @param repo
+	 * @param los
+	 */
+	public ContratService(ContratRepository repo, LocataireService los) {
+		this.repo = repo;
+		this.los = los;
+	}
+
 	public Contrat save(Contrat contrat) {
 		
 		return this.repo.save(contrat);
@@ -89,6 +97,15 @@ public class ContratService {
 	public List<Contrat> findByImmeuble(Immeuble immeuble){
 		
 		return this.repo.findByImmeuble(immeuble);
+	}
+	
+
+	public List<Contrat> getContratByLocataire(Long idLoc){
+		Locataire loc=los.trouveUn(idLoc);
+		System.out.println("Locataire: "+loc);
+		List<Contrat> con= findByLocataire(loc);
+		System.out.print("Nombre de contrats: "+con.size());
+		return con;
 	}
 	
 	public List<Contrat> findByLocataire(Locataire locataire){

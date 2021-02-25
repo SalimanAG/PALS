@@ -3,7 +3,6 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,11 +22,11 @@ public class LigneDemandeAppro implements Serializable{
 
 	
 	//Liaison avec Article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Article.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
 
-	//Liaison avec Approvisionnement
+	//Liaison avec Demande Appro Approvisionnement
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = DemandeApprovisionnement.class)
 	@JoinColumn(name = "numDA", referencedColumnName = "numDA",nullable = false)
 	public DemandeApprovisionnement appro;

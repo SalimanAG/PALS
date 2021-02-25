@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +17,7 @@ public class Recollement implements Serializable {
 	private String numRecollement;
 	private String descriptionRecollement;
 	private Date dateRecollement;
+	private boolean valideRecol;
 
 	// Liaison avec Magasin
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Magasin.class)
@@ -38,17 +38,29 @@ public class Recollement implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
 	private Exercice exercice;
+	
 	public Recollement() {
 		super();
 	}
 
-	public Recollement(String numRecollement, String descriptionRecollement, Date dateRecollement, Magasin magasin,
-			Regisseur regisseur, Exercice exercice) {
-		super();
+	/**
+	 * @param numRecollement
+	 * @param descriptionRecollement
+	 * @param dateRecollement
+	 * @param valideRecol
+	 * @param magasin
+	 * @param corres
+	 * @param regisseur
+	 * @param exercice
+	 */
+	public Recollement(String numRecollement, String descriptionRecollement, Date dateRecollement, boolean valideRecol,
+			Magasin magasin, Correspondant corres, Regisseur regisseur, Exercice exercice) {
 		this.numRecollement = numRecollement;
 		this.descriptionRecollement = descriptionRecollement;
 		this.dateRecollement = dateRecollement;
+		this.valideRecol = valideRecol;
 		this.magasin = magasin;
+		this.corres = corres;
 		this.regisseur = regisseur;
 		this.exercice = exercice;
 	}
@@ -96,6 +108,20 @@ public class Recollement implements Serializable {
 	}
 
 	/**
+	 * @return the valideRecol
+	 */
+	public boolean isValideRecol() {
+		return valideRecol;
+	}
+
+	/**
+	 * @param valideRecol the valideRecol to set
+	 */
+	public void setValideRecol(boolean valideRecol) {
+		this.valideRecol = valideRecol;
+	}
+
+	/**
 	 * @return the magasin
 	 */
 	public Magasin getMagasin() {
@@ -107,6 +133,20 @@ public class Recollement implements Serializable {
 	 */
 	public void setMagasin(Magasin magasin) {
 		this.magasin = magasin;
+	}
+
+	/**
+	 * @return the corres
+	 */
+	public Correspondant getCorres() {
+		return corres;
+	}
+
+	/**
+	 * @param corres the corres to set
+	 */
+	public void setCorres(Correspondant corres) {
+		this.corres = corres;
 	}
 
 	/**
@@ -136,35 +176,12 @@ public class Recollement implements Serializable {
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(dateRecollement, descriptionRecollement, exercice, magasin, numRecollement, regisseur);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Recollement other = (Recollement) obj;
-		return Objects.equals(dateRecollement, other.dateRecollement)
-				&& Objects.equals(descriptionRecollement, other.descriptionRecollement)
-				&& Objects.equals(exercice, other.exercice) && Objects.equals(magasin, other.magasin)
-				&& Objects.equals(numRecollement, other.numRecollement) && Objects.equals(regisseur, other.regisseur);
-	}
 
 	@Override
 	public String toString() {
 		return "Recollement [numRecollement=" + numRecollement + ", descriptionRecollement=" + descriptionRecollement
-				+ ", dateRecollement=" + dateRecollement + ", magasin=" + magasin + ", corres=" + corres
-				+ ", regisseur=" + regisseur + ", exercice=" + exercice + "]";
+				+ ", dateRecollement=" + dateRecollement + ", valideRecol=" + valideRecol + ", magasin=" + magasin
+				+ ", corres=" + corres + ", regisseur=" + regisseur + ", exercice=" + exercice + "]";
 	}
 
 }

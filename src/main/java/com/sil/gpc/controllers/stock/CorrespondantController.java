@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sil.gpc.domains.Caisse;
 import com.sil.gpc.domains.Correspondant;
 import com.sil.gpc.domains.LignePointVente;
 import com.sil.gpc.domains.PointVente;

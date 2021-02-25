@@ -34,7 +34,7 @@ public class EcheanceService {
 		if(entiter != null) {
 			entiter.setContrat(echeance.getContrat());
 			entiter.setDateEcheance(echeance.getDateEcheance());
-			entiter.setMois(echeance.getMois());
+			entiter.setMoisEcheance(echeance.getMoisEcheance());
 			entiter.setPayeEcheance(echeance.isPayeEcheance());
 			entiter.setContrat(echeance.getContrat());			
 			

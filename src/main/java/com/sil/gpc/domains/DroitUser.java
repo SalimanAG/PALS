@@ -13,70 +13,96 @@ public class DroitUser {
 	private Long idDroitUser;
 	private String codeDroitUser;
 	private String libDroitUser;
-	private String DescriDroitUser;
+	private String descriDroitUser;
 	
 	public DroitUser() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+
 	/**
-	 * @param idDroitUser
 	 * @param codeDroitUser
 	 * @param libDroitUser
 	 * @param descriDroitUser
 	 */
-	public DroitUser(Long idDroitUser, String codeDroitUser, String libDroitUser, String descriDroitUser) {
-		this.idDroitUser = idDroitUser;
+	public DroitUser(String codeDroitUser, String libDroitUser, String descriDroitUser) {
 		this.codeDroitUser = codeDroitUser;
 		this.libDroitUser = libDroitUser;
-		DescriDroitUser = descriDroitUser;
+		this.descriDroitUser = descriDroitUser;
 	}
 
 
+	/**
+	 * @return the idDroitUser
+	 */
 	public Long getIdDroitUser() {
 		return idDroitUser;
 	}
 
+
+	/**
+	 * @param idDroitUser the idDroitUser to set
+	 */
 	public void setIdDroitUser(Long idDroitUser) {
 		this.idDroitUser = idDroitUser;
 	}
 
+
+	/**
+	 * @return the codeDroitUser
+	 */
 	public String getCodeDroitUser() {
 		return codeDroitUser;
 	}
 
+
+	/**
+	 * @param codeDroitUser the codeDroitUser to set
+	 */
 	public void setCodeDroitUser(String codeDroitUser) {
 		this.codeDroitUser = codeDroitUser;
 	}
 
+
+	/**
+	 * @return the libDroitUser
+	 */
 	public String getLibDroitUser() {
 		return libDroitUser;
 	}
 
+
+	/**
+	 * @param libDroitUser the libDroitUser to set
+	 */
 	public void setLibDroitUser(String libDroitUser) {
 		this.libDroitUser = libDroitUser;
 	}
+
 
 	/**
 	 * @return the descriDroitUser
 	 */
 	public String getDescriDroitUser() {
-		return DescriDroitUser;
+		return descriDroitUser;
 	}
+
 
 	/**
 	 * @param descriDroitUser the descriDroitUser to set
 	 */
 	public void setDescriDroitUser(String descriDroitUser) {
-		DescriDroitUser = descriDroitUser;
+		this.descriDroitUser = descriDroitUser;
 	}
+
 
 	@Override
 	public String toString() {
 		return "DroitUser [idDroitUser=" + idDroitUser + ", codeDroitUser=" + codeDroitUser + ", libDroitUser="
-				+ libDroitUser + "]";
+				+ libDroitUser + ", descriDroitUser=" + descriDroitUser + "]";
 	}
-	
+
+
 	
 }

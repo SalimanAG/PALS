@@ -20,19 +20,16 @@ public class Echeance implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idEcheance;
 	private String moisEcheance;
+	private int annee;
 	private Date dateEcheance;
 	private boolean payeEcheance;
+	private double prix;
 	@ManyToOne(targetEntity = Contrat.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numContrat",referencedColumnName = "numContrat", nullable = false)
 	private Contrat contrat;
 
-	// Migration de lab clé du contrat vers l'échéance
-	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Contrat.class)
-//	@JoinColumn(name = "numContra", referencedColumnName = "numContrat", nullable = false)
-	//private Contrat contrat;
-
 	//Liaison avec la table OpCaisse
-	@ManyToOne(targetEntity = OpCaisse.class,fetch = FetchType.EAGER,optional = true)
+	@ManyToOne(targetEntity = OpCaisse.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numOpCaisse", referencedColumnName = "numOpCaisse",nullable = true)
 	private OpCaisse opCaisse ;
 
@@ -41,74 +38,141 @@ public class Echeance implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Echeance(String mois, Date dateEcheance, boolean payeEcheance, Contrat contrat) {
-		super();
-		this.moisEcheance = mois;
+	/**
+	 * @param moisEcheance
+	 * @param annee
+	 * @param dateEcheance
+	 * @param payeEcheance
+	 * @param prix
+	 * @param contrat
+	 * @param opCaisse
+	 */
+	public Echeance(String moisEcheance, int annee, Date dateEcheance, boolean payeEcheance, double prix,
+			Contrat contrat, OpCaisse opCaisse) {
+		this.moisEcheance = moisEcheance;
+		this.annee = annee;
 		this.dateEcheance = dateEcheance;
 		this.payeEcheance = payeEcheance;
-		//this.contrat = contrat;
-	}
-
-	public Long getIdEcheance() {
-		return idEcheance;
-	}
-
-	public void setIdEcheance(Long idEcheance) {
-		this.idEcheance = idEcheance;
-	}
-
-	public String getMois() {
-		return moisEcheance;
-	}
-
-	public void setMois(String mois) {
-		this.moisEcheance = mois;
-	}
-
-	public Date getDateEcheance() {
-		return dateEcheance;
-	}
-
-	public void setDateEcheance(Date dateEcheance) {
-		this.dateEcheance = dateEcheance;
-	}
-
-	public boolean isPayeEcheance() {
-		return payeEcheance;
-	}
-
-	public void setPayeEcheance(boolean payeEcheance) {
-		this.payeEcheance = payeEcheance;
-	}
-
-	public Contrat getContrat() {
-		return contrat;
-	}
-
-	public void setContrat(Contrat contrat) {
+		this.prix = prix;
 		this.contrat = contrat;
+		this.opCaisse = opCaisse;
 	}
-	
-	
+
+	/**
+	 * @return the moisEcheance
+	 */
 	public String getMoisEcheance() {
 		return moisEcheance;
 	}
 
+	/**
+	 * @param moisEcheance the moisEcheance to set
+	 */
 	public void setMoisEcheance(String moisEcheance) {
 		this.moisEcheance = moisEcheance;
 	}
 
+	/**
+	 * @return the annee
+	 */
+	public int getAnnee() {
+		return annee;
+	}
+
+	/**
+	 * @param annee the annee to set
+	 */
+	public void setAnnee(int annee) {
+		this.annee = annee;
+	}
+
+	/**
+	 * @return the dateEcheance
+	 */
+	public Date getDateEcheance() {
+		return dateEcheance;
+	}
+
+	/**
+	 * @param dateEcheance the dateEcheance to set
+	 */
+	public void setDateEcheance(Date dateEcheance) {
+		this.dateEcheance = dateEcheance;
+	}
+
+	/**
+	 * @return the payeEcheance
+	 */
+	public boolean isPayeEcheance() {
+		return payeEcheance;
+	}
+
+	/**
+	 * @param payeEcheance the payeEcheance to set
+	 */
+	public void setPayeEcheance(boolean payeEcheance) {
+		this.payeEcheance = payeEcheance;
+	}
+
+	/**
+	 * @return the prix
+	 */
+	public double getPrix() {
+		return prix;
+	}
+
+	/**
+	 * @param prix the prix to set
+	 */
+	public void setPrix(double prix) {
+		this.prix = prix;
+	}
+
+	/**
+	 * @return the contrat
+	 */
+	public Contrat getContrat() {
+		return contrat;
+	}
+
+	/**
+	 * @param contrat the contrat to set
+	 */
+	public void setContrat(Contrat contrat) {
+		this.contrat = contrat;
+	}
+
+	/**
+	 * @return the opCaisse
+	 */
 	public OpCaisse getOpCaisse() {
 		return opCaisse;
 	}
 
+	/**
+	 * @param opCaisse the opCaisse to set
+	 */
 	public void setOpCaisse(OpCaisse opCaisse) {
 		this.opCaisse = opCaisse;
 	}
 
+	/**
+	 * @return the idEcheance
+	 */
+	public Long getIdEcheance() {
+		return idEcheance;
+	}
+
+	@Override
+	public String toString() {
+		return "Echeance [idEcheance=" + idEcheance + ", moisEcheance=" + moisEcheance + ", annee=" + annee
+				+ ", dateEcheance=" + dateEcheance + ", payeEcheance=" + payeEcheance + ", prix=" + prix + ", contrat="
+				+ contrat + ", opCaisse=" + opCaisse + "]";
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(contrat, dateEcheance, idEcheance, moisEcheance, opCaisse, payeEcheance);
+		return Objects.hash(annee, contrat, dateEcheance, idEcheance, moisEcheance, opCaisse, payeEcheance, prix);
 	}
 
 	@Override
@@ -123,16 +187,11 @@ public class Echeance implements Serializable {
 			return false;
 		}
 		Echeance other = (Echeance) obj;
-		return Objects.equals(contrat, other.contrat) && Objects.equals(dateEcheance, other.dateEcheance)
-				&& Objects.equals(idEcheance, other.idEcheance) && Objects.equals(moisEcheance, other.moisEcheance)
-				&& Objects.equals(opCaisse, other.opCaisse) && payeEcheance == other.payeEcheance;
-	}
-
-	@Override
-	public String toString() {
-		return "Echeance [idEcheance=" + idEcheance + ", moisEcheance=" + moisEcheance + ", dateEcheance="
-				+ dateEcheance + ", payeEcheance=" + payeEcheance + ", contrat=" + contrat + ", opCaisse=" + opCaisse
-				+ "]";
+		return annee == other.annee && Objects.equals(contrat, other.contrat)
+				&& Objects.equals(dateEcheance, other.dateEcheance) && Objects.equals(idEcheance, other.idEcheance)
+				&& Objects.equals(moisEcheance, other.moisEcheance) && Objects.equals(opCaisse, other.opCaisse)
+				&& payeEcheance == other.payeEcheance
+				&& Double.doubleToLongBits(prix) == Double.doubleToLongBits(other.prix);
 	}
 
 }

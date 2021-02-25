@@ -9,11 +9,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RpService {
+public class TresComService {
 
 	private final TresComRepository tresComRepository;
 
-    public RpService(TresComRepository tresComRepository) {
+    public TresComService(TresComRepository tresComRepository) {
         this.tresComRepository = tresComRepository;
     }
 

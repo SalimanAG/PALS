@@ -2,7 +2,6 @@ package com.sil.gpc.services;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -50,9 +49,9 @@ public class CommandeService {
 		return !this.repo.existsById(id);
 	}
 	
-	public Optional<Commande> getById(String id){
+	public Commande getById(String id){
 		
-		return this.repo.findById(id);
+		return this.repo.findById(id).get();
 	}
 	
 	public List<Commande> getAll(){

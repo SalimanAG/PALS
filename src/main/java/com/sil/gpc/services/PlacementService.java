@@ -27,8 +27,11 @@ public class PlacementService {
 	public Placement edit(Placement p, String np){
 		Placement placem=repos.getOne(np);
 		if (placem!=null) {
-		placem.setDatePlacement(p.getDatePlacement());
-		return repos.save(placem);
+			placem.setDatePlacement(p.getDatePlacement());
+			placem.setCorrespondant(p.getCorrespondant());
+			placem.setExercice(p.getExercice());
+			placem.setRegisseur(p.getRegisseur());
+			return repos.save(placem);
 		}else
 			return null;
 	}

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,15 +15,15 @@ import javax.persistence.ManyToOne;
 public class PlageNumArticle implements Serializable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPlage;
 	private String numDebPlage;
 	private String numFinPlage;
-
+/*
 	@ManyToOne(targetEntity = Article.class,fetch = FetchType.LAZY)
 	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
-	
+	*/
 	//private String numRecollement;//*****************************Liaison à effectuer
 	//Liaison à la table "Recollement"
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity =LigneRecollement.class)
@@ -46,50 +47,71 @@ public class PlageNumArticle implements Serializable {
 		super();
 	}
 
-	public PlageNumArticle(Long idPlage, String numDebPlage, String numFinPlage) {
-		super();
-		this.idPlage = idPlage;
+
+	/**
+	 * @param numDebPlage
+	 * @param numFinPlage
+	 * @param ligneRecollement
+	 * @param lignePlacement
+	 * @param ligneAppro
+	 */
+	public PlageNumArticle(String numDebPlage, String numFinPlage, LigneRecollement ligneRecollement,
+			LignePlacement lignePlacement, LigneAppro ligneAppro) {
 		this.numDebPlage = numDebPlage;
 		this.numFinPlage = numFinPlage;
+		this.ligneRecollement = ligneRecollement;
+		this.lignePlacement = lignePlacement;
+		this.ligneAppro = ligneAppro;
 	}
 
+
+	/**
+	 * @return the idPlage
+	 */
 	public Long getIdPlage() {
 		return idPlage;
 	}
 
+
+	/**
+	 * @param idPlage the idPlage to set
+	 */
 	public void setIdPlage(Long idPlage) {
 		this.idPlage = idPlage;
 	}
 
+
+	/**
+	 * @return the numDebPlage
+	 */
 	public String getNumDebPlage() {
 		return numDebPlage;
 	}
 
+
+	/**
+	 * @param numDebPlage the numDebPlage to set
+	 */
 	public void setNumDebPlage(String numDebPlage) {
 		this.numDebPlage = numDebPlage;
 	}
 
+
+	/**
+	 * @return the numFinPlage
+	 */
 	public String getNumFinPlage() {
 		return numFinPlage;
 	}
 
+
+	/**
+	 * @param numFinPlage the numFinPlage to set
+	 */
 	public void setNumFinPlage(String numFinPlage) {
 		this.numFinPlage = numFinPlage;
 	}
 
-	/**
-	 * @return the article
-	 */
-	public Article getArticle() {
-		return article;
-	}
-
-	/**
-	 * @param article the article to set
-	 */
-	public void setArticle(Article article) {
-		this.article = article;
-	}
 
 	/**
 	 * @return the ligneRecollement
@@ -98,12 +120,14 @@ public class PlageNumArticle implements Serializable {
 		return ligneRecollement;
 	}
 
+
 	/**
 	 * @param ligneRecollement the ligneRecollement to set
 	 */
 	public void setLigneRecollement(LigneRecollement ligneRecollement) {
 		this.ligneRecollement = ligneRecollement;
 	}
+
 
 	/**
 	 * @return the lignePlacement
@@ -112,12 +136,14 @@ public class PlageNumArticle implements Serializable {
 		return lignePlacement;
 	}
 
+
 	/**
 	 * @param lignePlacement the lignePlacement to set
 	 */
 	public void setLignePlacement(LignePlacement lignePlacement) {
 		this.lignePlacement = lignePlacement;
 	}
+
 
 	/**
 	 * @return the ligneAppro
@@ -126,6 +152,7 @@ public class PlageNumArticle implements Serializable {
 		return ligneAppro;
 	}
 
+
 	/**
 	 * @param ligneAppro the ligneAppro to set
 	 */
@@ -133,47 +160,13 @@ public class PlageNumArticle implements Serializable {
 		this.ligneAppro = ligneAppro;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idPlage == null) ? 0 : idPlage.hashCode());
-		result = prime * result + ((numDebPlage == null) ? 0 : numDebPlage.hashCode());
-		result = prime * result + ((numFinPlage == null) ? 0 : numFinPlage.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PlageNumArticle other = (PlageNumArticle) obj;
-		if (idPlage == null) {
-			if (other.idPlage != null)
-				return false;
-		} else if (!idPlage.equals(other.idPlage))
-			return false;
-		if (numDebPlage == null) {
-			if (other.numDebPlage != null)
-				return false;
-		} else if (!numDebPlage.equals(other.numDebPlage))
-			return false;
-		if (numFinPlage == null) {
-			if (other.numFinPlage != null)
-				return false;
-		} else if (!numFinPlage.equals(other.numFinPlage))
-			return false;
-		return true;
-	}
 
 	@Override
 	public String toString() {
 		return "PlageNumArticle [idPlage=" + idPlage + ", numDebPlage=" + numDebPlage + ", numFinPlage=" + numFinPlage
-				+ "]";
+				+ ", ligneRecollement=" + ligneRecollement + ", lignePlacement=" + lignePlacement + ", ligneAppro="
+				+ ligneAppro + "]";
 	}
+
 	
 }

@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +17,7 @@ public class Approvisionnement implements Serializable {
 	private String numAppro;
 	private String descriptionAppro;
 	private Date dateAppro;
+	private boolean valideAppro;
 	
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
@@ -27,42 +27,88 @@ public class Approvisionnement implements Serializable {
 		super();
 	}
 
-	public Approvisionnement(String numAppro, String descriptionAppro, Date dateAppro, Exercice exercice) {
-		super();
+	/**
+	 * @param numAppro
+	 * @param descriptionAppro
+	 * @param dateAppro
+	 * @param valideAppro
+	 * @param exercice
+	 */
+	public Approvisionnement(String numAppro, String descriptionAppro, Date dateAppro, boolean valideAppro,
+			Exercice exercice) {
 		this.numAppro = numAppro;
 		this.descriptionAppro = descriptionAppro;
 		this.dateAppro = dateAppro;
+		this.valideAppro = valideAppro;
 		this.exercice = exercice;
 	}
 
+	/**
+	 * @return the numAppro
+	 */
 	public String getNumAppro() {
 		return numAppro;
 	}
 
+	/**
+	 * @param numAppro the numAppro to set
+	 */
 	public void setNumAppro(String numAppro) {
 		this.numAppro = numAppro;
 	}
 
+	/**
+	 * @return the descriptionAppro
+	 */
 	public String getDescriptionAppro() {
 		return descriptionAppro;
 	}
 
+	/**
+	 * @param descriptionAppro the descriptionAppro to set
+	 */
 	public void setDescriptionAppro(String descriptionAppro) {
 		this.descriptionAppro = descriptionAppro;
 	}
 
+	/**
+	 * @return the dateAppro
+	 */
 	public Date getDateAppro() {
 		return dateAppro;
 	}
 
+	/**
+	 * @param dateAppro the dateAppro to set
+	 */
 	public void setDateAppro(Date dateAppro) {
 		this.dateAppro = dateAppro;
 	}
 
+	/**
+	 * @return the valideAppro
+	 */
+	public boolean isValideAppro() {
+		return valideAppro;
+	}
+
+	/**
+	 * @param valideAppro the valideAppro to set
+	 */
+	public void setValideAppro(boolean valideAppro) {
+		this.valideAppro = valideAppro;
+	}
+
+	/**
+	 * @return the exercice
+	 */
 	public Exercice getExercice() {
 		return exercice;
 	}
 
+	/**
+	 * @param exercice the exercice to set
+	 */
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
@@ -70,29 +116,9 @@ public class Approvisionnement implements Serializable {
 	@Override
 	public String toString() {
 		return "Approvisionnement [numAppro=" + numAppro + ", descriptionAppro=" + descriptionAppro + ", dateAppro="
-				+ dateAppro + ", exercice=" + exercice + "]";
+				+ dateAppro + ", valideAppro=" + valideAppro + ", exercice=" + exercice + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(dateAppro, descriptionAppro, exercice, numAppro);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Approvisionnement other = (Approvisionnement) obj;
-		return Objects.equals(dateAppro, other.dateAppro) && Objects.equals(descriptionAppro, other.descriptionAppro)
-				&& Objects.equals(exercice, other.exercice) && Objects.equals(numAppro, other.numAppro);
-	}
 
-	
 }

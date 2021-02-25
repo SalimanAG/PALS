@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,9 +33,16 @@ public class Commande implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * @param numCommande
+	 * @param dateCommande
+	 * @param description
+	 * @param delaiLivraison
+	 * @param frs
+	 * @param exercice
+	 */
 	public Commande(String numCommande, Date dateCommande, String description, int delaiLivraison, Fournisseur frs,
 			Exercice exercice) {
-		super();
 		this.numCommande = numCommande;
 		this.dateCommande = dateCommande;
 		this.description = description;
@@ -45,75 +51,94 @@ public class Commande implements Serializable {
 		this.exercice = exercice;
 	}
 
+	/**
+	 * @return the numCommande
+	 */
 	public String getNumCommande() {
 		return numCommande;
 	}
 
+	/**
+	 * @param numCommande the numCommande to set
+	 */
 	public void setNumCommande(String numCommande) {
 		this.numCommande = numCommande;
 	}
 
+	/**
+	 * @return the dateCommande
+	 */
 	public Date getDateCommande() {
 		return dateCommande;
 	}
 
+	/**
+	 * @param dateCommande the dateCommande to set
+	 */
 	public void setDateCommande(Date dateCommande) {
 		this.dateCommande = dateCommande;
 	}
 
+	/**
+	 * @return the description
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * @param description the description to set
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * @return the delaiLivraison
+	 */
 	public int getDelaiLivraison() {
 		return delaiLivraison;
 	}
 
+	/**
+	 * @param delaiLivraison the delaiLivraison to set
+	 */
 	public void setDelaiLivraison(int delaiLivraison) {
 		this.delaiLivraison = delaiLivraison;
 	}
 
+	/**
+	 * @return the frs
+	 */
 	public Fournisseur getFrs() {
 		return frs;
 	}
 
+	/**
+	 * @param frs the frs to set
+	 */
 	public void setFrs(Fournisseur frs) {
 		this.frs = frs;
 	}
 
+	/**
+	 * @return the exercice
+	 */
 	public Exercice getExercice() {
 		return exercice;
 	}
 
+	/**
+	 * @param exercice the exercice to set
+	 */
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(dateCommande, delaiLivraison, description, exercice, frs, numCommande);
+	public String toString() {
+		return "Commande [numCommande=" + numCommande + ", dateCommande=" + dateCommande + ", description="
+				+ description + ", delaiLivraison=" + delaiLivraison + ", frs=" + frs + ", exercice=" + exercice + "]";
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Commande other = (Commande) obj;
-		return Objects.equals(dateCommande, other.dateCommande) && delaiLivraison == other.delaiLivraison
-				&& Objects.equals(description, other.description) && Objects.equals(exercice, other.exercice)
-				&& Objects.equals(frs, other.frs) && Objects.equals(numCommande, other.numCommande);
-	}
-
-
+	
 }

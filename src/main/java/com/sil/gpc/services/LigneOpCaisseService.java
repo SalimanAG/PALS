@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LigneOpCaisse;
+import com.sil.gpc.domains.OpCaisse;
 import com.sil.gpc.repositories.LigneOpCaisseRepository;
 
 @Service
@@ -60,6 +61,10 @@ public class LigneOpCaisseService {
 	public boolean delete(Long id) {
 		repos.deleteById(id);
 		return repos.existsById(id);
+	}
+
+	public List<LigneOpCaisse> getByOperation(OpCaisse oc) {
+		return repos.findByOpCaisse(oc);
 	}
 	
 }

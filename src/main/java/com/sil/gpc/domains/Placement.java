@@ -2,9 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Objects;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -25,12 +22,12 @@ public class Placement implements Serializable{
 	private Regisseur regisseur;
 
 	//Liaison avec correspondant
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Correspondant.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Correspondant.class)
 	@JoinColumn(name = "idCorrespondant",referencedColumnName = "idCorrespondant",nullable = false)
 	private Correspondant correspondant;
 
 	//Liaison avec Exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice",referencedColumnName = "codeExercice",nullable = false)
 	private Exercice exercice;
 
@@ -38,10 +35,19 @@ public class Placement implements Serializable{
 		super();
 	}
 
-	public Placement(String numPlacement, Date datePlacement, Exercice exercice) {
-		super();
+	/**
+	 * @param numPlacement
+	 * @param datePlacement
+	 * @param regisseur
+	 * @param correspondant
+	 * @param exercice
+	 */
+	public Placement(String numPlacement, Date datePlacement, Regisseur regisseur, Correspondant correspondant,
+			Exercice exercice) {
 		this.numPlacement = numPlacement;
 		this.datePlacement = datePlacement;
+		this.regisseur = regisseur;
+		this.correspondant = correspondant;
 		this.exercice = exercice;
 	}
 
@@ -74,6 +80,34 @@ public class Placement implements Serializable{
 	}
 
 	/**
+	 * @return the regisseur
+	 */
+	public Regisseur getRegisseur() {
+		return regisseur;
+	}
+
+	/**
+	 * @param regisseur the regisseur to set
+	 */
+	public void setRegisseur(Regisseur regisseur) {
+		this.regisseur = regisseur;
+	}
+
+	/**
+	 * @return the correspondant
+	 */
+	public Correspondant getCorrespondant() {
+		return correspondant;
+	}
+
+	/**
+	 * @param correspondant the correspondant to set
+	 */
+	public void setCorrespondant(Correspondant correspondant) {
+		this.correspondant = correspondant;
+	}
+
+	/**
 	 * @return the exercice
 	 */
 	public Exercice getExercice() {
@@ -88,31 +122,9 @@ public class Placement implements Serializable{
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(correspondant, datePlacement, exercice, numPlacement, regisseur);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Placement other = (Placement) obj;
-		return Objects.equals(correspondant, other.correspondant) && Objects.equals(datePlacement, other.datePlacement)
-				&& Objects.equals(exercice, other.exercice) && Objects.equals(numPlacement, other.numPlacement)
-				&& Objects.equals(regisseur, other.regisseur);
-	}
-
-	@Override
 	public String toString() {
 		return "Placement [numPlacement=" + numPlacement + ", datePlacement=" + datePlacement + ", regisseur="
 				+ regisseur + ", correspondant=" + correspondant + ", exercice=" + exercice + "]";
 	}
-
+	
 }

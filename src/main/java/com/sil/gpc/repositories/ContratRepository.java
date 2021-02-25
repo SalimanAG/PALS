@@ -24,7 +24,9 @@ public interface ContratRepository extends JpaRepository<Contrat, String> {
 	public List<Contrat> findByCautionContrat(double cautionContrat);
 	
 	public List<Contrat> findByImmeuble(Immeuble immeuble);
-	
-	public List<Contrat> findByLocataire(Locataire locataire);
+
+	//public List<Contrat> getByLocataire(Long idloc);
+
+	public List<Contrat> findByLocataire(Locataire loc);
 	
 }

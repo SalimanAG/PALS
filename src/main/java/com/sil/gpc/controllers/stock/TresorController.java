@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sil.gpc.domains.Caisse;
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.LigneCommande;
@@ -27,14 +26,14 @@ import com.sil.gpc.services.LigneCommandeService;
 import com.sil.gpc.services.LigneDemandeApproService;
 import com.sil.gpc.services.LigneReceptionService;
 import com.sil.gpc.services.ReceptionService;
-import com.sil.gpc.services.RpService;
+import com.sil.gpc.services.TresComService;
 
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-gpc/v1/stock/")
 public class TresorController {
 
-	private final RpService rpService;
+	private final TresComService tresComService;
 	private final CommandeService commandeService;
 	private final LigneCommandeService ligneCommandeService;
 	private final ReceptionService receptionService;
@@ -42,12 +41,12 @@ public class TresorController {
 	private final DemandeApproService demandeApproService;
 	private final LigneDemandeApproService ligneDemandeApproService;
 	
-	public TresorController(RpService rpService, CommandeService commandeService,
+	public TresorController(TresComService tresComService, CommandeService commandeService,
 			LigneCommandeService ligneCommandeService, ReceptionService receptionService,
 			LigneReceptionService ligneReceptionService, DemandeApproService demandeApproService,
 			LigneDemandeApproService ligneDemandeApproService) {
 		super();
-		this.rpService = rpService;
+		this.tresComService = tresComService;
 		this.commandeService = commandeService;
 		this.ligneCommandeService = ligneCommandeService;
 		this.receptionService = receptionService;
@@ -64,31 +63,31 @@ public class TresorController {
 	@GetMapping(path = "rp/list")
 	public List<TresCom> getAllRp(){
 		
-		return this.rpService.getAll();
+		return this.tresComService.getAll();
 	}
 	
 	@GetMapping(path = "rp/byCodRp/{id}")
 	public Optional<TresCom> getRpById(@PathVariable(name = "id") String id){
 		
-		return this.rpService.findById(id);
+		return this.tresComService.findById(id);
 	}
 	
 	@PostMapping(path = "rp/list")
 	public TresCom createRp( @RequestBody TresCom tresCom) {
 		
-		return this.rpService.save(tresCom);
+		return this.tresComService.save(tresCom);
 	}
 	
 	@PutMapping(path = "rp/byCodRp/{id}")
 	public TresCom updateRp(@PathVariable(name = "id") String id, @RequestBody TresCom tresCom) {
 		
-		return this.rpService.edit(id, tresCom);
+		return this.tresComService.edit(id, tresCom);
 	}
 	
 	@DeleteMapping(path = "rp/byCodRp/{id}")
 	public Boolean deleteRp(@PathVariable(name = "id") String id) {
 		
-		return this.rpService.delete(id);
+		return this.tresComService.delete(id);
 	}
 	
 
@@ -104,7 +103,7 @@ public class TresorController {
 	}
 	
 	@GetMapping(path = "commande/byCodCom/{id}")
-	public Optional<Commande> getCommandeById(@PathVariable(name = "id") String id){
+	public Commande getCommandeById(@PathVariable(name = "id") String id){
 		
 		return this.commandeService.getById(id);
 	}

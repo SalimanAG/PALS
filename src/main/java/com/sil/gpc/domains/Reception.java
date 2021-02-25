@@ -1,7 +1,6 @@
 package com.sil.gpc.domains;
 
 import java.sql.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,68 +15,86 @@ public class Reception {
 	@Column(length = 150)
 	private String observation;
 	private Date dateReception;
+	private boolean valideRecep; 
 	
 	public Reception() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reception(String numReception, String observation, Date dateReception) {
-		super();
+	/**
+	 * @param numReception
+	 * @param observation
+	 * @param dateReception
+	 * @param valideRecep
+	 */
+	public Reception(String numReception, String observation, Date dateReception, boolean valideRecep) {
 		this.numReception = numReception;
 		this.observation = observation;
-		this.dateReception = dateReception; 
+		this.dateReception = dateReception;
+		this.valideRecep = valideRecep;
 	}
 
+	/**
+	 * @return the numReception
+	 */
 	public String getNumReception() {
 		return numReception;
 	}
 
+	/**
+	 * @param numReception the numReception to set
+	 */
 	public void setNumReception(String numReception) {
 		this.numReception = numReception;
 	}
 
+	/**
+	 * @return the observation
+	 */
 	public String getObservation() {
 		return observation;
 	}
 
+	/**
+	 * @param observation the observation to set
+	 */
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
 
+	/**
+	 * @return the dateReception
+	 */
 	public Date getDateReception() {
 		return dateReception;
 	}
 
+	/**
+	 * @param dateReception the dateReception to set
+	 */
 	public void setDateReception(Date dateReception) {
 		this.dateReception = dateReception;
+	}
+
+	/**
+	 * @return the valideRecep
+	 */
+	public boolean isValideRecep() {
+		return valideRecep;
+	}
+
+	/**
+	 * @param valideRecep the valideRecep to set
+	 */
+	public void setValideRecep(boolean valideRecep) {
+		this.valideRecep = valideRecep;
 	}
 
 	@Override
 	public String toString() {
 		return "Reception [numReception=" + numReception + ", observation=" + observation + ", dateReception="
-				+ dateReception + "]";
+				+ dateReception + ", valideRecep=" + valideRecep + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(dateReception, numReception, observation);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Reception other = (Reception) obj;
-		return Objects.equals(dateReception, other.dateReception) && Objects.equals(numReception, other.numReception)
-				&& Objects.equals(observation, other.observation);
-	}
-	
 }

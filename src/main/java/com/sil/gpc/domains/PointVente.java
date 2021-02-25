@@ -2,13 +2,10 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,10 +15,10 @@ import javax.persistence.ManyToOne;
 public class PointVente implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="numPointVente", length = 15)
 	private String numPointVente; 
 	private Date datePointVente;
+	private boolean validePoint;
 	private boolean payerPoint;
 
 	//Liaison avec Exercice
@@ -50,16 +47,29 @@ public class PointVente implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public PointVente(String numPointVente, Date datePointVente, boolean payerPoint, Exercice exercice,
-			Correspondant correspondant, Regisseur regisseur) {
-		super();
+
+	/**
+	 * @param numPointVente
+	 * @param datePointVente
+	 * @param validePoint
+	 * @param payerPoint
+	 * @param exercice
+	 * @param correspondant
+	 * @param opCaisse
+	 * @param regisseur
+	 */
+	public PointVente(String numPointVente, Date datePointVente, boolean validePoint, boolean payerPoint,
+			Exercice exercice, Correspondant correspondant, OpCaisse opCaisse, Regisseur regisseur) {
 		this.numPointVente = numPointVente;
 		this.datePointVente = datePointVente;
+		this.validePoint = validePoint;
 		this.payerPoint = payerPoint;
 		this.exercice = exercice;
 		this.correspondant = correspondant;
+		this.opCaisse = opCaisse;
 		this.regisseur = regisseur;
 	}
+
 
 	/**
 	 * @return the numPointVente
@@ -88,6 +98,22 @@ public class PointVente implements Serializable{
 	public void setDatePointVente(Date datePointVente) {
 		this.datePointVente = datePointVente;
 	}
+
+	/**
+	 * @return the validePoint
+	 */
+	public boolean isValidePoint() {
+		return validePoint;
+	}
+
+
+	/**
+	 * @param validePoint the validePoint to set
+	 */
+	public void setValidePoint(boolean validePoint) {
+		this.validePoint = validePoint;
+	}
+
 
 	/**
 	 * @return the payerPoint
@@ -132,6 +158,20 @@ public class PointVente implements Serializable{
 	}
 
 	/**
+	 * @return the opCaisse
+	 */
+	public OpCaisse getOpCaisse() {
+		return opCaisse;
+	}
+
+	/**
+	 * @param opCaisse the opCaisse to set
+	 */
+	public void setOpCaisse(OpCaisse opCaisse) {
+		this.opCaisse = opCaisse;
+	}
+
+	/**
 	 * @return the regisseur
 	 */
 	public Regisseur getRegisseur() {
@@ -146,33 +186,9 @@ public class PointVente implements Serializable{
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(correspondant, datePointVente, exercice, numPointVente, opCaisse, payerPoint, regisseur);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		PointVente other = (PointVente) obj;
-		return Objects.equals(correspondant, other.correspondant)
-				&& Objects.equals(datePointVente, other.datePointVente) && Objects.equals(exercice, other.exercice)
-				&& Objects.equals(numPointVente, other.numPointVente) && Objects.equals(opCaisse, other.opCaisse)
-				&& payerPoint == other.payerPoint && Objects.equals(regisseur, other.regisseur);
-	}
-
-	@Override
 	public String toString() {
-		return "PointVente [numPointVente=" + numPointVente + ", datePointVente=" + datePointVente + ", payerPoint="
-				+ payerPoint + ", exercice=" + exercice + ", correspondant=" + correspondant + ", opCaisse=" + opCaisse
-				+ ", regisseur=" + regisseur + "]";
+		return "PointVente [numPointVente=" + numPointVente + ", datePointVente=" + datePointVente + ", validePoint="
+				+ validePoint + ", payerPoint=" + payerPoint + ", exercice=" + exercice + ", correspondant="
+				+ correspondant + ", opCaisse=" + opCaisse + ", regisseur=" + regisseur + "]";
 	}
-
 }

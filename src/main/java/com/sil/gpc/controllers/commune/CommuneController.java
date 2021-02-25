@@ -136,7 +136,8 @@ public class CommuneController {
 		Utilisateur userr = this.utilisateurService.save(new Utilisateur("KAMI ABDO", "KAMI", "KAMI", "Abdorazine", "Caissière", false, "03-04-2021", true, servic));
 
 		this.quartierService.save(new Quartier("QUTER001", "Quartier Gbégamey", "51457995", "", arrondi));
-		this.exerciceService.save(new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "encours", true));
+		this.exerciceService.save(new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "Clôturé", false));
+		//this.exerciceService.save(new Exercice("2021", "Exo 2021", new Date(2021, 1, 1), new Date(2021, 12, 31), "encours", true));
 		
 		
 		

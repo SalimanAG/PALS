@@ -84,9 +84,9 @@ public class FacturationController {
 						new Departement("0801", "Littoral", 
 								new Pays("PAY001", "Bénin", "République Démocratique du Bénin")))) ));
 		
-		System.out.println(this.opCaisseService.save(new OpCaisse("2020-1", new Date(2020, 01, 28), "Didier", true, "RAS",  new Date(2020, 01, 28), cais, tp , mp, 
-			new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "encours", true),  
-			utilisateurService.trouveUn((long)1))));
+		//System.out.println(this.opCaisseService.save(new OpCaisse("2020-1", new Date(20200102), "Didier", true, "RAS",  new Date(20200102), cais, tp , mp, 
+			//new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "Clôturé", true),  
+			//utilisateurService.trouveUn((long)1))));
 		
 		
 	}
@@ -324,10 +324,21 @@ public class FacturationController {
 	
 	@PostMapping(path = "opcaisse/list")
 	public OpCaisse createOpCaisse(@RequestBody OpCaisse opCaisse) {
+		
 		System.out.println(opCaisse);
-		OpCaisse op=this.opCaisseService.save(opCaisse);
-		System.out.println("opéra"+op);
-		return op;
+		/*OpCaisse op=new OpCaisse();
+		op.setCaisse(opCaisse.getCaisse());
+		op.setContribuable(opCaisse.getContribuable());
+		op.setDateOpCaisse(opCaisse.getDateOpCaisse());
+		op.setDateSaisie(opCaisse.getDateSaisie());
+		op.setModePaiement(opCaisse.getModePaiement());
+		op.setNumOpCaisse(opCaisse.getNumOpCaisse());
+		op.setTypeRecette(opCaisse.getTypeRecette());
+		op.setValideOpCaisse(true);
+		op.setObservationOpCaisse(opCaisse.getObservationOpCaisse());
+		op.setUtilisateur(opCaisse.getUtilisateur());
+		op.setExercice(opCaisse.getExercice());*/
+		return opCaisseService.save(opCaisse);
 	}
 	
 	@PutMapping(path = "opcaisse/byCodOpCai/{id}")
@@ -385,9 +396,15 @@ public class FacturationController {
 		return this.ligneOpCaisseService.getByid(id);
 	}
 	
-	@PostMapping(path = "ligneOpCaisse/list")
+	@PostMapping(path = "ligneOpCaisse/byNumOp/{num}")
 	public LigneOpCaisse createLigneOpCaisse(@RequestBody LigneOpCaisse ligneOpCaisse) {
-		
+		/*LigneOpCaisse lo=new LigneOpCaisse();
+		lo.setArticle(ligneOpCaisse.getArticle());
+		lo.setCommentaireLigneOperCaisse(ligneOpCaisse.getCommentaireLigneOperCaisse());
+		lo.setLivre(false);
+		lo.setOpCaisse(ligneOpCaisse.getOpCaisse());
+		lo.setPrixLigneOperCaisse(ligneOpCaisse.getPrixLigneOperCaisse());
+		lo.setQteLigneOperCaisse(ligneOpCaisse.getQteLigneOperCaisse());*/
 		return this.ligneOpCaisseService.save(ligneOpCaisse);
 	}
 	
@@ -414,11 +431,18 @@ public class FacturationController {
 			return res;
 	}
 	
+	@GetMapping(path = "ligneOpCaisse/byNumOp/{num}")
+	public List<LigneOpCaisse> getLigneOpCaisseByOC(@PathVariable(name = "oc") OpCaisse oc){
+		return this.ligneOpCaisseService.getByOperation(oc);
+	}
+	
 	@GetMapping(path = "ligneOpCaisse/byPriLig/{valeur}")
 	public List<LigneOpCaisse> getLigneOpCaisseByPrixLigne(@PathVariable(name = "valeur") Long valeur){
 		
 			return this.ligneOpCaisseService.getByPrixLigne(valeur);
 	}
+	
+	
 	
 	@GetMapping(path = "ligneOpCaisse/byQteLig/{valeur}")
 	public List<LigneOpCaisse> getLigneOpCaisseByQteLigne(@PathVariable(name = "valeur") Long valeur){

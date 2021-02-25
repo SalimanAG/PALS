@@ -2,7 +2,6 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +21,7 @@ public class OpCaisse implements Serializable {
 	private String contribuable;
 	private boolean valideOpCaisse;
 	@Column(length = 150)
-	private String ObservationOpCaisse;
+	private String obsOpCaisse;
 	private Date dateSaisie;
 
 	//Liaison à la caisse
@@ -42,27 +41,25 @@ public class OpCaisse implements Serializable {
 
 	//Liaison au type de recette
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
 	private Exercice exercice;
 
 	//Liaison à la table "ModePaiementRepository"
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Utilisateur.class)
-	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = false)
+	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur", nullable = true)
 	private Utilisateur utilisateur;
-	
 
 	public OpCaisse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 
 	/**
 	 * @param numOpCaisse
 	 * @param dateOpCaisse
 	 * @param contribuable
 	 * @param valideOpCaisse
-	 * @param observationOpCaisse
+	 * @param obsOpCaisse
 	 * @param dateSaisie
 	 * @param caisse
 	 * @param typeRecette
@@ -71,13 +68,13 @@ public class OpCaisse implements Serializable {
 	 * @param utilisateur
 	 */
 	public OpCaisse(String numOpCaisse, Date dateOpCaisse, String contribuable, boolean valideOpCaisse,
-			String observationOpCaisse, Date dateSaisie, Caisse caisse, TypeRecette typeRecette,
-			ModePaiement modePaiement, Exercice exercice, Utilisateur utilisateur) {
+			String obsOpCaisse, Date dateSaisie, Caisse caisse, TypeRecette typeRecette, ModePaiement modePaiement,
+			Exercice exercice, Utilisateur utilisateur) {
 		this.numOpCaisse = numOpCaisse;
 		this.dateOpCaisse = dateOpCaisse;
 		this.contribuable = contribuable;
 		this.valideOpCaisse = valideOpCaisse;
-		ObservationOpCaisse = observationOpCaisse;
+		this.obsOpCaisse = obsOpCaisse;
 		this.dateSaisie = dateSaisie;
 		this.caisse = caisse;
 		this.typeRecette = typeRecette;
@@ -86,111 +83,166 @@ public class OpCaisse implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
+	@Override
+	public String toString() {
+		return "OpCaisse [numOpCaisse=" + numOpCaisse + ", dateOpCaisse=" + dateOpCaisse + ", contribuable="
+				+ contribuable + ", valideOpCaisse=" + valideOpCaisse + ", obsOpCaisse=" + obsOpCaisse + ", dateSaisie="
+				+ dateSaisie + ", caisse=" + caisse + ", typeRecette=" + typeRecette + ", modePaiement=" + modePaiement
+				+ ", exercice=" + exercice + ", utilisateur=" + utilisateur + "]";
+	}
 
+	/**
+	 * @return the numOpCaisse
+	 */
 	public String getNumOpCaisse() {
 		return numOpCaisse;
 	}
 
+	/**
+	 * @param numOpCaisse the numOpCaisse to set
+	 */
 	public void setNumOpCaisse(String numOpCaisse) {
 		this.numOpCaisse = numOpCaisse;
 	}
 
+	/**
+	 * @return the dateOpCaisse
+	 */
 	public Date getDateOpCaisse() {
 		return dateOpCaisse;
 	}
 
+	/**
+	 * @param dateOpCaisse the dateOpCaisse to set
+	 */
 	public void setDateOpCaisse(Date dateOpCaisse) {
 		this.dateOpCaisse = dateOpCaisse;
 	}
 
+	/**
+	 * @return the contribuable
+	 */
 	public String getContribuable() {
 		return contribuable;
 	}
 
+	/**
+	 * @param contribuable the contribuable to set
+	 */
 	public void setContribuable(String contribuable) {
 		this.contribuable = contribuable;
 	}
 
+	/**
+	 * @return the valideOpCaisse
+	 */
 	public boolean isValideOpCaisse() {
 		return valideOpCaisse;
 	}
 
+	/**
+	 * @param valideOpCaisse the valideOpCaisse to set
+	 */
 	public void setValideOpCaisse(boolean valideOpCaisse) {
 		this.valideOpCaisse = valideOpCaisse;
 	}
 
-	public String getObservation() {
-		return ObservationOpCaisse;
+	/**
+	 * @return the obsOpCaisse
+	 */
+	public String getObsOpCaisse() {
+		return obsOpCaisse;
 	}
 
-	public void setObservation(String observation) {
-		ObservationOpCaisse = observation;
+	/**
+	 * @param obsOpCaisse the obsOpCaisse to set
+	 */
+	public void setObsOpCaisse(String obsOpCaisse) {
+		this.obsOpCaisse = obsOpCaisse;
 	}
 
+	/**
+	 * @return the dateSaisie
+	 */
 	public Date getDateSaisie() {
 		return dateSaisie;
 	}
 
+	/**
+	 * @param dateSaisie the dateSaisie to set
+	 */
 	public void setDateSaisie(Date dateSaisie) {
 		this.dateSaisie = dateSaisie;
 	}
 
+	/**
+	 * @return the caisse
+	 */
 	public Caisse getCaisse() {
 		return caisse;
 	}
 
+	/**
+	 * @param caisse the caisse to set
+	 */
 	public void setCaisse(Caisse caisse) {
 		this.caisse = caisse;
 	}
 
+	/**
+	 * @return the typeRecette
+	 */
 	public TypeRecette getTypeRecette() {
 		return typeRecette;
 	}
 
+	/**
+	 * @param typeRecette the typeRecette to set
+	 */
 	public void setTypeRecette(TypeRecette typeRecette) {
 		this.typeRecette = typeRecette;
 	}
 
+	/**
+	 * @return the modePaiement
+	 */
 	public ModePaiement getModePaiement() {
 		return modePaiement;
 	}
 
+	/**
+	 * @param modePaiement the modePaiement to set
+	 */
 	public void setModePaiement(ModePaiement modePaiement) {
 		this.modePaiement = modePaiement;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(ObservationOpCaisse, caisse, contribuable, dateOpCaisse, dateSaisie, exercice, modePaiement,
-				numOpCaisse, typeRecette, utilisateur, valideOpCaisse);
+	/**
+	 * @return the exercice
+	 */
+	public Exercice getExercice() {
+		return exercice;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		OpCaisse other = (OpCaisse) obj;
-		return Objects.equals(ObservationOpCaisse, other.ObservationOpCaisse) && Objects.equals(caisse, other.caisse)
-				&& Objects.equals(contribuable, other.contribuable) && Objects.equals(dateOpCaisse, other.dateOpCaisse)
-				&& Objects.equals(dateSaisie, other.dateSaisie) && Objects.equals(exercice, other.exercice)
-				&& Objects.equals(modePaiement, other.modePaiement) && Objects.equals(numOpCaisse, other.numOpCaisse)
-				&& Objects.equals(typeRecette, other.typeRecette) && Objects.equals(utilisateur, other.utilisateur)
-				&& valideOpCaisse == other.valideOpCaisse;
+	/**
+	 * @param exercice the exercice to set
+	 */
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
 	}
 
-	@Override
-	public String toString() {
-		return "OpCaisse [numOpCaisse=" + numOpCaisse + ", dateOpCaisse=" + dateOpCaisse + ", contribuable="
-				+ contribuable + ", valideOpCaisse=" + valideOpCaisse + ", ObservationOpCaisse=" + ObservationOpCaisse
-				+ ", dateSaisie=" + dateSaisie + ", caisse=" + caisse + ", typeRecette=" + typeRecette
-				+ ", modePaiement=" + modePaiement + ", exercice=" + exercice + ", utilisateur=" + utilisateur + "]";
+	/**
+	 * @return the utilisateur
+	 */
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	/**
+	 * @param utilisateur the utilisateur to set
+	 */
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 }

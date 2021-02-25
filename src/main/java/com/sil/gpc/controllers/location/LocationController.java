@@ -14,7 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sil.gpc.domains.Arrondissement;
 import com.sil.gpc.domains.Caisse;
+import com.sil.gpc.domains.Commune;
+import com.sil.gpc.domains.OpCaisse;
+import com.sil.gpc.domains.Pays;
+import com.sil.gpc.domains.Departement;
+import com.sil.gpc.domains.SiteMarcher;
 import com.sil.gpc.domains.Contrat;
 import com.sil.gpc.domains.Echeance;
 import com.sil.gpc.domains.Immeuble;
@@ -53,21 +59,39 @@ public class LocationController {
 		this.prixImmeubleService = prixImmeubleService;
 		this.locataireService = locataireService;
 		
-		
+		/*Arrondissement arr= new Arrondissement("080101", "Arrondissement 1", "Dans ...", "21454556", 
+				new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "", 
+						new Departement("0801", "Littoral", 
+								new Pays("PAY001", "Bénin", "République Démocratique du Bénin"))));
+				new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "", 
+						new Departement("0801", "Littoral", 
+								new Pays("PAY001", "Bénin", "République Démocratique du Bénin")));
 		TypeImmeuble typImm = this.typeImmeubleService.save(new TypeImmeuble("BT", "Boutique"));
-		//Immeuble im = this.immeubleService.save(new Immeuble("BT001", "Boutique 1", "Dans le Marché Dantopka", true, 30, 500, "SOCIMAT COOPERATIVE", "", arrondi, 
-		//new Quartier("QUTER001", "Quartier Gbégamey", "51457995", "", arrondi),typImm, new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arrondi)));
-		Locataire loca = new Locataire((long)1, "SOCIMAT COOPERATION", "", "", "02210001445", "DG");
+		Immeuble imm=immeubleService.save(new Immeuble("BT001", "Boutique 1", "", false, 9, 1500, "RAS", "", arr, 
+				new Quartier("08010101", "Dandji", "Dans ...", "21454556", arr), typImm, 
+				new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arr)));
+
+		Immeuble im=immeubleService.save(new Immeuble("BT002", "Boutique 2", "", false, 9, 1500, "RAS", "", arr, 
+				new Quartier("08010101", "Dandji", "Dans ...", "21454556", arr), typImm, 
+				new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arr)));
+		Immeuble i=immeubleService.save(new Immeuble("BT003", "Boutique 3", "", false, 9, 1500, "RAS", "", arr, 
+				new Quartier("08010101", "Dandji", "Dans ...", "21454556", arr), typImm, 
+				new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arr)));
+
+		Locataire loca = new Locataire("SOCIMAT COOPERATION", "", "", "02210001445", "DG");
+		Locataire loc = new Locataire("UnPlus Service", "", "", "0022997541414", "Gérant");
 		
-		//Contrat contr = this.contratService.save( new Contrat("CL00001", new Date(2020, 11, 20), new Date(2020, 12, 1), 200000, 10000, im, loca));
-		
+		Contrat contr = this.contratService.save( new Contrat("CL00001", new Date(2020, 8, 20), new Date(2020, 6, 1), 54000, 13500, imm, loca));		
+		Contrat cont = this.contratService.save( new Contrat("CL00002", new Date(2020, 7, 10), new Date(2020, 7, 1), 54000, 13500, im, loc));		
+		Contrat con = this.contratService.save( new Contrat("CL00003", new Date(2020, 7, 10), new Date(2020, 7, 1), 54000, 13500, im, loca));	
+		*/
 	}
 	
 	/*###########################################################
 	#############	Partie réservée pour contrat
 	###########################################################
 	*/
-	
+
 	@GetMapping(path = "contrat/list")
 	public List<Contrat> getAllContrat(){
 		return this.contratService.getAll();
@@ -84,11 +108,11 @@ public class LocationController {
 	}
 	
 	@GetMapping(path = "contrat/byLoc/{loc}")
-	public List<Contrat> getContratByImmeuble(@PathVariable(name = "loc") Locataire loc){
+	public List<Contrat> getContratByLocataire(@PathVariable(name = "loc") Locataire loc){
 		return this.contratService.findByLocataire(loc);
 	}
 	
-	@GetMapping(path = "contrat/byDatEff/{dateEffet}")
+	@GetMapping(path = "contrat/byDatEff/{dateEffet}")///21602470
 	public List<Contrat> getContratByDate(@PathVariable(name = "effet") Date dateEffet){
 		return this.contratService.findByDateEffetContrat(dateEffet);
 	}
@@ -147,13 +171,13 @@ public class LocationController {
 	
 	@PostMapping(path = "echeance/list")
 	public Echeance createEcheance( @RequestBody Echeance echeance) {
-		
+		Echeance e=new Echeance();
 		return this.echeanceService.save(echeance);
 	}
 	
 	@PutMapping(path = "echeance/byCodEch/{id}")
 	public Echeance updateEcheance(@PathVariable(name = "id") Long id, @RequestBody Echeance echeance) {
-		
+		System.out.println("Mise à jour de l\'échéance N°: " +id+" en "+ echeance.toString());
 		return this.echeanceService.edit(id, echeance);
 	}
 	

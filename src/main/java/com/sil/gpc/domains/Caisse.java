@@ -3,6 +3,7 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -16,6 +17,8 @@ public class Caisse implements Serializable {
 	
 	@Id
 	@PrimaryKeyJoinColumn
+	@Column(length = 2, unique = true)
+	
 	private String codeCaisse;
 	private String libeCaisse;
 
@@ -24,6 +27,7 @@ public class Caisse implements Serializable {
 	@ManyToOne(targetEntity = Arrondissement.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeArrondi",referencedColumnName = "codeArrondi", nullable = false)
 	private Arrondissement arrondissement;
+	
 	public Caisse() {
 		super();
 		// TODO Auto-generated constructor stub

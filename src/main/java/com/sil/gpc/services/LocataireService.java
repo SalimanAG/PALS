@@ -41,6 +41,10 @@ public class LocataireService {
 		return repos.existsById(id);
 	}
 	
+	public Locataire trouveUn(Long id) {
+		return repos.getOne(id);
+	}
+	
 	public Optional<Locataire> findById(Long id) {
 		return repos.findById(id);
 	}

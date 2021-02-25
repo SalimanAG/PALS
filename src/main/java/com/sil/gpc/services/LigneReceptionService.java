@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.repositories.LigneReceptionRepository;
 
@@ -45,7 +44,6 @@ public class LigneReceptionService {
 	public LigneReception edit(LigneReception ligne, Long id) {
 		LigneReception cible=repos.getOne(id);
 		if (cible!=null) {
-		cible.setQuantiteLigneReception(ligne.getQuantiteLigneReception());
 		cible.setPULigneReception(ligne.getPULigneReception());
 		cible.setNumSerieDebLigneReception(ligne.getNumSerieDebLigneReception());
 		cible.setNumSerieFinLigneReception(ligne.getNumSerieFinLigneReception());

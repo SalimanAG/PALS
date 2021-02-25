@@ -37,11 +37,10 @@ public class LigneReception implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LigneReception(Long idLigneReception, double quantiteLigneReception, double pULigneReception,
+	public LigneReception(double quantiteLigneReception, double pULigneReception,
 			String observationLigneReception, Long numSerieDebLigneReception, Long numSerieFinLigneReception,
 			LigneCommande ligneCommande) {
 		super();
-		this.idLigneReception = idLigneReception;
 		this.quantiteLigneReception = quantiteLigneReception;
 		PULigneReception = pULigneReception;
 		this.observationLigneReception = observationLigneReception;
@@ -50,86 +49,125 @@ public class LigneReception implements Serializable {
 		this.ligneCommande = ligneCommande;
 	}
 
+	/**
+	 * @return the idLigneReception
+	 */
 	public Long getIdLigneReception() {
 		return idLigneReception;
 	}
 
+	/**
+	 * @param idLigneReception the idLigneReception to set
+	 */
 	public void setIdLigneReception(Long idLigneReception) {
 		this.idLigneReception = idLigneReception;
 	}
 
+	/**
+	 * @return the quantiteLigneReception
+	 */
 	public double getQuantiteLigneReception() {
 		return quantiteLigneReception;
 	}
 
+	/**
+	 * @param quantiteLigneReception the quantiteLigneReception to set
+	 */
 	public void setQuantiteLigneReception(double quantiteLigneReception) {
 		this.quantiteLigneReception = quantiteLigneReception;
 	}
 
+	/**
+	 * @return the pULigneReception
+	 */
 	public double getPULigneReception() {
 		return PULigneReception;
 	}
 
+	/**
+	 * @param pULigneReception the pULigneReception to set
+	 */
 	public void setPULigneReception(double pULigneReception) {
 		PULigneReception = pULigneReception;
 	}
 
+	/**
+	 * @return the observationLigneReception
+	 */
 	public String getObservationLigneReception() {
 		return observationLigneReception;
 	}
 
+	/**
+	 * @param observationLigneReception the observationLigneReception to set
+	 */
 	public void setObservationLigneReception(String observationLigneReception) {
 		this.observationLigneReception = observationLigneReception;
 	}
 
+	/**
+	 * @return the numSerieDebLigneReception
+	 */
 	public Long getNumSerieDebLigneReception() {
 		return numSerieDebLigneReception;
 	}
 
+	/**
+	 * @param numSerieDebLigneReception the numSerieDebLigneReception to set
+	 */
 	public void setNumSerieDebLigneReception(Long numSerieDebLigneReception) {
 		this.numSerieDebLigneReception = numSerieDebLigneReception;
 	}
 
+	/**
+	 * @return the numSerieFinLigneReception
+	 */
 	public Long getNumSerieFinLigneReception() {
 		return numSerieFinLigneReception;
 	}
 
+	/**
+	 * @param numSerieFinLigneReception the numSerieFinLigneReception to set
+	 */
 	public void setNumSerieFinLigneReception(Long numSerieFinLigneReception) {
 		this.numSerieFinLigneReception = numSerieFinLigneReception;
 	}
 
+	/**
+	 * @return the ligneCommande
+	 */
 	public LigneCommande getLigneCommande() {
 		return ligneCommande;
 	}
 
+	/**
+	 * @param ligneCommande the ligneCommande to set
+	 */
 	public void setLigneCommande(LigneCommande ligneCommande) {
 		this.ligneCommande = ligneCommande;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+	/**
+	 * @return the reception
+	 */
+	public Reception getReception() {
+		return reception;
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();
-	}
-
-	@Override
-	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+	/**
+	 * @param reception the reception to set
+	 */
+	public void setReception(Reception reception) {
+		this.reception = reception;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "LigneReception [idLigneReception=" + idLigneReception + ", quantiteLigneReception="
+				+ quantiteLigneReception + ", PULigneReception=" + PULigneReception + ", observationLigneReception="
+				+ observationLigneReception + ", numSerieDebLigneReception=" + numSerieDebLigneReception
+				+ ", numSerieFinLigneReception=" + numSerieFinLigneReception + ", ligneCommande=" + ligneCommande
+				+ ", reception=" + reception + "]";
 	}
-	
-	
+
 }

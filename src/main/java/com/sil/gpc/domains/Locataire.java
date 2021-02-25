@@ -36,9 +36,8 @@ public class Locataire implements Serializable {
 	 * @param ifuLocataire
 	 * @param personneAContacter
 	 */
-	public Locataire(Long idLocataire, String identiteLocataire, String adresseLocataire, String telLocataire,
+	public Locataire( String identiteLocataire, String adresseLocataire, String telLocataire,
 			String ifuLocataire, String personneAContacter) {
-		this.idLocataire = idLocataire;
 		this.identiteLocataire = identiteLocataire;
 		this.adresseLocataire = adresseLocataire;
 		this.telLocataire = telLocataire;

@@ -32,6 +32,14 @@ public class EtreAffecte implements Serializable{
 	private SiteMarcher site;
 
 	/**
+	 * 
+	 */
+	public EtreAffecte() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
 	 * @param dateArrivee
 	 * @param dateDepart
 	 * @param regisseur
@@ -87,14 +95,14 @@ public class EtreAffecte implements Serializable{
 	}
 
 	/**
-	 * @return the Correspondant
+	 * @return the corres
 	 */
 	public Correspondant getCorres() {
 		return corres;
 	}
 
 	/**
-	 * @param regisseur the correspondant to set
+	 * @param corres the corres to set
 	 */
 	public void setCorres(Correspondant corres) {
 		this.corres = corres;
@@ -113,5 +121,12 @@ public class EtreAffecte implements Serializable{
 	public void setSite(SiteMarcher site) {
 		this.site = site;
 	}
+
+	@Override
+	public String toString() {
+		return "EtreAffecte [idAffecte=" + idAffecte + ", dateArrivee=" + dateArrivee + ", dateDepart=" + dateDepart
+				+ ", corres=" + corres + ", site=" + site + "]";
+	}
+
 	
 }

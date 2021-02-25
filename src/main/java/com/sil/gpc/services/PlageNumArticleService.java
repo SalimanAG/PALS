@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.PlageNumArticle;
 import com.sil.gpc.repositories.PlageNumArticleRepository;
 
@@ -25,9 +24,6 @@ public class PlageNumArticleService {
 		return repos.findAll();
 	}
 	
-	public List<PlageNumArticle> findByArticle(Article article){
-		return repos.findByArticle(article);
-	}
 	
 	public List<PlageNumArticle> findByAppro(Long numAppro){
 		return repos.findByLigneAppro(numAppro);

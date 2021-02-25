@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.LigneOpCaisse;
 import com.sil.gpc.domains.OpCaisse;
 import com.sil.gpc.repositories.OpCaisseRepository;
 
@@ -51,13 +52,13 @@ public class OpCaisseService {
 
 	public OpCaisse edit(OpCaisse oc, String num){
 		OpCaisse opc=repos.getOne(num);
+		System.out.println(oc.getNumOpCaisse().substring(0, 4));
 		if (opc!=null) {
 		opc.setCaisse(oc.getCaisse());
 		opc.setContribuable(oc.getContribuable());
 		opc.setDateOpCaisse(oc.getDateOpCaisse());
 		opc.setDateSaisie(oc.getDateSaisie());
 		opc.setModePaiement(oc.getModePaiement());
-		opc.setObservation(oc.getObservation());
 		opc.setTypeRecette(oc.getTypeRecette());
 		opc.setValideOpCaisse(oc.isValideOpCaisse());
 		return repos.save(opc);
@@ -66,6 +67,8 @@ public class OpCaisseService {
 	}
 
 	public OpCaisse save(OpCaisse oc){
+		List<OpCaisse> op=findAll();
+		
 		return repos.save(oc);
 	}
 
