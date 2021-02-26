@@ -35,7 +35,7 @@ public class CommandeService {
 			entiter.setExercice(commande.getExercice());
 			entiter.setFrs(commande.getFrs());
 			
-			return this.repo.save(commande);
+			return this.repo.save(entiter);
 		}
 		
 		return null;
