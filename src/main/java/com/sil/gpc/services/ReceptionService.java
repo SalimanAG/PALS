@@ -29,7 +29,6 @@ public class ReceptionService {
        	
     	Reception receptmod = this.receptionRepository.getOne(numReception);
    		if(receptmod != null) {
-   			receptmod.setNumReception(recept.getNumReception());
    			receptmod.setObservation(recept.getObservation());
    			receptmod.setDateReception(recept.getDateReception());
    			return this.receptionRepository.save(receptmod);

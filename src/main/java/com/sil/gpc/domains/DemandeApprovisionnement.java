@@ -18,6 +18,7 @@ public class DemandeApprovisionnement implements Serializable{
 	@Column(length = 12)
 	private String numDA;
 	private Date dateDA;
+	private int valeur;
 	
 	//Liaison avec Exercice
 	@ManyToOne(targetEntity = Exercice.class,fetch = FetchType.EAGER)
@@ -34,6 +35,21 @@ public class DemandeApprovisionnement implements Serializable{
 		this.numDA = numDA;
 		this.dateDA = dateDA;
 		this.exercice = exercice;
+		valeur =  0;
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
 
 	/**

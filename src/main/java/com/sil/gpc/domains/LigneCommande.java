@@ -21,7 +21,7 @@ public class LigneCommande implements Serializable{
 	private Long idLigneCommande;
 	private double qteLigneCommande;
 	private double PULigneCommande;
-	private double REmise;
+	private double remise;
 	private double TVA;
 
 	//Liaison à la table Commande
@@ -39,18 +39,25 @@ public class LigneCommande implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * @param idLigneCommande
+	 * @param qteLigneCommande
+	 * @param pULigneCommande
+	 * @param remise
+	 * @param tVA
+	 * @param numCommande
+	 * @param article
+	 */
 	public LigneCommande(Long idLigneCommande, double qteLigneCommande, double pULigneCommande, double remise,
-			double tVA, Commande cmde, String codeArticle) {
-		super();
+			double tVA, Commande numCommande, Article article) {
 		this.idLigneCommande = idLigneCommande;
 		this.qteLigneCommande = qteLigneCommande;
 		PULigneCommande = pULigneCommande;
-		REmise = remise;
+		this.remise = remise;
 		TVA = tVA;
-		this.numCommande = cmde;
+		this.numCommande = numCommande;
+		this.article = article;
 	}
-
-
 
 	public Long getIdLigneCommande() {
 		return idLigneCommande;
@@ -76,12 +83,18 @@ public class LigneCommande implements Serializable{
 		PULigneCommande = pULigneCommande;
 	}
 
+	/**
+	 * @return the remise
+	 */
 	public double getRemise() {
-		return REmise;
+		return remise;
 	}
 
+	/**
+	 * @param remise the remise to set
+	 */
 	public void setRemise(double remise) {
-		REmise = remise;
+		this.remise = remise;
 	}
 
 	public double getTVA() {

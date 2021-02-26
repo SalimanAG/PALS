@@ -375,10 +375,10 @@ public class MairieController {
 		return this.regisseurService.edit(id, regisseur);
 	}
 	
-	@DeleteMapping(path = "regisseur/byCodApp/{id}")
+	@DeleteMapping(path = "regisseur/byCodReg/{id}")
 	public Boolean deleteRegisseur(@PathVariable(name = "id") String id) {
 		
-		return this.approvisionnementService.delete(id);
+		return this.regisseurService.delete(id);
 	}	
 	
 	

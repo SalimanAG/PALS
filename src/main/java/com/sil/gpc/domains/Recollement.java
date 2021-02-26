@@ -18,6 +18,7 @@ public class Recollement implements Serializable {
 	private String descriptionRecollement;
 	private Date dateRecollement;
 	private boolean valideRecol;
+	private int valeur;
 
 	// Liaison avec Magasin
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Magasin.class)
@@ -63,7 +64,10 @@ public class Recollement implements Serializable {
 		this.corres = corres;
 		this.regisseur = regisseur;
 		this.exercice = exercice;
+		this.valideRecol=true;
+		this.valeur=0;
 	}
+
 
 	/**
 	 * @return the numRecollement
@@ -126,6 +130,20 @@ public class Recollement implements Serializable {
 	 */
 	public Magasin getMagasin() {
 		return magasin;
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
 
 	/**

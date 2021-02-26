@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class OpCaisse implements Serializable {
 	@Column(length = 150)
 	private String obsOpCaisse;
 	private Date dateSaisie;
+	private int valeur;
 
 	//Liaison à la caisse
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Caisse.class)
@@ -81,6 +83,7 @@ public class OpCaisse implements Serializable {
 		this.modePaiement = modePaiement;
 		this.exercice = exercice;
 		this.utilisateur = utilisateur;
+		valeur =  0;
 	}
 
 	@Override
@@ -89,6 +92,20 @@ public class OpCaisse implements Serializable {
 				+ contribuable + ", valideOpCaisse=" + valideOpCaisse + ", obsOpCaisse=" + obsOpCaisse + ", dateSaisie="
 				+ dateSaisie + ", caisse=" + caisse + ", typeRecette=" + typeRecette + ", modePaiement=" + modePaiement
 				+ ", exercice=" + exercice + ", utilisateur=" + utilisateur + "]";
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
 
 	/**
@@ -243,6 +260,32 @@ public class OpCaisse implements Serializable {
 	 */
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(caisse, contribuable, dateOpCaisse, dateSaisie, exercice, modePaiement, numOpCaisse,
+				obsOpCaisse, typeRecette, utilisateur, valideOpCaisse);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		OpCaisse other = (OpCaisse) obj;
+		return Objects.equals(caisse, other.caisse) && Objects.equals(contribuable, other.contribuable)
+				&& Objects.equals(dateOpCaisse, other.dateOpCaisse) && Objects.equals(dateSaisie, other.dateSaisie)
+				&& Objects.equals(exercice, other.exercice) && Objects.equals(modePaiement, other.modePaiement)
+				&& Objects.equals(numOpCaisse, other.numOpCaisse) && Objects.equals(obsOpCaisse, other.obsOpCaisse)
+				&& Objects.equals(typeRecette, other.typeRecette) && Objects.equals(utilisateur, other.utilisateur)
+				&& valideOpCaisse == other.valideOpCaisse;
 	}
 
 }

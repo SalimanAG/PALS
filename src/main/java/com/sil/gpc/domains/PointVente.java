@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ public class PointVente implements Serializable{
 	private Date datePointVente;
 	private boolean validePoint;
 	private boolean payerPoint;
+	private int valeur;
 
 	//Liaison avec Exercice
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
@@ -34,7 +36,7 @@ public class PointVente implements Serializable{
 	//*********************************Il reste l'opération de caisse
 	//Liaison avec OpCaisse
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = OpCaisse.class)
-	@JoinColumn(name = "numOpCaisse",referencedColumnName = "numOpCaisse",nullable = false)
+	@JoinColumn(name = "numOpCaisse",referencedColumnName = "numOpCaisse",nullable = true)
 	private OpCaisse opCaisse;
 
 	//Liaison avec Regisseur
@@ -46,7 +48,6 @@ public class PointVente implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 
 	/**
 	 * @param numPointVente
@@ -68,8 +69,24 @@ public class PointVente implements Serializable{
 		this.correspondant = correspondant;
 		this.opCaisse = opCaisse;
 		this.regisseur = regisseur;
+		validePoint=true;
+		valeur =  0;
 	}
 
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
+	}
 
 	/**
 	 * @return the numPointVente
@@ -191,4 +208,30 @@ public class PointVente implements Serializable{
 				+ validePoint + ", payerPoint=" + payerPoint + ", exercice=" + exercice + ", correspondant="
 				+ correspondant + ", opCaisse=" + opCaisse + ", regisseur=" + regisseur + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(correspondant, datePointVente, exercice, numPointVente, opCaisse, payerPoint, regisseur,
+				validePoint);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		PointVente other = (PointVente) obj;
+		return Objects.equals(correspondant, other.correspondant)
+				&& Objects.equals(datePointVente, other.datePointVente) && Objects.equals(exercice, other.exercice)
+				&& Objects.equals(numPointVente, other.numPointVente) && Objects.equals(opCaisse, other.opCaisse)
+				&& payerPoint == other.payerPoint && Objects.equals(regisseur, other.regisseur)
+				&& validePoint == other.validePoint;
+	}
+	
 }

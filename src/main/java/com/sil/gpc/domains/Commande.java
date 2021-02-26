@@ -20,6 +20,8 @@ public class Commande implements Serializable {
 	private Date dateCommande;
 	private String description;
 	private int delaiLivraison;
+	private boolean valide;
+	private int valeur;
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity =Fournisseur.class)
 	private Fournisseur frs;
 
@@ -49,6 +51,36 @@ public class Commande implements Serializable {
 		this.delaiLivraison = delaiLivraison;
 		this.frs = frs;
 		this.exercice = exercice;
+		this.valide=true;
+		this.valeur =  0;
+	}
+
+	/**
+	 * @return the valide
+	 */
+	public boolean isValide() {
+		return valide;
+	}
+
+	/**
+	 * @param valide the valide to set
+	 */
+	public void setValide(boolean valide) {
+		this.valide = valide;
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
 
 	/**

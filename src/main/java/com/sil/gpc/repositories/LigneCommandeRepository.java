@@ -18,7 +18,7 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Lo
 	
 	public List<LigneCommande> findByPULigneCommande(Long PULigneCommande);
 	
-	public List<LigneCommande> findByREmise(Long remise);
+	public List<LigneCommande> findByRemise(Long remise);
 	
 	public List<LigneCommande> findByTVA(Long tva);
 	

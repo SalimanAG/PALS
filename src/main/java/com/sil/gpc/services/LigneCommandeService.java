@@ -77,7 +77,7 @@ public class LigneCommandeService {
 	
 	public List<LigneCommande> findByREmise(Long remise){
 		
-		return this.repo.findByREmise(remise);
+		return this.repo.findByRemise(remise);
 	}
 	
 	public List<LigneCommande> findByTVA(Long tva){

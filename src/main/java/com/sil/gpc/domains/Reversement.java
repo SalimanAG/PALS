@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ public class Reversement implements Serializable{
 	private String numReversement;
 	private Date dateVersement;
 	private boolean valideReve;
+	private int valeur;
 	
 	//Liaison avec Exercice
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
@@ -31,13 +33,14 @@ public class Reversement implements Serializable{
 	public Reversement() {
 		super();
 	}
+	
 	/**
 	 * @return the numReversement
 	 */
 	public String getNumReversement() {
 		return numReversement;
 	}
-
+	
 	/**
 	 * @param numReversement
 	 * @param dateVersement
@@ -52,12 +55,22 @@ public class Reversement implements Serializable{
 		this.valideReve = valideReve;
 		this.exercice = exercice;
 		this.regisseur = regisseur;
+		valideReve=true;
+		valeur =  0;
 	}
+
 	/**
-	 * @param numReversement the numReversement to set
+	 * @return the valeur
 	 */
-	public void setNumReversement(String numReversement) {
-		this.numReversement = numReversement;
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
 
 	/**
@@ -74,19 +87,20 @@ public class Reversement implements Serializable{
 		this.dateVersement = dateVersement;
 	}
 
-
 	/**
 	 * @return the valideReve
 	 */
 	public boolean isValideReve() {
 		return valideReve;
 	}
+
 	/**
 	 * @param valideReve the valideReve to set
 	 */
 	public void setValideReve(boolean valideReve) {
 		this.valideReve = valideReve;
 	}
+
 	/**
 	 * @return the exercice
 	 */
@@ -114,11 +128,40 @@ public class Reversement implements Serializable{
 	public void setRegisseur(Regisseur regisseur) {
 		this.regisseur = regisseur;
 	}
+
+	/**
+	 * @param numReversement the numReversement to set
+	 */
+	public void setNumReversement(String numReversement) {
+		this.numReversement = numReversement;
+	}
+
 	@Override
 	public String toString() {
 		return "Reversement [numReversement=" + numReversement + ", dateVersement=" + dateVersement + ", valideReve="
 				+ valideReve + ", exercice=" + exercice + ", regisseur=" + regisseur + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateVersement, exercice, numReversement, regisseur, valideReve);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Reversement other = (Reversement) obj;
+		return Objects.equals(dateVersement, other.dateVersement) && Objects.equals(exercice, other.exercice)
+				&& Objects.equals(numReversement, other.numReversement) && Objects.equals(regisseur, other.regisseur)
+				&& valideReve == other.valideReve;
+	}
+	
 }

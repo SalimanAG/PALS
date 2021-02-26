@@ -5,8 +5,6 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,7 +41,7 @@ public class Correspondant implements Serializable {
 		this.idCorrespondant = idCorrespondant;
 		this.imputableCorres = imputableCorres;
 		this.magasinier = magasinier;
-		this.typecorres = typecorres;
+		//this.typecorres = typecorres;
 		this.utilisateur = utilisateur;
 	}
 

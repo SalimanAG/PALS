@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sil.gpc.domains.Article;
-import com.sil.gpc.domains.Caisse;
 import com.sil.gpc.domains.Famille;
 import com.sil.gpc.domains.Gerer;
 import com.sil.gpc.domains.Magasin;

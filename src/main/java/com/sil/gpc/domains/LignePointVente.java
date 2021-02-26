@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class LignePointVente implements Serializable{
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idLignePointVente;
 	private double quantiteLignePointVente;
 	private double PULignePointVente;
@@ -37,16 +38,36 @@ public class LignePointVente implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public LignePointVente(Long idLignePointVente, double quantiteLignePointVente, double pULignePointVente,
-			int numDebLignePointVente, int numFinLignePointVente, PointVente pontVente, Article article) {
-		super();
-		this.idLignePointVente = idLignePointVente;
+	/**
+	 * @param quantiteLignePointVente
+	 * @param pULignePointVente
+	 * @param numDebLignePointVente
+	 * @param numFinLignePointVente
+	 * @param pointVente
+	 * @param article
+	 */
+	public LignePointVente(double quantiteLignePointVente, double pULignePointVente, int numDebLignePointVente,
+			int numFinLignePointVente, PointVente pointVente, Article article) {
 		this.quantiteLignePointVente = quantiteLignePointVente;
 		PULignePointVente = pULignePointVente;
 		this.numDebLignePointVente = numDebLignePointVente;
 		this.numFinLignePointVente = numFinLignePointVente;
-		this.pointVente = pontVente;
+		this.pointVente = pointVente;
 		this.article = article;
+	}
+
+	/**
+	 * @return the idLignePointVente
+	 */
+	public Long getIdLignePointVente() {
+		return idLignePointVente;
+	}
+
+	/**
+	 * @param idLignePointVente the idLignePointVente to set
+	 */
+	public void setIdLignePointVente(Long idLignePointVente) {
+		this.idLignePointVente = idLignePointVente;
 	}
 
 	/**
@@ -106,16 +127,16 @@ public class LignePointVente implements Serializable{
 	}
 
 	/**
-	 * @return the pontVente
+	 * @return the pointVente
 	 */
-	public PointVente getPontVente() {
+	public PointVente getPointVente() {
 		return pointVente;
 	}
 
 	/**
-	 * @param pontVente the pontVente to set
+	 * @param pointVente the pointVente to set
 	 */
-	public void setPontVente(PointVente pointVente) {
+	public void setPointVente(PointVente pointVente) {
 		this.pointVente = pointVente;
 	}
 
@@ -131,14 +152,6 @@ public class LignePointVente implements Serializable{
 	 */
 	public void setArticle(Article article) {
 		this.article = article;
-	}
-
-	@Override
-	public String toString() {
-		return "LignePointVente [idLignePointVente=" + idLignePointVente + ", quantiteLignePointVente="
-				+ quantiteLignePointVente + ", PULignePointVente=" + PULignePointVente + ", numDebLignePointVente="
-				+ numDebLignePointVente + ", numFinLignePointVente=" + numFinLignePointVente + ", pointVente="
-				+ pointVente + ", article=" + article + "]";
 	}
 
 	@Override
@@ -166,5 +179,25 @@ public class LignePointVente implements Serializable{
 				&& Double.doubleToLongBits(quantiteLignePointVente) == Double
 						.doubleToLongBits(other.quantiteLignePointVente);
 	}
-	
+
+	/**
+	 * @param idLignePointVente
+	 * @param quantiteLignePointVente
+	 * @param pULignePointVente
+	 * @param numDebLignePointVente
+	 * @param numFinLignePointVente
+	 * @param pointVente
+	 * @param article
+	 */
+	public LignePointVente(Long idLignePointVente, double quantiteLignePointVente, double pULignePointVente,
+			int numDebLignePointVente, int numFinLignePointVente, PointVente pointVente, Article article) {
+		this.idLignePointVente = idLignePointVente;
+		this.quantiteLignePointVente = quantiteLignePointVente;
+		PULignePointVente = pULignePointVente;
+		this.numDebLignePointVente = numDebLignePointVente;
+		this.numFinLignePointVente = numFinLignePointVente;
+		this.pointVente = pointVente;
+		this.article = article;
+	}
+
 }

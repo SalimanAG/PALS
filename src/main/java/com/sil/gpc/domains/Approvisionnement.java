@@ -3,6 +3,7 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -17,7 +18,9 @@ public class Approvisionnement implements Serializable {
 	private String numAppro;
 	private String descriptionAppro;
 	private Date dateAppro;
+	@Column()
 	private boolean valideAppro;
+	private int valeur;
 	
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
@@ -41,6 +44,22 @@ public class Approvisionnement implements Serializable {
 		this.dateAppro = dateAppro;
 		this.valideAppro = valideAppro;
 		this.exercice = exercice;
+		valideAppro=true;
+		valeur =  0;
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
 
 	/**

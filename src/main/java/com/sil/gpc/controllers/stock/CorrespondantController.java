@@ -62,6 +62,12 @@ public class CorrespondantController {
 		
 		return this.correspondantService.getById(id);
 	}
+
+	@GetMapping(path = "correspondant/imputable")
+	public List<Correspondant> getCorrespondantImput(){
+		
+		return this.correspondantService.findByImputableCorres(true);
+	}
 	
 	@PostMapping(path = "correspondant/list")
 	public Correspondant createCorrespondant( @RequestBody Correspondant correspondant) {
@@ -128,7 +134,7 @@ public class CorrespondantController {
 		return this.pointVenteService.getAll();
 	}
 	
-	@GetMapping(path = "pointvente/byCodTypCor/{id}")
+	@GetMapping(path = "pointvente/byCodPvt/{id}")
 	public Optional<PointVente> getPointVenteById(@PathVariable(name = "id") String id){
 		
 		return this.pointVenteService.findById(id);
@@ -140,13 +146,12 @@ public class CorrespondantController {
 		return this.pointVenteService.save(pv);
 	}
 	
-	@PutMapping(path = "pointvente/byCodTypCor/{id}")
+	@PutMapping(path = "pointvente/byCodPvt/{id}")
 	public PointVente updatePointVente(@PathVariable(name = "id") String id, @RequestBody PointVente pv) {
-		
 		return this.pointVenteService.edit(id, pv);
 	}
 	
-	@DeleteMapping(path = "pointvente/byCodCor/{id}")
+	@DeleteMapping(path = "pointvente/byCodPvt/{id}")
 	public Boolean delete(@PathVariable(name = "id") String id) {
 		
 		return this.typCorresService.delete(id);
@@ -165,9 +170,8 @@ public class CorrespondantController {
 		return this.lignePointVenteService.findAll();
 	}
 	
-	@GetMapping(path = "lignepointvente/byCodTypCor/{id}")
+	@GetMapping(path = "lignepointvente/byCodLpv/{id}")
 	public Optional<LignePointVente> getLignePointVenteById(@PathVariable(name = "id") Long id){
-		
 		return this.lignePointVenteService.findById(id);
 	}
 	
@@ -177,13 +181,13 @@ public class CorrespondantController {
 		return this.lignePointVenteService.save(lpv);
 	}
 	
-	@PutMapping(path = "lignepointvente/byCodTypCor/{id}")
+	@PutMapping(path = "lignepointvente/byCodLpv/{id}")
 	public LignePointVente updateLignePointVente(@PathVariable(name = "id") Long id, @RequestBody LignePointVente lpv) {
 		
 		return this.lignePointVenteService.edit(lpv, id);
 	}
 	
-	@DeleteMapping(path = "lignepointvente/byCodCor/{id}")
+	@DeleteMapping(path = "lignepointvente/byCodLpv/{id}")
 	public Boolean deleteLignePointVente(@PathVariable(name = "id") Long id) {
 		
 		return this.lignePointVenteService.delete(id);

@@ -32,7 +32,7 @@ public class CorrespondantService {
 		if(entiter != null) {
 			entiter.setImputableCorres(correspondant.isImputableCorres());
 			entiter.setMagasinier(correspondant.getMagasinier());
-			entiter.setTypecorres(correspondant.getTypecorres());
+			//entiter.setTypecorres(correspondant.getTypecorres());
 			entiter.setUtilisateur(correspondant.getUtilisateur());
 			
 			return this.repo.save(entiter);

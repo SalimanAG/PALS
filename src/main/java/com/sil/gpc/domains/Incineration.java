@@ -16,6 +16,7 @@ public class Incineration {
 	private Date dateIncine;
 	private boolean valideIncine;
 	private String ObservationIncine;
+	private int valeur;
 
 	// Liaison avec Exercice
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
@@ -44,6 +45,22 @@ public class Incineration {
 		this.valideIncine = valideIncine;
 		ObservationIncine = observationIncine;
 		this.exercice = exercice;
+		this.valeur=0;
+		this.valideIncine=true;
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
 
 	/**

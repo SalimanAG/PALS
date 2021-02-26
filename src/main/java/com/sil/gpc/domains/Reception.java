@@ -16,6 +16,7 @@ public class Reception {
 	private String observation;
 	private Date dateReception;
 	private boolean valideRecep; 
+	private Long valeur;
 	
 	public Reception() {
 		super();
@@ -75,6 +76,20 @@ public class Reception {
 	 */
 	public void setDateReception(Date dateReception) {
 		this.dateReception = dateReception;
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public Long getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(Long valeur) {
+		this.valeur = valeur;
 	}
 
 	/**

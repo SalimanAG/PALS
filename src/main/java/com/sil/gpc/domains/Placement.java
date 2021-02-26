@@ -15,6 +15,8 @@ public class Placement implements Serializable{
 	@Id
 	private String numPlacement;
 	private Date datePlacement;
+	private int valeur;
+	private boolean validepl;
 
 	//Liaison avec Regisseur
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Regisseur.class)
@@ -49,6 +51,36 @@ public class Placement implements Serializable{
 		this.regisseur = regisseur;
 		this.correspondant = correspondant;
 		this.exercice = exercice;
+		this.valeur=0;
+		this.validepl=true;
+	}
+
+	/**
+	 * @return the valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur the valeur to set
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
+	}
+
+	/**
+	 * @return the validepl
+	 */
+	public boolean isValidepl() {
+		return validepl;
+	}
+
+	/**
+	 * @param validepl the validepl to set
+	 */
+	public void setValidepl(boolean validepl) {
+		this.validepl = validepl;
 	}
 
 	/**
