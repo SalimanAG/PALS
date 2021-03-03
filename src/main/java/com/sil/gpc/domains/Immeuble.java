@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -247,6 +248,33 @@ public class Immeuble implements Serializable{
 	 */
 	public void setSiteMarcher(SiteMarcher siteMarcher) {
 		this.siteMarcher = siteMarcher;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(arrondissement, autre, codeIm, etatIm, libIm, localisationIm, quartier, siteMarcher,
+				stuctResp, superficie, typeImmeuble, valUnit);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Immeuble other = (Immeuble) obj;
+		return Objects.equals(arrondissement, other.arrondissement) && Objects.equals(autre, other.autre)
+				&& Objects.equals(codeIm, other.codeIm) && etatIm == other.etatIm && Objects.equals(libIm, other.libIm)
+				&& Objects.equals(localisationIm, other.localisationIm) && Objects.equals(quartier, other.quartier)
+				&& Objects.equals(siteMarcher, other.siteMarcher) && Objects.equals(stuctResp, other.stuctResp)
+				&& Double.doubleToLongBits(superficie) == Double.doubleToLongBits(other.superficie)
+				&& Objects.equals(typeImmeuble, other.typeImmeuble)
+				&& Double.doubleToLongBits(valUnit) == Double.doubleToLongBits(other.valUnit);
 	}
 
 }

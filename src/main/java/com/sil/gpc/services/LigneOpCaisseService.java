@@ -52,6 +52,7 @@ public class LigneOpCaisseService {
 			cible.setArticle(ligne.getArticle());
 			cible.setPrixLigneOperCaisse(ligne.getPrixLigneOperCaisse());
 			cible.setQteLigneOperCaisse(ligne.getQteLigneOperCaisse());
+			cible.setLivre(ligne.isLivre());
 		return repos.save(cible);
 		}
 		else

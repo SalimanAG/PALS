@@ -43,6 +43,7 @@ public class Utilisateur {
 		this.fonctionUtilisateur = fonctionUtilisateur;
 		this.activeUtilisateur = activeUtilisateur;
 		this.service = service;
+		this.askMdp1erLance = true;
 	}
 	
 	

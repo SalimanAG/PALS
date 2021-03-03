@@ -35,7 +35,7 @@ public class PrixImmeubleService {
    			pimod.setIdPrixIm(prixIm.getIdPrixIm());
    			pimod.setDateDebPrixIm(prixIm.getDateDebPrixIm());
    			pimod.setDateFinPrixIm(prixIm.getDateFinPrixIm());
-   			pimod.setPrixIm(prixIm.getIdPrixIm());
+   			pimod.setPrixIm(prixIm.getPrixIm());
    			pimod.setImmeuble(prixIm.getImmeuble());			
    			return this.prixImmeubleRepository.save(pimod);
        }

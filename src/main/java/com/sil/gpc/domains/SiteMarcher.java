@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -82,8 +83,27 @@ public class SiteMarcher implements Serializable{
 	public String toString() {
 		return "SiteMarcher [codeSite=" + codeSite + ", LibSite=" + libSite + ", DescriSite=" + descriSite + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(arrondissement, codeSite, descriSite, libSite);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		SiteMarcher other = (SiteMarcher) obj;
+		return Objects.equals(arrondissement, other.arrondissement) && Objects.equals(codeSite, other.codeSite)
+				&& Objects.equals(descriSite, other.descriSite) && Objects.equals(libSite, other.libSite);
+	}
 	
-	
-	
-	
+		
 }

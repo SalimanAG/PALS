@@ -216,7 +216,7 @@ public class MagasinController {
 		return this.articleService.edit(id, article);
 	}
 	
-	@DeleteMapping(path = "caisse/byCodArt/{id}")
+	@DeleteMapping(path = "article/byCodArt/{id}")
 	public Boolean deleteArticle(@PathVariable(name = "id") String id) {
 		
 		return this.articleService.delete(id);

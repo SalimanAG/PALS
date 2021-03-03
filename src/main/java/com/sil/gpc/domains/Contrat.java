@@ -23,6 +23,8 @@ public class Contrat implements Serializable {
 	private Date dateSignatureContrat;
 	@Column(name = "dateEffetContrat")
 	private Date dateEffetContrat;
+	@Column(name = "dateFinContrat")
+	private Date dateFinContrat;
 	@Column(name = "avanceContrat")
 	private double avanceContrat;
 	@Column(name = "cautionContrat")
@@ -47,16 +49,18 @@ public class Contrat implements Serializable {
 	 * @param numContrat
 	 * @param dateSignatureContrat
 	 * @param dateEffetContrat
+	 * @param dateFinContrat
 	 * @param avanceContrat
 	 * @param cautionContrat
 	 * @param immeuble
 	 * @param locataire
 	 */
-	public Contrat(String numContrat, Date dateSignatureContrat, Date dateEffetContrat, double avanceContrat,
-			double cautionContrat, Immeuble immeuble, Locataire locataire) {
+	public Contrat(String numContrat, Date dateSignatureContrat, Date dateEffetContrat, Date dateFinContrat,
+			double avanceContrat, double cautionContrat, Immeuble immeuble, Locataire locataire) {
 		this.numContrat = numContrat;
 		this.dateSignatureContrat = dateSignatureContrat;
 		this.dateEffetContrat = dateEffetContrat;
+		this.dateFinContrat = dateFinContrat;
 		this.avanceContrat = avanceContrat;
 		this.cautionContrat = cautionContrat;
 		this.immeuble = immeuble;
@@ -103,6 +107,20 @@ public class Contrat implements Serializable {
 	 */
 	public void setDateEffetContrat(Date dateEffetContrat) {
 		this.dateEffetContrat = dateEffetContrat;
+	}
+
+	/**
+	 * @return the dateFinContrat
+	 */
+	public Date getDateFinContrat() {
+		return dateFinContrat;
+	}
+
+	/**
+	 * @param dateFinContrat the dateFinContrat to set
+	 */
+	public void setDateFinContrat(Date dateFinContrat) {
+		this.dateFinContrat = dateFinContrat;
 	}
 
 	/**
@@ -163,8 +181,8 @@ public class Contrat implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(avanceContrat, cautionContrat, dateEffetContrat, dateSignatureContrat, immeuble, locataire,
-				numContrat);
+		return Objects.hash(avanceContrat, cautionContrat, dateEffetContrat, dateFinContrat, dateSignatureContrat,
+				immeuble, locataire, numContrat);
 	}
 
 	@Override
@@ -182,6 +200,7 @@ public class Contrat implements Serializable {
 		return Double.doubleToLongBits(avanceContrat) == Double.doubleToLongBits(other.avanceContrat)
 				&& Double.doubleToLongBits(cautionContrat) == Double.doubleToLongBits(other.cautionContrat)
 				&& Objects.equals(dateEffetContrat, other.dateEffetContrat)
+				&& Objects.equals(dateFinContrat, other.dateFinContrat)
 				&& Objects.equals(dateSignatureContrat, other.dateSignatureContrat)
 				&& Objects.equals(immeuble, other.immeuble) && Objects.equals(locataire, other.locataire)
 				&& Objects.equals(numContrat, other.numContrat);
@@ -190,8 +209,9 @@ public class Contrat implements Serializable {
 	@Override
 	public String toString() {
 		return "Contrat [numContrat=" + numContrat + ", dateSignatureContrat=" + dateSignatureContrat
-				+ ", dateEffetContrat=" + dateEffetContrat + ", avanceContrat=" + avanceContrat + ", cautionContrat="
-				+ cautionContrat + ", immeuble=" + immeuble + ", locataire=" + locataire + "]";
+				+ ", dateEffetContrat=" + dateEffetContrat + ", dateFinContrat=" + dateFinContrat + ", avanceContrat="
+				+ avanceContrat + ", cautionContrat=" + cautionContrat + ", immeuble=" + immeuble + ", locataire="
+				+ locataire + "]";
 	}
 
 }
