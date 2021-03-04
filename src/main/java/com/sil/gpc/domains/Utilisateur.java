@@ -28,7 +28,6 @@ public class Utilisateur {
 	@JoinColumn(name = "codeService", referencedColumnName = "codeService", nullable = true)
 	public Service service;
 	
-	
 	public Utilisateur() {
 		super();
 	}
@@ -45,8 +44,6 @@ public class Utilisateur {
 		this.service = service;
 		this.askMdp1erLance = true;
 	}
-	
-	
 
 	public Utilisateur(String login, String motDePass, String nomUtilisateur, String prenomUtilisateur,
 			String fonctionUtilisateur, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,

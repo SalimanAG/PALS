@@ -22,17 +22,19 @@ public class UtilisateurService {
     }
     
     //Editer
-    public Utilisateur edit(Long idUser, Utilisateur user) {
-       	
+    public Utilisateur edit(Long idUser, Utilisateur user) {     	
     	Utilisateur usermod = this.userRepository.getOne(idUser);
    		if(usermod != null) {
-   			usermod.setIdUtilisateur(user.getIdUtilisateur());
    			usermod.setNomUtilisateur(user.getNomUtilisateur());
    			usermod.setPrenomUtilisateur(user.getPrenomUtilisateur());
    			usermod.setLogin(user.getLogin());
-   			usermod.setMotDePass(user.getMotDePass());
+   			if(usermod.isAskMdp1erLance() && user.getMotDePass()==null && user.getMotDePass()=="") {
+   				usermod.setMotDePass(user.getMotDePass());
+   			}
+   			usermod.setAskMdp1erLance(user.isAskMdp1erLance());
    			usermod.setActiveUtilisateur(user.isActiveUtilisateur());
    			usermod.setFonctionUtilisateur(user.getFonctionUtilisateur());
+   			usermod.setService(user.getService());
    			usermod.setService(user.getService());
    			return this.userRepository.save(usermod);
        }
@@ -46,7 +48,6 @@ public class UtilisateurService {
             
     	return this.userRepository.existsById(id);
     }   
-
 
     // 
     public Optional<Utilisateur> findById(Long id) {

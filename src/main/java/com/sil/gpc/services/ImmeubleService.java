@@ -29,10 +29,19 @@ public class ImmeubleService {
 		
 		Immeuble entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setArrondissement(immeuble.getArrondissement());
+			entiter.setAutre(immeuble.getAutre());
 			entiter.setEtatIm(immeuble.isEtatIm());
 			entiter.setLocalisationIm(immeuble.getLocalisationIm());
 			entiter.setQuartier(immeuble.getQuartier());
 			entiter.setTypeImmeuble(immeuble.getTypeImmeuble());
+			entiter.setLibIm(immeuble.getLibIm());
+			entiter.setSiteMarcher(immeuble.getSiteMarcher());
+			entiter.setStuctResp(immeuble.getStuctResp());
+			entiter.setSuperficie(immeuble.getSuperficie());
+			entiter.setValUnit(immeuble.getValUnit());
+			entiter.setSuperficie(immeuble.getSuperficie());
+			entiter.setSuperficie(immeuble.getSuperficie());
 			
 			return this.repo.save(entiter);
 		}

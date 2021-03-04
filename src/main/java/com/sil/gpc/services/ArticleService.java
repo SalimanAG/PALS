@@ -38,6 +38,10 @@ public class ArticleService {
 			entiter.setStockerArticle(article.isStockerArticle());
 			entiter.setFamille(article.getFamille());
 			entiter.setUnite(article.getUnite());
+			entiter.setQteStIniTres(article.getQteStIniTres());
+			entiter.setPuStIniTres(article.getPuStIniTres());
+			entiter.setDatStInitArtTres(article.getDatStInitArtTres());
+			entiter.setExo(article.getExo());
 			
 			return this.repo.save(entiter);
 		}

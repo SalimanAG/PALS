@@ -41,7 +41,7 @@ public class PointVente implements Serializable{
 
 	//Liaison avec Regisseur
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Regisseur.class)
-	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = false)
+	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = true)
 	private Regisseur regisseur;
 
 	public PointVente() {

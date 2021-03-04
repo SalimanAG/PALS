@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -24,7 +25,15 @@ public class Article implements Serializable {
 	private boolean consommableArticle;
 	private Long prixVenteArticle;
 	private String couleurArticle;
-	
+	private double qteStIniTres;;
+	private double puStIniTres;
+	private Date datStInitArtTres;
+
+	//Migration de la clé de l'exercice
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@JoinColumn(name = "ExoStInit", referencedColumnName = "codeExercice",nullable = true)
+	public Exercice exo;
+		
 	//Migration du code de la famille vers l'article
 	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "famille",referencedColumnName = "codeFamille")
@@ -34,7 +43,7 @@ public class Article implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Uniter.class)
 	@JoinColumn(name = "unite", referencedColumnName = "codeUniter",nullable = false)
 	public Uniter unite;
-		
+	
 	public Article() {
 		super();
 	}
@@ -53,6 +62,10 @@ public class Article implements Serializable {
 		this.couleurArticle = couleurArticle;
 		this.famille = famille;
 		this.unite = uniter;
+		this.qteStIniTres =0;
+		this.puStIniTres = 0;
+		this.datStInitArtTres = null;
+		this.exo = null;
 	}
 
 	public String getCodeArticle() {
@@ -133,6 +146,62 @@ public class Article implements Serializable {
 
 	public void setUnite(Uniter unite) {
 		this.unite = unite;
+	}
+
+	/**
+	 * @return the qteStIniTres
+	 */
+	public double getQteStIniTres() {
+		return qteStIniTres;
+	}
+
+	/**
+	 * @param qteStIniTres the qteStIniTres to set
+	 */
+	public void setQteStIniTres(double qteStIniTres) {
+		this.qteStIniTres = qteStIniTres;
+	}
+
+	/**
+	 * @return the puStIniTres
+	 */
+	public double getPuStIniTres() {
+		return puStIniTres;
+	}
+
+	/**
+	 * @param puStIniTres the puStIniTres to set
+	 */
+	public void setPuStIniTres(double puStIniTres) {
+		this.puStIniTres = puStIniTres;
+	}
+
+	/**
+	 * @return the datStInitArtTres
+	 */
+	public Date getDatStInitArtTres() {
+		return datStInitArtTres;
+	}
+
+	/**
+	 * @param datStInitArtTres the datStInitArtTres to set
+	 */
+	public void setDatStInitArtTres(Date datStInitArtTres) {
+		this.datStInitArtTres = datStInitArtTres;
+	}
+
+	/**
+	 * @return the exo
+	 */
+	public Exercice getExo() {
+		return exo;
+	}
+
+	/**
+	 * @param exo the exo to set
+	 */
+	public void setExo(Exercice exo) {
+		this.exo = exo;
 	}
 
 	@Override
