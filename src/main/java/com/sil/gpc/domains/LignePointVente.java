@@ -3,6 +3,7 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,9 @@ public class LignePointVente implements Serializable{
 	private Long idLignePointVente;
 	private double quantiteLignePointVente;
 	private double PULignePointVente;
+	@Column(nullable = true)
 	private int numDebLignePointVente;
+	@Column(nullable = true)
 	private int numFinLignePointVente;
 	
 	//Liaison avec Point vente

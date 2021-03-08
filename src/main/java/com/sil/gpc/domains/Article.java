@@ -30,7 +30,7 @@ public class Article implements Serializable {
 	private Date datStInitArtTres;
 
 	//Migration de la clé de l'exercice
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "ExoStInit", referencedColumnName = "codeExercice",nullable = true)
 	public Exercice exo;
 		

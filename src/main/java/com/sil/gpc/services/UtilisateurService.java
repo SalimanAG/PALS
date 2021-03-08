@@ -28,7 +28,7 @@ public class UtilisateurService {
    			usermod.setNomUtilisateur(user.getNomUtilisateur());
    			usermod.setPrenomUtilisateur(user.getPrenomUtilisateur());
    			usermod.setLogin(user.getLogin());
-   			if(usermod.isAskMdp1erLance() && user.getMotDePass()==null && user.getMotDePass()=="") {
+   			if(usermod.isAskMdp1erLance() && user.getMotDePass()!=null && user.getMotDePass()!="") {
    				usermod.setMotDePass(user.getMotDePass());
    			}
    			usermod.setAskMdp1erLance(user.isAskMdp1erLance());

@@ -18,6 +18,7 @@ public class Commande implements Serializable {
 	@Column(name = "numCommande", length = 8, updatable = false)
 	private String numCommande;
 	private Date dateCommande;
+	private Date dateRemise;
 	private String description;
 	private int delaiLivraison;
 	private boolean valide;
@@ -43,10 +44,11 @@ public class Commande implements Serializable {
 	 * @param frs
 	 * @param exercice
 	 */
-	public Commande(String numCommande, Date dateCommande, String description, int delaiLivraison, Fournisseur frs,
+	public Commande(String numCommande, Date dateCommande, Date dateRemise, String description, int delaiLivraison, Fournisseur frs,
 			Exercice exercice) {
 		this.numCommande = numCommande;
 		this.dateCommande = dateCommande;
+		this.dateRemise= dateRemise;
 		this.description = description;
 		this.delaiLivraison = delaiLivraison;
 		this.frs = frs;
@@ -112,6 +114,20 @@ public class Commande implements Serializable {
 	}
 
 	/**
+	 * @return the dateRemise
+	 */
+	public Date getDateRemise() {
+		return dateRemise;
+	}
+
+	/**
+	 * @param dateRemise the dateRemise to set
+	 */
+	public void setDateRemise(Date dateRemise) {
+		this.dateRemise = dateRemise;
+	}
+
+	/**
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -169,8 +185,10 @@ public class Commande implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Commande [numCommande=" + numCommande + ", dateCommande=" + dateCommande + ", description="
-				+ description + ", delaiLivraison=" + delaiLivraison + ", frs=" + frs + ", exercice=" + exercice + "]";
+		return "Commande [numCommande=" + numCommande + ", dateCommande=" + dateCommande + ", dateRemise=" + dateRemise
+				+ ", description=" + description + ", delaiLivraison=" + delaiLivraison + ", valide=" + valide
+				+ ", valeur=" + valeur + ", frs=" + frs + ", exercice=" + exercice + "]";
 	}
+
 	
 }
