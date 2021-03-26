@@ -37,8 +37,8 @@ public class InstituReverseService {
 	
 	public InstituReverse editInst(String cod, InstituReverse inst) {
 		if(repos.existsById(cod)) {
-			InstituReverse in=getByCod(cod);
-			in.setCodeInstRevers(inst.getCodeInstRevers());
+			InstituReverse in=repos.getOne(cod);
+			//in.setCodeInstRevers(inst.getCodeInstRevers());
 			in.setLibInstRevers(inst.getLibInstRevers());
 			return repos.save(in);
 		}

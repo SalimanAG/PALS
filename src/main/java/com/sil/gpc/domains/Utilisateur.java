@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class Utilisateur {
 	@Id  //*******************A générer automatiquement
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idUtilisateur;
+	@Column(unique = true)
 	private String login;
 	private String motDePass;
 	private String nomUtilisateur;

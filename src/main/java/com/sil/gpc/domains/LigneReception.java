@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class LigneReception implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idLigneReception;
 	private double quantiteLigneReception;
 	private double PULigneReception;

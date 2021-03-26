@@ -2,6 +2,8 @@ package com.sil.gpc.controllers.facturaction;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,18 +78,12 @@ public class FacturationController {
 		this.arrondissementService = arrondissementService;
 		this.utilisateurService = utilisateurService;
 		this.articleService = articleService;
-		
-		ModePaiement mp = this.modePaiementService.save(new ModePaiement("V", "Virement bancaire"));
-		TypeRecette tp=typeRecetteService.save(new TypeRecette("VD", "Vente Directe"));
-		Caisse cais=caisseService.save(new Caisse("C2", "Caisse 2", new Arrondissement("080101", "Arrondissement 1", "Dans ...", "21454556", 
-				new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "",
-						new Departement("0801", "Littoral", 
-								new Pays("PAY001", "Bénin", "République Démocratique du Bénin")))) ));
-		
-		//System.out.println(this.opCaisseService.save(new OpCaisse("2020-1", new Date(20200102), "Didier", true, "RAS",  new Date(20200102), cais, tp , mp, 
-			//new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "Clôturé", true),  
-			//utilisateurService.trouveUn((long)1))));
-		
+
+		ModePaiement mp = this.modePaiementService.save(new ModePaiement("E", "Espèces"));
+		mp = this.modePaiementService.save(new ModePaiement("C", "Chèque"));
+		TypeRecette tp=typeRecetteService.save(new TypeRecette("P", "Prestation"));
+		tp=typeRecetteService.save(new TypeRecette("L", "Location"));
+		tp=typeRecetteService.save(new TypeRecette("I", "Imputation de correspondant"));
 		
 	}
 	
@@ -96,11 +92,17 @@ public class FacturationController {
 	#############	Partie réservée pour Caisse
 	###########################################################
 	*/
-	
+
 	@GetMapping(path = "caisse/list")
 	public List<Caisse> getAllCaisse(){
 		
 		return this.caisseService.getAll();
+	}
+
+	@GetMapping(path = "caisse/list/az")
+	public List<Caisse> getAllCaisseDSC(){
+		
+		return this.caisseService.listeab();
 	}
 	
 	@GetMapping(path = "caisse/byCodCai/{id}")
@@ -312,7 +314,9 @@ public class FacturationController {
 	
 	@GetMapping(path = "opcaisse/list")
 	public List<OpCaisse> getAllOpcaisse(){
-		System.out.println(this.opCaisseService.findAll());
+		//List<OpCaisse> opc = this.opCaisseService.findAll();
+		//opc.sort(null);
+		//System.out.print(opc);
 		return this.opCaisseService.findAll();
 	}
 	

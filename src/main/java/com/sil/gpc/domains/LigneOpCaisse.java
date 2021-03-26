@@ -33,22 +33,16 @@ public class LigneOpCaisse implements Serializable {
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 
-	/**
-	 * 
-	 */
+	//Liaison à la table Magasin
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Magasin.class)
+	@JoinColumn(name = "codeMagasin", nullable = true, referencedColumnName = "codeMagasin")
+	public Magasin magasin;
+
 	public LigneOpCaisse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param idLigneOperCaisse
-	 * @param qteLigneOperCaisse
-	 * @param prixLigneOperCaisse
-	 * @param commentaireLigneOperCaisse
-	 * @param opCaisse
-	 * @param article
-	 */
 	public LigneOpCaisse(Long qteLigneOperCaisse, Long prixLigneOperCaisse,
 			String commentaireLigneOperCaisse, OpCaisse opCaisse, Article article) {
 		this.qteLigneOperCaisse = qteLigneOperCaisse;
@@ -57,6 +51,7 @@ public class LigneOpCaisse implements Serializable {
 		this.opCaisse = opCaisse;
 		this.article = article;
 		this.livre = false;
+		this.magasin=null;
 	}
 
 	/**

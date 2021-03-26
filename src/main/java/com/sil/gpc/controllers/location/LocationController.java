@@ -13,14 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sil.gpc.domains.Arrondissement;
-import com.sil.gpc.domains.Caisse;
-import com.sil.gpc.domains.Commune;
-import com.sil.gpc.domains.OpCaisse;
-import com.sil.gpc.domains.Pays;
-import com.sil.gpc.domains.Departement;
-import com.sil.gpc.domains.SiteMarcher;
 import com.sil.gpc.domains.Contrat;
 import com.sil.gpc.domains.Echeance;
 import com.sil.gpc.domains.Immeuble;
@@ -171,7 +163,7 @@ public class LocationController {
 	
 	@PostMapping(path = "echeance/list")
 	public Echeance createEcheance( @RequestBody Echeance echeance) {
-		Echeance e=new Echeance();
+		//Echeance e=new Echeance();
 		return this.echeanceService.save(echeance);
 	}
 	

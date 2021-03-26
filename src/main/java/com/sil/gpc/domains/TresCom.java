@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -21,54 +23,36 @@ public class TresCom implements Serializable{
 	private Magasinier magasinier;
 
 	@OneToOne(fetch = FetchType.EAGER,targetEntity =Utilisateur.class)
-	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = false )
+	@JoinColumn(name ="idUtilisateur", referencedColumnName = "idUtilisateur",nullable = true )
 	private Utilisateur utilisateur;
-	
+
+
 	public TresCom(String idRp, Magasinier magasinier, Utilisateur utilisateur) {
-		super();
 		this.idRp = idRp;
 		this.magasinier = magasinier;
 		this.utilisateur = utilisateur;
 	}
 
-	/**
-	 * @return the idRp
-	 */
 	public String getIdRp() {
 		return idRp;
 	}
 
-	/**
-	 * @param idRp the idRp to set
-	 */
 	public void setIdRp(String idRp) {
 		this.idRp = idRp;
 	}
 
-	/**
-	 * @return the magasinier
-	 */
 	public Magasinier getMagasinier() {
 		return magasinier;
 	}
 
-	/**
-	 * @param magasinier the magasinier to set
-	 */
 	public void setMagasinier(Magasinier magasinier) {
 		this.magasinier = magasinier;
 	}
 
-	/**
-	 * @return the utilisateur
-	 */
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
 
-	/**
-	 * @param utilisateur the utilisateur to set
-	 */
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}

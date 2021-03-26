@@ -18,6 +18,7 @@ import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneDemandeAppro;
 import com.sil.gpc.domains.LigneReception;
+import com.sil.gpc.domains.Magasin;
 import com.sil.gpc.domains.Reception;
 import com.sil.gpc.domains.TresCom;
 import com.sil.gpc.services.CommandeService;
@@ -25,6 +26,7 @@ import com.sil.gpc.services.DemandeApproService;
 import com.sil.gpc.services.LigneCommandeService;
 import com.sil.gpc.services.LigneDemandeApproService;
 import com.sil.gpc.services.LigneReceptionService;
+import com.sil.gpc.services.MagasinService;
 import com.sil.gpc.services.ReceptionService;
 import com.sil.gpc.services.TresComService;
 

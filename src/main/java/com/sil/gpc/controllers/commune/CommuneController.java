@@ -73,26 +73,6 @@ public class CommuneController {
 	private final InstituReverseService ir;
 	private final PourcenReverseService perce;
 	
-	
-	/**
-	 * @param exerciceService
-	 * @param fournisseurService
-	 * @param serviceService
-	 * @param utilisateurService
-	 * @param paysService
-	 * @param departementService
-	 * @param communeService
-	 * @param arrondissementService
-	 * @param quartierService
-	 * @param etreAffecterService
-	 * @param siMaS
-	 * @param gu
-	 * @param dgus
-	 * @param aug
-	 * @param du
-	 * @param ir
-	 * @param perce
-	 */
 	public CommuneController(ExerciceService exerciceService, FournisseurService fournisseurService,
 			ServiceService serviceService, UtilisateurService utilisateurService, PaysService paysService,
 			DepartementService departementService, CommuneService communeService,
@@ -119,7 +99,7 @@ public class CommuneController {
 		this.perce = perce;
 		
 		
-		Pays pay = this.paysService.save(new Pays("PAY001", "Bénin", "République Démocratique du Bénin"));
+		/*Pays pay = this.paysService.save(new Pays("PAY001", "Bénin", "République Démocratique du Bénin"));
 		
 		Departement depart = this.departementService.save(new Departement("0801", "Littoral", pay));
 		
@@ -133,11 +113,11 @@ public class CommuneController {
 		 
 		 Service servic = this.serviceService.save(new Service("SAFEM", "Service des Affaires Financières et Economiques"));
 			
-		Utilisateur userr = this.utilisateurService.save(new Utilisateur("KAMI ABDO", "KAMI", "KAMI", "Abdorazine", "Caissière", false, "03-04-2021", true, servic));
+		 Utilisateur userr = this.utilisateurService.save(new Utilisateur("SuperU", "Super", "User", "SU", "", true, null, true, null));
 
-		this.quartierService.save(new Quartier("QUTER001", "Quartier Gbégamey", "51457995", "", arrondi));
-		this.exerciceService.save(new Exercice("2020", "Exo 2020", new Date(2020, 1, 1), new Date(2020, 12, 31), "Clôturé", false));
-		this.exerciceService.save(new Exercice("2021", "Exo 2021", new Date(2021, 1, 1), new Date(2021, 12, 31), "encours", true));
+		this.quartierService.save(new Quartier("QUTER001", "Quartier Gbégamey", "51457995", "", arrondi));*/
+		//this.exerciceService.save(new Exercice("2020", "Exo 2020", "2020-01-01", "2020-12-31", "Clôturé", false));
+		//this.exerciceService.save(new Exercice("2021", "Exo 2021", "2021-01-01", "2021-12-31", "encours", true));
 		
 		
 		
@@ -883,31 +863,31 @@ public class CommuneController {
 		return this.ir.findAll();
 	}
 	
-	@GetMapping(path = "ins/byCodSit/{id}")
+	@GetMapping(path = "ins/byCodIns/{id}")
 	public InstituReverse getInstById(@PathVariable(name = "id") String id){
 		
 		return this.ir.getByCod(id);
 	}
 	
-	@GetMapping(path = "ins/byLibSit/{lib}")
+	@GetMapping(path = "ins/byLibIns/{lib}")
 	public List<InstituReverse> getInstByLibelle(@PathVariable(name = "nom") String lib){
 		
 		return this.ir.getByLib(lib);
 	}
 	
 	@PostMapping(path = "ins/list")
-	public InstituReverse createSite( @RequestBody InstituReverse ins) {
+	public InstituReverse createIns( @RequestBody InstituReverse ins) {
 		
 		return this.ir.saveInst(ins);
 	}
 	
-	@PutMapping(path = "ins/byCodQua/{id}")
+	@PutMapping(path = "ins/byCodIns/{id}")
 	public InstituReverse updateInst(@PathVariable(name = "id") String id, @RequestBody InstituReverse ins) {
 		
 		return this.ir.editInst(id, ins);
 	}
 	
-	@DeleteMapping(path = "ins/byCodSit/{id}")
+	@DeleteMapping(path = "ins/byCodIns/{id}")
 	public Boolean deleteInst(@PathVariable(name = "id") String id) {
 		
 		return this.ir.delIntByCod(id);
@@ -936,7 +916,7 @@ public class CommuneController {
 		return this.perce.save(pource);
 	}
 	
-	@PutMapping(path = "Pourcentage/byId/{id}")
+	@PutMapping(path = "pourcentage/byId/{id}")
 	public PourcenReverse updatePourcentage(@PathVariable(name = "id") Long id, @RequestBody PourcenReverse por) {
 		
 		return this.perce.save(por);

@@ -43,7 +43,7 @@ public class PointVente implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Regisseur.class)
 	@JoinColumn(name = "idRegisseur",referencedColumnName = "idRegisseur",nullable = true)
 	private Regisseur regisseur;
-
+	
 	public PointVente() {
 		super();
 		// TODO Auto-generated constructor stub

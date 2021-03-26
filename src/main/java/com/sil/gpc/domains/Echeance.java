@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 public class Echeance implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEcheance;
 	private String moisEcheance;
 	private int annee;

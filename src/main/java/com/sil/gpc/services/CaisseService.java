@@ -3,6 +3,7 @@ package com.sil.gpc.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Arrondissement;
@@ -72,4 +73,7 @@ public class CaisseService {
 		return this.repo.findByLibeCaisse(libeCaisse);
 	}
 	
+	public List<Caisse> listeab(){
+		return repo.findAll(Sort.by(Sort.Direction.DESC, "codeCaisse"));
+	}
 }

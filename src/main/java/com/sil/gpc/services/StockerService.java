@@ -31,7 +31,6 @@ public class StockerService {
        	
     	Stocker stockmod = this.stockerRepository.getOne(idStocker);
    		if(stockmod != null) {
-   			stockmod.setIdStocker(stock.getIdStocker());
    			stockmod.setQuantiterStocker(stock.getQuantiterStocker());
    			stockmod.setStockDeSecuriter(stock.getStockDeSecuriter());
    			stockmod.setstockMinimal(stock.getStockMinimal());

@@ -37,6 +37,7 @@ public class PointVenteService {
    			pvmod.setExercice(pv.getExercice());
    			pvmod.setCorrespondant(pv.getCorrespondant());
    			pvmod.setRegisseur(pv.getRegisseur());
+   			pvmod.setOpCaisse(pv.getOpCaisse());
    			
    			return this.pointVenteRepository.save(pvmod);
        }
