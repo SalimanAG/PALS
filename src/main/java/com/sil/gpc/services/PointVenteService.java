@@ -23,6 +23,7 @@ public class PointVenteService {
 
     // Sauvegarder
     public PointVente save(PointVente pv) {
+    	pv.setValidePoint(true);
         return   this.pointVenteRepository.save(pv);
     }
     
@@ -38,6 +39,7 @@ public class PointVenteService {
    			pvmod.setCorrespondant(pv.getCorrespondant());
    			pvmod.setRegisseur(pv.getRegisseur());
    			pvmod.setOpCaisse(pv.getOpCaisse());
+   			pvmod.setValidePoint(pv.isValidePoint());
    			
    			return this.pointVenteRepository.save(pvmod);
        }

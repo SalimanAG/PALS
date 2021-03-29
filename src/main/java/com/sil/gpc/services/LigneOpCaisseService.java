@@ -8,17 +8,17 @@ import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LigneOpCaisse;
 import com.sil.gpc.domains.OpCaisse;
 import com.sil.gpc.repositories.LigneOpCaisseRepository;
+import com.sil.gpc.repositories.OpCaisseRepository;
 
 @Service
 public class LigneOpCaisseService {
 
 	private final LigneOpCaisseRepository repos;
-	
-	/**
-	 * @param lopr
-	 */
-	public LigneOpCaisseService(LigneOpCaisseRepository lopr) {
-		this.repos = lopr;
+	private final OpCaisseRepository repo;
+
+	public LigneOpCaisseService(LigneOpCaisseRepository repos, OpCaisseRepository repo) {
+		this.repos = repos;
+		this.repo = repo;
 	}
 
 	public LigneOpCaisse getByid(Long id) {
@@ -68,4 +68,8 @@ public class LigneOpCaisseService {
 		return repos.findByOpCaisse(oc);
 	}
 	
+	public List<LigneOpCaisse> findLigneByOP(OpCaisse opc){
+		return repos.findByOpCaisse(opc);
+		
+	}
 }

@@ -21,7 +21,7 @@ public class ApprovisionnementService {
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
-		
+		approvisionnement.setValideAppro(true);		
 		return this.repo.save(approvisionnement);
 	}
 	
@@ -31,6 +31,7 @@ public class ApprovisionnementService {
 		if(entiter != null) {
 			entiter.setDateAppro(approvisionnement.getDateAppro());
 			entiter.setDescriptionAppro(approvisionnement.getDescriptionAppro());
+			entiter.setValideAppro(approvisionnement.isValideAppro());
 			entiter.setExercice(approvisionnement.getExercice());
 			
 			return this.repo.save(entiter);

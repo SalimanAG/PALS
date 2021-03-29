@@ -918,7 +918,10 @@ public class CommuneController {
 	
 	@PutMapping(path = "pourcentage/byId/{id}")
 	public PourcenReverse updatePourcentage(@PathVariable(name = "id") Long id, @RequestBody PourcenReverse por) {
-		
+		PourcenReverse p= perce.findById(id).get();
+		p.setArticle(por.getArticle());
+		p.setValPourcenRevers(por.getValPourcenRevers());
+		p.setInstituReverse(por.getInstituReverse());
 		return this.perce.save(por);
 	}
 	

@@ -21,6 +21,7 @@ public class ReversementService {
     
  // Sauvegarder 
     public Reversement save(Reversement rev) {
+    	rev.setValideReve(true);
         return   this.reversementRepository.save(rev);
     }
     
@@ -31,6 +32,7 @@ public class ReversementService {
    		if(revertmod != null) {
    			revertmod.setNumReversement(revers.getNumReversement());
    			revertmod.setDateVersement(revers.getDateVersement());
+   			revertmod.setValideReve(revers.isValideReve());
    			return this.reversementRepository.save(revertmod);
        }
    		return null;

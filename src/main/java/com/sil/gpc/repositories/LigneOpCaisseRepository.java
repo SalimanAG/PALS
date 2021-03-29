@@ -17,5 +17,4 @@ public interface LigneOpCaisseRepository extends JpaRepository<LigneOpCaisse, Lo
 	public List<LigneOpCaisse> findByPrixLigneOperCaisse(double prix);
 
 	public List<LigneOpCaisse> findByOpCaisse(OpCaisse opCaisse);
-
 }

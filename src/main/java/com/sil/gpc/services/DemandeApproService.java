@@ -21,7 +21,7 @@ public class DemandeApproService {
 	}
 	
 	public DemandeApprovisionnement save(DemandeApprovisionnement demandeApprovisionnement) {
-		
+		demandeApprovisionnement.setValideDA(true);
 		return this.repo.save(demandeApprovisionnement);
 	}
 	
@@ -31,7 +31,7 @@ public class DemandeApproService {
 		if(entiter != null) {
 			entiter.setDateDA(demandeApprovisionnement.getDateDA());
 			entiter.setExercice(demandeApprovisionnement.getExercice());
-			
+			entiter.setValideDA(demandeApprovisionnement.isValideDA());
 			return this.repo.save(entiter);
 		}
 		

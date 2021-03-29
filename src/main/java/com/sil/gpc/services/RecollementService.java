@@ -23,6 +23,7 @@ public class RecollementService {
     
     // Sauvegarder 
     public Recollement save(Recollement recolle) {
+    	recolle.setValideRecol(true);
         return   this.recollementRepository.save(recolle);
     }
     
@@ -37,6 +38,7 @@ public class RecollementService {
    			receptmod.setMagasin(recoll.getMagasin());
    			receptmod.setRegisseur(recoll.getRegisseur());
    			receptmod.setExercice(recoll.getExercice());
+   			receptmod.setValideRecol(recoll.isValideRecol());
    			return this.recollementRepository.save(receptmod);
        }
    		return null;

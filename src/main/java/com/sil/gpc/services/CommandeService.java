@@ -21,7 +21,7 @@ public class CommandeService {
 	}
 	
 	public Commande save(Commande commande) {
-		
+		commande.setValide(true);
 		return this.repo.save(commande);
 	}
 	
@@ -34,7 +34,7 @@ public class CommandeService {
 			entiter.setDescription(commande.getDescription());
 			entiter.setExercice(commande.getExercice());
 			entiter.setFrs(commande.getFrs());
-			
+			entiter.setValide(commande.isValide());
 			return this.repo.save(entiter);
 		}
 		

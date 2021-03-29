@@ -21,6 +21,7 @@ public class PlacementService {
 	}
 	
 	public Placement save(Placement placem){
+		placem.setValidepl(true);
 		return repos.save(placem);
 	}
 
@@ -30,6 +31,7 @@ public class PlacementService {
 			placem.setDatePlacement(p.getDatePlacement());
 			placem.setCorrespondant(p.getCorrespondant());
 			placem.setExercice(p.getExercice());
+			placem.setValidepl(p.isValidepl());
 			placem.setRegisseur(p.getRegisseur());
 			return repos.save(placem);
 		}else

@@ -19,6 +19,7 @@ public class DemandeApprovisionnement implements Serializable{
 	private String numDA;
 	private Date dateDA;
 	private int valeur;
+	private boolean valideDA;
 	
 	//Liaison avec Exercice
 	@ManyToOne(targetEntity = Exercice.class,fetch = FetchType.EAGER)
@@ -43,6 +44,14 @@ public class DemandeApprovisionnement implements Serializable{
 	 */
 	public int getValeur() {
 		return valeur;
+	}
+
+	public boolean isValideDA() {
+		return valideDA;
+	}
+
+	public void setValideDA(boolean valideDA) {
+		this.valideDA = valideDA;
 	}
 
 	/**
