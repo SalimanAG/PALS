@@ -10,7 +10,8 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Inventaire {
-@Id
+
+	@Id
 	private String numInv;
 	private Date dateInv;
 	private String descrInv;

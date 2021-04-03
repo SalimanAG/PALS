@@ -21,8 +21,31 @@ public class ApprovisionnementService {
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
-		approvisionnement.setValideAppro(true);		
-		return this.repo.save(approvisionnement);
+approvisionnement.setValideAppro(true);	
+		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "BA-";
+		if(this.repo.findLastNumUsed(approvisionnement.getExercice().getCodeExercice()) != null) {
+			val = this.repo.findLastNumUsed(approvisionnement.getExercice().getCodeExercice());
+			val++;
+			
+		}
+		
+		approvisionnement.setValeur(val);
+		
+		code = code+approvisionnement.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		approvisionnement.setNumAppro(code+val);
+		approvisionnement.setValideAppro(true);
+		
+		if(repo.existsById(approvisionnement.getNumAppro())==false) return this.repo.save(approvisionnement) ;
+		
+		return null;
+		
 	}
 	
 	public Approvisionnement edit(String id, Approvisionnement approvisionnement) {

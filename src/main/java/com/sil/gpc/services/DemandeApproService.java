@@ -22,7 +22,28 @@ public class DemandeApproService {
 	
 	public DemandeApprovisionnement save(DemandeApprovisionnement demandeApprovisionnement) {
 		demandeApprovisionnement.setValideDA(true);
-		return this.repo.save(demandeApprovisionnement);
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "DA-";
+		if(this.repo.findLastNumUsed(demandeApprovisionnement.getExercice().getCodeExercice()) != null) {
+			val = this.repo.findLastNumUsed(demandeApprovisionnement.getExercice().getCodeExercice());
+			val++;
+			
+		}
+		
+		demandeApprovisionnement.setValeur(val);
+		
+		code = code+demandeApprovisionnement.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		demandeApprovisionnement.setNumDA(code+val);
+		
+		if(repo.existsById(demandeApprovisionnement.getNumDA())==false) return this.repo.save(demandeApprovisionnement);
+		
+		return null;
+		
 	}
 	
 	public DemandeApprovisionnement edit(String id, DemandeApprovisionnement demandeApprovisionnement) {

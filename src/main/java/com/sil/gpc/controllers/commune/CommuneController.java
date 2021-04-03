@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sil.gpc.domains.AffectDroitGroupUser;
 import com.sil.gpc.domains.AffectUserGroup;
+import com.sil.gpc.domains.AffectUserToArrondi;
 import com.sil.gpc.domains.Arrondissement;
 import com.sil.gpc.domains.Commune;
 import com.sil.gpc.domains.Departement;
@@ -33,8 +34,8 @@ import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.services.AffectDroitGroupUserService;
 import com.sil.gpc.services.AffectUserGroupService;
+import com.sil.gpc.services.AffectUserToArrondiService;
 import com.sil.gpc.services.ArrondissementService;
-import com.sil.gpc.services.CaisseService;
 import com.sil.gpc.services.CommuneService;
 import com.sil.gpc.services.DepartementService;
 import com.sil.gpc.services.DroitUserService;
@@ -72,14 +73,15 @@ public class CommuneController {
 	private final DroitUserService du;
 	private final InstituReverseService ir;
 	private final PourcenReverseService perce;
-	
+	private final AffectUserToArrondiService auta;
+
 	public CommuneController(ExerciceService exerciceService, FournisseurService fournisseurService,
 			ServiceService serviceService, UtilisateurService utilisateurService, PaysService paysService,
 			DepartementService departementService, CommuneService communeService,
 			ArrondissementService arrondissementService, QuartierService quartierService,
 			EtreAffeccteService etreAffecterService, SiteMarcherService siMaS, GroupUserService ug,
 			AffectDroitGroupUserService dgus, AffectUserGroupService aug, DroitUserService du, InstituReverseService ir,
-			PourcenReverseService perce) {
+			PourcenReverseService perce, AffectUserToArrondiService auta) {
 		this.exerciceService = exerciceService;
 		this.fournisseurService = fournisseurService;
 		this.serviceService = serviceService;
@@ -97,30 +99,7 @@ public class CommuneController {
 		this.du = du;
 		this.ir = ir;
 		this.perce = perce;
-		
-		
-		/*Pays pay = this.paysService.save(new Pays("PAY001", "Bénin", "République Démocratique du Bénin"));
-		
-		Departement depart = this.departementService.save(new Departement("0801", "Littoral", pay));
-		
-		Commune commun = this.communeService.save(new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "", depart));
-		
-		Arrondissement arrondi = this.arrondissementService.save(new Arrondissement("080101", "Arrondissement 1", "Dans ...", "21454556", commun));
-		
-		Quartier quart = this.quartierService.save(new Quartier("08010101", "Dandji", "Dans ...", "21454556", arrondi));
-		
-		 this.siMaS.save(new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arrondi));
-		 
-		 Service servic = this.serviceService.save(new Service("SAFEM", "Service des Affaires Financières et Economiques"));
-			
-		 Utilisateur userr = this.utilisateurService.save(new Utilisateur("SuperU", "Super", "User", "SU", "", true, null, true, null));
-
-		this.quartierService.save(new Quartier("QUTER001", "Quartier Gbégamey", "51457995", "", arrondi));*/
-		//this.exerciceService.save(new Exercice("2020", "Exo 2020", "2020-01-01", "2020-12-31", "Clôturé", false));
-		//this.exerciceService.save(new Exercice("2021", "Exo 2021", "2021-01-01", "2021-12-31", "encours", true));
-		
-		
-		
+		this.auta = auta;
 	}
 
 	/*###########################################################
@@ -929,6 +908,40 @@ public class CommuneController {
 	public Boolean deleteSite(@PathVariable(name = "id") Long id) {
 		
 		return this.perce.delete(id);
+	}	
+
+	
+	/*###########################################################
+	#############	Partie réservée pour AffectUserToArrondi
+	###########################################################
+	*/
+	@GetMapping(path = "affectUserToArrondi/list")
+	public List<AffectUserToArrondi> getAllAffectUserArrondi(){
+		
+		return this.auta.getAll();
+	}
+	
+	@GetMapping(path = "affectAnUserToArrondi/byCodAffUseToArr/{id}")
+	public AffectUserToArrondi getUserArrondiId(@PathVariable(name = "id") Long id){
+		
+		return this.auta.findAnAffect(id);
+	}
+	
+	@PostMapping(path = "affectUserToArrondi/list")
+	public AffectUserToArrondi createUserArrondi( @RequestBody AffectUserToArrondi userArrondi) {
+		
+		return this.auta.save(userArrondi);
+	}
+	
+	@PutMapping(path = "affectUserToArrondi/byCodAffUseToArr/{id}")
+public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id, @RequestBody AffectUserToArrondi userArrondi) {
+		return this.auta.edit(id, userArrondi);
+	}
+	
+	@DeleteMapping(path = "affectUserToArrondi/byCodAffUseToArr/{id}")
+	public Boolean deleteUserArrondi(@PathVariable(name = "id") Long id) {
+		
+		return this.auta.delete(id);
 	}	
 	
 	

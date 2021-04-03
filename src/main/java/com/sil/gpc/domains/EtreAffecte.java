@@ -27,6 +27,11 @@ public class EtreAffecte implements Serializable{
 	private Correspondant corres;
 	
 	//Liaison avec Site
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Arrondissement.class)
+	@JoinColumn(name = "codeArrondi",referencedColumnName = "codeArrondi",nullable = false)
+	private Arrondissement arrondissement;
+
+	//Liaison avec Site
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
 	@JoinColumn(name = "codeSite",referencedColumnName = "codeSite",nullable = false)
 	private SiteMarcher site;
@@ -39,17 +44,21 @@ public class EtreAffecte implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param dateArrivee
-	 * @param dateDepart
-	 * @param regisseur
-	 * @param site
-	 */
-	public EtreAffecte(Date dateArrivee, Date dateDepart, Correspondant corres, SiteMarcher site) {
+	public EtreAffecte(Date dateArrivee, Date dateDepart, Correspondant corres, Arrondissement arrondissement,
+			SiteMarcher site) {
 		this.dateArrivee = dateArrivee;
 		this.dateDepart = dateDepart;
 		this.corres = corres;
+		this.arrondissement = arrondissement;
 		this.site = site;
+	}
+
+	public Arrondissement getArrondissement() {
+		return arrondissement;
+	}
+
+	public void setArrondissement(Arrondissement arrondissement) {
+		this.arrondissement = arrondissement;
 	}
 
 	/**

@@ -25,5 +25,9 @@ public interface RecollementRepository extends JpaRepository<Recollement, String
 	public List<Recollement> findByRegisseur(Regisseur reg);
 	
 	public List<Recollement> findByExercice(Exercice exo);
+	
+	@Query(value="SELECT valeur FROM recollement WHERE code_exercice = ?1 ORDER BY valeur DESC LIMIT 1;"
+			, nativeQuery = true)
+	public Integer findLastNumUsed(String codeExercice);
 
 }

@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 public class Commande implements Serializable {
 
 	@Id
-	@Column(name = "numCommande", length = 8, updatable = false)
+	@Column(name = "numCommande", length = 20, updatable = false)
 	private String numCommande;
 	private Date dateCommande;
 	private Date dateRemise;
@@ -54,7 +54,6 @@ public class Commande implements Serializable {
 		this.frs = frs;
 		this.exercice = exercice;
 		this.valide=true;
-		this.valeur =  0;
 	}
 
 	/**

@@ -83,7 +83,6 @@ public class OpCaisse implements Serializable {
 		this.modePaiement = modePaiement;
 		this.exercice = exercice;
 		this.utilisateur = utilisateur;
-		valeur =  0;
 	}
 
 	@Override

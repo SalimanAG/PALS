@@ -1,44 +1,58 @@
 package com.sil.gpc.domains;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@SuppressWarnings("serial")
 @Entity
-public class Reception {
+public class Reception implements Serializable {
 
 	@Id
-	@Column(length = 12)
+	@Column(length = 20)
 	private String numReception;
 	@Column(length = 150)
 	private String observation;
 	private Date dateReception;
-	private boolean valideRecep; 
-	private Long valeur;
+	private boolean valideRecep;
+	@SuppressWarnings("unused")
+	private int valeur;
+
+	@ManyToOne(targetEntity = Exercice.class)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice")
+	Exercice exercice;
 	
 	public Reception() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * @param numReception
-	 * @param observation
-	 * @param dateReception
-	 * @param valideRecep
-	 */
-	public Reception(String numReception, String observation, Date dateReception, boolean valideRecep) {
+	public Reception(String numReception, String observation, Date dateReception, boolean valideRecep, int valeur,
+			Exercice exercice) {
 		this.numReception = numReception;
 		this.observation = observation;
 		this.dateReception = dateReception;
 		this.valideRecep = valideRecep;
+		this.valeur = valeur;
+		this.exercice = exercice;
 	}
-
-	/**
-	 * @return the numReception
-	 */
+	
+	public Exercice getExercice() {
+		return exercice;
+	}
+	
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
+	}
+	
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
+	}
+	
 	public String getNumReception() {
 		return numReception;
 	}
@@ -50,9 +64,10 @@ public class Reception {
 		this.numReception = numReception;
 	}
 
-	/**
-	 * @return the observation
-	 */
+	public int getValeur() {
+		return valeur;
+	}
+	
 	public String getObservation() {
 		return observation;
 	}
@@ -78,23 +93,6 @@ public class Reception {
 		this.dateReception = dateReception;
 	}
 
-	/**
-	 * @return the valeur
-	 */
-	public Long getValeur() {
-		return valeur;
-	}
-
-	/**
-	 * @param valeur the valeur to set
-	 */
-	public void setValeur(Long valeur) {
-		this.valeur = valeur;
-	}
-
-	/**
-	 * @return the valideRecep
-	 */
 	public boolean isValideRecep() {
 		return valideRecep;
 	}

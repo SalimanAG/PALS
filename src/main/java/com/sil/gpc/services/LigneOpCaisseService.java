@@ -14,11 +14,9 @@ import com.sil.gpc.repositories.OpCaisseRepository;
 public class LigneOpCaisseService {
 
 	private final LigneOpCaisseRepository repos;
-	private final OpCaisseRepository repo;
 
-	public LigneOpCaisseService(LigneOpCaisseRepository repos, OpCaisseRepository repo) {
+	public LigneOpCaisseService(LigneOpCaisseRepository repos) {
 		this.repos = repos;
-		this.repo = repo;
 	}
 
 	public LigneOpCaisse getByid(Long id) {

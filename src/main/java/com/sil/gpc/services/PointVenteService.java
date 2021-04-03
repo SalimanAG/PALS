@@ -23,8 +23,29 @@ public class PointVenteService {
 
     // Sauvegarder
     public PointVente save(PointVente pv) {
-    	pv.setValidePoint(true);
-        return   this.pointVenteRepository.save(pv);
+pv.setValidePoint(true);
+    	
+    	Integer val = 1, nbrMaxCaract = 6;
+		String code = "PV-";
+		if(this.pointVenteRepository.findLastNumUsed(pv.getExercice().getCodeExercice()) != null) {
+			val = this.pointVenteRepository.findLastNumUsed(pv.getExercice().getCodeExercice());
+			val++;
+			
+		}
+		
+		pv.setValeur(val);
+		
+		code = code+pv.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		pv.setNumPointVente(code+val);
+		
+		if(pointVenteRepository.existsById(pv.getNumPointVente())==false) return   this.pointVenteRepository.save(pv);
+		
+		return null;
     }
     
  // Editer 

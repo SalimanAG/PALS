@@ -2,8 +2,6 @@ package com.sil.gpc.controllers.facturaction;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,20 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sil.gpc.domains.Affecter;
-import com.sil.gpc.domains.Arrondissement;
 import com.sil.gpc.domains.Caisse;
-import com.sil.gpc.domains.Commune;
-import com.sil.gpc.domains.Departement;
-import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneOpCaisse;
 import com.sil.gpc.domains.LigneReversement;
 import com.sil.gpc.domains.ModePaiement;
 import com.sil.gpc.domains.OpCaisse;
-import com.sil.gpc.domains.Pays;
 import com.sil.gpc.domains.Reversement;
-import com.sil.gpc.domains.Service;
 import com.sil.gpc.domains.TypeRecette;
-import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.services.AffecterService;
 import com.sil.gpc.services.ArrondissementService;
 import com.sil.gpc.services.ArticleService;
@@ -61,7 +52,7 @@ public class FacturationController {
 	private final UtilisateurService utilisateurService;
 	private final ArticleService articleService;
 	
-	
+	@SuppressWarnings("unused")
 	public FacturationController(CaisseService caisseService, AffecterService affecterService,
 			LigneOpCaisseService ligneOpCaisseService, LigneReversementService ligneReversementService,
 			ModePaiementService modePaiementService, OpCaisseService opCaisseService,
@@ -78,6 +69,7 @@ public class FacturationController {
 		this.arrondissementService = arrondissementService;
 		this.utilisateurService = utilisateurService;
 		this.articleService = articleService;
+		
 
 		ModePaiement mp = this.modePaiementService.save(new ModePaiement("E", "Espèces"));
 		mp = this.modePaiementService.save(new ModePaiement("C", "Chèque"));

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.sil.gpc.domains.AffectDroitGroupUser;
 import com.sil.gpc.domains.DroitUser;
 import com.sil.gpc.domains.GroupUser;
-import com.sil.gpc.domains.PourcenReverse;
 import com.sil.gpc.repositories.AffectDroitGroupUserRepository;
 
 @Service

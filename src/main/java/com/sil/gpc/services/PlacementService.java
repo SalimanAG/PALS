@@ -21,8 +21,30 @@ public class PlacementService {
 	}
 	
 	public Placement save(Placement placem){
-		placem.setValidepl(true);
-		return repos.save(placem);
+placem.setValidepl(true);
+		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "PL-";
+		if(this.repos.findLastNumUsed(placem.getExercice().getCodeExercice()) != null) {
+			val = this.repos.findLastNumUsed(placem.getExercice().getCodeExercice());
+			val++;
+			
+		}
+		
+		placem.setValeur(val);
+		
+		code = code+placem.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		placem.setNumPlacement(code+val);
+		
+		if(repos.existsById(placem.getNumPlacement())==false) return repos.save(placem);
+		
+		return null;
+		
 	}
 
 	public Placement edit(Placement p, String np){

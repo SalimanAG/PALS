@@ -24,5 +24,9 @@ public interface PointVenteRepository extends JpaRepository<PointVente, String> 
 	public List<PointVente> findByCorrespondant(Correspondant corresp);
 	
 	public List<PointVente> findByRegisseur(Regisseur reg);
+	
+	@Query(value="SELECT valeur FROM point_vente WHERE code_exercice = ?1 ORDER BY valeur DESC LIMIT 1;"
+			, nativeQuery = true)
+	public Integer findLastNumUsed(String codeExercice);
 
 }

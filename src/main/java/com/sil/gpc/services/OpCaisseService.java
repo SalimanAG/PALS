@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.sil.gpc.domains.LigneOpCaisse;
 import com.sil.gpc.domains.OpCaisse;
 import com.sil.gpc.repositories.OpCaisseRepository;
 
@@ -67,9 +66,36 @@ public class OpCaisseService {
 	}
 
 	public OpCaisse save(OpCaisse oc){
-		List<OpCaisse> op=findAll();
+		Integer val = 0, nbrMaxCaract = 6;
+		String code = "";
+		val=this.repos.findLastNumUsed(oc.getCaisse().getCodeCaisse(), oc.getExercice().getCodeExercice())+1;// != null) {
+			//val = this.repos.findLastNumUsed(oc.getCaisse().getCodeCaisse(), oc.getExercice().getCodeExercice())+1;
+			
+			oc.setValeur(val);
+		//}
 		
-		return repos.save(oc);
+		code = code+oc.getCaisse().getCodeCaisse()+"-"+oc.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		OpCaisse opc=new OpCaisse();		
+		opc.setNumOpCaisse(code+val);
+		opc.setCaisse(oc.getCaisse());
+		opc.setContribuable(oc.getContribuable());
+		opc.setDateOpCaisse(oc.getDateOpCaisse());
+		opc.setDateSaisie(oc.getDateSaisie());
+		opc.setExercice(oc.getExercice());
+		opc.setModePaiement(oc.getModePaiement());
+		opc.setObsOpCaisse(oc.getObsOpCaisse());
+		opc.setTypeRecette(oc.getTypeRecette());
+		opc.setUtilisateur(oc.getUtilisateur());
+		opc.setValeur(val);
+		opc.setValideOpCaisse(true);
+		
+		if(repos.existsById(oc.getNumOpCaisse())==false) return repos.save(opc);
+		
+		return null;
 	}
 
 	public boolean delete(String num){

@@ -14,5 +14,9 @@ public interface ReversementRepository extends JpaRepository<Reversement, String
 	public List<Reversement> findByNumReversement(String NumReversement);
 	
 	public List<Reversement> findByDateVersement(Date DateReversement);
+	
+	@Query(value="SELECT valeur FROM reversement WHERE code_exercice = ?1 ORDER BY valeur DESC LIMIT 1;"
+			, nativeQuery = true)
+	public Integer findLastNumUsed(String codeExercice);
 
 }

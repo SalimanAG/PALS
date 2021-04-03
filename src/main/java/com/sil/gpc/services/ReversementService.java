@@ -22,7 +22,29 @@ public class ReversementService {
  // Sauvegarder 
     public Reversement save(Reversement rev) {
     	rev.setValideReve(true);
-        return   this.reversementRepository.save(rev);
+    	
+    	Integer val = 1, nbrMaxCaract = 6;
+		String code = "RV-";
+		if(this.reversementRepository.findLastNumUsed(rev.getExercice().getCodeExercice()) != null) {
+			val = this.reversementRepository.findLastNumUsed(rev.getExercice().getCodeExercice());
+			val++;
+			
+		}
+		
+		rev.setValeur(val);
+		
+		code = code+rev.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		rev.setNumReversement(code+val);
+		
+		if(reversementRepository.existsById(rev.getNumReversement())==false) return   this.reversementRepository.save(rev);
+		
+		return null;
+
     }
     
     //Editer

@@ -21,7 +21,29 @@ public class ReceptionService {
 
     // Sauvegarder 
     public Reception save(Reception rep) {
-        return   this.receptionRepository.save(rep);
+    	rep.setValideRecep(true);
+    	Integer val = 1, nbrMaxCaract = 6;
+		String code = "RC-";
+		if(this.receptionRepository.findLastNumUsed(rep.getExercice().getCodeExercice()) != null) {
+			val = this.receptionRepository.findLastNumUsed(rep.getExercice().getCodeExercice());
+			val++;
+			
+		}
+		
+		rep.setValeur(val);
+		
+		code = code+rep.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		rep.setNumReception(code+val);
+		
+		if(receptionRepository.existsById(rep.getNumReception())==false) return this.receptionRepository.save(rep) ;
+		
+		return null;
+        
     }
     
     // Editer 

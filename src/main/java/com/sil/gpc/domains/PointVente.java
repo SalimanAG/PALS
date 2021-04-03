@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class PointVente implements Serializable{
 
 	@Id
-	@Column(name="numPointVente", length = 15)
+	@Column(name="numPointVente", length = 2)
 	private String numPointVente; 
 	private Date datePointVente;
 	private boolean validePoint;

@@ -22,7 +22,28 @@ public class CommandeService {
 	
 	public Commande save(Commande commande) {
 		commande.setValide(true);
-		return this.repo.save(commande);
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "CA-";
+		if(this.repo.findLastNumUsed(commande.getExercice().getCodeExercice()) != null) {
+			val = this.repo.findLastNumUsed(commande.getExercice().getCodeExercice());
+			val++;
+			
+		}
+		
+		commande.setValeur(val);
+		
+		code = code+commande.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		commande.setNumCommande(code+val);
+		System.out.println(commande.toString());
+		
+		if(repo.existsById(commande.getNumCommande())==false) return this.repo.save(commande) ;
+		
+		return null;
 	}
 	
 	public Commande edit(String id, Commande commande) {

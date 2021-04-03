@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Correspondant;
 import com.sil.gpc.domains.EtreAffecte;
-import com.sil.gpc.domains.Reception;
 import com.sil.gpc.domains.SiteMarcher;
 import com.sil.gpc.repositories.EtreAffecteRepository;
 
