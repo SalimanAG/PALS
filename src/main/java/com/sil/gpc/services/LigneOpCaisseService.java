@@ -8,7 +8,6 @@ import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LigneOpCaisse;
 import com.sil.gpc.domains.OpCaisse;
 import com.sil.gpc.repositories.LigneOpCaisseRepository;
-import com.sil.gpc.repositories.OpCaisseRepository;
 
 @Service
 public class LigneOpCaisseService {

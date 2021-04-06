@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +35,7 @@ public class Contrat implements Serializable {
 	private Immeuble immeuble;
 
 	// Migration de lab clé du locataire vers le contrat
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Locataire.class)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Locataire.class)
 	@JoinColumn(name = "idLocataire", referencedColumnName = "idLocataire", nullable = false)
 	private Locataire locataire;
 

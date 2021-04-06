@@ -77,6 +77,8 @@ public class FacturationController {
 		tp=typeRecetteService.save(new TypeRecette("L", "Location"));
 		tp=typeRecetteService.save(new TypeRecette("I", "Imputation de correspondant"));
 		
+		//System.out.printf("oper", opCaisseService.userOp(Long.valueOf(1)));
+		
 	}
 	
 	
@@ -320,7 +322,6 @@ public class FacturationController {
 	
 	@PostMapping(path = "opcaisse/list")
 	public OpCaisse createOpCaisse(@RequestBody OpCaisse opCaisse) {
-		
 		System.out.println(opCaisse);
 		/*OpCaisse op=new OpCaisse();
 		op.setCaisse(opCaisse.getCaisse());
@@ -372,8 +373,16 @@ public class FacturationController {
 		
 			return this.opCaisseService.findByTypeRecette(valeur);
 	}
-	
-	
+
+	@GetMapping(path="opcaisse/byUser/{user}/byDate/{dat}")
+	public List<OpCaisse> userOpCbyDate(Long user, Date dat){
+		return this.opCaisseService.userOpOfDayAndCais(user, dat);
+	}
+
+	@GetMapping(path="opcaisse/byUser/{user}")
+	public List<OpCaisse> opByUser(@PathVariable(name = "user")Long user){
+		return this.opCaisseService.userOp(user);
+	}
 	
 	/*###########################################################################
 	#############	Partie réservée pour ligne opération caisse #################

@@ -40,7 +40,7 @@ public class Article implements Serializable {
 	private Famille famille;
 
 	//Migration de la clé de l'unité vers l'article
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,targetEntity = Uniter.class)
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Uniter.class)
 	@JoinColumn(name = "unite", referencedColumnName = "codeUniter",nullable = false)
 	public Uniter unite;
 	

@@ -92,6 +92,7 @@ public class OpCaisseService {
 		opc.setUtilisateur(oc.getUtilisateur());
 		opc.setValeur(val);
 		opc.setValideOpCaisse(true);
+		System.out.printf("Apres traitement:",opc);
 		
 		if(repos.existsById(oc.getNumOpCaisse())==false) return repos.save(opc);
 		
@@ -101,6 +102,18 @@ public class OpCaisseService {
 	public boolean delete(String num){
 		repos.deleteById(num);
 		return !repos.existsById(num);
+	}
+
+	public List<OpCaisse> opOfDayAndCais(List<String> listcodCai, Date dat){
+		return repos.OpcOfDay(listcodCai, dat);
+	}
+
+	public List<OpCaisse> userOp(Long user){
+		return repos.userOpc(user);
+	}
+
+	public List<OpCaisse> userOpOfDayAndCais(Long user, Date dat){
+		return repos.userOpcOfDay(user, dat);
 	}
 	
 }
