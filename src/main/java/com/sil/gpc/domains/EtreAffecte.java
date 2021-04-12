@@ -33,7 +33,7 @@ public class EtreAffecte implements Serializable{
 
 	//Liaison avec Site
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = SiteMarcher.class)
-	@JoinColumn(name = "codeSite",referencedColumnName = "codeSite",nullable = false)
+	@JoinColumn(name = "codeSite",referencedColumnName = "codeSite",nullable = true)
 	private SiteMarcher site;
 
 	/**

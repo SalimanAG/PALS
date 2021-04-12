@@ -69,16 +69,7 @@ public class FacturationController {
 		this.arrondissementService = arrondissementService;
 		this.utilisateurService = utilisateurService;
 		this.articleService = articleService;
-		
 
-		ModePaiement mp = this.modePaiementService.save(new ModePaiement("E", "Espèces"));
-		mp = this.modePaiementService.save(new ModePaiement("C", "Chèque"));
-		TypeRecette tp=typeRecetteService.save(new TypeRecette("P", "Prestation"));
-		tp=typeRecetteService.save(new TypeRecette("L", "Location"));
-		tp=typeRecetteService.save(new TypeRecette("I", "Imputation de correspondant"));
-		
-		//System.out.printf("oper", opCaisseService.userOp(Long.valueOf(1)));
-		
 	}
 	
 	

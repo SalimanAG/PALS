@@ -38,15 +38,6 @@ public class Echeance implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param moisEcheance
-	 * @param annee
-	 * @param dateEcheance
-	 * @param payeEcheance
-	 * @param prix
-	 * @param contrat
-	 * @param opCaisse
-	 */
 	public Echeance(String moisEcheance, int annee, Date dateEcheance, boolean payeEcheance, double prix,
 			Contrat contrat, OpCaisse opCaisse) {
 		this.moisEcheance = moisEcheance;
@@ -58,37 +49,22 @@ public class Echeance implements Serializable {
 		this.opCaisse = opCaisse;
 	}
 
-	/**
-	 * @return the moisEcheance
-	 */
 	public String getMoisEcheance() {
 		return moisEcheance;
 	}
 
-	/**
-	 * @param moisEcheance the moisEcheance to set
-	 */
 	public void setMoisEcheance(String moisEcheance) {
 		this.moisEcheance = moisEcheance;
 	}
 
-	/**
-	 * @return the annee
-	 */
 	public int getAnnee() {
 		return annee;
 	}
 
-	/**
-	 * @param annee the annee to set
-	 */
 	public void setAnnee(int annee) {
 		this.annee = annee;
 	}
 
-	/**
-	 * @return the dateEcheance
-	 */
 	public Date getDateEcheance() {
 		return dateEcheance;
 	}

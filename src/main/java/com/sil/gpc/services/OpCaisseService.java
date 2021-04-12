@@ -92,7 +92,6 @@ public class OpCaisseService {
 		opc.setUtilisateur(oc.getUtilisateur());
 		opc.setValeur(val);
 		opc.setValideOpCaisse(true);
-		System.out.printf("Apres traitement:",opc);
 		
 		if(repos.existsById(oc.getNumOpCaisse())==false) return repos.save(opc);
 		

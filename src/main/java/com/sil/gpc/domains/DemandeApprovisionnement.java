@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class DemandeApprovisionnement implements Serializable{
 	@Id
-	@Column(length = 12)
+	@Column(length = 20)
 	private String numDA;
 	private Date dateDA;
 	private int valeur;

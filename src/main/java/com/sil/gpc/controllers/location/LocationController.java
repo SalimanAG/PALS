@@ -51,32 +51,6 @@ public class LocationController {
 		this.prixImmeubleService = prixImmeubleService;
 		this.locataireService = locataireService;
 		
-		/*Arrondissement arr= new Arrondissement("080101", "Arrondissement 1", "Dans ...", "21454556", 
-				new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "", 
-						new Departement("0801", "Littoral", 
-								new Pays("PAY001", "Bénin", "République Démocratique du Bénin"))));
-				new Commune("0801", "Commune de Cotonou", "21753525", "Sud", "", "", 
-						new Departement("0801", "Littoral", 
-								new Pays("PAY001", "Bénin", "République Démocratique du Bénin")));
-		TypeImmeuble typImm = this.typeImmeubleService.save(new TypeImmeuble("BT", "Boutique"));
-		Immeuble imm=immeubleService.save(new Immeuble("BT001", "Boutique 1", "", false, 9, 1500, "RAS", "", arr, 
-				new Quartier("08010101", "Dandji", "Dans ...", "21454556", arr), typImm, 
-				new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arr)));
-
-		Immeuble im=immeubleService.save(new Immeuble("BT002", "Boutique 2", "", false, 9, 1500, "RAS", "", arr, 
-				new Quartier("08010101", "Dandji", "Dans ...", "21454556", arr), typImm, 
-				new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arr)));
-		Immeuble i=immeubleService.save(new Immeuble("BT003", "Boutique 3", "", false, 9, 1500, "RAS", "", arr, 
-				new Quartier("08010101", "Dandji", "Dans ...", "21454556", arr), typImm, 
-				new SiteMarcher("SIT001", "Marcher Dantopka", "Marché", arr)));
-
-		Locataire loca = new Locataire("SOCIMAT COOPERATION", "", "", "02210001445", "DG");
-		Locataire loc = new Locataire("UnPlus Service", "", "", "0022997541414", "Gérant");
-		
-		Contrat contr = this.contratService.save( new Contrat("CL00001", new Date(2020, 8, 20), new Date(2020, 6, 1), 54000, 13500, imm, loca));		
-		Contrat cont = this.contratService.save( new Contrat("CL00002", new Date(2020, 7, 10), new Date(2020, 7, 1), 54000, 13500, im, loc));		
-		Contrat con = this.contratService.save( new Contrat("CL00003", new Date(2020, 7, 10), new Date(2020, 7, 1), 54000, 13500, im, loca));	
-		*/
 	}
 	
 	/*###########################################################

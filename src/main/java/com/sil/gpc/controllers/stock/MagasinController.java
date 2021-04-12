@@ -62,19 +62,6 @@ public class MagasinController {
 		this.plageNumDispoService = plageNumDispoService;
 		this.stockerService = stockerService;
 
-		/*Magasin mg= magasinService.save(new Magasin("MC", "Magasin central"));
-		/*Uniter U= uniterService.save(new Uniter("U", "Unité"));
-		Famille F= familleService.save(new Famille("01", "Famille Etat Civil"));
-		Famille F1= familleService.save(new Famille("02", "Famille Affaires domaniales"));
-		Article a=new Article("01001", "Certificat de possession d'état", true, true, true, false, (long)500, "SM",F,U);
-		Article art= articleService.save(new Article("01001", "Certificat de possession d'état", true, true, true, false, (long)500, "SM", F, U));
-		Article art1= articleService.save(new Article("01002", "Certificat de position militaire", true, true, true, false, (long)200, "SM", F, U));
-		Article art2= articleService.save(new Article("01003", "Certificat de résidence", true, true, true, false, (long)500, "SM", F, U));
-		Article art3= articleService.save(new Article("01004", "Certificat de de vie et de charge", true, true, true, false, (long)300, "SM", F, U));
-		Article art4= articleService.save(new Article("01005", "Timbre de légalisation à 400", true, true, true, false, (long)400, "SM", F, U));
-		Article art5= articleService.save(new Article("02001", "Convention de vente de parcelle", true, true, true, false, (long)4000, "SM", F1, U));
-		Article art6= articleService.save(new Article("02002", "Convention de vente de maison", true, true, true, false, (long)10000, "SM", F1, U));
-		Article art7= articleService.save(new Article("02003", "Timbbre de légalisation de vente de bien meuble", true, true, true, false, (long)10000, "SM", F1, U));*/
 	}
 	
 	/*###########################################################

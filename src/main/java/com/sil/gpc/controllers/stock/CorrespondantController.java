@@ -40,10 +40,6 @@ public class CorrespondantController {
 		this.pointVenteService = pointVenteService;
 		this.lignePointVenteService = lignePointVenteService;
 		
-		
-		this.typCorresService.save(new TypCorres("LIV", "Livreur(se)"));
-		this.typCorresService.save(new TypCorres("COE", "Agent Collecteur"));
-
 	}
 	
 	/*###########################################################

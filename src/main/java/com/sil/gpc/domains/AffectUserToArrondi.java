@@ -28,6 +28,11 @@ public class AffectUserToArrondi implements Serializable{
 	@JoinColumn(name = "idUtilisateur", referencedColumnName = "idUtilisateur")
 	private Utilisateur utilisateur;
 
+	public AffectUserToArrondi() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public AffectUserToArrondi(Date dateDebutAffectToArrondi, Date dateFinAffectToArrondi,
 			Arrondissement arrondissement, Utilisateur utilisateur) {
 		this.dateDebutAffectToArrondi = dateDebutAffectToArrondi;
