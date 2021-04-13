@@ -20,8 +20,10 @@ public class ArrondissementService {
 	}
 	
 	public Arrondissement save(Arrondissement arrondissement) {
-		
-		return this.repo.save(arrondissement);
+		if(!repo.existsById(arrondissement.getCodeArrondi())) {
+			return this.repo.save(arrondissement);
+		}
+		return null;
 	}
 	
 	public Arrondissement edit(String id, Arrondissement arrondissement) {

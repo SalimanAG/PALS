@@ -19,7 +19,9 @@ public class RegisseurService {
     
     // Sauvegarder 
     public Regisseur save(Regisseur reg) {
-        return   this.regisseurRepository.save(reg);
+        if(!regisseurRepository.existsById(reg.getIdRegisseur()))
+        	return   this.regisseurRepository.save(reg);
+		return null;
     }
     
  // Editer

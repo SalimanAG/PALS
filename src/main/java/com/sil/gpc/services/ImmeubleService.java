@@ -21,8 +21,10 @@ public class ImmeubleService {
 	}
 	
 	public Immeuble save(Immeuble immeuble) {
-		
-		return this.repo.save(immeuble);
+		if(!repo.existsById(immeuble.getCodeIm())) {
+			return this.repo.save(immeuble);
+		}
+		return null;
 	}
 	
 	public Immeuble edit(String id, Immeuble immeuble) {

@@ -20,7 +20,6 @@ public class Reception implements Serializable {
 	private String observation;
 	private Date dateReception;
 	private boolean valideRecep;
-	@SuppressWarnings("unused")
 	private int valeur;
 
 	@ManyToOne(targetEntity = Exercice.class)

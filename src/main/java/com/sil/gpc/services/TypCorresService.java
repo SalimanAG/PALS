@@ -20,8 +20,9 @@ public class TypCorresService {
 
     // Sauvegarder
     public TypCorres save(TypCorres typCorres) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.typCorresRepository.save(typCorres);
+    	if(!typCorresRepository.existsById(typCorres.getCodeTypCorres()))
+    		return   this.typCorresRepository.save(typCorres);
+		return null;
     }
     
  // editer

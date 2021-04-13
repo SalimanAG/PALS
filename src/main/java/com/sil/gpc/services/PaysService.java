@@ -40,7 +40,9 @@ public class PaysService {
 	}
 	
 	public Pays save(Pays p){
-		return repos.save(p);
+		if(!repos.existsById(p.getCodePays()))
+				return repos.save(p);
+		return null;
 	}
 
 	public Pays modifiePays(Pays p, String cp){

@@ -20,7 +20,9 @@ public class UniterService {
 
  // Sauvegarder un Uniter
     public Uniter save(Uniter uniter) {
-        return   this.uniterRepository.save(uniter);
+        if(!uniterRepository.existsById(uniter.getCodeUniter()))
+        	return   this.uniterRepository.save(uniter);
+		return null;
     }
     
     // Editer un Uniter

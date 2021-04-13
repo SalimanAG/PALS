@@ -20,7 +20,9 @@ public class ModePaiementService {
 	}
 
 	public ModePaiement save(ModePaiement mp){
-		return repos.save(mp);
+		if(!repos.existsById(mp.getCodeModPay()))
+			return repos.save(mp);
+		return null;
 	}
 	
 	

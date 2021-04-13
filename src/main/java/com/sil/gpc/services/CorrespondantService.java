@@ -22,8 +22,10 @@ public class CorrespondantService {
 	}
 	
 	public Correspondant save(Correspondant correspondant) {
-		
-		return this.repo.save(correspondant);
+		if(!repo.existsById(correspondant.getIdCorrespondant())) {
+			return this.repo.save(correspondant);
+		}
+		return null;
 	}
 	
 	public Correspondant edit(String id, Correspondant correspondant) {

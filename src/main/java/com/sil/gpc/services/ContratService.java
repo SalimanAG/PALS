@@ -29,8 +29,10 @@ public class ContratService {
 	}
 
 	public Contrat save(Contrat contrat) {
-		
-		return this.repo.save(contrat);
+		if(!repo.existsById(contrat.getNumContrat())) {
+			return this.repo.save(contrat);
+		}
+		return null;
 	}
 	
 	public Contrat edit(String id, Contrat contrat) {

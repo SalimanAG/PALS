@@ -20,8 +20,10 @@ public class DepartementService {
 	}
 	
 	public Departement save(Departement departement) {
-		
+		if(repo.existsById(departement.getCodeDepartement())) {
 		return this.repo.save(departement);
+	}
+	return null;
 	}
 	
 	public Departement edit(String id, Departement departement) {

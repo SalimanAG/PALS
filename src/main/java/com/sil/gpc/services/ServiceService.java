@@ -19,8 +19,9 @@ public class ServiceService {
     
  // Sauvegarder un Service
     public Service save(Service service) {
-    	//quartier.setCodeQuartier(quartier.getCodeQuartier());
-        return   this.serviceRepository.save(service);
+    	if(!serviceRepository.existsById(service.getCodeService()))
+    		return   this.serviceRepository.save(service);
+		return null;
     }
     
     // Editer un Service

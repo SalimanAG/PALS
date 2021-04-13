@@ -21,7 +21,10 @@ public class MagasinService {
 	}
 	
 	public Magasin save(Magasin mg){
-		return repos.save(mg);
+		if(!repos.existsById(mg.getCodeMagasin())) {
+			return repos.save(mg);
+		}
+		return null;
 	}
 	
 	public Magasin edit(Magasin mg, String cm){

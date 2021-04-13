@@ -19,8 +19,10 @@ public class FamilleService {
 	}
 	
 	public Famille save(Famille famille) {
-		
-		return this.repo.save(famille);
+		if(!repo.existsById(famille.getCodeFamille())) {
+			return this.repo.save(famille);
+		}
+		return null;
 	}
 	
 	public Famille edit(String id, Famille famille) {

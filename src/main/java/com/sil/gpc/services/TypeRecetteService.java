@@ -23,7 +23,9 @@ public class TypeRecetteService {
     
  // Sauvegarder un TypeRecette
     public TypeRecette save(TypeRecette typeRecette) {
-        return   this.typeRecetteRepository.save(typeRecette);
+        if(!typeRecetteRepository.existsById(typeRecette.getCodeTypRec()))
+        	return   this.typeRecetteRepository.save(typeRecette);
+		return null;
     }
     
     // Editer un TypeRecette

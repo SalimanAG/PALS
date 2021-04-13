@@ -20,7 +20,9 @@ public class TresComService {
     
     // Sauvegarder
     public TresCom save(TresCom receptPercep) {
-        return   this.tresComRepository.save(receptPercep);
+        if(!tresComRepository.existsById(receptPercep.getIdRp()))
+        	return   this.tresComRepository.save(receptPercep);
+		return null;
     }
     
   //Editer

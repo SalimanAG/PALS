@@ -32,7 +32,10 @@ public class InstituReverseService {
 	}
 	
 	public InstituReverse saveInst(InstituReverse inst) {
-		return repos.save(inst);
+		if(!repos.existsById(inst.getCodeInstRevers())) {
+			return repos.save(inst);
+		}
+		return null;
 	}
 	
 	public InstituReverse editInst(String cod, InstituReverse inst) {

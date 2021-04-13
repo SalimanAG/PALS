@@ -20,8 +20,10 @@ public class CommuneService {
 	}
 	
 	public Commune save(Commune commune) {
-		
-		return this.repo.save(commune);
+		if(!repo.existsById(commune.getCodeCommune())) {
+			return this.repo.save(commune);
+		}
+		return null;
 	}
 	
 	public Commune edit(String id, Commune commune) {

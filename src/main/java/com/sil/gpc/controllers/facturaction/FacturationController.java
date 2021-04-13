@@ -52,7 +52,7 @@ public class FacturationController {
 	private final UtilisateurService utilisateurService;
 	private final ArticleService articleService;
 	
-	@SuppressWarnings("unused")
+	
 	public FacturationController(CaisseService caisseService, AffecterService affecterService,
 			LigneOpCaisseService ligneOpCaisseService, LigneReversementService ligneReversementService,
 			ModePaiementService modePaiementService, OpCaisseService opCaisseService,

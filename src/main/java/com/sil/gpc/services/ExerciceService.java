@@ -20,8 +20,10 @@ public class ExerciceService {
 	}
 	
 	public Exercice save (Exercice exercice) {
-		
+		if(!repo.existsById(exercice.getCodeExercice())) {
 		return this.repo.save(exercice);
+		}
+		return null;
 	}
 	
 	public Exercice edit (String id, Exercice exercice) {

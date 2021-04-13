@@ -21,8 +21,10 @@ public class ArticleService {
 	}
 	
 	public Article save(Article article) {
-		
-		return this.repo.save(article);
+		if(!repo.existsById(article.getCodeArticle())) {
+			return this.repo.save(article);
+		}
+		return null;
 	}
 	
 	public Article edit(String id, Article article) {

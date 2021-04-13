@@ -20,7 +20,9 @@ public class QuartierService {
     
  // Sauvegarder
     public Quartier save(Quartier quartier) {
-        return   this.quartierRepository.save(quartier);
+        if(!quartierRepository.existsById(quartier.getCodeQuartier()))
+        	return   this.quartierRepository.save(quartier);
+		return null;
     }
     
  // Editer 

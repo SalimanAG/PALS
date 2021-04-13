@@ -19,8 +19,10 @@ public class FournisseurService {
 	}
 	
 	public Fournisseur save(Fournisseur fournisseur) {
-		
-		return this.repo.save(fournisseur);
+		if(!repo.existsById(fournisseur.getCodeFrs())) {
+			return this.repo.save(fournisseur);
+		}
+		return null;
 	}
 	
 	public Fournisseur edit(String id, Fournisseur fournisseur) {

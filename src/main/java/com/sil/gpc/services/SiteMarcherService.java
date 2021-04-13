@@ -20,7 +20,9 @@ public class SiteMarcherService {
 
     // Sauvegarder 
     public SiteMarcher save(SiteMarcher sm) {
-    	return repo.save(sm);
+    	if(!repo.existsById(sm.getCodeSite()))
+    		return repo.save(sm);
+		return null;
     }
     
     // Editer 

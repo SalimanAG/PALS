@@ -20,7 +20,10 @@ public class GroupUserService {
 
     // Sauvegarder 
     public GroupUser save(GroupUser guser) {
-    	return repo.save(guser);
+    	if(!repo.existsById(guser.getIdGroupUser())) {
+    		return repo.save(guser);
+		}
+		return null;
     }
     
     // Editer 

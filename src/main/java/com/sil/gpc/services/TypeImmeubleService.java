@@ -21,7 +21,9 @@ public class TypeImmeubleService {
     
  // Sauvegarder
     public TypeImmeuble save(TypeImmeuble Im) {
-        return   this.typeImmeubleRepository.save(Im);
+        if(!typeImmeubleRepository.existsById(Im.getCodeTypIm()))
+        	return   this.typeImmeubleRepository.save(Im);
+		return null;
     }
     
    // editer
