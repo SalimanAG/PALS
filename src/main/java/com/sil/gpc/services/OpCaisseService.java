@@ -66,36 +66,21 @@ public class OpCaisseService {
 	}
 
 	public OpCaisse save(OpCaisse oc){
-		Integer val = 0, nbrMaxCaract = 6;
-		String code = "";
-		val=this.repos.findLastNumUsed(oc.getCaisse().getCodeCaisse(), oc.getExercice().getCodeExercice())+1;// != null) {
-			//val = this.repos.findLastNumUsed(oc.getCaisse().getCodeCaisse(), oc.getExercice().getCodeExercice())+1;
-			
-			oc.setValeur(val);
-		//}
-		
-		code = code+oc.getCaisse().getCodeCaisse()+"-"+oc.getExercice().getCodeExercice();
-		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = oc.getCaisse().getCodeCaisse()+"-"+oc.getExercice().getCodeExercice();
+		if(this.repos.findLastNumUsed(oc.getCaisse().getCodeCaisse(), oc.getExercice().getCodeExercice()) != null) {
+			val = this.repos.findLastNumUsed(oc.getCaisse().getCodeCaisse(), oc.getExercice().getCodeExercice());
+			val++;
+		}
+		System.out.println(val);
 		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
 			code+="0";
 		}
-		OpCaisse opc=new OpCaisse();		
-		opc.setNumOpCaisse(code+val);
-		opc.setCaisse(oc.getCaisse());
-		opc.setContribuable(oc.getContribuable());
-		opc.setDateOpCaisse(oc.getDateOpCaisse());
-		opc.setDateSaisie(oc.getDateSaisie());
-		opc.setExercice(oc.getExercice());
-		opc.setModePaiement(oc.getModePaiement());
-		opc.setObsOpCaisse(oc.getObsOpCaisse());
-		opc.setTypeRecette(oc.getTypeRecette());
-		opc.setUtilisateur(oc.getUtilisateur());
-		opc.setValeur(val);
-		opc.setValideOpCaisse(true);
-		
-		if(repos.existsById(oc.getNumOpCaisse())==false) return repos.save(opc);
-		
-		return null;
+		oc.setNumOpCaisse(code+val);
+		System.out.println(oc.getNumOpCaisse());
+		oc.setValeur(val); 
+		if(repos.existsById(oc.getNumOpCaisse())==false) return repos.save(oc);
+			return null;
 	}
 
 	public boolean delete(String num){
