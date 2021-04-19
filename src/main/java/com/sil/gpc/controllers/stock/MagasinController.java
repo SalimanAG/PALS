@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.Famille;
 import com.sil.gpc.domains.Gerer;
+import com.sil.gpc.domains.Inventaire;
+import com.sil.gpc.domains.LigneInventaire;
 import com.sil.gpc.domains.Magasin;
 import com.sil.gpc.domains.Magasinier;
 import com.sil.gpc.domains.PlageNumArticle;
@@ -25,6 +27,8 @@ import com.sil.gpc.domains.Uniter;
 import com.sil.gpc.services.ArticleService;
 import com.sil.gpc.services.FamilleService;
 import com.sil.gpc.services.GererService;
+import com.sil.gpc.services.InventaireService;
+import com.sil.gpc.services.LigneInventaireService;
 import com.sil.gpc.services.MagasinService;
 import com.sil.gpc.services.MagasinierService;
 import com.sil.gpc.services.PlageNumArticleService;
@@ -46,11 +50,16 @@ public class MagasinController {
 	private final PlageNumArticleService plageNumArticleService;
 	private final PlageNumDispoService plageNumDispoService;
 	private final StockerService stockerService;
+	private final LigneInventaireService lInvServ;
+	private final InventaireService invServ;
+	
+	
 	
 	public MagasinController(MagasinService magasinService, MagasinierService magasinierService,
 			FamilleService familleService, ArticleService articleService, UniterService uniterService,
 			GererService gererService, PlageNumArticleService plageNumArticleService,
-			PlageNumDispoService plageNumDispoService, StockerService stockerService) {
+			PlageNumDispoService plageNumDispoService, StockerService stockerService, LigneInventaireService lInvServ,
+			InventaireService invServ) {
 		super();
 		this.magasinService = magasinService;
 		this.magasinierService = magasinierService;
@@ -61,9 +70,10 @@ public class MagasinController {
 		this.plageNumArticleService = plageNumArticleService;
 		this.plageNumDispoService = plageNumDispoService;
 		this.stockerService = stockerService;
-
+		this.lInvServ = lInvServ;
+		this.invServ = invServ;
 	}
-	
+
 	/*###########################################################
 	#############	Partie réservée pour magasin
 	###########################################################
@@ -356,8 +366,6 @@ public class MagasinController {
 		return this.plageNumDispoService.delete(id);
 	}	
 	
-	
-	
 	/*###########################################################
 	#############	Partie réservée pour stocker
 	###########################################################
@@ -388,6 +396,70 @@ public class MagasinController {
 	public Boolean deleteStocker(@PathVariable(name = "id") Long id) {
 		
 		return this.stockerService.delete(id);
+	}	
+
+	/*###########################################################
+	#############	Partie réservée pour Inventaire
+	###########################################################
+	*/
+	
+	@GetMapping(path = "inventaire/list")
+	public List<Inventaire> getAllInventaire(){	
+		return this.invServ.findAll();
+	}
+	
+	@GetMapping(path = "inventaire/byCodSto/{id}")
+	public Optional<Inventaire> getInventaireById(@PathVariable(name = "id") String id){	
+		return this.invServ.findById(id);
+	}
+	
+	@PostMapping(path = "inventaire/list")
+	public Inventaire createInventaire( @RequestBody Inventaire inv) {
+		return this.invServ.save(inv);
+	}
+	
+	@PutMapping(path = "inventaire/byCodSto/{id}")
+	public Inventaire updateInventaire(@PathVariable(name = "id") String id, @RequestBody Inventaire inv) {
+		
+		return this.invServ.edit(inv, id);
+	}
+	
+	@DeleteMapping(path = "inventaire/byCodSto/{id}")
+	public Boolean deleteInvent(@PathVariable(name = "id") String id) {
+		
+		return this.invServ.delete(id);
+	}	
+
+	/*###########################################################
+	###########	Partie réservée pour LigneInventaire#############
+	#############################################################
+	*/
+	
+	@GetMapping(path = "ligneInventaire/list")
+	public List<LigneInventaire> getAllLigneInventaire(){	
+		return this.lInvServ.findAll();
+	}
+	
+	@GetMapping(path = "ligneInventaire/byCodSto/{id}")
+	public Optional<LigneInventaire> getLigneInventaireById(@PathVariable(name = "id") Long id){	
+		return this.lInvServ.findById(id);
+	}
+	
+	@PostMapping(path = "ligneInventaire/list")
+	public LigneInventaire createLigneInventaire( @RequestBody LigneInventaire livgInv) {
+		return this.lInvServ.save(livgInv);
+	}
+	
+	@PutMapping(path = "ligneInventaire/byCodSto/{id}")
+	public LigneInventaire updateLigneInventaire(@PathVariable(name = "id") Long id, @RequestBody LigneInventaire ligInv) {
+		
+		return this.lInvServ.edit(ligInv, id);
+	}
+	
+	@DeleteMapping(path = "ligneInventaire/byCodSto/{id}")
+	public Boolean deleteLigneInventaire(@PathVariable(name = "id") Long id) {
+		
+		return this.lInvServ.delete(id);
 	}	
 	
 	
