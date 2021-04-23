@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,12 +19,12 @@ public class Inventaire {
 	private boolean valideInve;
 	private int valeur;
 	
-	@ManyToOne(targetEntity = Exercice.class)
-	@JoinColumn(referencedColumnName = "codeExercice")
+	@ManyToOne(targetEntity = Exercice.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice")
 	private Exercice exercice;
 	
-	@ManyToOne(targetEntity = Magasin.class)
-	@JoinColumn(referencedColumnName = "codeMagasin")
+	@ManyToOne(targetEntity = Magasin.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin")
 	private Magasin magasin;
 
 	public Inventaire() {
