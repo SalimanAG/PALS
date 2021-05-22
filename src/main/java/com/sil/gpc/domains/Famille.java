@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
 @Entity
@@ -13,6 +16,16 @@ public class Famille implements Serializable {
 	@Id
 	private String codeFamille;
 	private String libFamille;
+	
+	//Liaison à la sa superFamille
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Famille.class)
+	@JoinColumn(name = "codeSuperFamille", referencedColumnName = "codeFamille")
+	private Famille superFamille;
+	
+	//Liaison à la son magasin qui la gère
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Magasin.class)
+	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin")
+	private Magasin magasin;
 
 	public Famille() {
 		super();

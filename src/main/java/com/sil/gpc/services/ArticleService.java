@@ -39,7 +39,6 @@ public class ArticleService {
 			entiter.setPrixVenteArticle(article.getPrixVenteArticle());
 			entiter.setStockerArticle(article.isStockerArticle());
 			entiter.setFamille(article.getFamille());
-			entiter.setUnite(article.getUnite());
 			entiter.setQteStIniTres(article.getQteStIniTres());
 			entiter.setPuStIniTres(article.getPuStIniTres());
 			entiter.setDatStInitArtTres(article.getDatStInitArtTres());
@@ -98,7 +97,7 @@ public class ArticleService {
 	
 	public List<Article> findByUnite(Uniter uniter){
 		
-		return this.repo.findByUnite(uniter);
+		return null;
 	}
 	
 	public List<Article> findByStockerArticle(boolean stockerArticle){

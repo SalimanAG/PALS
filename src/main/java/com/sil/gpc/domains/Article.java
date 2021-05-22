@@ -27,6 +27,12 @@ public class Article implements Serializable {
 	private double qteStIniTres;;
 	private double puStIniTres;
 	private Date datStInitArtTres;
+	private String specialiterArticle;
+	private String abregerArticle;
+	private String compteArticle;
+	private String codeBareArticle;
+	private double tvaArticle;
+	private double taxeSpecifiqArticle;
 
 	//Migration de la clé de l'exercice
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
@@ -37,19 +43,22 @@ public class Article implements Serializable {
 	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "famille",referencedColumnName = "codeFamille")
 	private Famille famille;
-
+	
 	//Migration de la clé de l'unité vers l'article
-	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Uniter.class)
-	@JoinColumn(name = "unite", referencedColumnName = "codeUniter",nullable = false)
-	public Uniter unite;
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Fournisseur.class)
+	@JoinColumn(name = "codeFrs", referencedColumnName = "codeFrs",nullable = false)
+	public Fournisseur fournisseur;
 	
 	public Article() {
 		super();
 	}
 
+	
+
 	public Article(String codeArticle, String libArticle, boolean stockerArticle, boolean numSerieArticle,
 			boolean livrableArticle, boolean consommableArticle, Long prixVenteArticle, String couleurArticle,
-			Famille famille, Uniter uniter) {
+			double qteStIniTres, double puStIniTres, Date datStInitArtTres, Exercice exo, Famille famille,
+			Fournisseur fournisseur) {
 		super();
 		this.codeArticle = codeArticle;
 		this.libArticle = libArticle;
@@ -59,13 +68,15 @@ public class Article implements Serializable {
 		this.consommableArticle = consommableArticle;
 		this.prixVenteArticle = prixVenteArticle;
 		this.couleurArticle = couleurArticle;
+		this.qteStIniTres = qteStIniTres;
+		this.puStIniTres = puStIniTres;
+		this.datStInitArtTres = datStInitArtTres;
+		this.exo = exo;
 		this.famille = famille;
-		this.unite = uniter;
-		this.qteStIniTres =0;
-		this.puStIniTres = 0;
-		this.datStInitArtTres = null;
-		this.exo = null;
+		this.fournisseur = fournisseur;
 	}
+
+
 
 	public String getCodeArticle() {
 		return codeArticle;
@@ -139,13 +150,6 @@ public class Article implements Serializable {
 		this.famille = famille;
 	}
 
-	public Uniter getUnite() {
-		return unite;
-	}
-
-	public void setUnite(Uniter unite) {
-		this.unite = unite;
-	}
 
 	/**
 	 * @return the qteStIniTres
@@ -203,37 +207,6 @@ public class Article implements Serializable {
 		this.exo = exo;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(codeArticle, consommableArticle, couleurArticle, famille, libArticle, livrableArticle,
-				numSerieArticle, prixVenteArticle, stockerArticle, unite);
-	}
+	
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Article other = (Article) obj;
-		return Objects.equals(codeArticle, other.codeArticle) && consommableArticle == other.consommableArticle
-				&& Objects.equals(couleurArticle, other.couleurArticle) && Objects.equals(famille, other.famille)
-				&& Objects.equals(libArticle, other.libArticle) && livrableArticle == other.livrableArticle
-				&& numSerieArticle == other.numSerieArticle && Objects.equals(prixVenteArticle, other.prixVenteArticle)
-				&& stockerArticle == other.stockerArticle && Objects.equals(unite, other.unite);
-	}
-
-	@Override
-	public String toString() {
-		return "Article [codeArticle=" + codeArticle + ", libArticle=" + libArticle + ", stockerArticle="
-				+ stockerArticle + ", numSerieArticle=" + numSerieArticle + ", livrableArticle=" + livrableArticle
-				+ ", consommableArticle=" + consommableArticle + ", prixVenteArticle=" + prixVenteArticle
-				+ ", couleurArticle=" + couleurArticle + ", famille=" + famille + ", unite=" + unite + "]";
-	}
-	 
 }

@@ -5,35 +5,48 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
 @Entity(name = "Fournisseur")
 public class Fournisseur implements Serializable{
 	
 	@Id
-	@Column(length = 4)
 	private String codeFrs;
-	@Column(length = 150)
 	private String identiteFrs;
-	@Column(length = 100)
 	private String adresseFrs;
-	@Column(length = 150)
 	private String raisonSociale;
-	@Column(length = 13)
 	private String numIfuFrs;
-	@Column(length = 45)
 	private String telFRS;
-	@Column(length = 150)
 	private String description;
+	private String domaineInterven;
+	private String regComFrs;
+	private String compteAvanceFrs;
+	private String compteFacturationFrs;
+	private String compteConsignationFrs;
+	private String compteAvoirFrs;
+	private boolean agreerFrs;
+	private String numAgrementFrs;
+	
+	//Liaison à la catégorie de Frs
+		@ManyToOne(fetch = FetchType.EAGER, targetEntity = CategorieFrs.class)
+		@JoinColumn(name = "codeCatFrs", referencedColumnName = "codeCatFrs")
+		private CategorieFrs categorieFrs;
 	
 	public Fournisseur() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public Fournisseur(String codeFrs, String identiteFrs, String adresseFrs, String raisonSociale, String numIfuFrs,
-			String telFRS, String description) {
+			String telFRS, String description, String domaineInterven, String regComFrs, String compteAvanceFrs,
+			String compteFacturationFrs, String compteConsignationFrs, String compteAvoirFrs, boolean agreerFrs,
+			String numAgrementFrs, CategorieFrs categorieFrs) {
 		super();
 		this.codeFrs = codeFrs;
 		this.identiteFrs = identiteFrs;
@@ -42,7 +55,18 @@ public class Fournisseur implements Serializable{
 		this.numIfuFrs = numIfuFrs;
 		this.telFRS = telFRS;
 		this.description = description;
+		this.domaineInterven = domaineInterven;
+		this.regComFrs = regComFrs;
+		this.compteAvanceFrs = compteAvanceFrs;
+		this.compteFacturationFrs = compteFacturationFrs;
+		this.compteConsignationFrs = compteConsignationFrs;
+		this.compteAvoirFrs = compteAvoirFrs;
+		this.agreerFrs = agreerFrs;
+		this.numAgrementFrs = numAgrementFrs;
+		this.categorieFrs = categorieFrs;
 	}
+
+
 
 	public String getCodeFrs() {
 		return codeFrs;
@@ -100,34 +124,127 @@ public class Fournisseur implements Serializable{
 		this.description = description;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(adresseFrs, codeFrs, description, identiteFrs, numIfuFrs, raisonSociale, telFRS);
+
+
+	public String getDomaineInterven() {
+		return domaineInterven;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Fournisseur other = (Fournisseur) obj;
-		return Objects.equals(adresseFrs, other.adresseFrs) && Objects.equals(codeFrs, other.codeFrs)
-				&& Objects.equals(description, other.description) && Objects.equals(identiteFrs, other.identiteFrs)
-				&& Objects.equals(numIfuFrs, other.numIfuFrs) && Objects.equals(raisonSociale, other.raisonSociale)
-				&& Objects.equals(telFRS, other.telFRS);
+
+
+	public void setDomaineInterven(String domaineInterven) {
+		this.domaineInterven = domaineInterven;
 	}
+
+
+
+	public String getRegComFrs() {
+		return regComFrs;
+	}
+
+
+
+	public void setRegComFrs(String regComFrs) {
+		this.regComFrs = regComFrs;
+	}
+
+
+
+	public String getCompteAvanceFrs() {
+		return compteAvanceFrs;
+	}
+
+
+
+	public void setCompteAvanceFrs(String compteAvanceFrs) {
+		this.compteAvanceFrs = compteAvanceFrs;
+	}
+
+
+
+	public String getCompteFacturationFrs() {
+		return compteFacturationFrs;
+	}
+
+
+
+	public void setCompteFacturationFrs(String compteFacturationFrs) {
+		this.compteFacturationFrs = compteFacturationFrs;
+	}
+
+
+
+	public String getCompteConsignationFrs() {
+		return compteConsignationFrs;
+	}
+
+
+
+	public void setCompteConsignationFrs(String compteConsignationFrs) {
+		this.compteConsignationFrs = compteConsignationFrs;
+	}
+
+
+
+	public String getCompteAvoirFrs() {
+		return compteAvoirFrs;
+	}
+
+
+
+	public void setCompteAvoirFrs(String compteAvoirFrs) {
+		this.compteAvoirFrs = compteAvoirFrs;
+	}
+
+
+
+	public boolean isAgreerFrs() {
+		return agreerFrs;
+	}
+
+
+
+	public void setAgreerFrs(boolean agreerFrs) {
+		this.agreerFrs = agreerFrs;
+	}
+
+
+
+	public String getNumAgrementFrs() {
+		return numAgrementFrs;
+	}
+
+
+
+	public void setNumAgrementFrs(String numAgrementFrs) {
+		this.numAgrementFrs = numAgrementFrs;
+	}
+
+
+
+	public CategorieFrs getCategorieFrs() {
+		return categorieFrs;
+	}
+
+
+
+	public void setCategorieFrs(CategorieFrs categorieFrs) {
+		this.categorieFrs = categorieFrs;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Fournisseur [codeFrs=" + codeFrs + ", identiteFrs=" + identiteFrs + ", adresseFrs=" + adresseFrs
 				+ ", raisonSociale=" + raisonSociale + ", numIfuFrs=" + numIfuFrs + ", telFRS=" + telFRS
-				+ ", description=" + description + "]";
+				+ ", description=" + description + ", domaineInterven=" + domaineInterven + ", regComFrs=" + regComFrs
+				+ ", compteAvanceFrs=" + compteAvanceFrs + ", compteFacturationFrs=" + compteFacturationFrs
+				+ ", compteConsignationFrs=" + compteConsignationFrs + ", compteAvoirFrs=" + compteAvoirFrs
+				+ ", agreerFrs=" + agreerFrs + ", numAgrementFrs=" + numAgrementFrs + ", categorieFrs=" + categorieFrs
+				+ "]";
 	}
+
+	
 
 }
