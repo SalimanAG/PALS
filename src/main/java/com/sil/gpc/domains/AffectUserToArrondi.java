@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 public class AffectUserToArrondi implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAffectUserToArrondi;
 	private Date dateDebutAffectToArrondi;
 	private Date dateFinAffectToArrondi;

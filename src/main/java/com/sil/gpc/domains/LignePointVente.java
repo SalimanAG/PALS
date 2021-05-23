@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 public class LignePointVente implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idLignePointVente;
 	private double quantiteLignePointVente;
 	private double PULignePointVente;

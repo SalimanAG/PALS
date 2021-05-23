@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 public class PlageNumArticle implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idPlage;
 	private String numDebPlage;
 	private String numFinPlage;
