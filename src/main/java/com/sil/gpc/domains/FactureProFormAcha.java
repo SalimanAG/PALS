@@ -12,13 +12,13 @@ import javax.persistence.ManyToOne;
 public class FactureProFormAcha {
 
 	@Id
-	private String idFactureProFormAcha;
-	private Timestamp dateFactureProFormAcha;
-	private String designationFactureProFormAcha;
-	private boolean valideFactureProFormAcha;
-	private Timestamp datePriseFactureProFormAcha;
-	private Timestamp dateDeplisFactureProFormAcha;
-	private String obserFactureProFormAcha;
+	private String idFpfa;
+	private Timestamp dateFpfa;
+	private String designationFpfa;
+	private boolean valideFpfa;
+	private Timestamp datePriseFpfa;
+	private Timestamp dateDeplisFpfa;
+	private String obserFpfa;
 	
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Fournisseur.class)
@@ -29,82 +29,93 @@ public class FactureProFormAcha {
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice",nullable = true)
 	public Exercice exercice;
+	
+
+	//Liaison à la table Commande
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
+	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
+	public Commande commande;
+
 
 	public FactureProFormAcha() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FactureProFormAcha(String idFactureProFormAcha, Timestamp dateFactureProFormAcha,
-			String designationFactureProFormAcha, boolean valideFactureProFormAcha,
-			Timestamp datePriseFactureProFormAcha, Timestamp dateDeplisFactureProFormAcha,
-			String obserFactureProFormAcha, Fournisseur fournisseur, Exercice exercice) {
+	
+
+	public FactureProFormAcha(String idFpfa, Timestamp dateFpfa, String designationFpfa, boolean valideFpfa,
+			Timestamp datePriseFpfa, Timestamp dateDeplisFpfa, String obserFpfa, Fournisseur fournisseur,
+			Exercice exercice, Commande commande) {
 		super();
-		this.idFactureProFormAcha = idFactureProFormAcha;
-		this.dateFactureProFormAcha = dateFactureProFormAcha;
-		this.designationFactureProFormAcha = designationFactureProFormAcha;
-		this.valideFactureProFormAcha = valideFactureProFormAcha;
-		this.datePriseFactureProFormAcha = datePriseFactureProFormAcha;
-		this.dateDeplisFactureProFormAcha = dateDeplisFactureProFormAcha;
-		this.obserFactureProFormAcha = obserFactureProFormAcha;
+		this.idFpfa = idFpfa;
+		this.dateFpfa = dateFpfa;
+		this.designationFpfa = designationFpfa;
+		this.valideFpfa = valideFpfa;
+		this.datePriseFpfa = datePriseFpfa;
+		this.dateDeplisFpfa = dateDeplisFpfa;
+		this.obserFpfa = obserFpfa;
 		this.fournisseur = fournisseur;
 		this.exercice = exercice;
+		this.commande = commande;
 	}
 
-	public String getIdFactureProFormAcha() {
-		return idFactureProFormAcha;
+
+
+	public String getIdFpfa() {
+		return idFpfa;
 	}
 
-	public void setIdFactureProFormAcha(String idFactureProFormAcha) {
-		this.idFactureProFormAcha = idFactureProFormAcha;
+	public void setIdFpfa(String idFpfa) {
+		this.idFpfa = idFpfa;
 	}
 
-	public Timestamp getDateFactureProFormAcha() {
-		return dateFactureProFormAcha;
+	public Timestamp getDateFpfa() {
+		return dateFpfa;
 	}
 
-	public void setDateFactureProFormAcha(Timestamp dateFactureProFormAcha) {
-		this.dateFactureProFormAcha = dateFactureProFormAcha;
+	public void setDateFpfa(Timestamp dateFpfa) {
+		this.dateFpfa = dateFpfa;
 	}
 
-	public String getDesignationFactureProFormAcha() {
-		return designationFactureProFormAcha;
+	public String getDesignationFpfa() {
+		return designationFpfa;
 	}
 
-	public void setDesignationFactureProFormAcha(String designationFactureProFormAcha) {
-		this.designationFactureProFormAcha = designationFactureProFormAcha;
+	public void setDesignationFpfa(String designationFpfa) {
+		this.designationFpfa = designationFpfa;
 	}
 
-	public boolean isValideFactureProFormAcha() {
-		return valideFactureProFormAcha;
+	public boolean isValideFpfa() {
+		return valideFpfa;
 	}
 
-	public void setValideFactureProFormAcha(boolean valideFactureProFormAcha) {
-		this.valideFactureProFormAcha = valideFactureProFormAcha;
+	public void setValideFpfa(boolean valideFpfa) {
+		this.valideFpfa = valideFpfa;
 	}
 
-	public Timestamp getDatePriseFactureProFormAcha() {
-		return datePriseFactureProFormAcha;
+	public Timestamp getDatePriseFpfa() {
+		return datePriseFpfa;
 	}
 
-	public void setDatePriseFactureProFormAcha(Timestamp datePriseFactureProFormAcha) {
-		this.datePriseFactureProFormAcha = datePriseFactureProFormAcha;
+	public void setDatePriseFpfa(Timestamp datePriseFpfa) {
+		this.datePriseFpfa = datePriseFpfa;
 	}
 
-	public Timestamp getDateDeplisFactureProFormAcha() {
-		return dateDeplisFactureProFormAcha;
+	public Timestamp getDateDeplisFpfa() {
+		return dateDeplisFpfa;
 	}
 
-	public void setDateDeplisFactureProFormAcha(Timestamp dateDeplisFactureProFormAcha) {
-		this.dateDeplisFactureProFormAcha = dateDeplisFactureProFormAcha;
+	public void setDateDeplisFpfa(Timestamp dateDeplisFpfa) {
+		this.dateDeplisFpfa = dateDeplisFpfa;
 	}
 
-	public String getObserFactureProFormAcha() {
-		return obserFactureProFormAcha;
+	public String getObserFpfa() {
+		return obserFpfa;
 	}
 
-	public void setObserFactureProFormAcha(String obserFactureProFormAcha) {
-		this.obserFactureProFormAcha = obserFactureProFormAcha;
+	public void setObserFpfa(String obserFpfa) {
+		this.obserFpfa = obserFpfa;
 	}
 
 	public Fournisseur getFournisseur() {
@@ -122,16 +133,30 @@ public class FactureProFormAcha {
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
+	
+	
+
+	public Commande getCommande() {
+		return commande;
+	}
+
+
+
+	public void setCommande(Commande commande) {
+		this.commande = commande;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "FactureProFormAcha [idFactureProFormAcha=" + idFactureProFormAcha + ", dateFactureProFormAcha="
-				+ dateFactureProFormAcha + ", designationFactureProFormAcha=" + designationFactureProFormAcha
-				+ ", valideFactureProFormAcha=" + valideFactureProFormAcha + ", datePriseFactureProFormAcha="
-				+ datePriseFactureProFormAcha + ", dateDeplisFactureProFormAcha=" + dateDeplisFactureProFormAcha
-				+ ", obserFactureProFormAcha=" + obserFactureProFormAcha + ", fournisseur=" + fournisseur
-				+ ", exercice=" + exercice + "]";
+		return "FactureProFormAcha [idFpfa=" + idFpfa + ", dateFpfa=" + dateFpfa + ", designationFpfa="
+				+ designationFpfa + ", valideFpfa=" + valideFpfa + ", datePriseFpfa=" + datePriseFpfa
+				+ ", dateDeplisFpfa=" + dateDeplisFpfa + ", obserFpfa=" + obserFpfa + ", fournisseur=" + fournisseur
+				+ ", exercice=" + exercice + ", commande=" + commande + "]";
 	}
+
+
 	
 	
 	

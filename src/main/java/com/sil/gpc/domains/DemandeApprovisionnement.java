@@ -25,6 +25,11 @@ public class DemandeApprovisionnement implements Serializable{
 	@ManyToOne(targetEntity = Exercice.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice",nullable = false)
 	public Exercice exercice;
+	
+	//Liaison avec Centre de consommation 
+	@ManyToOne(targetEntity = Service.class,fetch = FetchType.EAGER)
+	@JoinColumn(name = "codeService", referencedColumnName = "codeService",nullable = false)
+	public Service service;
 
 	public DemandeApprovisionnement() {
 		super();
@@ -36,7 +41,6 @@ public class DemandeApprovisionnement implements Serializable{
 		this.numDA = numDA;
 		this.dateDA = dateDA;
 		this.exercice = exercice;
-		valeur =  0;
 	}
 
 	/**

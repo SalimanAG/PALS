@@ -29,7 +29,7 @@ public class LigneDemandePrix {
 	
 	//Liaison à la unité
 		@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
-		@JoinColumn(name = "codeUniter", referencedColumnName = "codeUniter", nullable = false)
+		@JoinColumn(name = "codeUniter", referencedColumnName = "codeUniter")
 		private Uniter uniter;
 
 	public LigneDemandePrix() {

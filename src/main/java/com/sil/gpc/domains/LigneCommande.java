@@ -34,6 +34,11 @@ public class LigneCommande implements Serializable{
 	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
 	public Article article;
 	
+	//Liaison à la unité
+	@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codeUniter", referencedColumnName = "codeUniter")
+	private Uniter uniter;
+	
 	public LigneCommande() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -13,18 +13,18 @@ public class LigneFactureProFormAchat {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idLigneFactureProFormAchat;
-	private double qteLigneFactureProFormAchat;
-	private double prixUnitLigneFactureProFormAchat;
-	private String designLigneFactureProFormAchat;
-	private double tauxTaxeAibicLigneFactureProFormAchat;
-	private double tauxTvaLigneFactureProFormAchat;
-	private double tauxTsLigneFactureProFormAchat;
-	private double prixUnitHtLigneFactureProFormAchat;
+	private Long idLigneFpfa;
+	private double qteLigneFpfa;
+	private double prixUnitLigneFpfa;
+	private String designLigneFpfa;
+	private double tauxTaxeAibicLigneFpfa;
+	private double tauxTvaLigneFpfa;
+	private double tauxTsLigneFpfa;
+	private double prixUnitHtLigneFpfa;
 	
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = FactureProFormAcha.class)
-	@JoinColumn(name = "idFactureProFormAcha", referencedColumnName = "idFactureProFormAcha",nullable = false)
+	@JoinColumn(name = "idFpfa", referencedColumnName = "idFpfa",nullable = false)
 	public FactureProFormAcha factureProFormAcha;
 	
 	//Liaison à la article
@@ -42,88 +42,105 @@ public class LigneFactureProFormAchat {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LigneFactureProFormAchat(Long idLigneFactureProFormAchat, double qteLigneFactureProFormAchat,
-			double prixUnitLigneFactureProFormAchat, String designLigneFactureProFormAchat,
-			double tauxTaxeAibicLigneFactureProFormAchat, double tauxTvaLigneFactureProFormAchat,
-			double tauxTsLigneFactureProFormAchat, double prixUnitHtLigneFactureProFormAchat,
-			FactureProFormAcha factureProFormAcha, Article article, Uniter uniter) {
+
+	public LigneFactureProFormAchat(Long idLigneFpfa, double qteLigneFpfa, double prixUnitLigneFpfa,
+			String designLigneFpfa, double tauxTaxeAibicLigneFpfa, double tauxTvaLigneFpfa, double tauxTsLigneFpfa,
+			double prixUnitHtLigneFpfa, FactureProFormAcha factureProFormAcha, Article article, Uniter uniter) {
 		super();
-		this.idLigneFactureProFormAchat = idLigneFactureProFormAchat;
-		this.qteLigneFactureProFormAchat = qteLigneFactureProFormAchat;
-		this.prixUnitLigneFactureProFormAchat = prixUnitLigneFactureProFormAchat;
-		this.designLigneFactureProFormAchat = designLigneFactureProFormAchat;
-		this.tauxTaxeAibicLigneFactureProFormAchat = tauxTaxeAibicLigneFactureProFormAchat;
-		this.tauxTvaLigneFactureProFormAchat = tauxTvaLigneFactureProFormAchat;
-		this.tauxTsLigneFactureProFormAchat = tauxTsLigneFactureProFormAchat;
-		this.prixUnitHtLigneFactureProFormAchat = prixUnitHtLigneFactureProFormAchat;
+		this.idLigneFpfa = idLigneFpfa;
+		this.qteLigneFpfa = qteLigneFpfa;
+		this.prixUnitLigneFpfa = prixUnitLigneFpfa;
+		this.designLigneFpfa = designLigneFpfa;
+		this.tauxTaxeAibicLigneFpfa = tauxTaxeAibicLigneFpfa;
+		this.tauxTvaLigneFpfa = tauxTvaLigneFpfa;
+		this.tauxTsLigneFpfa = tauxTsLigneFpfa;
+		this.prixUnitHtLigneFpfa = prixUnitHtLigneFpfa;
 		this.factureProFormAcha = factureProFormAcha;
 		this.article = article;
 		this.uniter = uniter;
 	}
 
-	public Long getIdLigneFactureProFormAchat() {
-		return idLigneFactureProFormAchat;
+	
+
+	public Long getIdLigneFpfa() {
+		return idLigneFpfa;
 	}
 
-	public void setIdLigneFactureProFormAchat(Long idLigneFactureProFormAchat) {
-		this.idLigneFactureProFormAchat = idLigneFactureProFormAchat;
+
+	public void setIdLigneFpfa(Long idLigneFpfa) {
+		this.idLigneFpfa = idLigneFpfa;
 	}
 
-	public double getQteLigneFactureProFormAchat() {
-		return qteLigneFactureProFormAchat;
+
+	public double getQteLigneFpfa() {
+		return qteLigneFpfa;
 	}
 
-	public void setQteLigneFactureProFormAchat(double qteLigneFactureProFormAchat) {
-		this.qteLigneFactureProFormAchat = qteLigneFactureProFormAchat;
+
+	public void setQteLigneFpfa(double qteLigneFpfa) {
+		this.qteLigneFpfa = qteLigneFpfa;
 	}
 
-	public double getPrixUnitLigneFactureProFormAchat() {
-		return prixUnitLigneFactureProFormAchat;
+
+	public double getPrixUnitLigneFpfa() {
+		return prixUnitLigneFpfa;
 	}
 
-	public void setPrixUnitLigneFactureProFormAchat(double prixUnitLigneFactureProFormAchat) {
-		this.prixUnitLigneFactureProFormAchat = prixUnitLigneFactureProFormAchat;
+
+	public void setPrixUnitLigneFpfa(double prixUnitLigneFpfa) {
+		this.prixUnitLigneFpfa = prixUnitLigneFpfa;
 	}
 
-	public String getDesignLigneFactureProFormAchat() {
-		return designLigneFactureProFormAchat;
+
+	public String getDesignLigneFpfa() {
+		return designLigneFpfa;
 	}
 
-	public void setDesignLigneFactureProFormAchat(String designLigneFactureProFormAchat) {
-		this.designLigneFactureProFormAchat = designLigneFactureProFormAchat;
+
+	public void setDesignLigneFpfa(String designLigneFpfa) {
+		this.designLigneFpfa = designLigneFpfa;
 	}
 
-	public double getTauxTaxeAibicLigneFactureProFormAchat() {
-		return tauxTaxeAibicLigneFactureProFormAchat;
+
+	public double getTauxTaxeAibicLigneFpfa() {
+		return tauxTaxeAibicLigneFpfa;
 	}
 
-	public void setTauxTaxeAibicLigneFactureProFormAchat(double tauxTaxeAibicLigneFactureProFormAchat) {
-		this.tauxTaxeAibicLigneFactureProFormAchat = tauxTaxeAibicLigneFactureProFormAchat;
+
+	public void setTauxTaxeAibicLigneFpfa(double tauxTaxeAibicLigneFpfa) {
+		this.tauxTaxeAibicLigneFpfa = tauxTaxeAibicLigneFpfa;
 	}
 
-	public double getTauxTvaLigneFactureProFormAchat() {
-		return tauxTvaLigneFactureProFormAchat;
+
+	public double getTauxTvaLigneFpfa() {
+		return tauxTvaLigneFpfa;
 	}
 
-	public void setTauxTvaLigneFactureProFormAchat(double tauxTvaLigneFactureProFormAchat) {
-		this.tauxTvaLigneFactureProFormAchat = tauxTvaLigneFactureProFormAchat;
+
+	public void setTauxTvaLigneFpfa(double tauxTvaLigneFpfa) {
+		this.tauxTvaLigneFpfa = tauxTvaLigneFpfa;
 	}
 
-	public double getTauxTsLigneFactureProFormAchat() {
-		return tauxTsLigneFactureProFormAchat;
+
+	public double getTauxTsLigneFpfa() {
+		return tauxTsLigneFpfa;
 	}
 
-	public void setTauxTsLigneFactureProFormAchat(double tauxTsLigneFactureProFormAchat) {
-		this.tauxTsLigneFactureProFormAchat = tauxTsLigneFactureProFormAchat;
+
+	public void setTauxTsLigneFpfa(double tauxTsLigneFpfa) {
+		this.tauxTsLigneFpfa = tauxTsLigneFpfa;
 	}
 
-	public double getPrixUnitHtLigneFactureProFormAchat() {
-		return prixUnitHtLigneFactureProFormAchat;
+
+	public double getPrixUnitHtLigneFpfa() {
+		return prixUnitHtLigneFpfa;
 	}
 
-	public void setPrixUnitHtLigneFactureProFormAchat(double prixUnitHtLigneFactureProFormAchat) {
-		this.prixUnitHtLigneFactureProFormAchat = prixUnitHtLigneFactureProFormAchat;
+
+	public void setPrixUnitHtLigneFpfa(double prixUnitHtLigneFpfa) {
+		this.prixUnitHtLigneFpfa = prixUnitHtLigneFpfa;
 	}
+
 
 	public FactureProFormAcha getFactureProFormAcha() {
 		return factureProFormAcha;
@@ -149,22 +166,16 @@ public class LigneFactureProFormAchat {
 		this.uniter = uniter;
 	}
 
+
 	@Override
 	public String toString() {
-		return "LigneFactureProFormAchat [idLigneFactureProFormAchat=" + idLigneFactureProFormAchat
-				+ ", qteLigneFactureProFormAchat=" + qteLigneFactureProFormAchat + ", prixUnitLigneFactureProFormAchat="
-				+ prixUnitLigneFactureProFormAchat + ", designLigneFactureProFormAchat="
-				+ designLigneFactureProFormAchat + ", tauxTaxeAibicLigneFactureProFormAchat="
-				+ tauxTaxeAibicLigneFactureProFormAchat + ", tauxTvaLigneFactureProFormAchat="
-				+ tauxTvaLigneFactureProFormAchat + ", tauxTsLigneFactureProFormAchat=" + tauxTsLigneFactureProFormAchat
-				+ ", prixUnitHtLigneFactureProFormAchat=" + prixUnitHtLigneFactureProFormAchat + ", factureProFormAcha="
-				+ factureProFormAcha + ", article=" + article + ", uniter=" + uniter + "]";
+		return "LigneFactureProFormAchat [idLigneFpfa=" + idLigneFpfa + ", qteLigneFpfa=" + qteLigneFpfa
+				+ ", prixUnitLigneFpfa=" + prixUnitLigneFpfa + ", designLigneFpfa=" + designLigneFpfa
+				+ ", tauxTaxeAibicLigneFpfa=" + tauxTaxeAibicLigneFpfa + ", tauxTvaLigneFpfa=" + tauxTvaLigneFpfa
+				+ ", tauxTsLigneFpfa=" + tauxTsLigneFpfa + ", prixUnitHtLigneFpfa=" + prixUnitHtLigneFpfa
+				+ ", factureProFormAcha=" + factureProFormAcha + ", article=" + article + ", uniter=" + uniter + "]";
 	}
-	
-	
 
-	
-	
-	
+		
 
 }

@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,20 +27,30 @@ public class Reception implements Serializable {
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice")
 	Exercice exercice;
 	
+	@ManyToOne(targetEntity = Magasin.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin")
+	private Magasin magasin;
+	
+	
 	public Reception() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	public Reception(String numReception, String observation, Date dateReception, boolean valideRecep, int valeur,
-			Exercice exercice) {
+			Exercice exercice, Magasin magasin) {
+		super();
 		this.numReception = numReception;
 		this.observation = observation;
 		this.dateReception = dateReception;
 		this.valideRecep = valideRecep;
 		this.valeur = valeur;
 		this.exercice = exercice;
+		this.magasin = magasin;
 	}
-	
+
+
 	public Exercice getExercice() {
 		return exercice;
 	}
@@ -102,7 +113,15 @@ public class Reception implements Serializable {
 	public void setValideRecep(boolean valideRecep) {
 		this.valideRecep = valideRecep;
 	}
+	
+	
 
+	public Magasin getMagasin() {
+		return magasin;
+	}
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
+	}
 	@Override
 	public String toString() {
 		return "Reception [numReception=" + numReception + ", observation=" + observation + ", dateReception="

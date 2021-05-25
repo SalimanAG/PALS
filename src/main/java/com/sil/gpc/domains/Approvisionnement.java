@@ -26,27 +26,29 @@ public class Approvisionnement implements Serializable {
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
 	private Exercice exercice;
 	
+	@ManyToOne(targetEntity = Magasin.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin")
+	private Magasin magasin;
+	
+	
 	public Approvisionnement() {
 		super();
 	}
 
-	/**
-	 * @param numAppro
-	 * @param descriptionAppro
-	 * @param dateAppro
-	 * @param valideAppro
-	 * @param exercice
-	 */
-	public Approvisionnement(String numAppro, String descriptionAppro, Date dateAppro, boolean valideAppro,
-			Exercice exercice) {
+
+	public Approvisionnement(String numAppro, String descriptionAppro, Date dateAppro, boolean valideAppro, int valeur,
+			Exercice exercice, Magasin magasin) {
+		super();
 		this.numAppro = numAppro;
 		this.descriptionAppro = descriptionAppro;
 		this.dateAppro = dateAppro;
 		this.valideAppro = valideAppro;
+		this.valeur = valeur;
 		this.exercice = exercice;
-		valideAppro=true;
-		valeur =  0;
+		this.magasin = magasin;
 	}
+
+
 
 	/**
 	 * @return the valeur
@@ -131,11 +133,24 @@ public class Approvisionnement implements Serializable {
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
+	
+	
+
+	public Magasin getMagasin() {
+		return magasin;
+	}
+
+
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Approvisionnement [numAppro=" + numAppro + ", descriptionAppro=" + descriptionAppro + ", dateAppro="
-				+ dateAppro + ", valideAppro=" + valideAppro + ", exercice=" + exercice + "]";
+				+ dateAppro + ", valideAppro=" + valideAppro + ", valeur=" + valeur + ", exercice=" + exercice
+				+ ", magasin=" + magasin + "]";
 	}
 
 

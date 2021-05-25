@@ -32,6 +32,7 @@ public class LigneReception implements Serializable {
 	@JoinColumn(name = "numReception", referencedColumnName = "numReception")
 	private Reception reception;
 	
+
 	public LigneReception() {
 		super();
 		// TODO Auto-generated constructor stub

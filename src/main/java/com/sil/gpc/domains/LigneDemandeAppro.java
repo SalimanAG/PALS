@@ -25,6 +25,11 @@ public class LigneDemandeAppro implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
 	public Article article;
+	
+	//Liaison à la unité
+	@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "codeUniter", referencedColumnName = "codeUniter")
+	private Uniter uniter;
 
 	//Liaison avec Demande Appro Approvisionnement
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = DemandeApprovisionnement.class)
