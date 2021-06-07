@@ -29,6 +29,7 @@ public class MagasinierService {
 		mag.setNomMagasinier(mg.getNomMagasinier());
 		mag.setPrenomMagasinier(mg.getPrenomMagasinier());
 		mag.setTelMagasinier(mg.getTelMagasinier());
+		
 		return repos.save(mag);
 		}else
 			return null;

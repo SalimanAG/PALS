@@ -124,6 +124,8 @@ public class Gerer implements Serializable{
 				&& Objects.equals(magasinier, other.magasinier);
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Gerer [idGerer=" + idGerer + ", dateDebGerer=" + dateDebGerer + ", dateFinGerer=" + dateFinGerer

@@ -1,6 +1,5 @@
 package com.sil.gpc.controllers.stock;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,23 +13,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sil.gpc.domains.AppelOffre;
 import com.sil.gpc.domains.Approvisionnement;
+import com.sil.gpc.domains.BondTravail;
+import com.sil.gpc.domains.CommandeAchat;
+import com.sil.gpc.domains.ConsulterFrsForDp;
+import com.sil.gpc.domains.DemandePrix;
+import com.sil.gpc.domains.FactureProFormAcha;
+import com.sil.gpc.domains.Inventaire;
+import com.sil.gpc.domains.LettreCommande;
 import com.sil.gpc.domains.LigneAppro;
-import com.sil.gpc.domains.Placement;
-import com.sil.gpc.domains.Regisseur;
-import com.sil.gpc.domains.Exercice;
-import com.sil.gpc.domains.Recollement;
-import com.sil.gpc.domains.LignePlacement;
-import com.sil.gpc.domains.Article;
-import com.sil.gpc.domains.Magasin;
-import com.sil.gpc.domains.LigneRecollement;
+import com.sil.gpc.domains.LigneDemandePrix;
+import com.sil.gpc.domains.LigneFactureProFormAchat;
+import com.sil.gpc.domains.LigneInventaire;
+import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
+import com.sil.gpc.encapsuleurs.EncapDemandePrix;
+import com.sil.gpc.encapsuleurs.EncapFactureProformAchat;
+import com.sil.gpc.encapsuleurs.EncapInventaire;
+import com.sil.gpc.services.AppelOffreService;
 import com.sil.gpc.services.ApprovisionnementService;
+import com.sil.gpc.services.BondTravailService;
+import com.sil.gpc.services.CommandeAchatService;
+import com.sil.gpc.services.ConsulterFrsForDpService;
+import com.sil.gpc.services.DemandePrixService;
+import com.sil.gpc.services.FactureProFormAchaService;
+import com.sil.gpc.services.LettreCommandeService;
 import com.sil.gpc.services.LigneApproService;
-import com.sil.gpc.services.LignePlacementService;
-import com.sil.gpc.services.LigneRecollementService;
-import com.sil.gpc.services.PlacementService;
-import com.sil.gpc.services.RecollementService;
-import com.sil.gpc.services.RegisseurService;
+import com.sil.gpc.services.LigneDemandePrixService;
+import com.sil.gpc.services.LigneFactureProFormAchaService;
 
 @CrossOrigin
 @RestController
@@ -39,24 +49,30 @@ public class MairieController {
 
 	private final ApprovisionnementService approvisionnementService;
 	private final LigneApproService ligneApproService;
-	private final PlacementService placementService;
-	private final LignePlacementService lignePlacementService;
-	private final RecollementService recollementService;
-	private final LigneRecollementService ligneRecollementService;
-	private final RegisseurService regisseurService;
+	private final AppelOffreService appelOffreService;
+	private final BondTravailService bondTravailService;
+	private final CommandeAchatService commandeAchatService;
+	private final ConsulterFrsForDpService consulterFrsForDpService;
+	private final DemandePrixService demandePrixService;
+	private final FactureProFormAchaService factureProFormAchaService;
+	private final LettreCommandeService lettreCommandeService;
+	private final LigneDemandePrixService ligneDemandePrixService;
+	private final LigneFactureProFormAchaService ligneFactureProFormAchaService;
 	
 	
-	public MairieController(ApprovisionnementService approvisionnementService, LigneApproService ligneApproService,
-			PlacementService placementService, LignePlacementService lignePlacementService,
-			RecollementService recollementService, LigneRecollementService ligneRecollementService, RegisseurService regisseurService) {
+	public MairieController(ApprovisionnementService approvisionnementService, LigneApproService ligneApproService, LigneFactureProFormAchaService ligneFactureProFormAchaService, LigneDemandePrixService ligneDemandePrixService, LettreCommandeService lettreCommandeService, FactureProFormAchaService factureProFormAchaService, DemandePrixService demandePrixService, ConsulterFrsForDpService consulterFrsForDpService, CommandeAchatService commandeAchatService, BondTravailService bondTravailService, AppelOffreService appelOffreService) {
 		super();
 		this.approvisionnementService = approvisionnementService;
 		this.ligneApproService = ligneApproService;
-		this.placementService = placementService;
-		this.lignePlacementService = lignePlacementService;
-		this.recollementService = recollementService;
-		this.ligneRecollementService = ligneRecollementService;
-		this.regisseurService = regisseurService;
+		this.appelOffreService = appelOffreService;
+		this.bondTravailService = bondTravailService;
+		this.commandeAchatService = commandeAchatService;
+		this.consulterFrsForDpService = consulterFrsForDpService;
+		this.demandePrixService = demandePrixService;
+		this.factureProFormAchaService = factureProFormAchaService;
+		this.lettreCommandeService = lettreCommandeService;
+		this.ligneDemandePrixService = ligneDemandePrixService;
+		this.ligneFactureProFormAchaService = ligneFactureProFormAchaService;
 	}
 	
 	/*###########################################################
@@ -81,6 +97,25 @@ public class MairieController {
 		
 		return this.approvisionnementService.save(approvisionnement);
 	}
+	
+	@PostMapping(path = "approvisionnement/list2")
+	public EncapApprovisionnement createApprovisionnementByEncap( @RequestBody EncapApprovisionnement encapApprovisionnement) {
+		List<LigneAppro> lignes = encapApprovisionnement.getLigneAppros();
+		
+		Approvisionnement element = this.approvisionnementService.save(encapApprovisionnement.getApprovisionnement());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneAppro lig = lignes.get(i);
+			lig.setAppro(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		lignes = this.ligneApproService.saveAll(lignes);
+		
+		return new EncapApprovisionnement(element, lignes);
+	}
+
 	
 	@PutMapping(path = "approvisionnement/byCodApp/{id}")
 	public Approvisionnement updateApprovisionnement(@PathVariable(name = "id") String id, @RequestBody Approvisionnement approvisionnement) {
@@ -135,251 +170,375 @@ public class MairieController {
 	
 	
 	/*###########################################################
-	#############	Partie réservée pour Placement
+	#############	Partie réservée pour AppelOffre
 	###########################################################
 	*/
-	@GetMapping(path = "placement/list")
-	public List<Placement> getAllPlacement(){
+	
+	@GetMapping(path = "appelOffre/list")
+	public List<AppelOffre> getAllAppelOffre(){
 		
-		return this.placementService.findAll();
+		return this.appelOffreService.getAll();
 	}
 	
-	@GetMapping(path = "placement/byCodPla/{id}")
-	public Optional<Placement> getPlacementById(@PathVariable(name = "id") String id){
+	@GetMapping(path = "appelOffre/byCodAppOff/{id}")
+	public AppelOffre getAppelOffreById(@PathVariable(name = "id") String id){
 		
-		return this.placementService.findById(id);
+		return this.appelOffreService.getById(id);
 	}
 	
-	@GetMapping(path = "placement/byExo/{exo}")
-	public List<Placement> getPlacementByExercice(@PathVariable(name = "exo") Exercice exo){
+	@PostMapping(path = "appelOffre/list")
+	public AppelOffre createAppelOffre( @RequestBody AppelOffre appelOffre) {
 		
-		return  null;//this.placementService.findByExercice(exo); // utiliser l'objet Exercice et non int
+		return this.appelOffreService.save(appelOffre);
 	}
 	
-	@GetMapping(path = "placement/byDatePla/{datePla}")
-	public List<Placement> getPlacementByDate(@PathVariable(name = "datePla") Date datePla){
+	@PutMapping(path = "appelOffre/byCodAppOff/{id}")
+	public AppelOffre updateAppelOffre(@PathVariable(name = "id") String id, @RequestBody AppelOffre appelOffre) {
 		
-		return this.placementService.findByDatePlacement(datePla); //nom de methode mal defini
+		return this.appelOffreService.edit(id, appelOffre);
 	}
 	
-	@PostMapping(path = "placement/list")
-	public Placement createPlacement( @RequestBody Placement placement) {
+	@DeleteMapping(path = "appelOffre/byCodAppOff/{id}")
+	public Boolean deleteLigneAppro(@PathVariable(name = "id") String id) {
 		
-		return this.placementService.save(placement);
+		return this.appelOffreService.delete(id);
+	}
+
+
+	
+	/*###########################################################
+	#############	Partie réservée pour BondTravail
+	###########################################################
+	*/
+	
+	@GetMapping(path = "bondTravail/list")
+	public List<BondTravail> getAllBondTravail(){
+		
+		return this.bondTravailService.getAll();
 	}
 	
-	@PutMapping(path = "placement/byCodPla/{id}")
-	public Placement updatePlacement(@PathVariable(name = "id") String id, @RequestBody Placement placement) {
+	@GetMapping(path = "bondTravail/byCodBonTra/{id}")
+	public BondTravail getBondTravailById(@PathVariable(name = "id") String id){
 		
-		return this.placementService.edit(placement, id);
+		return this.bondTravailService.getById(id);
 	}
 	
-	@DeleteMapping(path = "placement/byCodPla/{id}")
-	public Boolean deletePlacement(@PathVariable(name = "id") String id) {
+	@PostMapping(path = "bondTravail/list")
+	public BondTravail createBondTravail( @RequestBody BondTravail bondTravail) {
 		
-		return this.placementService.delete(id);
+		return this.bondTravailService.save(bondTravail);
 	}
 	
+	@PutMapping(path = "bondTravail/byCodBonTra/{id}")
+	public BondTravail updateBondTravail(@PathVariable(name = "id") String id, @RequestBody BondTravail bondTravail) {
+		
+		return this.bondTravailService.edit(id, bondTravail);
+	}
+	
+	@DeleteMapping(path = "bondTravail/byCodBonTra/{id}")
+	public Boolean deleteBondTravail(@PathVariable(name = "id") String id) {
+		
+		return this.bondTravailService.delete(id);
+	}
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour CommandeAchat
+	###########################################################
+	*/
+	
+	@GetMapping(path = "commandeAchat/list")
+	public List<CommandeAchat> getAllCommandeAchat(){
+		
+		return this.commandeAchatService.getAll();
+	}
+	
+	@GetMapping(path = "commandeAchat/byCodComAch/{id}")
+	public CommandeAchat getCommandeAchatById(@PathVariable(name = "id") String id){
+		
+		return this.commandeAchatService.getById(id);
+	}
+	
+	@PostMapping(path = "commandeAchat/list")
+	public CommandeAchat createCommandeAchat( @RequestBody CommandeAchat commandeAchat) {
+		
+		return this.commandeAchatService.save(commandeAchat);
+	}
+	
+	@PutMapping(path = "commandeAchat/byCodComAch/{id}")
+	public CommandeAchat updateCommandeAchat(@PathVariable(name = "id") String id, @RequestBody CommandeAchat commandeAchat) {
+		
+		return this.commandeAchatService.edit(id, commandeAchat);
+	}
+	
+	@DeleteMapping(path = "commandeAchat/byCodComAch/{id}")
+	public Boolean deleteCommandeAchat(@PathVariable(name = "id") String id) {
+		
+		return this.commandeAchatService.delete(id);
+	}
 	
 	
 	
 	/*###########################################################
-	#############	Partie réservée pour Ligne placement
+	#############	Partie réservée pour ConsulterFrsForDp
 	###########################################################
 	*/
-	@GetMapping(path = "lignePla/list")
-	public List<LignePlacement> getAllLignePla(){
+	
+	@GetMapping(path = "consulterFrsForDp/list")
+	public List<ConsulterFrsForDp> getConsulterFrsForDp(){
 		
-		return this.lignePlacementService.findAll();
+		return this.consulterFrsForDpService.getAll();
 	}
 	
-	@GetMapping(path = "lignePla/byCodLigPla/{id}")
-	public Optional<LignePlacement> getLignePlaById(@PathVariable(name = "id") Long id){
+	@GetMapping(path = "consulterFrsForDp/byCodConFrsForDp/{id}")
+	public ConsulterFrsForDp getConsulterFrsForDpById(@PathVariable(name = "id") Long id){
 		
-		return this.lignePlacementService.findById(id);
+		return this.consulterFrsForDpService.getById(id);
 	}
 	
-	@GetMapping(path = "lignePla/Prix/{prix}")
-	public List<LignePlacement> getLignePlaByPrix(@PathVariable(name = "prix") double prix){
+	@PostMapping(path = "consulterFrsForDp/list")
+	public ConsulterFrsForDp createConsulterFrsForDp( @RequestBody ConsulterFrsForDp consulterFrsForDp) {
 		
-		return this.lignePlacementService.findByPrix(prix);
+		return this.consulterFrsForDpService.save(consulterFrsForDp);
 	}
 	
-	@GetMapping(path = "lignePla/Article/{art}")
-	public List<LignePlacement> getLignePlaByArticle(@PathVariable(name = "art") Article art){
+	@PutMapping(path = "consulterFrsForDp/byCodConFrsForDp/{id}")
+	public ConsulterFrsForDp updateConsulterFrsForDp(@PathVariable(name = "id") Long id, @RequestBody ConsulterFrsForDp consulterFrsForDp) {
 		
-		return this.lignePlacementService.findByArticle(art);
+		return this.consulterFrsForDpService.edit(id, consulterFrsForDp);
 	}
 	
-	@PostMapping(path = "lignePla/list")
-	public LignePlacement createLignePla( @RequestBody LignePlacement lignePla) {
+	@DeleteMapping(path = "consulterFrsForDp/byCodConFrsForDp/{id}")
+	public Boolean deleteConsulterFrsForDp(@PathVariable(name = "id") Long id) {
 		
-		return this.lignePlacementService.save(lignePla);
+		return this.consulterFrsForDpService.delete(id);
+	}
+
+	
+
+	/*###########################################################
+	#############	Partie réservée pour DemandePrix
+	###########################################################
+	*/
+	
+	@GetMapping(path = "demandePrix/list")
+	public List<DemandePrix> getAllDemandePrix(){
+		
+		return this.demandePrixService.getAll();
 	}
 	
-	@PutMapping(path = "lignePla/byCodLigPla/{id}")
-	public LignePlacement updateLignePla(@PathVariable(name = "id") Long id, @RequestBody LignePlacement lignePla) {
+	@GetMapping(path = "demandePrix/byCodDemPri/{id}")
+	public DemandePrix getDemandePrixById(@PathVariable(name = "id") String id){
 		
-		return this.lignePlacementService.edit(lignePla, id);
+		return this.demandePrixService.getById(id);
 	}
 	
-	@DeleteMapping(path = "lignePla/byCodLiPla/{id}")
-	public Boolean deleteLignePla(@PathVariable(name = "id") Long id) {
+	@PostMapping(path = "demandePrix/list")
+	public DemandePrix createDemandePrix( @RequestBody DemandePrix demandePrix) {
 		
-		return this.lignePlacementService.delete(id);
+		return this.demandePrixService.save(demandePrix);
 	}
 	
+	
+	@PostMapping(path = "demandePrix/list2")
+	public EncapDemandePrix createDemandePrixByEncap( @RequestBody EncapDemandePrix encapDemandePrix) {
+		List<LigneDemandePrix> lignes = encapDemandePrix.getLigneDemandePrixs();
+		
+		DemandePrix element = this.demandePrixService.save(encapDemandePrix.getDemandePrix());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneDemandePrix lig = lignes.get(i);
+			lig.setDemandePrix(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		lignes = this.ligneDemandePrixService.saveAll(lignes);
+		
+		return new EncapDemandePrix(element, lignes);
+	}
+
+	
+	
+	@PutMapping(path = "demandePrix/byCodDemPri/{id}")
+	public DemandePrix updateDemandePrix(@PathVariable(name = "id") String id, @RequestBody DemandePrix demandePrix) {
+		
+		return this.demandePrixService.edit(id, demandePrix);
+	}
+	
+	@DeleteMapping(path = "demandePrix/byCodDemPri/{id}")
+	public Boolean deleteDemandePrix(@PathVariable(name = "id") String id) {
+		
+		return this.demandePrixService.delete(id);
+	}
 	
 	
 	/*###########################################################
-	#############	Partie réservée pour Recollement
+	#############	Partie réservée pour LigneDemandePrix
 	###########################################################
 	*/
-	@GetMapping(path = "recollement/list")
-	public List<Recollement> getAllRecollement(){
+	
+	@GetMapping(path = "ligneDemandePrix/list")
+	public List<LigneDemandePrix> getAllLigneDemandePrix(){
 		
-		return this.recollementService.getAll();
+		return this.ligneDemandePrixService.getAll();
 	}
 	
-	@GetMapping(path = "recollement/byCodReco/{id}")
-	public Optional<Recollement> getRecollementById(@PathVariable(name = "id") String id){
+	@GetMapping(path = "ligneDemandePrix/byCodLigDemPri/{id}")
+	public LigneDemandePrix getLigneDemandePrixById(@PathVariable(name = "id") Long id){
 		
-		return this.recollementService.findById(id);
+		return this.ligneDemandePrixService.getById(id);
 	}
 	
-	@GetMapping(path = "recollement/byDateReco/{dateReco}")
-	public List<Recollement> getRecollementByDateRecollement(@PathVariable(name = "dateReco") Date dateReco){
+	@PostMapping(path = "ligneDemandePrix/list")
+	public LigneDemandePrix createLigneDemandePrix( @RequestBody LigneDemandePrix ligneDemandePrix) {
 		
-		return this.recollementService.findByDateRecollement(dateReco);
+		return this.ligneDemandePrixService.save(ligneDemandePrix);
 	}
 	
-	@GetMapping(path = "recollement/byMag/{mag}")
-	public List<Recollement> getRecollementByMagasin(@PathVariable(name = "mag") Magasin mag){
+	@PutMapping(path = "ligneDemandePrix/byCodLigDemPri/{id}")
+	public LigneDemandePrix updateLigneDemandePrix(@PathVariable(name = "id") Long id, @RequestBody LigneDemandePrix ligneDemandePrix) {
 		
-		return this.recollementService.findByMagasinRecollement(mag);
+		return this.ligneDemandePrixService.edit(id, ligneDemandePrix);
 	}
 	
-	@GetMapping(path = "recollement/byReg/{reg}")
-	public List<Recollement> getRecollementByRegisseur(@PathVariable(name = "reg") Regisseur reg){
+	@DeleteMapping(path = "ligneDemandePrix/byCodLigDemPri/{id}")
+	public Boolean deleteLigneDemandePrix(@PathVariable(name = "id") Long id) {
 		
-		return this.recollementService.findByRegisseurRecollement(reg);
+		return this.ligneDemandePrixService.delete(id);
 	}
 	
-	@GetMapping(path = "recollement/byExo/{exo}")
-	public List<Recollement> getRecollementByExercice(@PathVariable(name = "exo") Exercice exo){
+
+	
+	/*###########################################################
+	#############	Partie réservée pour LettreCommande
+	###########################################################
+	*/
+	
+	@GetMapping(path = "lettreCommande/list")
+	public List<LettreCommande> getAllLettreCommande(){
 		
-		return this.recollementService.findByExerciceRecollement(exo);
+		return this.lettreCommandeService.getAll();
 	}
 	
-	@PostMapping(path = "recollement/list")
-	public Recollement createRecollement( @RequestBody Recollement recollement) {
+	@GetMapping(path = "lettreCommande/byCodLetCom/{id}")
+	public LettreCommande getLettreCommandeById(@PathVariable(name = "id") String id){
 		
-		return this.recollementService.save(recollement);
+		return this.lettreCommandeService.getById(id);
 	}
 	
-	@PutMapping(path = "recollement/byCodReco/{id}")
-	public Recollement updateRecollement(@PathVariable(name = "id") String id, @RequestBody Recollement recollement) {
+	@PostMapping(path = "lettreCommande/list")
+	public LettreCommande createLettreCommande( @RequestBody LettreCommande lettreCommande) {
 		
-		return this.recollementService.edit(id, recollement);
+		return this.lettreCommandeService.save(lettreCommande);
 	}
 	
-	@DeleteMapping(path = "recollement/byCodReco/{id}")
-	public Boolean deleteRecollement(@PathVariable(name = "id") String id) {
+	@PutMapping(path = "lettreCommande/byCodLetCom/{id}")
+	public LettreCommande updateLettreCommande(@PathVariable(name = "id") String id, @RequestBody LettreCommande lettreCommande) {
 		
-		return this.recollementService.delete(id);
+		return this.lettreCommandeService.edit(id, lettreCommande);
 	}
 	
-	
+	@DeleteMapping(path = "lettreCommande/byCodLetCom/{id}")
+	public Boolean deleteLettreCommande(@PathVariable(name = "id") String id) {
+		
+		return this.lettreCommandeService.delete(id);
+	}
+
 	
 	
 	/*###########################################################
-	#############	Partie réservée pour Ligne Recollement
+	#############	Partie réservée pour FactureProFormAcha
 	###########################################################
 	*/
-	@GetMapping(path = "ligneRecoll/list")
-	public List<LigneRecollement> getAllLigneRecoll(){
+	
+	@GetMapping(path = "factureProFormAcha/list")
+	public List<FactureProFormAcha> getAllFactureProFormAcha(){
 		
-		return this.ligneRecollementService.findAll();
+		return this.factureProFormAchaService.getAll();
 	}
 	
-	@GetMapping(path = "ligneRecoll/byCodLigRecoll/{id}")
-	public Optional<LigneRecollement> getLigneRecollById(@PathVariable(name = "id") Long id){
+	@GetMapping(path = "factureProFormAcha/byCodFacProForAch/{id}")
+	public FactureProFormAcha getFactureProFormAchaById(@PathVariable(name = "id") String id){
 		
-		return this.ligneRecollementService.FindById(id);
+		return this.factureProFormAchaService.getById(id);
 	}
 	
-	@GetMapping(path = "ligneRecoll/byPrixLigRecoll/{prix}")
-	public List<LigneRecollement> getLigneRecollByPrix(@PathVariable(name = "prix") double prix){
+	@PostMapping(path = "factureProFormAcha/list")
+	public FactureProFormAcha createFactureProFormAcha( @RequestBody FactureProFormAcha factureProFormAcha) {
 		
-		return this.ligneRecollementService.findByPrix(prix);
+		return this.factureProFormAchaService.save(factureProFormAcha);
 	}
 	
-	@GetMapping(path = "ligneRecoll/byQteLigRecoll/{qte}")
-	public List<LigneRecollement> getLigneRecollByQuantite(@PathVariable(name = "qte") double qte){
+	
+	@PostMapping(path = "factureProFormAcha/list2")
+	public EncapFactureProformAchat createFactureProFormAchaByEncap( @RequestBody EncapFactureProformAchat encapFactureProformAchat) {
+		List<LigneFactureProFormAchat> lignes = encapFactureProformAchat.getFactureProFormAchats();
 		
-		return this.ligneRecollementService.findByQte(qte);
+		FactureProFormAcha element = this.factureProFormAchaService.save(encapFactureProformAchat.getFactureProFormAcha());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneFactureProFormAchat lig = lignes.get(i);
+			lig.setFactureProFormAcha(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		lignes = this.ligneFactureProFormAchaService.saveAll(lignes);
+		
+		return new EncapFactureProformAchat(element, lignes);
 	}
 	
-	@GetMapping(path = "ligneRecoll/byArticle/{art}")
-	public List<LigneRecollement> getLigneRecollByQuantite(@PathVariable(name = "art") Article art){
+	
+	@PutMapping(path = "factureProFormAcha/byCodFacProForAch/{id}")
+	public FactureProFormAcha updateFactureProFormAcha(@PathVariable(name = "id") String id, @RequestBody FactureProFormAcha factureProFormAcha) {
 		
-		return this.ligneRecollementService.findByArtice(art);
+		return this.factureProFormAchaService.edit(id, factureProFormAcha);
 	}
 	
-	@PostMapping(path = "ligneRecoll/list")
-	public LigneRecollement createLigneRecollement( @RequestBody LigneRecollement ligneRecoll) {
+	@DeleteMapping(path = "factureProFormAcha/byCodFacProForAch/{id}")
+	public Boolean deleteFactureProFormAcha(@PathVariable(name = "id") String id) {
 		
-		return this.ligneRecollementService.save(ligneRecoll);
+		return this.factureProFormAchaService.delete(id);
 	}
-	
-	@PutMapping(path = "ligneRecoll/byCodLigRecoll/{id}")
-	public LigneRecollement updateLigneRecollement(@PathVariable(name = "id") Long id, @RequestBody LigneRecollement ligneRecoll) {
-		
-		return this.ligneRecollementService.edit(ligneRecoll, id);
-	}
-	
-	@DeleteMapping(path = "ligneRecoll/byCodLigRecoll/{id}")
-	public Boolean deleteLigneRecollement(@PathVariable(name = "id") Long id) {
-		
-		return this.ligneRecollementService.delete(id);
-	}	
-	
-	
+
 	
 	
 	/*###########################################################
-	#############	Partie réservée pour Régisseur
+	#############	Partie réservée pour LigneFactureProFormAcha
 	###########################################################
 	*/
-	@GetMapping(path = "regisseur/list")
-	public List<Regisseur> getAllRegisseur(){
+	
+	@GetMapping(path = "ligneFactureProFormAchat/list")
+	public List<LigneFactureProFormAchat> getAllLigneFactureProFormAchat(){
 		
-		return this.regisseurService.getAll();
+		return this.ligneFactureProFormAchaService.getAll();
 	}
 	
-	@GetMapping(path = "regisseur/byCodReg/{id}")
-	public Optional<Regisseur> getRegisseurById(@PathVariable(name = "id") String id){
+	@GetMapping(path = "ligneFactureProFormAchat/byCodLigFacProForAch/{id}")
+	public LigneFactureProFormAchat getLigneFactureProFormAchatById(@PathVariable(name = "id") Long id){
 		
-		return this.regisseurService.findById(id);
+		return this.ligneFactureProFormAchaService.getById(id);
 	}
 	
-	@PostMapping(path = "regisseur/list")
-	public Regisseur createRegisseur( @RequestBody Regisseur regisseur) {
+	@PostMapping(path = "ligneFactureProFormAchat/list")
+	public LigneFactureProFormAchat createLigneFactureProFormAchat( @RequestBody LigneFactureProFormAchat ligneFactureProFormAchat) {
 		
-		return this.regisseurService.save(regisseur);
+		return this.ligneFactureProFormAchaService.save(ligneFactureProFormAchat);
 	}
 	
-	@PutMapping(path = "regisseur/byCodReg/{id}")
-	public Regisseur updateApprovisionnement(@PathVariable(name = "id") String id, @RequestBody Regisseur regisseur) {
+	@PutMapping(path = "ligneFactureProFormAchat/byCodLigFacProForAch/{id}")
+	public LigneFactureProFormAchat updateLigneFactureProFormAchat(@PathVariable(name = "id") Long id, @RequestBody LigneFactureProFormAchat ligneFactureProFormAchat) {
 		
-		return this.regisseurService.edit(id, regisseur);
+		return this.ligneFactureProFormAchaService.edit(id, ligneFactureProFormAchat);
 	}
 	
-	@DeleteMapping(path = "regisseur/byCodReg/{id}")
-	public Boolean deleteRegisseur(@PathVariable(name = "id") String id) {
+	@DeleteMapping(path = "ligneFactureProFormAchat/byCodLigFacProForAch/{id}")
+	public Boolean deleteLigneFactureProFormAchat(@PathVariable(name = "id") Long id) {
 		
-		return this.regisseurService.delete(id);
-	}	
+		return this.ligneFactureProFormAchaService.delete(id);
+	}
+
 	
 	
 	

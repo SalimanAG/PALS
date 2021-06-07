@@ -15,22 +15,24 @@ public class Exercice implements Serializable{
 	private Date dateDebut;
 	private Date dateFin;
 	private String etatExo;
-	private boolean exoSelectionner;
+	private boolean cloturerExo;
 	
 	public Exercice() {
 		super();
 	}
 
+
 	public Exercice(String codeExercice, String libExercice, Date dateDebut, Date dateFin, String etatExo,
-			boolean exoSelectionner) {
+			boolean cloturerExo) {
 		super();
 		this.codeExercice = codeExercice;
 		this.libExercice = libExercice;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.etatExo = etatExo;
-		this.exoSelectionner = exoSelectionner;
+		this.cloturerExo = cloturerExo;
 	}
+
 
 	public String getCodeExercice() {
 		return codeExercice;
@@ -72,45 +74,24 @@ public class Exercice implements Serializable{
 		this.etatExo = etatExo;
 	}
 
-	public boolean isExoSelectionner() {
-		return exoSelectionner;
+
+	public boolean isCloturerExo() {
+		return cloturerExo;
 	}
 
-	public void setExoSelectionner(boolean exoSelectionner) {
-		this.exoSelectionner = exoSelectionner;
+
+	public void setCloturerExo(boolean cloturerExo) {
+		this.cloturerExo = cloturerExo;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeExercice == null) ? 0 : codeExercice.hashCode());
-		result = prime * result + ((dateDebut == null) ? 0 : dateDebut.hashCode());
-		result = prime * result + ((dateFin == null) ? 0 : dateFin.hashCode());
-		result = prime * result + ((etatExo == null) ? 0 : etatExo.hashCode());
-		result = prime * result + (exoSelectionner ? 1231 : 1237);
-		result = prime * result + ((libExercice == null) ? 0 : libExercice.hashCode());
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();
-	}
 
 	@Override
 	public String toString() {
 		return "Exercice [codeExercice=" + codeExercice + ", libExercice=" + libExercice + ", dateDebut=" + dateDebut
-				+ ", dateFin=" + dateFin + ", etatExo=" + etatExo + ", exoSelectionner=" + exoSelectionner + "]";
+				+ ", dateFin=" + dateFin + ", etatExo=" + etatExo + ", cloturerExo=" + cloturerExo + "]";
 	}
+
+	
 	
 	
 }

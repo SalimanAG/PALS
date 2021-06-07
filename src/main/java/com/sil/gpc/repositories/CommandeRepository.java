@@ -12,9 +12,9 @@ import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.Fournisseur;
 
 @Repository
-public interface CommandeRepository extends JpaRepository<Commande, String> {
+public interface CommandeRepository extends JpaRepository<Commande, Long> {
 
-	public List<Commande> findByNumCommande(String numCommande);
+	//public List<Commande> findByNumCommande(String numCommande);
 	
 	public List<Commande> findByDateCommande(Date dateCommande);
 	

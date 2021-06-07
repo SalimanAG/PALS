@@ -110,28 +110,7 @@ public class Quartier implements Serializable {
 		this.arrondissement = arrondissement;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(adresseQuartier, arrondissement, codeQuartier, nomQuartier, numTelQuartier);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Quartier other = (Quartier) obj;
-		return Objects.equals(adresseQuartier, other.adresseQuartier)
-				&& Objects.equals(arrondissement, other.arrondissement)
-				&& Objects.equals(codeQuartier, other.codeQuartier) && Objects.equals(nomQuartier, other.nomQuartier)
-				&& Objects.equals(numTelQuartier, other.numTelQuartier);
-	}
+	
 
 	@Override
 	public String toString() {

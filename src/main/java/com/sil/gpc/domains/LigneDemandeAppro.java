@@ -40,14 +40,19 @@ public class LigneDemandeAppro implements Serializable{
 		super();
 	}
 
-	public LigneDemandeAppro(Long idLigneDA, Long quantiteDemandee, Article article, DemandeApprovisionnement appro,
-			List<LigneAppro> ligneApproParDA) {
+
+
+	public LigneDemandeAppro(Long idLigneDA, Long quantiteDemandee, Article article, Uniter uniter,
+			DemandeApprovisionnement appro) {
 		super();
 		this.idLigneDA = idLigneDA;
 		this.quantiteDemandee = quantiteDemandee;
 		this.article = article;
+		this.uniter = uniter;
 		this.appro = appro;
 	}
+
+
 
 	/**
 	 * @return the idLigneDA
@@ -105,10 +110,20 @@ public class LigneDemandeAppro implements Serializable{
 		this.appro = appro;
 	}
 
+	public Uniter getUniter() {
+		return uniter;
+	}
+
+	public void setUniter(Uniter uniter) {
+		this.uniter = uniter;
+	}
+
 	@Override
 	public String toString() {
 		return "LigneDemandeAppro [idLigneDA=" + idLigneDA + ", quantiteDemandee=" + quantiteDemandee + ", article="
-				+ article + ", appro=" + appro + "]";
+				+ article + ", uniter=" + uniter + ", appro=" + appro + "]";
 	}
+
+
 
 }

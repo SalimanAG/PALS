@@ -53,6 +53,12 @@ public class ReceptionService {
    		if(receptmod != null) {
    			receptmod.setObservation(recept.getObservation());
    			receptmod.setDateReception(recept.getDateReception());
+   			receptmod.setExercice(recept.getExercice());
+   			receptmod.setMagasin(recept.getMagasin());
+   			receptmod.setRefBordLivraiRecept(recept.getRefBordLivraiRecept());
+   			receptmod.setReferenceReception(recept.getReferenceReception());
+   			receptmod.setValideRecep(recept.isValideRecep());
+   			
    			return this.receptionRepository.save(receptmod);
        }
    		return null;

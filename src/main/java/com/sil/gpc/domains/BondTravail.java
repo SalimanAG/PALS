@@ -12,6 +12,7 @@ public class BondTravail {
 	@Id
 	private String numBondTravail;
 	
+	private double valeur;
 
 	//Liaison à la table Commande
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
@@ -55,6 +56,16 @@ public class BondTravail {
 	@Override
 	public String toString() {
 		return "BondTravail [numBondTravail=" + numBondTravail + ", commande=" + commande + "]";
+	}
+
+
+	public double getValeur() {
+		return valeur;
+	}
+
+
+	public void setValeur(double valeur) {
+		this.valeur = valeur;
 	}
 
 	

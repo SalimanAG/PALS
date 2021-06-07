@@ -35,6 +35,15 @@ public class FournisseurService {
 			entiter.setNumIfuFrs(fournisseur.getNumIfuFrs());
 			entiter.setRaisonSociale(fournisseur.getRaisonSociale());
 			entiter.setTelFRS(fournisseur.getTelFRS());
+			entiter.setAgreerFrs(fournisseur.isAgreerFrs());
+			entiter.setCategorieFrs(fournisseur.getCategorieFrs());
+			entiter.setCompteAvanceFrs(fournisseur.getCompteAvanceFrs());
+			entiter.setCompteAvoirFrs(fournisseur.getCompteAvoirFrs());
+			entiter.setCompteConsignationFrs(fournisseur.getCompteConsignationFrs());
+			entiter.setCompteFacturationFrs(fournisseur.getCompteFacturationFrs());
+			entiter.setDomaineInterven(fournisseur.getDomaineInterven());
+			entiter.setNumAgrementFrs(fournisseur.getNumAgrementFrs());
+			entiter.setRegComFrs(fournisseur.getRegComFrs());
 			
 			return this.repo.save(entiter);
 		}

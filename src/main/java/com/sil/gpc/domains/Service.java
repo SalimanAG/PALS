@@ -21,6 +21,16 @@ public class Service implements Serializable {
 	@JoinColumn(name = "codeDirection", referencedColumnName = "codeDirection")
 	private Direction direction;
 	
+	//Liaison à son super centre de consommation
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Service.class)
+	@JoinColumn(name = "codeSuperService", referencedColumnName = "codeService")
+	private Service superService;
+	
+	//Liaison à son type de centre de consommation
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = TypeService.class)
+	@JoinColumn(name = "codeTypService", referencedColumnName = "codeTypService")
+	private TypeService typeService;
+	
 	public Service() {
 		super();
 	}
@@ -54,10 +64,29 @@ public class Service implements Serializable {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
+	
+	
+
+	public Service getSuperService() {
+		return superService;
+	}
+
+	public void setSuperService(Service superService) {
+		this.superService = superService;
+	}
+
+	public TypeService getTypeService() {
+		return typeService;
+	}
+
+	public void setTypeService(TypeService typeService) {
+		this.typeService = typeService;
+	}
 
 	@Override
 	public String toString() {
-		return "Service [codeService=" + codeService + ", libService=" + libService + ", direction=" + direction + "]";
+		return "Service [codeService=" + codeService + ", libService=" + libService + ", direction=" + direction
+				+ ", superService=" + superService + ", typeService=" + typeService + "]";
 	}
 
 	

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.repositories.LigneReceptionRepository;
 
@@ -25,13 +26,13 @@ public class LigneReceptionService {
 	}
 
 
-	public List<LigneReception> findByQte (double qte){
+	/*public List<LigneReception> findByQte (double qte){
 		return repos.findByQuantiteLigneReception(qte);
 	}
 
 	public List<LigneReception> findByPrix (double prix){
 		return repos.findByPULigneReception(prix);
-	}
+	}*/
 
 	public List<LigneReception> findAll() {
 		return repos.findAll();
@@ -40,15 +41,24 @@ public class LigneReceptionService {
 	public LigneReception save(LigneReception ligne){
 		return repos.save(ligne);
 	}
+	
+	public List<LigneReception> saveAll (List<LigneReception> ligneReceptions) {
+		
+		return this.repos.saveAll(ligneReceptions);
+	}
 
 	public LigneReception edit(LigneReception ligne, Long id) {
 		LigneReception cible=repos.getOne(id);
 		if (cible!=null) {
-		cible.setPULigneReception(ligne.getPULigneReception());
+		cible.setPuLigneReception(ligne.getPuLigneReception());
 		cible.setNumSerieDebLigneReception(ligne.getNumSerieDebLigneReception());
 		cible.setNumSerieFinLigneReception(ligne.getNumSerieFinLigneReception());
 		cible.setQuantiteLigneReception(ligne.getQuantiteLigneReception());
 		cible.setObservationLigneReception(ligne.getObservationLigneReception());
+		cible.setImputer(ligne.isImputer());
+		cible.setLigneCommande(ligne.getLigneCommande());
+		cible.setReception(ligne.getReception());
+		
 		return repos.save(cible);
 		}
 		else 

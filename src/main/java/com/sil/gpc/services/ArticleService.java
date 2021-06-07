@@ -43,6 +43,18 @@ public class ArticleService {
 			entiter.setPuStIniTres(article.getPuStIniTres());
 			entiter.setDatStInitArtTres(article.getDatStInitArtTres());
 			entiter.setExo(article.getExo());
+			entiter.setAbregerArticle(article.getAbregerArticle());
+			entiter.setAfficherArticle(article.isAfficherArticle());
+			entiter.setCodeBareArticle(article.getCodeBareArticle());
+			entiter.setCompteArticle(article.getCompteArticle());
+			entiter.setFournisseur(article.getFournisseur());
+			entiter.setSpecialiterArticle(article.getSpecialiterArticle());
+			entiter.setTaxeSpecifiqArticle(article.getTaxeSpecifiqArticle());
+			entiter.setTvaArticle(article.getTvaArticle());
+			entiter.setCmupActuArticle(article.getCmupActuArticle());
+			entiter.setStockSecurArticle(article.getStockSecurArticle());
+			entiter.setStockMinimArticle(article.getStockMinimArticle());
+			entiter.setStockAlertArticle(article.getStockAlertArticle());
 			
 			return this.repo.save(entiter);
 		}

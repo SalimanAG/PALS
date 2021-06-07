@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.Commande;
+import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.repositories.LigneCommandeRepository;
 
@@ -25,16 +26,27 @@ public class LigneCommandeService {
 		return this.repo.save(ligneCommande);
 	}
 	
+	
+	public List<LigneCommande> saveAll (List<LigneCommande> ligneCommandes) {
+		
+		return this.repo.saveAll(ligneCommandes);
+	}
+
+	
+	
 	public LigneCommande edit(Long id, LigneCommande ligneCommande) {
 		
 		LigneCommande entiter = this.repo.getOne(id);
 		if(entiter != null) {
-			entiter.setPULigneCommande(ligneCommande.getPULigneCommande());
+			entiter.setPuLigneCommande(ligneCommande.getPuLigneCommande());
 			entiter.setQteLigneCommande(ligneCommande.getQteLigneCommande());
 			entiter.setRemise(ligneCommande.getRemise());
-			entiter.setTVA(ligneCommande.getTVA());
+			entiter.setTva(ligneCommande.getTva());
 			entiter.setArticle(ligneCommande.getArticle());
 			entiter.setNumCommande(ligneCommande.getNumCommande());
+			entiter.setTaibic(ligneCommande.getTaibic());
+			entiter.setTs(ligneCommande.getTs());
+			entiter.setUniter(ligneCommande.getUniter());
 			
 			return this.repo.save(entiter);
 		}
@@ -60,7 +72,7 @@ public class LigneCommandeService {
 		return this.repo.findAll();
 	}
 	
-	public List<LigneCommande> findByIdLigneCommande (Long idLigneCommande){
+	/*public List<LigneCommande> findByIdLigneCommande (Long idLigneCommande){
 		
 		return this.repo.findByIdLigneCommande(idLigneCommande);
 	}
@@ -93,6 +105,6 @@ public class LigneCommandeService {
 	public List<LigneCommande> findByArticle(Article article){
 		
 		return this.repo.findByArticle(article);
-	}
+	}*/
 	
 }

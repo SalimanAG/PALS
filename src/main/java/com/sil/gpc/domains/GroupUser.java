@@ -36,6 +36,8 @@ public class GroupUser {
 	public void setLibGroupUser(String libGroupUser) {
 		this.libGroupUser = libGroupUser;
 	}
+	
+	
 
 	@Override
 	public String toString() {

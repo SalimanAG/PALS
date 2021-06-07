@@ -19,6 +19,7 @@ public class FactureProFormAcha {
 	private Timestamp datePriseFpfa;
 	private Timestamp dateDeplisFpfa;
 	private String obserFpfa;
+	private double valeur;
 	
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Fournisseur.class)
@@ -35,6 +36,12 @@ public class FactureProFormAcha {
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
 	public Commande commande;
+	
+	//Liaison à la demande de prix ayant faire objet
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = DemandePrix.class)
+	@JoinColumn(name = "idDemandePrix", referencedColumnName = "idDemandePrix",nullable = false)
+	public DemandePrix demandePrix;
+
 
 
 	public FactureProFormAcha() {
@@ -46,7 +53,7 @@ public class FactureProFormAcha {
 
 	public FactureProFormAcha(String idFpfa, Timestamp dateFpfa, String designationFpfa, boolean valideFpfa,
 			Timestamp datePriseFpfa, Timestamp dateDeplisFpfa, String obserFpfa, Fournisseur fournisseur,
-			Exercice exercice, Commande commande) {
+			Exercice exercice, Commande commande, DemandePrix demandePrix) {
 		super();
 		this.idFpfa = idFpfa;
 		this.dateFpfa = dateFpfa;
@@ -58,6 +65,7 @@ public class FactureProFormAcha {
 		this.fournisseur = fournisseur;
 		this.exercice = exercice;
 		this.commande = commande;
+		this.demandePrix = demandePrix;
 	}
 
 
@@ -146,6 +154,31 @@ public class FactureProFormAcha {
 		this.commande = commande;
 	}
 
+	
+
+
+	public DemandePrix getDemandePrix() {
+		return demandePrix;
+	}
+
+
+
+	public void setDemandePrix(DemandePrix demandePrix) {
+		this.demandePrix = demandePrix;
+	}
+
+
+
+	public double getValeur() {
+		return valeur;
+	}
+
+
+
+	public void setValeur(double valeur) {
+		this.valeur = valeur;
+	}
+
 
 
 	@Override
@@ -153,11 +186,10 @@ public class FactureProFormAcha {
 		return "FactureProFormAcha [idFpfa=" + idFpfa + ", dateFpfa=" + dateFpfa + ", designationFpfa="
 				+ designationFpfa + ", valideFpfa=" + valideFpfa + ", datePriseFpfa=" + datePriseFpfa
 				+ ", dateDeplisFpfa=" + dateDeplisFpfa + ", obserFpfa=" + obserFpfa + ", fournisseur=" + fournisseur
-				+ ", exercice=" + exercice + ", commande=" + commande + "]";
+				+ ", exercice=" + exercice + ", commande=" + commande + ", demandePrix=" + demandePrix + "]";
 	}
 
 
-	
 	
 	
 	

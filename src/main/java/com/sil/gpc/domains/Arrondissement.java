@@ -60,46 +60,12 @@ public class Arrondissement implements Serializable{
 	public void setNumTelArrondi(String numTelArrondi) {
 		this.numTelArrondi = numTelArrondi;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((adresseArrondi == null) ? 0 : adresseArrondi.hashCode());
-		result = prime * result + ((codeArrondi == null) ? 0 : codeArrondi.hashCode());
-		result = prime * result + ((nomArrondi == null) ? 0 : nomArrondi.hashCode());
-		result = prime * result + ((numTelArrondi == null) ? 0 : numTelArrondi.hashCode());
-		return result;
+	
+	public Commune getCommune() {
+		return commune;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Arrondissement other = (Arrondissement) obj;
-		if (adresseArrondi == null) {
-			if (other.adresseArrondi != null)
-				return false;
-		} else if (!adresseArrondi.equals(other.adresseArrondi))
-			return false;
-		if (codeArrondi == null) {
-			if (other.codeArrondi != null)
-				return false;
-		} else if (!codeArrondi.equals(other.codeArrondi))
-			return false;
-		if (nomArrondi == null) {
-			if (other.nomArrondi != null)
-				return false;
-		} else if (!nomArrondi.equals(other.nomArrondi))
-			return false;
-		if (numTelArrondi == null) {
-			if (other.numTelArrondi != null)
-				return false;
-		} else if (!numTelArrondi.equals(other.numTelArrondi))
-			return false;
-		return true;
+	public void setCommune(Commune commune) {
+		this.commune = commune;
 	}
 	@Override
 	public String toString() {

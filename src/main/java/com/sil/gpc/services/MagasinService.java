@@ -30,8 +30,8 @@ public class MagasinService {
 	public Magasin edit(Magasin mg, String cm){
 		Magasin mag=repos.getOne(cm);
 		if(mag!=null) {
-		mag.setCodeMagasin(mg.getCodeMagasin());
 		mag.setLibMagasin(mg.getLibMagasin());
+		
 		return repos.save(mag);
 		}else
 			return null;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sil.gpc.domains.AffectUniterToArticle;
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.Famille;
 import com.sil.gpc.domains.Gerer;
@@ -20,10 +21,11 @@ import com.sil.gpc.domains.Inventaire;
 import com.sil.gpc.domains.LigneInventaire;
 import com.sil.gpc.domains.Magasin;
 import com.sil.gpc.domains.Magasinier;
-import com.sil.gpc.domains.PlageNumArticle;
-import com.sil.gpc.domains.PlageNumDispo;
 import com.sil.gpc.domains.Stocker;
+import com.sil.gpc.domains.TypeArticle;
 import com.sil.gpc.domains.Uniter;
+import com.sil.gpc.encapsuleurs.EncapInventaire;
+import com.sil.gpc.services.AffectUniterToArticleService;
 import com.sil.gpc.services.ArticleService;
 import com.sil.gpc.services.FamilleService;
 import com.sil.gpc.services.GererService;
@@ -31,9 +33,8 @@ import com.sil.gpc.services.InventaireService;
 import com.sil.gpc.services.LigneInventaireService;
 import com.sil.gpc.services.MagasinService;
 import com.sil.gpc.services.MagasinierService;
-import com.sil.gpc.services.PlageNumArticleService;
-import com.sil.gpc.services.PlageNumDispoService;
 import com.sil.gpc.services.StockerService;
+import com.sil.gpc.services.TypeArticleService;
 import com.sil.gpc.services.UniterService;
 
 @CrossOrigin
@@ -47,19 +48,19 @@ public class MagasinController {
 	private final ArticleService articleService;
 	private final UniterService uniterService;
 	private final GererService gererService;
-	private final PlageNumArticleService plageNumArticleService;
-	private final PlageNumDispoService plageNumDispoService;
 	private final StockerService stockerService;
 	private final LigneInventaireService lInvServ;
 	private final InventaireService invServ;
+	private final AffectUniterToArticleService affectUniterToArticleService;
+	private final TypeArticleService typeArticleService;
+	
 	
 	
 	
 	public MagasinController(MagasinService magasinService, MagasinierService magasinierService,
 			FamilleService familleService, ArticleService articleService, UniterService uniterService,
-			GererService gererService, PlageNumArticleService plageNumArticleService,
-			PlageNumDispoService plageNumDispoService, StockerService stockerService, LigneInventaireService lInvServ,
-			InventaireService invServ) {
+			GererService gererService, StockerService stockerService, LigneInventaireService lInvServ,
+			InventaireService invServ, TypeArticleService typeArticleService, AffectUniterToArticleService affectUniterToArticleService) {
 		super();
 		this.magasinService = magasinService;
 		this.magasinierService = magasinierService;
@@ -67,11 +68,11 @@ public class MagasinController {
 		this.articleService = articleService;
 		this.uniterService = uniterService;
 		this.gererService = gererService;
-		this.plageNumArticleService = plageNumArticleService;
-		this.plageNumDispoService = plageNumDispoService;
 		this.stockerService = stockerService;
 		this.lInvServ = lInvServ;
 		this.invServ = invServ;
+		this.affectUniterToArticleService = affectUniterToArticleService;
+		this.typeArticleService = typeArticleService;
 	}
 
 	/*###########################################################
@@ -294,77 +295,6 @@ public class MagasinController {
 	}
 
 	
-	/*###########################################################
-	#############	Partie réservée pour Plage Numéro Article
-	###########################################################
-	*/
-	
-	@GetMapping(path = "plageNumArticle/list")
-	public List<PlageNumArticle> getAllPlageNumArticle(){
-		
-		return this.plageNumArticleService.findAll();
-	}
-	
-	@GetMapping(path = "plageNumArticle/byCodPlaNumArt/{id}")
-	public Optional<PlageNumArticle> getPlageNumArticleById(@PathVariable(name = "id") Long id){
-		
-		return this.plageNumArticleService.recherchePlage(id);
-	}
-	
-	@PostMapping(path = "plageNumArticle/list")
-	public PlageNumArticle createPlageNumArticle( @RequestBody PlageNumArticle plageNumArticle) {
-		
-		return this.plageNumArticleService.save(plageNumArticle);
-	}
-	
-	@PutMapping(path = "plageNumArticle/byCodPlaNumArt/{id}")
-	public PlageNumArticle updatePlageNumArticle(@PathVariable(name = "id") Long id, @RequestBody PlageNumArticle plageNumArticle) {
-		
-		return this.plageNumArticleService.edit(plageNumArticle, id);
-	}
-	
-	@DeleteMapping(path = "plageNumArticle/byCodPlaNumArt/{id}")
-	public Boolean deletePlageNumArticle(@PathVariable(name = "id") Long id) {
-		
-		return this.plageNumArticleService.delete(id);
-	}
-	
-	
-	
-	/*###########################################################
-	#############	Partie réservée pour Plage Numéro Dispo
-	###########################################################
-	*/
-	
-	@GetMapping(path = "plageNumDispo/list")
-	public List<PlageNumDispo> getAllPlageNumDispo(){
-		
-		return this.plageNumDispoService.findAll();
-	}
-	
-	@GetMapping(path = "plageNumDispo/byCodPlaNumDis/{id}")
-	public Optional<PlageNumDispo> getPlageNumDispoById(@PathVariable(name = "id") String id){
-		
-		return this.plageNumDispoService.findById(id);
-	}
-	
-	@PostMapping(path = "plageNumDispo/list")
-	public PlageNumDispo createPlageNumDispo( @RequestBody PlageNumDispo plageNumDispo) {
-		
-		return this.plageNumDispoService.save(plageNumDispo);
-	}
-	
-	@PutMapping(path = "plageNumDispo/byCodPlaNumDis/{id}")
-	public PlageNumDispo updatePlageNumDispo(@PathVariable(name = "id") String id, @RequestBody PlageNumDispo plageNumDispo) {
-		
-		return this.plageNumDispoService.edit(plageNumDispo, id);
-	}
-	
-	@DeleteMapping(path = "plageNumDispo/byCodPlaNumDis/{id}")
-	public Boolean deletePlageNumDispo(@PathVariable(name = "id") String id) {
-		
-		return this.plageNumDispoService.delete(id);
-	}	
 	
 	/*###########################################################
 	#############	Partie réservée pour stocker
@@ -418,6 +348,25 @@ public class MagasinController {
 		return this.invServ.save(inv);
 	}
 	
+	@PostMapping(path = "inventaire/list2")
+	public EncapInventaire createInventaireByEncap( @RequestBody EncapInventaire inv) {
+		List<LigneInventaire> lignes = inv.getLigneInventaires();
+		
+		Inventaire element = this.invServ.save(inv.getInventaire());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneInventaire lig = lignes.get(i);
+			lig.setInventaire(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		lignes = this.lInvServ.saveAll(lignes);
+		
+		return new EncapInventaire(element, lignes);
+	}
+
+	
 	@PutMapping(path = "inventaire/byCodSto/{id}")
 	public Inventaire updateInventaire(@PathVariable(name = "id") String id, @RequestBody Inventaire inv) {
 		
@@ -461,6 +410,73 @@ public class MagasinController {
 		
 		return this.lInvServ.delete(id);
 	}	
+
+	
+	/*###########################################################
+	###########	Partie réservée pour AffectUniterToArticle#############
+	#############################################################
+	*/
+	
+	@GetMapping(path = "affectUniterToArticle/list")
+	public List<AffectUniterToArticle> getAllAffectUniterToArticle(){	
+		return this.affectUniterToArticleService.getAll();
+	}
+	
+	@GetMapping(path = "affectUniterToArticle/byIdAffUniToArti/{id}")
+	public AffectUniterToArticle getLigneAffectUniterToArticleById(@PathVariable(name = "id") Long id){	
+		return this.affectUniterToArticleService.getById(id);
+	}
+	
+	@PostMapping(path = "affectUniterToArticle/list")
+	public AffectUniterToArticle createAffectUniterToArticle( @RequestBody AffectUniterToArticle affectUniterToArticle) {
+		return this.affectUniterToArticleService.save(affectUniterToArticle);
+	}
+	
+	@PutMapping(path = "affectUniterToArticle/byIdAffUniToArti/{id}")
+	public AffectUniterToArticle updateAffectUniterToArticle(@PathVariable(name = "id") Long id, @RequestBody AffectUniterToArticle affectUniterToArticle) {
+		
+		return this.affectUniterToArticleService.edit(id, affectUniterToArticle);
+	}
+	
+	@DeleteMapping(path = "affectUniterToArticle/byIdAffUniToArti/{id}")
+	public Boolean deleteAffectUniterToArticle(@PathVariable(name = "id") Long id) {
+		
+		return this.affectUniterToArticleService.delete(id);
+	}	
+
+	
+	/*###########################################################
+	###########	Partie réservée pour TypeArticle#############
+	#############################################################
+	*/
+	
+	@GetMapping(path = "typeArticle/list")
+	public List<TypeArticle> getAllTypeArticle(){	
+		return this.typeArticleService.getAll();
+	}
+	
+	@GetMapping(path = "typeArticle/byCodTypArti/{id}")
+	public TypeArticle getTypeArticleById(@PathVariable(name = "id") String id){	
+		return this.typeArticleService.getById(id);
+	}
+	
+	@PostMapping(path = "typeArticle/list")
+	public TypeArticle createTypeArticle( @RequestBody TypeArticle typeArticle) {
+		return this.typeArticleService.save(typeArticle);
+	}
+	
+	@PutMapping(path = "typeArticle/byCodTypArti/{id}")
+	public TypeArticle updateTypeArticle(@PathVariable(name = "id") String id, @RequestBody TypeArticle typeArticle) {
+		
+		return this.typeArticleService.edit(id, typeArticle);
+	}
+	
+	@DeleteMapping(path = "typeArticle/byCodTypArti/{id}")
+	public Boolean deleteTypeArticle(@PathVariable(name = "id") String id) {
+		
+		return this.typeArticleService.delete(id);
+	}	
+
 	
 	
 	

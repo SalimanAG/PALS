@@ -25,6 +25,13 @@ public class LigneApproService {
 		return this.repo.save(ligneAppro);
 	}
 	
+	
+	public List<LigneAppro> saveAll (List<LigneAppro> ligneAppros) {
+			
+		return this.repo.saveAll(ligneAppros);
+	}
+	
+	
 	public LigneAppro edit(Long id, LigneAppro ligneAppro) {
 		
 		LigneAppro entiter = this.repo.getOne(id);
@@ -58,7 +65,7 @@ public class LigneApproService {
 		return this.repo.findAll();
 	}
 	
-	public List<LigneAppro> findByIdLigneAppro(Long idLigneAppro){
+	/*public List<LigneAppro> findByIdLigneAppro(Long idLigneAppro){
 		
 		return this.repo.findByIdLigneAppro(idLigneAppro);
 	}
@@ -81,6 +88,6 @@ public class LigneApproService {
 	public List<LigneAppro> findByLigneDA(LigneDemandeAppro ligneDemandeAppro){
 		
 		return this.repo.findByLigneDA(ligneDemandeAppro);
-	}
+	}*/
 	
 }

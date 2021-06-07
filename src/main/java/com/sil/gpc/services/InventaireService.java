@@ -34,6 +34,7 @@ public class InventaireService {
 		opc.setExercice(inv.getExercice());
 		opc.setMagasin(inv.getMagasin());
 		opc.setValideInve(inv.isValideInve());
+		
 		return repos.save(opc);
 		}else
 			return null;

@@ -32,6 +32,7 @@ public class AffectDroitGroupUserService {
    			AffectDroitGroupUser por=repo.getOne(id);
    			por.setGroupUser(dguser.getGroupUser());
    			por.setDroitUser(dguser.getDroitUser());
+   			
    			return this.repo.save(por);
        }
    		return null;

@@ -36,12 +36,20 @@ public class DemandeApprovisionnement implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public DemandeApprovisionnement(String numDA, Date dateDA, Exercice exercice) {
+	
+
+	public DemandeApprovisionnement(String numDA, Date dateDA, int valeur, boolean valideDA, Exercice exercice,
+			Service service) {
 		super();
 		this.numDA = numDA;
 		this.dateDA = dateDA;
+		this.valeur = valeur;
+		this.valideDA = valideDA;
 		this.exercice = exercice;
+		this.service = service;
 	}
+
+
 
 	/**
 	 * @return the valeur
@@ -107,25 +115,26 @@ public class DemandeApprovisionnement implements Serializable{
 		this.exercice = exercice;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(dateDA, exercice, numDA);
+
+
+	public Service getService() {
+		return service;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		DemandeApprovisionnement other = (DemandeApprovisionnement) obj;
-		return Objects.equals(dateDA, other.dateDA) && Objects.equals(exercice, other.exercice)
-				&& Objects.equals(numDA, other.numDA);
+
+
+	public void setService(Service service) {
+		this.service = service;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "DemandeApprovisionnement [numDA=" + numDA + ", dateDA=" + dateDA + ", valeur=" + valeur + ", valideDA="
+				+ valideDA + ", exercice=" + exercice + ", service=" + service + "]";
+	}
+
+
 
 }

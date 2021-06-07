@@ -39,36 +39,7 @@ public class Magasin implements Serializable{
 		this.libMagasin = libMagasin;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeMagasin == null) ? 0 : codeMagasin.hashCode());
-		result = prime * result + ((libMagasin == null) ? 0 : libMagasin.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Magasin other = (Magasin) obj;
-		if (codeMagasin == null) {
-			if (other.codeMagasin != null)
-				return false;
-		} else if (!codeMagasin.equals(other.codeMagasin))
-			return false;
-		if (libMagasin == null) {
-			if (other.libMagasin != null)
-				return false;
-		} else if (!libMagasin.equals(other.libMagasin))
-			return false;
-		return true;
-	}
 
 	@Override
 	public String toString() {

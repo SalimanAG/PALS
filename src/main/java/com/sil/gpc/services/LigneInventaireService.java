@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneInventaire;
 import com.sil.gpc.repositories.LigneInventaireRepository;
 
@@ -27,6 +28,13 @@ public class LigneInventaireService {
 		return repos.findAll();
 	}
 	
+	
+	public List<LigneInventaire> saveAll (List<LigneInventaire> ligneInventaires) {
+		
+		return this.repos.saveAll(ligneInventaires);
+	}
+	
+	
 	public LigneInventaire edit(LigneInventaire lInv, Long num){
 		LigneInventaire opc=repos.findById(num).get();
 		if (opc!=null) {
@@ -36,6 +44,7 @@ public class LigneInventaireService {
 			opc.setPu(lInv.getPu());
 			opc.setStockreel(lInv.getStockreel());
 			opc.setStockTheoriq(lInv.getStockTheoriq());
+			
 			return repos.save(opc);
 		}else
 			return null;

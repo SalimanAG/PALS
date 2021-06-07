@@ -53,6 +53,8 @@ public class DemandeApproService {
 			entiter.setDateDA(demandeApprovisionnement.getDateDA());
 			entiter.setExercice(demandeApprovisionnement.getExercice());
 			entiter.setValideDA(demandeApprovisionnement.isValideDA());
+			entiter.setService(demandeApprovisionnement.getService());
+			
 			return this.repo.save(entiter);
 		}
 		

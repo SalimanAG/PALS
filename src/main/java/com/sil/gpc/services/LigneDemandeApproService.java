@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.DemandeApprovisionnement;
+import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneDemandeAppro;
 import com.sil.gpc.repositories.LigneDemandeApproRepository;
 
@@ -25,6 +26,14 @@ public class LigneDemandeApproService {
 		return this.repo.save(ligneDemandeAppro);
 	}
 	
+	
+	public List<LigneDemandeAppro> saveAll (List<LigneDemandeAppro> ligneDemandeAppros) {
+		
+		return this.repo.saveAll(ligneDemandeAppros);
+	}
+	
+	
+	
 	public LigneDemandeAppro edit (Long id, LigneDemandeAppro ligneDemandeAppro) {
 		
 		LigneDemandeAppro entiter = this.repo.getOne(id);
@@ -32,6 +41,7 @@ public class LigneDemandeApproService {
 			entiter.setAppro(ligneDemandeAppro.getAppro());
 			entiter.setArticle(ligneDemandeAppro.getArticle());
 			entiter.setQuantiteDemandee(ligneDemandeAppro.getQuantiteDemandee());
+			entiter.setUniter(ligneDemandeAppro.getUniter());
 			
 			return this.repo.save(entiter);
 		}
@@ -57,7 +67,7 @@ public class LigneDemandeApproService {
 		return this.repo.findAll();
 	}
 	
-	public List<LigneDemandeAppro> findByIdLigneDA(Long idLigneDA){
+	/*public List<LigneDemandeAppro> findByIdLigneDA(Long idLigneDA){
 		
 		return this.repo.findByIdLigneDA(idLigneDA);
 	}
@@ -75,6 +85,6 @@ public class LigneDemandeApproService {
 	public List<LigneDemandeAppro> findByAppro(DemandeApprovisionnement appro){
 		
 		return this.repo.findByAppro(appro);
-	}
+	}*/
 	
 }

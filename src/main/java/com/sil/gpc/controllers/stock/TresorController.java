@@ -15,25 +15,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.DemandeApprovisionnement;
+import com.sil.gpc.domains.FactureProFormAcha;
 import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneDemandeAppro;
+import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.domains.Reception;
-import com.sil.gpc.domains.TresCom;
+import com.sil.gpc.encapsuleurs.EncapCommande;
+import com.sil.gpc.encapsuleurs.EncapDemandeAppro;
+import com.sil.gpc.encapsuleurs.EncapFactureProformAchat;
+import com.sil.gpc.encapsuleurs.EncapReception;
 import com.sil.gpc.services.CommandeService;
 import com.sil.gpc.services.DemandeApproService;
 import com.sil.gpc.services.LigneCommandeService;
 import com.sil.gpc.services.LigneDemandeApproService;
 import com.sil.gpc.services.LigneReceptionService;
 import com.sil.gpc.services.ReceptionService;
-import com.sil.gpc.services.TresComService;
 
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-gpc/v1/stock/")
 public class TresorController {
 
-	private final TresComService tresComService;
+
 	private final CommandeService commandeService;
 	private final LigneCommandeService ligneCommandeService;
 	private final ReceptionService receptionService;
@@ -41,12 +45,12 @@ public class TresorController {
 	private final DemandeApproService demandeApproService;
 	private final LigneDemandeApproService ligneDemandeApproService;
 	
-	public TresorController(TresComService tresComService, CommandeService commandeService,
+	public TresorController(CommandeService commandeService,
 			LigneCommandeService ligneCommandeService, ReceptionService receptionService,
 			LigneReceptionService ligneReceptionService, DemandeApproService demandeApproService,
 			LigneDemandeApproService ligneDemandeApproService) {
 		super();
-		this.tresComService = tresComService;
+		
 		this.commandeService = commandeService;
 		this.ligneCommandeService = ligneCommandeService;
 		this.receptionService = receptionService;
@@ -54,42 +58,7 @@ public class TresorController {
 		this.demandeApproService = demandeApproService;
 		this.ligneDemandeApproService = ligneDemandeApproService;
 	}
-	
-	/*###########################################################
-	#############	Partie réservée pour TresCom
-	###########################################################
-	*/
-	
-	@GetMapping(path = "rp/list")
-	public List<TresCom> getAllRp(){
 		
-		return this.tresComService.getAll();
-	}
-	
-	@GetMapping(path = "rp/byCodRp/{id}")
-	public Optional<TresCom> getRpById(@PathVariable(name = "id") String id){
-		
-		return this.tresComService.findById(id);
-	}
-	
-	@PostMapping(path = "rp/list")
-	public TresCom createRp( @RequestBody TresCom tresCom) {
-		
-		return this.tresComService.save(tresCom);
-	}
-	
-	@PutMapping(path = "rp/byCodRp/{id}")
-	public TresCom updateRp(@PathVariable(name = "id") String id, @RequestBody TresCom tresCom) {
-		
-		return this.tresComService.edit(id, tresCom);
-	}
-	
-	@DeleteMapping(path = "rp/byCodRp/{id}")
-	public Boolean deleteRp(@PathVariable(name = "id") String id) {
-		
-		return this.tresComService.delete(id);
-	}
-	
 
 	/*###########################################################
 	#############	Partie réservée pour commande
@@ -103,7 +72,7 @@ public class TresorController {
 	}
 	
 	@GetMapping(path = "commande/byCodCom/{id}")
-	public Commande getCommandeById(@PathVariable(name = "id") String id){
+	public Commande getCommandeById(@PathVariable(name = "id") Long id){
 		
 		return this.commandeService.getById(id);
 	}
@@ -114,14 +83,35 @@ public class TresorController {
 		return this.commandeService.save(commande);
 	}
 	
+	
+	@PostMapping(path = "commande/list2")
+	public EncapCommande createCommandeByEncap( @RequestBody EncapCommande encapCommande) {
+		List<LigneCommande> lignes = encapCommande.getLigneCommandes();
+		
+		Commande element = this.commandeService.save(encapCommande.getCommande());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneCommande lig = lignes.get(i);
+			lig.setNumCommande(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		lignes = this.ligneCommandeService.saveAll(lignes);
+		
+		return new EncapCommande(element, lignes);
+	}
+
+	
+	
 	@PutMapping(path = "commande/byCodCom/{id}")
-	public Commande updateCommande(@PathVariable(name = "id") String id, @RequestBody Commande commande) {
+	public Commande updateCommande(@PathVariable(name = "id") Long id, @RequestBody Commande commande) {
 		
 		return this.commandeService.edit(id, commande);
 	}
 	
 	@DeleteMapping(path = "commande/byCodCom/{id}")
-	public Boolean deleteCommande(@PathVariable(name = "id") String id) {
+	public Boolean deleteCommande(@PathVariable(name = "id") Long id) {
 		
 		return this.commandeService.delete(id);
 	}
@@ -187,6 +177,26 @@ public class TresorController {
 		
 		return this.receptionService.save(reception);
 	}
+	
+	
+	@PostMapping(path = "reception/list2")
+	public EncapReception createReceptionByEncap( @RequestBody EncapReception encapReception) {
+		List<LigneReception> lignes = encapReception.getLigneReceptions();
+		
+		Reception element = this.receptionService.save(encapReception.getReception());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneReception lig = lignes.get(i);
+			lig.setReception(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		lignes = this.ligneReceptionService.saveAll(lignes);
+		
+		return new EncapReception(element, lignes);
+	}
+	
 	
 	@PutMapping(path = "reception/byCodRec/{id}")
 	public Reception updateReception(@PathVariable(name = "id") String id, @RequestBody Reception reception) {
@@ -261,6 +271,26 @@ public class TresorController {
 		
 		return this.demandeApproService.save(demandeApprovisionnement);
 	}
+	
+	
+	@PostMapping(path = "demandeAppro/list2")
+	public EncapDemandeAppro createDemandeApproByEncap( @RequestBody EncapDemandeAppro encapDemandeAppro) {
+		List<LigneDemandeAppro> lignes = encapDemandeAppro.getLigneDemandeAppros();
+		
+		DemandeApprovisionnement element = this.demandeApproService.save(encapDemandeAppro.getDemandeApprovisionnement());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneDemandeAppro lig = lignes.get(i);
+			lig.setAppro(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		lignes = this.ligneDemandeApproService.saveAll(lignes);
+		
+		return new EncapDemandeAppro(element, lignes);
+	}
+	
 	
 	@PutMapping(path = "demandeAppro/byCodDemApp/{id}")
 	public DemandeApprovisionnement updateDemandeAppro(@PathVariable(name = "id") String id, @RequestBody DemandeApprovisionnement demandeApprovisionnement) {

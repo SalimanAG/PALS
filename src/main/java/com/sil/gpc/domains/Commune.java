@@ -96,29 +96,16 @@ public class Commune implements Serializable{
 	}
 
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(adresseMairie, codeCommune, codeDepartement, entetePage, nomCommune, numTelMairie,
-				piedPage);
+
+	public Departement getCodeDepartement() {
+		return codeDepartement;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Commune other = (Commune) obj;
-		return Objects.equals(adresseMairie, other.adresseMairie) && Objects.equals(codeCommune, other.codeCommune)
-				&& Objects.equals(codeDepartement, other.codeDepartement)
-				&& Objects.equals(entetePage, other.entetePage) && Objects.equals(nomCommune, other.nomCommune)
-				&& Objects.equals(numTelMairie, other.numTelMairie) && Objects.equals(piedPage, other.piedPage);
+
+	public void setCodeDepartement(Departement codeDepartement) {
+		this.codeDepartement = codeDepartement;
 	}
+
 
 	@Override
 	public String toString() {

@@ -33,8 +33,8 @@ public class ExerciceService {
 			entiter.setDateDebut(exercice.getDateDebut());
 			entiter.setDateFin(exercice.getDateFin());
 			entiter.setEtatExo(exercice.getEtatExo());
-			entiter.setExoSelectionner(exercice.isExoSelectionner());
 			entiter.setLibExercice(exercice.getLibExercice());
+			entiter.setCloturerExo(exercice.isCloturerExo());
 			
 			return this.repo.save(entiter);
 		}

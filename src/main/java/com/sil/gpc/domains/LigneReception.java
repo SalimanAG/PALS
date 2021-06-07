@@ -19,10 +19,11 @@ public class LigneReception implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idLigneReception;
 	private double quantiteLigneReception;
-	private double PULigneReception;
+	private double puLigneReception;
 	private String observationLigneReception;
 	private Long numSerieDebLigneReception;
 	private Long numSerieFinLigneReception;
+	private boolean imputer;
 	
 	@ManyToOne(targetEntity = LigneCommande.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande")
@@ -38,17 +39,22 @@ public class LigneReception implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LigneReception(double quantiteLigneReception, double pULigneReception,
+
+	public LigneReception(Long idLigneReception, double quantiteLigneReception, double puLigneReception,
 			String observationLigneReception, Long numSerieDebLigneReception, Long numSerieFinLigneReception,
-			LigneCommande ligneCommande) {
+			boolean imputer, LigneCommande ligneCommande, Reception reception) {
 		super();
+		this.idLigneReception = idLigneReception;
 		this.quantiteLigneReception = quantiteLigneReception;
-		PULigneReception = pULigneReception;
+		this.puLigneReception = puLigneReception;
 		this.observationLigneReception = observationLigneReception;
 		this.numSerieDebLigneReception = numSerieDebLigneReception;
 		this.numSerieFinLigneReception = numSerieFinLigneReception;
+		this.imputer = imputer;
 		this.ligneCommande = ligneCommande;
+		this.reception = reception;
 	}
+
 
 	/**
 	 * @return the idLigneReception
@@ -78,19 +84,28 @@ public class LigneReception implements Serializable {
 		this.quantiteLigneReception = quantiteLigneReception;
 	}
 
-	/**
-	 * @return the pULigneReception
-	 */
-	public double getPULigneReception() {
-		return PULigneReception;
+
+	
+
+	public double getPuLigneReception() {
+		return puLigneReception;
 	}
 
-	/**
-	 * @param pULigneReception the pULigneReception to set
-	 */
-	public void setPULigneReception(double pULigneReception) {
-		PULigneReception = pULigneReception;
+
+	public void setPuLigneReception(double puLigneReception) {
+		this.puLigneReception = puLigneReception;
 	}
+
+
+	public boolean isImputer() {
+		return imputer;
+	}
+
+
+	public void setImputer(boolean imputer) {
+		this.imputer = imputer;
+	}
+
 
 	/**
 	 * @return the observationLigneReception
@@ -162,13 +177,15 @@ public class LigneReception implements Serializable {
 		this.reception = reception;
 	}
 
+
 	@Override
 	public String toString() {
 		return "LigneReception [idLigneReception=" + idLigneReception + ", quantiteLigneReception="
-				+ quantiteLigneReception + ", PULigneReception=" + PULigneReception + ", observationLigneReception="
+				+ quantiteLigneReception + ", puLigneReception=" + puLigneReception + ", observationLigneReception="
 				+ observationLigneReception + ", numSerieDebLigneReception=" + numSerieDebLigneReception
-				+ ", numSerieFinLigneReception=" + numSerieFinLigneReception + ", ligneCommande=" + ligneCommande
-				+ ", reception=" + reception + "]";
+				+ ", numSerieFinLigneReception=" + numSerieFinLigneReception + ", imputer=" + imputer
+				+ ", ligneCommande=" + ligneCommande + ", reception=" + reception + "]";
 	}
 
+	
 }

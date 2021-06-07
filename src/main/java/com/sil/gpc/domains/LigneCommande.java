@@ -20,9 +20,11 @@ public class LigneCommande implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idLigneCommande;
 	private double qteLigneCommande;
-	private double PULigneCommande;
+	private double puLigneCommande;
 	private double remise;
-	private double TVA;
+	private double tva;
+	private double taibic;
+	private double ts;
 
 	//Liaison à la table Commande
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
@@ -44,25 +46,24 @@ public class LigneCommande implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param idLigneCommande
-	 * @param qteLigneCommande
-	 * @param pULigneCommande
-	 * @param remise
-	 * @param tVA
-	 * @param numCommande
-	 * @param article
-	 */
-	public LigneCommande(Long idLigneCommande, double qteLigneCommande, double pULigneCommande, double remise,
-			double tVA, Commande numCommande, Article article) {
+
+	public LigneCommande(Long idLigneCommande, double qteLigneCommande, double puLigneCommande, double remise,
+			double tva, double taibic, double ts, Commande numCommande, Article article, Uniter uniter) {
+		super();
 		this.idLigneCommande = idLigneCommande;
 		this.qteLigneCommande = qteLigneCommande;
-		PULigneCommande = pULigneCommande;
+		this.puLigneCommande = puLigneCommande;
 		this.remise = remise;
-		TVA = tVA;
+		this.tva = tva;
+		this.taibic = taibic;
+		this.ts = ts;
 		this.numCommande = numCommande;
 		this.article = article;
+		this.uniter = uniter;
 	}
+
+
+
 
 	public Long getIdLigneCommande() {
 		return idLigneCommande;
@@ -80,35 +81,66 @@ public class LigneCommande implements Serializable{
 		this.qteLigneCommande = qteLigneCommande;
 	}
 
-	public double getPULigneCommande() {
-		return PULigneCommande;
+
+	public double getPuLigneCommande() {
+		return puLigneCommande;
 	}
 
-	public void setPULigneCommande(double pULigneCommande) {
-		PULigneCommande = pULigneCommande;
+
+	public void setPuLigneCommande(double puLigneCommande) {
+		this.puLigneCommande = puLigneCommande;
 	}
 
-	/**
-	 * @return the remise
-	 */
+
 	public double getRemise() {
 		return remise;
 	}
 
-	/**
-	 * @param remise the remise to set
-	 */
+
 	public void setRemise(double remise) {
 		this.remise = remise;
 	}
 
-	public double getTVA() {
-		return TVA;
+
+	public double getTva() {
+		return tva;
 	}
 
-	public void setTVA(double tVA) {
-		TVA = tVA;
+
+	public void setTva(double tva) {
+		this.tva = tva;
 	}
+
+
+	public double getTaibic() {
+		return taibic;
+	}
+
+
+	public void setTaibic(double taibic) {
+		this.taibic = taibic;
+	}
+
+
+	public double getTs() {
+		return ts;
+	}
+
+
+	public void setTs(double ts) {
+		this.ts = ts;
+	}
+
+
+	public Uniter getUniter() {
+		return uniter;
+	}
+
+
+	public void setUniter(Uniter uniter) {
+		this.uniter = uniter;
+	}
+
 
 	public Commande getNumCommande() {
 		return numCommande;
@@ -124,6 +156,14 @@ public class LigneCommande implements Serializable{
 
 	public void setArticle(Article article) {
 		this.article = article;
+	}
+
+
+	@Override
+	public String toString() {
+		return "LigneCommande [idLigneCommande=" + idLigneCommande + ", qteLigneCommande=" + qteLigneCommande
+				+ ", puLigneCommande=" + puLigneCommande + ", remise=" + remise + ", tva=" + tva + ", taibic=" + taibic
+				+ ", ts=" + ts + ", numCommande=" + numCommande + ", article=" + article + ", uniter=" + uniter + "]";
 	}
 	
 	

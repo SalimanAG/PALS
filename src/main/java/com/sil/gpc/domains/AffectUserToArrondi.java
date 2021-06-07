@@ -81,4 +81,13 @@ public class AffectUserToArrondi implements Serializable{
 		this.utilisateur = utilisateur;
 	}
 
+	@Override
+	public String toString() {
+		return "AffectUserToArrondi [idAffectUserToArrondi=" + idAffectUserToArrondi + ", dateDebutAffectToArrondi="
+				+ dateDebutAffectToArrondi + ", dateFinAffectToArrondi=" + dateFinAffectToArrondi + ", arrondissement="
+				+ arrondissement + ", utilisateur=" + utilisateur + "]";
+	}
+	
+	
+
 }

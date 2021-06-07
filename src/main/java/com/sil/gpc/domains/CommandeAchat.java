@@ -12,6 +12,8 @@ public class CommandeAchat {
 	@Id
 	private String numComAchat;
 	
+	private double valeur;
+	
 
 	//Liaison à la table Commande
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
@@ -51,11 +53,24 @@ public class CommandeAchat {
 		this.commande = commande;
 	}
 
+	
+	
+
+	public double getValeur() {
+		return valeur;
+	}
+
+
+	public void setValeur(double valeur) {
+		this.valeur = valeur;
+	}
+
 
 	@Override
 	public String toString() {
-		return "CommandeAchat [numComAchat=" + numComAchat + ", commande=" + commande + "]";
+		return "CommandeAchat [numComAchat=" + numComAchat + ", valeur=" + valeur + ", commande=" + commande + "]";
 	}
+
 	
 	
 	

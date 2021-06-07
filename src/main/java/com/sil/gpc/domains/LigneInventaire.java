@@ -17,17 +17,17 @@ public class LigneInventaire {
 	private double pu;
 	private double stockTheoriq;
 	private double stockreel;
-	private String Observation;
+	private String observation;
 
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
 	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
-	public Article article;
+	private Article article;
 
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Inventaire.class)
 	@JoinColumn(name = "numInv", referencedColumnName = "numInv",nullable = false)
-	public Inventaire inventaire;
+	private Inventaire inventaire;
 
 	/**
 	 * 
@@ -37,23 +37,21 @@ public class LigneInventaire {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param pu
-	 * @param stockTheoriq
-	 * @param stockreel
-	 * @param observation
-	 * @param article
-	 * @param inventaire
-	 */
-	public LigneInventaire(double pu, double stockTheoriq, double stockreel, String observation, Article article,
-			Inventaire inventaire) {
+	
+
+	public LigneInventaire(Long idLigneInv, double pu, double stockTheoriq, double stockreel, String observation,
+			Article article, Inventaire inventaire) {
+		super();
+		this.idLigneInv = idLigneInv;
 		this.pu = pu;
 		this.stockTheoriq = stockTheoriq;
 		this.stockreel = stockreel;
-		Observation = observation;
+		this.observation = observation;
 		this.article = article;
 		this.inventaire = inventaire;
 	}
+
+
 
 	/**
 	 * @return the idLigneInv
@@ -111,19 +109,19 @@ public class LigneInventaire {
 		this.stockreel = stockreel;
 	}
 
-	/**
-	 * @return the observation
-	 */
+	
+
 	public String getObservation() {
-		return Observation;
+		return observation;
 	}
 
-	/**
-	 * @param observation the observation to set
-	 */
+
+
 	public void setObservation(String observation) {
-		Observation = observation;
+		this.observation = observation;
 	}
+
+
 
 	/**
 	 * @return the article
@@ -152,5 +150,16 @@ public class LigneInventaire {
 	public void setInventaire(Inventaire inventaire) {
 		this.inventaire = inventaire;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "LigneInventaire [idLigneInv=" + idLigneInv + ", pu=" + pu + ", stockTheoriq=" + stockTheoriq
+				+ ", stockreel=" + stockreel + ", observation=" + observation + ", article=" + article + ", inventaire="
+				+ inventaire + "]";
+	}
+	
+	
 	
 }

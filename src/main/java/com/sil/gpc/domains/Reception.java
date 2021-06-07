@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,13 +16,14 @@ import javax.persistence.ManyToOne;
 public class Reception implements Serializable {
 
 	@Id
-	@Column(length = 20)
+	@Column(length = 50)
 	private String numReception;
-	@Column(length = 150)
 	private String observation;
-	private Date dateReception;
+	private Timestamp dateReception;
 	private boolean valideRecep;
 	private int valeur;
+	private String referenceReception;
+	private String refBordLivraiRecept;
 
 	@ManyToOne(targetEntity = Exercice.class)
 	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice")
@@ -38,17 +40,22 @@ public class Reception implements Serializable {
 	}
 	
 	
-	public Reception(String numReception, String observation, Date dateReception, boolean valideRecep, int valeur,
-			Exercice exercice, Magasin magasin) {
+
+	public Reception(String numReception, String observation, Timestamp dateReception, boolean valideRecep, int valeur,
+			String referenceReception, String refBordLivraiRecept, Exercice exercice, Magasin magasin) {
 		super();
 		this.numReception = numReception;
 		this.observation = observation;
 		this.dateReception = dateReception;
 		this.valideRecep = valideRecep;
 		this.valeur = valeur;
+		this.referenceReception = referenceReception;
+		this.refBordLivraiRecept = refBordLivraiRecept;
 		this.exercice = exercice;
 		this.magasin = magasin;
 	}
+
+
 
 
 	public Exercice getExercice() {
@@ -89,19 +96,43 @@ public class Reception implements Serializable {
 		this.observation = observation;
 	}
 
-	/**
-	 * @return the dateReception
-	 */
-	public Date getDateReception() {
+	
+
+	public Timestamp getDateReception() {
 		return dateReception;
 	}
 
-	/**
-	 * @param dateReception the dateReception to set
-	 */
-	public void setDateReception(Date dateReception) {
+
+
+	public void setDateReception(Timestamp dateReception) {
 		this.dateReception = dateReception;
 	}
+
+
+
+	public String getReferenceReception() {
+		return referenceReception;
+	}
+
+
+
+	public void setReferenceReception(String referenceReception) {
+		this.referenceReception = referenceReception;
+	}
+
+
+
+	public String getRefBordLivraiRecept() {
+		return refBordLivraiRecept;
+	}
+
+
+
+	public void setRefBordLivraiRecept(String refBordLivraiRecept) {
+		this.refBordLivraiRecept = refBordLivraiRecept;
+	}
+
+
 
 	public boolean isValideRecep() {
 		return valideRecep;
@@ -122,10 +153,17 @@ public class Reception implements Serializable {
 	public void setMagasin(Magasin magasin) {
 		this.magasin = magasin;
 	}
+
+
+
 	@Override
 	public String toString() {
 		return "Reception [numReception=" + numReception + ", observation=" + observation + ", dateReception="
-				+ dateReception + ", valideRecep=" + valideRecep + "]";
+				+ dateReception + ", valideRecep=" + valideRecep + ", valeur=" + valeur + ", referenceReception="
+				+ referenceReception + ", refBordLivraiRecept=" + refBordLivraiRecept + ", exercice=" + exercice
+				+ ", magasin=" + magasin + "]";
 	}
-
+	
+	
+	
 }

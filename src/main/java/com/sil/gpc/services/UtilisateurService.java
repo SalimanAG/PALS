@@ -36,6 +36,8 @@ public class UtilisateurService {
    			usermod.setFonctionUtilisateur(user.getFonctionUtilisateur());
    			usermod.setService(user.getService());
    			usermod.setService(user.getService());
+   			
+   			
    			return this.userRepository.save(usermod);
        }
    		return null;

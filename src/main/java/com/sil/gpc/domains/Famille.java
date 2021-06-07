@@ -31,11 +31,17 @@ public class Famille implements Serializable {
 		super();
 	}
 
-	public Famille(String codeFamille, String libFamille) {
+
+
+	public Famille(String codeFamille, String libFamille, Famille superFamille, Magasin magasin) {
 		super();
 		this.codeFamille = codeFamille;
 		this.libFamille = libFamille;
+		this.superFamille = superFamille;
+		this.magasin = magasin;
 	}
+
+
 
 	public String getCodeFamille() {
 		return codeFamille;
@@ -53,29 +59,30 @@ public class Famille implements Serializable {
 		this.libFamille = libFamille;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(codeFamille, libFamille);
+
+
+	public Famille getSuperFamille() {
+		return superFamille;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Famille other = (Famille) obj;
-		return Objects.equals(codeFamille, other.codeFamille) && Objects.equals(libFamille, other.libFamille);
+	public void setSuperFamille(Famille superFamille) {
+		this.superFamille = superFamille;
+	}
+
+	public Magasin getMagasin() {
+		return magasin;
+	}
+
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
 	}
 
 	@Override
 	public String toString() {
-		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + "]";
+		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + ", superFamille=" + superFamille
+				+ ", magasin=" + magasin + "]";
 	}
+
+
 
 }

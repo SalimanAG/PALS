@@ -21,7 +21,7 @@ public class ApprovisionnementService {
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
-approvisionnement.setValideAppro(true);	
+		approvisionnement.setValideAppro(true);	
 		
 		Integer val = 1, nbrMaxCaract = 6;
 		String code = "BA-";
@@ -56,6 +56,7 @@ approvisionnement.setValideAppro(true);
 			entiter.setDescriptionAppro(approvisionnement.getDescriptionAppro());
 			entiter.setValideAppro(approvisionnement.isValideAppro());
 			entiter.setExercice(approvisionnement.getExercice());
+			entiter.setMagasin(approvisionnement.getMagasin());
 			
 			return this.repo.save(entiter);
 		}

@@ -147,29 +147,9 @@ public class Stocker implements Serializable{
 	}
 	
 	
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(article, cmup, idStocker, magasin, quantiterStocker, stockDeSecuriter, stockMinimal);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Stocker other = (Stocker) obj;
-		return Objects.equals(article, other.article) && Objects.equals(cmup, other.cmup)
-				&& Objects.equals(idStocker, other.idStocker) && Objects.equals(magasin, other.magasin)
-				&& Objects.equals(quantiterStocker, other.quantiterStocker)
-				&& Objects.equals(stockDeSecuriter, other.stockDeSecuriter)
-				&& Objects.equals(stockMinimal, other.stockMinimal);
+	public void setStockMinimal(Long stockMinimal) {
+		this.stockMinimal = stockMinimal;
 	}
 
 	@Override

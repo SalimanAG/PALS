@@ -151,30 +151,6 @@ public class Utilisateur {
 				+ "]";
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(activeUtilisateur, askMdp1erLance, dateLastConnex, fonctionUtilisateur, idUtilisateur,
-				login, motDePass, nomUtilisateur, prenomUtilisateur, service);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Utilisateur other = (Utilisateur) obj;
-		return activeUtilisateur == other.activeUtilisateur && askMdp1erLance == other.askMdp1erLance
-				&& Objects.equals(dateLastConnex, other.dateLastConnex)
-				&& Objects.equals(fonctionUtilisateur, other.fonctionUtilisateur)
-				&& Objects.equals(idUtilisateur, other.idUtilisateur) && Objects.equals(login, other.login)
-				&& Objects.equals(motDePass, other.motDePass) && Objects.equals(nomUtilisateur, other.nomUtilisateur)
-				&& Objects.equals(prenomUtilisateur, other.prenomUtilisateur) && Objects.equals(service, other.service);
-	}
 	
 }

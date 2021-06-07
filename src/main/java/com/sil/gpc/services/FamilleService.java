@@ -30,6 +30,9 @@ public class FamilleService {
 		Famille entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			entiter.setLibFamille(famille.getLibFamille());
+			entiter.setMagasin(famille.getMagasin());
+			entiter.setSuperFamille(famille.getSuperFamille());
+			
 			return repo.save(entiter);
 		}
 		

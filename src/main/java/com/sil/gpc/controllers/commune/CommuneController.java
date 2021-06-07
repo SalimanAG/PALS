@@ -1,6 +1,6 @@
 package com.sil.gpc.controllers.commune;
 
-import java.sql.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,37 +18,39 @@ import com.sil.gpc.domains.AffectDroitGroupUser;
 import com.sil.gpc.domains.AffectUserGroup;
 import com.sil.gpc.domains.AffectUserToArrondi;
 import com.sil.gpc.domains.Arrondissement;
+import com.sil.gpc.domains.CategorieFrs;
+import com.sil.gpc.domains.CauseAnomalie;
+import com.sil.gpc.domains.CloturePeriodiq;
 import com.sil.gpc.domains.Commune;
 import com.sil.gpc.domains.Departement;
+import com.sil.gpc.domains.Direction;
 import com.sil.gpc.domains.DroitUser;
-import com.sil.gpc.domains.EtreAffecte;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.Fournisseur;
 import com.sil.gpc.domains.GroupUser;
-import com.sil.gpc.domains.InstituReverse;
 import com.sil.gpc.domains.Service;
-import com.sil.gpc.domains.SiteMarcher;
+import com.sil.gpc.domains.TypeService;
 import com.sil.gpc.domains.Pays;
-import com.sil.gpc.domains.PourcenReverse;
 import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.services.AffectDroitGroupUserService;
 import com.sil.gpc.services.AffectUserGroupService;
 import com.sil.gpc.services.AffectUserToArrondiService;
 import com.sil.gpc.services.ArrondissementService;
+import com.sil.gpc.services.CategorieFrsService;
+import com.sil.gpc.services.CauseAnomalieService;
+import com.sil.gpc.services.CloturePeriodiqService;
 import com.sil.gpc.services.CommuneService;
 import com.sil.gpc.services.DepartementService;
+import com.sil.gpc.services.DirectionService;
 import com.sil.gpc.services.DroitUserService;
-import com.sil.gpc.services.EtreAffeccteService;
 import com.sil.gpc.services.ExerciceService;
 import com.sil.gpc.services.FournisseurService;
 import com.sil.gpc.services.GroupUserService;
-import com.sil.gpc.services.InstituReverseService;
 import com.sil.gpc.services.PaysService;
-import com.sil.gpc.services.PourcenReverseService;
 import com.sil.gpc.services.QuartierService;
 import com.sil.gpc.services.ServiceService;
-import com.sil.gpc.services.SiteMarcherService;
+import com.sil.gpc.services.TypeServiceService;
 import com.sil.gpc.services.UtilisateurService;
 
 @RestController
@@ -65,23 +67,24 @@ public class CommuneController {
 	private final CommuneService communeService;
 	private final ArrondissementService arrondissementService;
 	private final QuartierService quartierService;
-	private final EtreAffeccteService etreAffecterService;
-	private final SiteMarcherService siMaS;
 	private final GroupUserService ug;
 	private final AffectDroitGroupUserService dgus;
 	private final AffectUserGroupService aug;
 	private final DroitUserService du;
-	private final InstituReverseService ir;
-	private final PourcenReverseService perce;
 	private final AffectUserToArrondiService auta;
+	private final CategorieFrsService categorieFrsService;
+	private final CauseAnomalieService causeAnomalieService;
+	private final DirectionService directionService;
+	private final CloturePeriodiqService cloturePeriodiqService;
+	private final TypeServiceService typeServiceService;
 
 	public CommuneController(ExerciceService exerciceService, FournisseurService fournisseurService,
 			ServiceService serviceService, UtilisateurService utilisateurService, PaysService paysService,
 			DepartementService departementService, CommuneService communeService,
 			ArrondissementService arrondissementService, QuartierService quartierService,
-			EtreAffeccteService etreAffecterService, SiteMarcherService siMaS, GroupUserService ug,
-			AffectDroitGroupUserService dgus, AffectUserGroupService aug, DroitUserService du, InstituReverseService ir,
-			PourcenReverseService perce, AffectUserToArrondiService auta) {
+			GroupUserService ug,
+			AffectDroitGroupUserService dgus, AffectUserGroupService aug, DroitUserService du,
+			AffectUserToArrondiService auta, DirectionService directionService, CloturePeriodiqService cloturePeriodiqService, CauseAnomalieService causeAnomalieService, CategorieFrsService categorieFrsService, TypeServiceService typeServiceService) {
 		this.exerciceService = exerciceService;
 		this.fournisseurService = fournisseurService;
 		this.serviceService = serviceService;
@@ -91,15 +94,16 @@ public class CommuneController {
 		this.communeService = communeService;
 		this.arrondissementService = arrondissementService;
 		this.quartierService = quartierService;
-		this.etreAffecterService = etreAffecterService;
-		this.siMaS = siMaS;
 		this.ug = ug;
 		this.dgus = dgus;
 		this.aug = aug;
 		this.du = du;
-		this.ir = ir;
-		this.perce = perce;
 		this.auta = auta;
+		this.categorieFrsService = categorieFrsService;
+		this.causeAnomalieService = causeAnomalieService;
+		this.directionService = directionService;
+		this.cloturePeriodiqService = cloturePeriodiqService;
+		this.typeServiceService = typeServiceService;
 	}
 
 	/*###########################################################
@@ -143,50 +147,7 @@ public class CommuneController {
 		return this.exerciceService.delete(id);
 	}
 	
-	
-
-	/*###########################################################
-	#############	Partie réservée pour EtreAffecte
-	###########################################################
-	*/
-	
-	@GetMapping(path = "Affect/list")
-	public List<EtreAffecte> getAllAffectation(){
 		
-		return this.etreAffecterService.getAllAffect();
-	}
-	
-	@GetMapping(path = "Affect/byId/{id}")
-	public Optional<EtreAffecte> getAffectationById(@PathVariable(name = "id") Long id){
-		
-		return this.etreAffecterService.findById(id);
-	}
-	
-@GetMapping(path = "Affect/bydatArr/{exoSel}")
-	public List<EtreAffecte> findAffectationByDA(@PathVariable(name = "exoSel") Date da){
-		
-		return this.etreAffecterService.findByDateArrivee(da);
-	}
-	
-	@PostMapping(path = "Affect/list")
-	public EtreAffecte createAffectation( @RequestBody EtreAffecte affect) {
-		
-		return this.etreAffecterService.save(affect);
-	}
-	
-	@PutMapping(path = "Affect/byId/{id}")
-	public EtreAffecte updateAffectation(@PathVariable(name = "id") Long id, @RequestBody EtreAffecte affect) {
-		
-		return this.etreAffecterService.edit(id, affect);
-	}
-	
-	@DeleteMapping(path = "Affect/byId/{id}")
-	public Boolean deleteAffectation(@PathVariable(name = "id") Long id) {
-		
-		return this.etreAffecterService.delete(id);
-	}
-	
-	
 	
 	/*###########################################################
 	#############	Partie réservée pour fournisseur
@@ -790,126 +751,6 @@ public class CommuneController {
 	}	
 
 	
-	/*###########################################################
-	#############	Partie réservée pour siteMarcher
-	###########################################################
-	*/
-	@GetMapping(path = "site/list")
-	public List<SiteMarcher> getAllSite(){
-		
-		return this.siMaS.getAll();
-	}
-	
-	@GetMapping(path = "site/byCodSit/{id}")
-	public Optional<SiteMarcher> getSiteById(@PathVariable(name = "id") String id){
-		
-		return this.siMaS.findById(id);
-	}
-	
-	@GetMapping(path = "site/byLibSit/{lib}")
-	public List<SiteMarcher> getSiteByLibelle(@PathVariable(name = "nom") String lib){
-		
-		return this.siMaS.findByLibe(lib);
-	}
-	
-	@PostMapping(path = "site/list")
-	public SiteMarcher createSite( @RequestBody SiteMarcher site) {
-		
-		return this.siMaS.save(site);
-	}
-	
-	@PutMapping(path = "site/byCodSit/{id}")
-	public SiteMarcher updateSite(@PathVariable(name = "id") String id, @RequestBody SiteMarcher sit) {
-		
-		return this.siMaS.edit(id, sit);
-	}
-	
-	@DeleteMapping(path = "site/byCodSit/{id}")
-	public Boolean deleteSite(@PathVariable(name = "id") String id) {
-		
-		return this.siMaS.delete(id);
-	}		
-
-	
-	/*###########################################################
-	#############	Partie réservée pour InstituReverse
-	###########################################################
-	*/
-	
-	@GetMapping(path = "ins/list")
-	public List<InstituReverse> getAllInstitut(){
-		
-		return this.ir.findAll();
-	}
-	
-	@GetMapping(path = "ins/byCodIns/{id}")
-	public InstituReverse getInstById(@PathVariable(name = "id") String id){
-		
-		return this.ir.getByCod(id);
-	}
-	
-	@GetMapping(path = "ins/byLibIns/{lib}")
-	public List<InstituReverse> getInstByLibelle(@PathVariable(name = "nom") String lib){
-		
-		return this.ir.getByLib(lib);
-	}
-	
-	@PostMapping(path = "ins/list")
-	public InstituReverse createIns( @RequestBody InstituReverse ins) {
-		
-		return this.ir.saveInst(ins);
-	}
-	
-	@PutMapping(path = "ins/byCodIns/{id}")
-	public InstituReverse updateInst(@PathVariable(name = "id") String id, @RequestBody InstituReverse ins) {
-		
-		return this.ir.editInst(id, ins);
-	}
-	
-	@DeleteMapping(path = "ins/byCodIns/{id}")
-	public Boolean deleteInst(@PathVariable(name = "id") String id) {
-		
-		return this.ir.delIntByCod(id);
-	}		
-
-	
-	/*###########################################################
-	#############	Partie réservée pour siteMarcher
-	###########################################################
-	*/
-	@GetMapping(path = "pourcentage/list")
-	public List<PourcenReverse> getAllPourcentages(){
-		
-		return this.perce.getAll();
-	}
-	
-	@GetMapping(path = "pourcentage/byId/{id}")
-	public Optional<PourcenReverse> getPourcentageById(@PathVariable(name = "id") Long id){
-		
-		return this.perce.findById(id);
-	}
-	
-	@PostMapping(path = "pourcentage/list")
-	public PourcenReverse createSite( @RequestBody PourcenReverse pource) {
-		
-		return this.perce.save(pource);
-	}
-	
-	@PutMapping(path = "pourcentage/byId/{id}")
-	public PourcenReverse updatePourcentage(@PathVariable(name = "id") Long id, @RequestBody PourcenReverse por) {
-		PourcenReverse p= perce.findById(id).get();
-		p.setArticle(por.getArticle());
-		p.setValPourcenRevers(por.getValPourcenRevers());
-		p.setInstituReverse(por.getInstituReverse());
-		return this.perce.save(por);
-	}
-	
-	@DeleteMapping(path = "pourcentage/byId/{id}")
-	public Boolean deleteSite(@PathVariable(name = "id") Long id) {
-		
-		return this.perce.delete(id);
-	}	
-
 	
 	/*###########################################################
 	#############	Partie réservée pour AffectUserToArrondi
@@ -943,6 +784,181 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 		
 		return this.auta.delete(id);
 	}	
+	
+
+	/*###########################################################
+	#############	Partie réservée pour CategorieFrs
+	###########################################################
+	*/
+	@GetMapping(path = "categorieFrs/list")
+	public List<CategorieFrs> getAllCategorieFrs(){
+		
+		return this.categorieFrsService.getAll();
+	}
+	
+	@GetMapping(path = "categorieFrs/byCodCatFrs/{id}")
+	public CategorieFrs getCategorieFrsById(@PathVariable(name = "id") String id){
+		
+		return this.categorieFrsService.getById(id);
+	}
+	
+	@PostMapping(path = "categorieFrs/list")
+	public CategorieFrs createCategorieFrs( @RequestBody CategorieFrs categorieFrs) {
+		
+		return this.categorieFrsService.save(categorieFrs);
+	}
+	
+	@PutMapping(path = "categorieFrs/byCodCatFrs/{id}")
+	public CategorieFrs updateCategorieFrs(@PathVariable(name = "id") String id, @RequestBody CategorieFrs categorieFrs) {
+		return this.categorieFrsService.edit(id, categorieFrs);
+	}
+	
+	@DeleteMapping(path = "categorieFrs/byCodCatFrs/{id}")
+	public Boolean deleteCategorieFrs(@PathVariable(name = "id") String id) {
+		
+		return this.categorieFrsService.delete(id);
+	}	
+
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour CauseAnomalie
+	###########################################################
+	*/
+	@GetMapping(path = "causeAnomalie/list")
+	public List<CauseAnomalie> getAllCauseAnomalie(){
+		
+		return this.causeAnomalieService.getAll();
+	}
+	
+	@GetMapping(path = "causeAnomalie/byCodCauAno/{id}")
+	public CauseAnomalie getCauseAnomalieById(@PathVariable(name = "id") String id){
+		
+		return this.causeAnomalieService.getById(id);
+	}
+	
+	@PostMapping(path = "causeAnomalie/list")
+	public CauseAnomalie createCauseAnomalie( @RequestBody CauseAnomalie causeAnomalie) {
+		
+		return this.causeAnomalieService.save(causeAnomalie);
+	}
+	
+	@PutMapping(path = "causeAnomalie/byCodCauAno/{id}")
+	public CauseAnomalie updateCauseAnomalie(@PathVariable(name = "id") String id, @RequestBody CauseAnomalie causeAnomalie) {
+		return this.causeAnomalieService.edit(id, causeAnomalie);
+	}
+	
+	@DeleteMapping(path = "causeAnomalie/byCodCauAno/{id}")
+	public Boolean deleteCauseAnomalie(@PathVariable(name = "id") String id) {
+		
+		return this.causeAnomalieService.delete(id);
+	}	
+
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour TypeService
+	###########################################################
+	*/
+	@GetMapping(path = "typeService/list")
+	public List<TypeService> getAllTypeService(){
+		
+		return this.typeServiceService.getAll();
+	}
+	
+	@GetMapping(path = "typeService/byCodTypSer/{id}")
+	public TypeService getTypeServiceById(@PathVariable(name = "id") String id){
+		
+		return this.typeServiceService.getById(id);
+	}
+	
+	@PostMapping(path = "typeService/list")
+	public TypeService createTypeService( @RequestBody TypeService typeService) {
+		
+		return this.typeServiceService.save(typeService);
+	}
+	
+	@PutMapping(path = "typeService/byCodTypSer/{id}")
+	public TypeService updateDirection(@PathVariable(name = "id") String id, @RequestBody TypeService typeService) {
+		return this.typeServiceService.edit(id, typeService);
+	}
+	
+	@DeleteMapping(path = "typeService/byCodTypSer/{id}")
+	public Boolean deleteTypeService(@PathVariable(name = "id") String id) {
+		
+		return this.typeServiceService.delete(id);
+	}	
+
+	
+	/*###########################################################
+	#############	Partie réservée pour CloturePeriodiq
+	###########################################################
+	*/
+	@GetMapping(path = "cloturePeriodiq/list")
+	public List<CloturePeriodiq> getAllCloturePeriodiq(){
+		
+		return this.cloturePeriodiqService.getAll();
+	}
+	
+	@GetMapping(path = "cloturePeriodiq/byCodCloPer/{id}")
+	public CloturePeriodiq getCloturePeriodiqById(@PathVariable(name = "id") Long id){
+		
+		return this.cloturePeriodiqService.getById(id);
+	}
+	
+	@PostMapping(path = "cloturePeriodiq/list")
+	public CloturePeriodiq createCloturePeriodiq( @RequestBody CloturePeriodiq cloturePeriodiq) {
+		
+		return this.cloturePeriodiqService.save(cloturePeriodiq);
+	}
+	
+	@PutMapping(path = "cloturePeriodiq/byCodCloPer/{id}")
+	public CloturePeriodiq updateCloturePeriodiq(@PathVariable(name = "id") Long id, @RequestBody CloturePeriodiq cloturePeriodiq) {
+		return this.cloturePeriodiqService.edit(id, cloturePeriodiq);
+	}
+	
+	@DeleteMapping(path = "cloturePeriodiq/byCodCloPer/{id}")
+	public Boolean deleteCloturePeriodiq(@PathVariable(name = "id") Long id) {
+		
+		return this.cloturePeriodiqService.delete(id);
+	}	
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour Direction
+	###########################################################
+	*/
+	@GetMapping(path = "direction/list")
+	public List<Direction> getAllDirection(){
+		
+		return this.directionService.getAll();
+	}
+	
+	@GetMapping(path = "direction/byCodDir/{id}")
+	public Direction getDirectionById(@PathVariable(name = "id") String id){
+		
+		return this.directionService.getById(id);
+	}
+	
+	@PostMapping(path = "direction/list")
+	public Direction createDirection( @RequestBody Direction direction) {
+		
+		return this.directionService.save(direction);
+	}
+	
+	@PutMapping(path = "direction/byCodDir/{id}")
+	public Direction updateDirection(@PathVariable(name = "id") String id, @RequestBody Direction direction) {
+		return this.directionService.edit(id, direction);
+	}
+	
+	@DeleteMapping(path = "direction/byCodDir/{id}")
+	public Boolean deleteDirection(@PathVariable(name = "id") String id) {
+		
+		return this.directionService.delete(id);
+	}	
+
+
+
 	
 	
 }

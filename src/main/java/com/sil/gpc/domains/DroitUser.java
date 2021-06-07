@@ -21,16 +21,17 @@ public class DroitUser {
 	}
 
 
-	/**
-	 * @param codeDroitUser
-	 * @param libDroitUser
-	 * @param descriDroitUser
-	 */
-	public DroitUser(String codeDroitUser, String libDroitUser, String descriDroitUser) {
+
+	public DroitUser(Long idDroitUser, String codeDroitUser, String libDroitUser, String descriDroitUser) {
+		super();
+		this.idDroitUser = idDroitUser;
 		this.codeDroitUser = codeDroitUser;
 		this.libDroitUser = libDroitUser;
 		this.descriDroitUser = descriDroitUser;
 	}
+
+
+
 
 
 	/**

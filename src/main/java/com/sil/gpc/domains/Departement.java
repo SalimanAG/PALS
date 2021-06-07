@@ -79,26 +79,7 @@ public class Departement implements Serializable{
 		this.pays = pays;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(codeDepartement, nomDepartement, pays);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Departement other = (Departement) obj;
-		return Objects.equals(codeDepartement, other.codeDepartement)
-				&& Objects.equals(nomDepartement, other.nomDepartement) && Objects.equals(pays, other.pays);
-	}
 
 	@Override
 	public String toString() {

@@ -12,7 +12,7 @@ import com.sil.gpc.domains.LigneCommande;
 @Repository
 public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Long>{
 
-	public List<LigneCommande> findByIdLigneCommande (Long idLigneCommande);
+	/*public List<LigneCommande> findByIdLigneCommande (Long idLigneCommande);
 	
 	public List<LigneCommande> findByQteLigneCommande(Long qteLigneCommande);
 	
@@ -24,6 +24,6 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Lo
 	
 	public List<LigneCommande> findByNumCommande(Commande commande);
 	
-	public List<LigneCommande> findByArticle(Article article);
+	public List<LigneCommande> findByArticle(Article article);*/
 	
 }

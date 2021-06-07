@@ -44,37 +44,12 @@ public class Direction {
 
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeDirection == null) ? 0 : codeDirection.hashCode());
-		result = prime * result + ((libDirection == null) ? 0 : libDirection.hashCode());
-		return result;
+	public String toString() {
+		return "Direction [codeDirection=" + codeDirection + ", libDirection=" + libDirection + "]";
 	}
 
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Direction other = (Direction) obj;
-		if (codeDirection == null) {
-			if (other.codeDirection != null)
-				return false;
-		} else if (!codeDirection.equals(other.codeDirection))
-			return false;
-		if (libDirection == null) {
-			if (other.libDirection != null)
-				return false;
-		} else if (!libDirection.equals(other.libDirection))
-			return false;
-		return true;
-	}
-	
+
 	
 
 }

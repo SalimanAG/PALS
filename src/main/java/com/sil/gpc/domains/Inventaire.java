@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -14,7 +15,7 @@ public class Inventaire {
 
 	@Id
 	private String numInv;
-	private Date dateInv;
+	private Timestamp dateInv;
 	private String descrInv;
 	private boolean valideInve;
 	private int valeur;
@@ -32,7 +33,7 @@ public class Inventaire {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Inventaire(String numInv, Date dateInv, String descrInv, Exercice exercice, Magasin magasin) {
+	public Inventaire(String numInv, Timestamp dateInv, String descrInv, Exercice exercice, Magasin magasin) {
 		this.numInv = numInv;
 		this.dateInv = dateInv;
 		this.descrInv = descrInv;
@@ -64,11 +65,11 @@ public class Inventaire {
 		this.numInv = numInv;
 	}
 
-	public Date getDateInv() {
+	public Timestamp getDateInv() {
 		return dateInv;
 	}
 
-	public void setDateInv(Date dateInv) {
+	public void setDateInv(Timestamp dateInv) {
 		this.dateInv = dateInv;
 	}
 
@@ -95,6 +96,8 @@ public class Inventaire {
 	public void setMagasin(Magasin magasin) {
 		this.magasin = magasin;
 	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -102,26 +105,6 @@ public class Inventaire {
 				+ ", magasin=" + magasin + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(dateInv, descrInv, exercice, magasin, numInv);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Inventaire other = (Inventaire) obj;
-		return Objects.equals(dateInv, other.dateInv) && Objects.equals(descrInv, other.descrInv)
-				&& Objects.equals(exercice, other.exercice) && Objects.equals(magasin, other.magasin)
-				&& Objects.equals(numInv, other.numInv);
-	}
 	
 }

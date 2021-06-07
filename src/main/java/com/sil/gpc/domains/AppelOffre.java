@@ -12,7 +12,8 @@ public class AppelOffre {
 	@Id
 	private String numAppelOffre;
 	
-
+	private double valeur;
+	
 	//Liaison à la table Commande
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
@@ -55,6 +56,16 @@ public class AppelOffre {
 	@Override
 	public String toString() {
 		return "AppelOffre [numAppelOffre=" + numAppelOffre + ", commande=" + commande + "]";
+	}
+
+
+	public double getValeur() {
+		return valeur;
+	}
+
+
+	public void setValeur(double valeur) {
+		this.valeur = valeur;
 	}
 
 	

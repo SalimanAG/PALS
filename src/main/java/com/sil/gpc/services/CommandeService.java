@@ -21,6 +21,8 @@ public class CommandeService {
 	}
 	
 	public Commande save(Commande commande) {
+		
+		/*
 		commande.setValide(true);
 		Integer val = 1, nbrMaxCaract = 6;
 		String code = "CA-";
@@ -39,14 +41,17 @@ public class CommandeService {
 		}
 		
 		commande.setNumCommande(code+val);
-		System.out.println(commande.toString());
 		
-		if(repo.existsById(commande.getNumCommande())==false) return this.repo.save(commande) ;
+		*/
 		
-		return null;
+		//System.out.println(commande.toString());
+		
+		//if(repo.existsById(commande.getNumCommande())==false) 
+		return this.repo.save(commande) ;
+		//return null;
 	}
 	
-	public Commande edit(String id, Commande commande) {
+	public Commande edit(Long id, Commande commande) {
 		
 		Commande entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -62,7 +67,7 @@ public class CommandeService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
@@ -70,7 +75,7 @@ public class CommandeService {
 		return !this.repo.existsById(id);
 	}
 	
-	public Commande getById(String id){
+	public Commande getById(Long id){
 		
 		return this.repo.findById(id).get();
 	}
@@ -80,10 +85,6 @@ public class CommandeService {
 		return this.repo.findAll();
 	}
 	
-	public List<Commande> findByNumCommande(String numCommande){
-		
-		return this.repo.findByNumCommande(numCommande);
-	}
 	
 	public List<Commande> findByDateCommande(Date dateCommande){
 		

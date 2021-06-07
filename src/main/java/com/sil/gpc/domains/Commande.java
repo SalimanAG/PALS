@@ -18,13 +18,16 @@ public class Commande implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String numCommande;
+	private Long numCommande;
 	private Date dateCommande;
 	private Date dateRemise;
 	private String description;
 	private int delaiLivraison;
 	private boolean valide;
 	private int valeur;
+	private boolean liver;
+	private boolean reporter;
+	
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity =Fournisseur.class)
 	private Fournisseur frs;
 
@@ -38,25 +41,25 @@ public class Commande implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param numCommande
-	 * @param dateCommande
-	 * @param description
-	 * @param delaiLivraison
-	 * @param frs
-	 * @param exercice
-	 */
-	public Commande(String numCommande, Date dateCommande, Date dateRemise, String description, int delaiLivraison, Fournisseur frs,
-			Exercice exercice) {
+
+
+	public Commande(Long numCommande, Date dateCommande, Date dateRemise, String description, int delaiLivraison,
+			boolean valide, int valeur, boolean liver, boolean reporter, Fournisseur frs, Exercice exercice) {
+		super();
 		this.numCommande = numCommande;
 		this.dateCommande = dateCommande;
-		this.dateRemise= dateRemise;
+		this.dateRemise = dateRemise;
 		this.description = description;
 		this.delaiLivraison = delaiLivraison;
+		this.valide = valide;
+		this.valeur = valeur;
+		this.liver = liver;
+		this.reporter = reporter;
 		this.frs = frs;
 		this.exercice = exercice;
-		this.valide=true;
 	}
+
+
 
 	/**
 	 * @return the valide
@@ -89,14 +92,14 @@ public class Commande implements Serializable {
 	/**
 	 * @return the numCommande
 	 */
-	public String getNumCommande() {
+	public Long getNumCommande() {
 		return numCommande;
 	}
 
 	/**
 	 * @param numCommande the numCommande to set
 	 */
-	public void setNumCommande(String numCommande) {
+	public void setNumCommande(Long numCommande) {
 		this.numCommande = numCommande;
 	}
 
@@ -183,13 +186,36 @@ public class Commande implements Serializable {
 	public void setExercice(Exercice exercice) {
 		this.exercice = exercice;
 	}
+	
+	
+
+	public boolean isLiver() {
+		return liver;
+	}
+
+	public void setLiver(boolean liver) {
+		this.liver = liver;
+	}
+
+	public boolean isReporter() {
+		return reporter;
+	}
+
+	public void setReporter(boolean reporter) {
+		this.reporter = reporter;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Commande [numCommande=" + numCommande + ", dateCommande=" + dateCommande + ", dateRemise=" + dateRemise
 				+ ", description=" + description + ", delaiLivraison=" + delaiLivraison + ", valide=" + valide
-				+ ", valeur=" + valeur + ", frs=" + frs + ", exercice=" + exercice + "]";
+				+ ", valeur=" + valeur + ", liver=" + liver + ", reporter=" + reporter + ", frs=" + frs + ", exercice="
+				+ exercice + "]";
 	}
+
+	
 
 	
 }

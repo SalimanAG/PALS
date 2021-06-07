@@ -14,6 +14,7 @@ public class AffectDroitGroupUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idAffectDroitGroup;
+	
 	//Liaison  avec Droits des Utilisateurs
 		@ManyToOne(fetch = FetchType.EAGER,targetEntity = DroitUser.class)
 		@JoinColumn(name="idDroitUser", referencedColumnName = "idDroitUser", nullable = false)
@@ -58,6 +59,8 @@ public class AffectDroitGroupUser {
 			this.groupUser = groupUser;
 		}
 
+		
+		
 		@Override
 		public String toString() {
 			return "AffectDroitGroupUser [idAffectDroitGroup=" + idAffectDroitGroup + ", droitUser=" + droitUser

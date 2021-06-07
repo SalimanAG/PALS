@@ -17,7 +17,7 @@ public class DemandePrix {
 	private Timestamp dateDemandePrix;
 	private Timestamp dateLimiteDemandePrix;
 	private boolean valideDemandePrix;
-	private double reporter;
+	private boolean reporter;
 	
 	//Liaison à exercice
 		@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
@@ -30,7 +30,7 @@ public class DemandePrix {
 	}
 
 	public DemandePrix(String idDemandePrix, String designationDemandePrix, Timestamp dateDemandePrix,
-			Timestamp dateLimiteDemandePrix, boolean valideDemandePrix, double reporter, Exercice exercice) {
+			Timestamp dateLimiteDemandePrix, boolean valideDemandePrix, boolean reporter, Exercice exercice) {
 		super();
 		this.idDemandePrix = idDemandePrix;
 		this.designationDemandePrix = designationDemandePrix;
@@ -81,11 +81,12 @@ public class DemandePrix {
 		this.valideDemandePrix = valideDemandePrix;
 	}
 
-	public double getReporter() {
+
+	public boolean isReporter() {
 		return reporter;
 	}
 
-	public void setReporter(double reporter) {
+	public void setReporter(boolean reporter) {
 		this.reporter = reporter;
 	}
 

@@ -21,6 +21,6 @@ public interface ExerciceRepository extends JpaRepository<Exercice, String> {
 	
 	public List<Exercice> findByLibExercice(String libExercice);
 	
-	public List<Exercice> findByExoSelectionner(boolean exoSelectionner);
+	//public List<Exercice> findByExoSelectionner(boolean exoSelectionner);
 	
 }

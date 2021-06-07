@@ -37,6 +37,8 @@ public class StockerService {
    			stockmod.setCmup(stock.getCmup());
    			stockmod.setArticle(stock.getArticle());
    			stockmod.setMagasin(stock.getMagasin());
+   			stockmod.setStockDeSecuriter(stock.getStockDeSecuriter());
+   			
    			return this.stockerRepository.save(stockmod);
        }
    		return null;
