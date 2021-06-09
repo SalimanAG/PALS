@@ -28,7 +28,7 @@ public class DemandeApprovisionnement implements Serializable{
 	
 	//Liaison avec Centre de consommation 
 	@ManyToOne(targetEntity = Service.class,fetch = FetchType.EAGER)
-	@JoinColumn(name = "codeService", referencedColumnName = "codeService",nullable = false)
+	@JoinColumn(name = "numService", referencedColumnName = "numService",nullable = false)
 	public Service service;
 
 	public DemandeApprovisionnement() {

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,17 +15,19 @@ import javax.persistence.ManyToOne;
 public class Service implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numService;
 	private String codeService;
 	private String libService;
 	
 	//Liaison à la direction d'Appartenance
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Direction.class)
-	@JoinColumn(name = "codeDirection", referencedColumnName = "codeDirection")
+	@JoinColumn(name = "numDirection", referencedColumnName = "numDirection")
 	private Direction direction;
 	
 	//Liaison à son super centre de consommation
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Service.class)
-	@JoinColumn(name = "codeSuperService", referencedColumnName = "codeService")
+	@JoinColumn(name = "codeSuperService", referencedColumnName = "numService")
 	private Service superService;
 	
 	//Liaison à son type de centre de consommation
@@ -33,6 +37,14 @@ public class Service implements Serializable {
 	
 	public Service() {
 		super();
+	}
+
+	public Long getNumService() {
+		return numService;
+	}
+
+	public void setNumService(Long numService) {
+		this.numService = numService;
 	}
 
 	public Service(String codeService, String libService) {
@@ -85,9 +97,11 @@ public class Service implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Service [codeService=" + codeService + ", libService=" + libService + ", direction=" + direction
-				+ ", superService=" + superService + ", typeService=" + typeService + "]";
+		return "Service [numService=" + numService + ", codeService=" + codeService + ", libService=" + libService
+				+ ", direction=" + direction + ", superService=" + superService + ", typeService=" + typeService + "]";
 	}
+
+
 
 	
 	

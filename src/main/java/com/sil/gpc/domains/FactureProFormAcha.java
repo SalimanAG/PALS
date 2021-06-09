@@ -23,7 +23,7 @@ public class FactureProFormAcha {
 	
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Fournisseur.class)
-	@JoinColumn(name = "codeFrs", referencedColumnName = "codeFrs",nullable = false)
+	@JoinColumn(name = "numFournisseur", referencedColumnName = "numFournisseur",nullable = false)
 	public Fournisseur fournisseur;
 	
 	//Migration de la clé de l'exercice

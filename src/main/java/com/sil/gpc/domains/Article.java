@@ -5,6 +5,8 @@ import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,7 +16,10 @@ import javax.persistence.ManyToOne;
 
 public class Article implements Serializable {
 
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numArticle;
 	private String codeArticle;
 	private String libArticle;
 	private boolean stockerArticle;
@@ -95,6 +100,22 @@ public class Article implements Serializable {
 		this.exo = exo;
 		this.famille = famille;
 		this.fournisseur = fournisseur;
+	}
+
+
+
+
+
+	public Long getNumArticle() {
+		return numArticle;
+	}
+
+
+
+
+
+	public void setNumArticle(Long numArticle) {
+		this.numArticle = numArticle;
 	}
 
 
@@ -394,16 +415,19 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Article [codeArticle=" + codeArticle + ", libArticle=" + libArticle + ", stockerArticle="
-				+ stockerArticle + ", numSerieArticle=" + numSerieArticle + ", livrableArticle=" + livrableArticle
-				+ ", consommableArticle=" + consommableArticle + ", prixVenteArticle=" + prixVenteArticle
-				+ ", couleurArticle=" + couleurArticle + ", qteStIniTres=" + qteStIniTres + ", puStIniTres="
-				+ puStIniTres + ", datStInitArtTres=" + datStInitArtTres + ", specialiterArticle=" + specialiterArticle
-				+ ", abregerArticle=" + abregerArticle + ", compteArticle=" + compteArticle + ", codeBareArticle="
-				+ codeBareArticle + ", tvaArticle=" + tvaArticle + ", taxeSpecifiqArticle=" + taxeSpecifiqArticle
-				+ ", afficherArticle=" + afficherArticle + ", exo=" + exo + ", famille=" + famille + ", fournisseur="
-				+ fournisseur + "]";
+		return "Article [numArticle=" + numArticle + ", codeArticle=" + codeArticle + ", libArticle=" + libArticle
+				+ ", stockerArticle=" + stockerArticle + ", numSerieArticle=" + numSerieArticle + ", livrableArticle="
+				+ livrableArticle + ", consommableArticle=" + consommableArticle + ", prixVenteArticle="
+				+ prixVenteArticle + ", couleurArticle=" + couleurArticle + ", qteStIniTres=" + qteStIniTres
+				+ ", puStIniTres=" + puStIniTres + ", datStInitArtTres=" + datStInitArtTres + ", specialiterArticle="
+				+ specialiterArticle + ", abregerArticle=" + abregerArticle + ", compteArticle=" + compteArticle
+				+ ", codeBareArticle=" + codeBareArticle + ", tvaArticle=" + tvaArticle + ", taxeSpecifiqArticle="
+				+ taxeSpecifiqArticle + ", afficherArticle=" + afficherArticle + ", cmupActuArticle=" + cmupActuArticle
+				+ ", stockMinimArticle=" + stockMinimArticle + ", stockAlertArticle=" + stockAlertArticle
+				+ ", stockSecurArticle=" + stockSecurArticle + ", exo=" + exo + ", famille=" + famille
+				+ ", fournisseur=" + fournisseur + "]";
 	}
+
 	
 	
 

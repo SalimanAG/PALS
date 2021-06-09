@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,17 +16,19 @@ import javax.persistence.ManyToOne;
 public class Famille implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numFamille;
 	private String codeFamille;
 	private String libFamille;
 	
 	//Liaison à la sa superFamille
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Famille.class)
-	@JoinColumn(name = "codeSuperFamille", referencedColumnName = "codeFamille")
+	@JoinColumn(name = "codeSuperFamille", referencedColumnName = "numFamille")
 	private Famille superFamille;
 	
 	//Liaison à la son magasin qui la gère
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Magasin.class)
-	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin")
+	@JoinColumn(name = "numMagasin", referencedColumnName = "numMagasin")
 	private Magasin magasin;
 
 	public Famille() {
@@ -39,6 +43,18 @@ public class Famille implements Serializable {
 		this.libFamille = libFamille;
 		this.superFamille = superFamille;
 		this.magasin = magasin;
+	}
+
+
+
+	public Long getNumFamille() {
+		return numFamille;
+	}
+
+
+
+	public void setNumFamille(Long numFamille) {
+		this.numFamille = numFamille;
 	}
 
 
@@ -77,11 +93,15 @@ public class Famille implements Serializable {
 		this.magasin = magasin;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Famille [codeFamille=" + codeFamille + ", libFamille=" + libFamille + ", superFamille=" + superFamille
-				+ ", magasin=" + magasin + "]";
+		return "Famille [numFamille=" + numFamille + ", codeFamille=" + codeFamille + ", libFamille=" + libFamille
+				+ ", superFamille=" + superFamille + ", magasin=" + magasin + "]";
 	}
+
+
 
 
 

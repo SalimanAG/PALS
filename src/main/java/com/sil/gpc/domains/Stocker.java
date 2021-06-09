@@ -25,12 +25,12 @@ public class Stocker implements Serializable{
 
 	//Liaison à l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
-	@JoinColumn(name = "codeArticle",referencedColumnName = "codeArticle",nullable = false)
+	@JoinColumn(name = "numArticle",referencedColumnName = "numArticle",nullable = false)
 	private Article article;
 
 	//Liaison à l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Magasin.class)
-	@JoinColumn(name = "codeMagasin",referencedColumnName = "codeMagasin",nullable = false)
+	@JoinColumn(name = "numMagasin",referencedColumnName = "numMagasin",nullable = false)
 	private Magasin magasin;
 	
 	public Stocker() {

@@ -21,7 +21,7 @@ public class LigneInventaire {
 
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
-	@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle",nullable = false)
+	@JoinColumn(name = "numArticle", referencedColumnName = "numArticle",nullable = false)
 	private Article article;
 
 	//Migration de la clé de l'unité vers l'article

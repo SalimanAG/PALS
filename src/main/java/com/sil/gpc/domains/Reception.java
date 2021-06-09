@@ -30,7 +30,7 @@ public class Reception implements Serializable {
 	Exercice exercice;
 	
 	@ManyToOne(targetEntity = Magasin.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "codeMagasin", referencedColumnName = "codeMagasin")
+	@JoinColumn(name = "numMagasin", referencedColumnName = "numMagasin")
 	private Magasin magasin;
 	
 	

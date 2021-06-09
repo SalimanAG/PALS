@@ -33,12 +33,12 @@ public class LigneCommande implements Serializable{
 
 	//Liaison à la table Article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
-	@JoinColumn(name = "codeArticle", nullable = false, referencedColumnName = "codeArticle")
+	@JoinColumn(name = "numArticle", nullable = false, referencedColumnName = "numArticle")
 	public Article article;
 	
 	//Liaison à la unité
 	@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "codeUniter", referencedColumnName = "codeUniter")
+	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter")
 	private Uniter uniter;
 	
 	public LigneCommande() {

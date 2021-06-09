@@ -3,6 +3,8 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @SuppressWarnings("serial")
@@ -10,6 +12,8 @@ import javax.persistence.Id;
 public class Magasin implements Serializable{
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numMagasin;
 	private String codeMagasin;
 	private String libMagasin;
 	
@@ -21,6 +25,14 @@ public class Magasin implements Serializable{
 		super();
 		this.codeMagasin = codeMagasin;
 		this.libMagasin = libMagasin;
+	}
+
+	public Long getNumMagasin() {
+		return numMagasin;
+	}
+
+	public void setNumMagasin(Long numMagasin) {
+		this.numMagasin = numMagasin;
 	}
 
 	public String getCodeMagasin() {
@@ -39,11 +51,13 @@ public class Magasin implements Serializable{
 		this.libMagasin = libMagasin;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Magasin [codeMagasin=" + codeMagasin + ", libMagasin=" + libMagasin + "]";
+		return "Magasin [numMagasin=" + numMagasin + ", codeMagasin=" + codeMagasin + ", libMagasin=" + libMagasin
+				+ "]";
 	}
+
+
+
 	
 }

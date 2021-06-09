@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,8 @@ import javax.persistence.ManyToOne;
 public class Fournisseur implements Serializable{
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numFournisseur;
 	private String codeFrs;
 	private String identiteFrs;
 	private String adresseFrs;
@@ -64,6 +68,18 @@ public class Fournisseur implements Serializable{
 		this.agreerFrs = agreerFrs;
 		this.numAgrementFrs = numAgrementFrs;
 		this.categorieFrs = categorieFrs;
+	}
+
+
+
+	public Long getNumFournisseur() {
+		return numFournisseur;
+	}
+
+
+
+	public void setNumFournisseur(Long numFournisseur) {
+		this.numFournisseur = numFournisseur;
 	}
 
 
@@ -236,15 +252,16 @@ public class Fournisseur implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Fournisseur [codeFrs=" + codeFrs + ", identiteFrs=" + identiteFrs + ", adresseFrs=" + adresseFrs
-				+ ", raisonSociale=" + raisonSociale + ", numIfuFrs=" + numIfuFrs + ", telFRS=" + telFRS
-				+ ", description=" + description + ", domaineInterven=" + domaineInterven + ", regComFrs=" + regComFrs
-				+ ", compteAvanceFrs=" + compteAvanceFrs + ", compteFacturationFrs=" + compteFacturationFrs
-				+ ", compteConsignationFrs=" + compteConsignationFrs + ", compteAvoirFrs=" + compteAvoirFrs
-				+ ", agreerFrs=" + agreerFrs + ", numAgrementFrs=" + numAgrementFrs + ", categorieFrs=" + categorieFrs
-				+ "]";
+		return "Fournisseur [numFournisseur=" + numFournisseur + ", codeFrs=" + codeFrs + ", identiteFrs=" + identiteFrs
+				+ ", adresseFrs=" + adresseFrs + ", raisonSociale=" + raisonSociale + ", numIfuFrs=" + numIfuFrs
+				+ ", telFRS=" + telFRS + ", description=" + description + ", domaineInterven=" + domaineInterven
+				+ ", regComFrs=" + regComFrs + ", compteAvanceFrs=" + compteAvanceFrs + ", compteFacturationFrs="
+				+ compteFacturationFrs + ", compteConsignationFrs=" + compteConsignationFrs + ", compteAvoirFrs="
+				+ compteAvoirFrs + ", agreerFrs=" + agreerFrs + ", numAgrementFrs=" + numAgrementFrs + ", categorieFrs="
+				+ categorieFrs + "]";
 	}
 
-	
+
+
 
 }

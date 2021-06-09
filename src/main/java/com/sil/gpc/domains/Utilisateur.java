@@ -27,7 +27,7 @@ public class Utilisateur {
 	private boolean askMdp1erLance;
 	
 	@ManyToOne(targetEntity = Service.class)
-	@JoinColumn(name = "codeService", referencedColumnName = "codeService", nullable = true)
+	@JoinColumn(name = "numService", referencedColumnName = "numService", nullable = true)
 	public Service service;
 	
 	public Utilisateur() {

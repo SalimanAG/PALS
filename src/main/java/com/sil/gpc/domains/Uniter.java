@@ -3,6 +3,8 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @SuppressWarnings("serial")
@@ -10,6 +12,8 @@ import javax.persistence.Id;
 public class Uniter implements Serializable{
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numUniter;
 	private String codeUniter;
 	private String libUniter;
 	
@@ -21,6 +25,14 @@ public class Uniter implements Serializable{
 		super();
 		this.codeUniter = codeUniter;
 		this.libUniter = libUniter;
+	}
+
+	public Long getNumUniter() {
+		return numUniter;
+	}
+
+	public void setNumUniter(Long numUniter) {
+		this.numUniter = numUniter;
 	}
 
 	public String getCodeUniter() {
@@ -39,11 +51,13 @@ public class Uniter implements Serializable{
 		this.libUniter = libUniter;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Uniter [codeUniter=" + codeUniter + ", libUniter=" + libUniter + "]";
+		return "Uniter [numUniter=" + numUniter + ", codeUniter=" + codeUniter + ", libUniter=" + libUniter + "]";
 	}
+
+
+
 	
 	
 }

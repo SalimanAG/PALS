@@ -17,12 +17,12 @@ public class AffectUniterToArticle {
 	
 	//Liaison à la article
 		@ManyToOne(targetEntity = Article.class, fetch = FetchType.EAGER)
-		@JoinColumn(name = "codeArticle", referencedColumnName = "codeArticle", nullable = false)
+		@JoinColumn(name = "numArticle", referencedColumnName = "numArticle", nullable = false)
 		private Article article;
 	
 	//Liaison à la unité
 		@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
-		@JoinColumn(name = "codeUniter", referencedColumnName = "codeUniter", nullable = false)
+		@JoinColumn(name = "numUniter", referencedColumnName = "numUniter", nullable = false)
 		private Uniter uniter;
 
 	public AffectUniterToArticle() {

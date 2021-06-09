@@ -29,7 +29,7 @@ public class Gerer implements Serializable{
 	
 	//Liaison avec Magasin
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Magasin.class)
-	@JoinColumn(name = "codeMagasin", referencedColumnName ="codeMagasin",nullable = false)
+	@JoinColumn(name = "numMagasin", referencedColumnName ="numMagasin",nullable = false)
 	private Magasin magasin;
 	
 	public Gerer() {
