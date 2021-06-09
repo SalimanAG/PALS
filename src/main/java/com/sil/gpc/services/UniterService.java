@@ -20,13 +20,13 @@ public class UniterService {
 
  // Sauvegarder un Uniter
     public Uniter save(Uniter uniter) {
-        if(!uniterRepository.existsById(uniter.getCodeUniter()))
+        if(!uniterRepository.existsById(uniter.getNumUniter()))
         	return   this.uniterRepository.save(uniter);
 		return null;
     }
     
     // Editer un Uniter
-    public Uniter edit(String codeUniter,Uniter uniter) {
+    public Uniter edit(Long codeUniter,Uniter uniter) {
     	
     	Uniter unitemod = this.uniterRepository.getOne(codeUniter);
 		if(unitemod != null) {
@@ -39,7 +39,7 @@ public class UniterService {
     }
     
  // Supprimer  
-    public boolean delete(String id) {
+    public boolean delete(Long id) {
     	if(this.uniterRepository.existsById(id))
          this.uniterRepository.deleteById(id);
     	
@@ -47,7 +47,7 @@ public class UniterService {
     }   
     
  // Renvoie un Uniter par son code
-    public Optional <Uniter> findById(String id) {
+    public Optional <Uniter> findById(Long id) {
         return this.uniterRepository.findById(id);
     }
     

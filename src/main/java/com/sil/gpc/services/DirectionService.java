@@ -18,13 +18,13 @@ public class DirectionService {
 	}
 	
 	public Direction save(Direction direction) {
-		if(!repo.existsById(direction.getCodeDirection())) {
+		if(!repo.existsById(direction.getNumDirection())) {
 			return this.repo.save(direction);
 		}
 		return null;
 	}
 	
-	public Direction edit(String id, Direction direction) {
+	public Direction edit(Long id, Direction direction) {
 		
 		Direction entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -36,7 +36,7 @@ public class DirectionService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		Direction entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -46,7 +46,7 @@ public class DirectionService {
 		return !this.repo.existsById(id);
 	}
 	
-	public Direction getById(String id){
+	public Direction getById(Long id){
 		
 		return this.repo.findById(id).get();
 	}

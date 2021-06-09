@@ -87,7 +87,7 @@ public class MagasinController {
 	}
 	
 	@GetMapping(path = "magasin/byCodMag/{id}")
-	public Optional<Magasin> getMagasinById(@PathVariable(name = "id") String id){
+	public Optional<Magasin> getMagasinById(@PathVariable(name = "id") Long id){
 		
 		return this.magasinService.findById(id);
 	}
@@ -99,13 +99,13 @@ public class MagasinController {
 	}
 	
 	@PutMapping(path = "magasin/byCodMag/{id}")
-	public Magasin updateMagasin(@PathVariable(name = "id") String id, @RequestBody Magasin magasin) {
+	public Magasin updateMagasin(@PathVariable(name = "id") Long id, @RequestBody Magasin magasin) {
 		
 		return this.magasinService.edit(magasin, id);
 	}
 	
 	@DeleteMapping(path = "magasin/byCodMag/{id}")
-	public Boolean deleteMagasin(@PathVariable(name = "id") String id) {
+	public Boolean deleteMagasin(@PathVariable(name = "id") Long id) {
 		
 		return this.magasinService.delete(id);
 	}	
@@ -161,7 +161,7 @@ public class MagasinController {
 	}
 	
 	@GetMapping(path = "famille/byCodFam/{id}")
-	public Optional<Famille> getFamilleById(@PathVariable(name = "id") String id){
+	public Optional<Famille> getFamilleById(@PathVariable(name = "id") Long id){
 		
 		return this.familleService.getById(id);
 	}
@@ -173,13 +173,13 @@ public class MagasinController {
 	}
 	
 	@PutMapping(path = "famille/byCodFam/{id}")
-	public Famille updateFamille(@PathVariable(name = "id") String id, @RequestBody Famille famille) {
+	public Famille updateFamille(@PathVariable(name = "id") Long id, @RequestBody Famille famille) {
 		
 		return this.familleService.edit(id, famille);
 	}
 	
 	@DeleteMapping(path = "famille/byCodFam/{id}")
-	public Boolean deleteFamille(@PathVariable(name = "id") String id) {
+	public Boolean deleteFamille(@PathVariable(name = "id") Long id) {
 		
 		return this.familleService.delete(id);
 	}
@@ -197,7 +197,7 @@ public class MagasinController {
 	}
 	
 	@GetMapping(path = "article/byCodArt/{id}")
-	public Optional<Article> getCaisseById(@PathVariable(name = "id") String id){
+	public Optional<Article> getCaisseById(@PathVariable(name = "id") Long id){
 		
 		return this.articleService.getById(id);
 	}
@@ -209,13 +209,13 @@ public class MagasinController {
 	}
 	
 	@PutMapping(path = "article/byCodArt/{id}")
-	public Article updateArticle(@PathVariable(name = "id") String id, @RequestBody Article article) {
+	public Article updateArticle(@PathVariable(name = "id") Long id, @RequestBody Article article) {
 		
 		return this.articleService.edit(id, article);
 	}
 	
 	@DeleteMapping(path = "article/byCodArt/{id}")
-	public Boolean deleteArticle(@PathVariable(name = "id") String id) {
+	public Boolean deleteArticle(@PathVariable(name = "id") Long id) {
 		
 		return this.articleService.delete(id);
 	}
@@ -234,7 +234,7 @@ public class MagasinController {
 	}
 	
 	@GetMapping(path = "uniter/byCodUni/{id}")
-	public Optional<Uniter> getUniterById(@PathVariable(name = "id") String id){
+	public Optional<Uniter> getUniterById(@PathVariable(name = "id") Long id){
 		
 		return this.uniterService.findById(id);
 	}
@@ -246,13 +246,13 @@ public class MagasinController {
 	}
 	
 	@PutMapping(path = "uniter/byCodUni/{id}")
-	public Uniter updateUniter(@PathVariable(name = "id") String id, @RequestBody Uniter uniter) {
+	public Uniter updateUniter(@PathVariable(name = "id") Long id, @RequestBody Uniter uniter) {
 		
 		return this.uniterService.edit(id, uniter);
 	}
 	
 	@DeleteMapping(path = "uniter/byCodUni/{id}")
-	public Boolean deleteUniter(@PathVariable(name = "id") String id) {
+	public Boolean deleteUniter(@PathVariable(name = "id") Long id) {
 		
 		return this.uniterService.delete(id);
 	}	

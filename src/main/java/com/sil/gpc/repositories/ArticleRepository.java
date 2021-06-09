@@ -10,7 +10,7 @@ import com.sil.gpc.domains.Famille;
 import com.sil.gpc.domains.Uniter;
 
 @Repository
-public interface ArticleRepository extends JpaRepository<Article, String> {
+public interface ArticleRepository extends JpaRepository<Article, Long> {
 
 	public List<Article> findByCodeArticle(String codeArticle);
 	

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.Fournisseur;
 
 @Repository
-public interface FournisseurRepository extends JpaRepository<Fournisseur, String> {
+public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> {
 
 	public List<Fournisseur> findByCodeFrs(String codeFrs);
 	

@@ -19,13 +19,13 @@ public class FournisseurService {
 	}
 	
 	public Fournisseur save(Fournisseur fournisseur) {
-		if(!repo.existsById(fournisseur.getCodeFrs())) {
+		if(!repo.existsById(fournisseur.getNumFournisseur())) {
 			return this.repo.save(fournisseur);
 		}
 		return null;
 	}
 	
-	public Fournisseur edit(String id, Fournisseur fournisseur) {
+	public Fournisseur edit(Long id, Fournisseur fournisseur) {
 		
 		Fournisseur entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -51,7 +51,7 @@ public class FournisseurService {
 		return null;
 	}
 	
-	public boolean delete (String id) {
+	public boolean delete (Long id) {
 		
 		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
@@ -59,7 +59,7 @@ public class FournisseurService {
 		return !this.repo.existsById(id);
 	}
 	
-	public Optional<Fournisseur> getById(String id){
+	public Optional<Fournisseur> getById(Long id){
 		
 		return this.repo.findById(id);
 	}

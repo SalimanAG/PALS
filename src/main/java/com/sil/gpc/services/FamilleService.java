@@ -19,13 +19,13 @@ public class FamilleService {
 	}
 	
 	public Famille save(Famille famille) {
-		if(!repo.existsById(famille.getCodeFamille())) {
+		if(!repo.existsById(famille.getNumFamille())) {
 			return this.repo.save(famille);
 		}
 		return null;
 	}
 	
-	public Famille edit(String id, Famille famille) {
+	public Famille edit(Long id, Famille famille) {
 		
 		Famille entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -39,7 +39,7 @@ public class FamilleService {
 		return null;
 	}
 	
-	public boolean delete (String id) {
+	public boolean delete (Long id) {
 		
 		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
@@ -47,7 +47,7 @@ public class FamilleService {
 		return !this.repo.existsById(id);
 	}
 	
-	public Optional<Famille> getById(String id){
+	public Optional<Famille> getById(Long id){
 		
 		return this.repo.findById(id);
 	}

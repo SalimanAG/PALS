@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sil.gpc.domains.Famille;
 
-public interface FamilleRepository extends JpaRepository<Famille, String>{
+public interface FamilleRepository extends JpaRepository<Famille, Long>{
 
 	public List<Famille> findByCodeFamille(String codeFamille);
 	

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.Magasin;
 
 @Repository
-public interface MagasinRepository extends JpaRepository<Magasin, String>{
+public interface MagasinRepository extends JpaRepository<Magasin, Long>{
 
 	List<Magasin> findByLibMagasin(String libMagasin);
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.Uniter;
 
 @Repository
-public interface UniterRepository extends JpaRepository<Uniter, String> {
+public interface UniterRepository extends JpaRepository<Uniter, Long> {
 	
 	public List<Uniter> findByCodeUniter(String CodeUniter);
 	

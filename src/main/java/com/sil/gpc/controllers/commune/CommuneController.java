@@ -179,7 +179,7 @@ public class CommuneController {
 	}
 	
 	@GetMapping(path = "fournisseur/byRaiSocFou/{id}")
-	public Optional<Fournisseur> getFournisseurById(@PathVariable(name = "id") String id){
+	public Optional<Fournisseur> getFournisseurById(@PathVariable(name = "id") Long id){
 		
 		return this.fournisseurService.getById(id);
 	}
@@ -191,13 +191,13 @@ public class CommuneController {
 	}
 	
 	@PutMapping(path = "fournisseur/byCodFou/{id}")
-	public Fournisseur updateFournisseur(@PathVariable(name = "id") String id, @RequestBody Fournisseur fournisseur) {
+	public Fournisseur updateFournisseur(@PathVariable(name = "id") Long id, @RequestBody Fournisseur fournisseur) {
 		
 		return this.fournisseurService.edit(id, fournisseur);
 	}
 	
 	@DeleteMapping(path = "fournisseur/byCodFou/{id}")
-	public Boolean deleteFournisseur(@PathVariable(name = "id") String id) {
+	public Boolean deleteFournisseur(@PathVariable(name = "id") Long id) {
 		
 		return this.fournisseurService.delete(id);
 	}	
@@ -935,7 +935,7 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@GetMapping(path = "direction/byCodDir/{id}")
-	public Direction getDirectionById(@PathVariable(name = "id") String id){
+	public Direction getDirectionById(@PathVariable(name = "id") Long id){
 		
 		return this.directionService.getById(id);
 	}
@@ -947,12 +947,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@PutMapping(path = "direction/byCodDir/{id}")
-	public Direction updateDirection(@PathVariable(name = "id") String id, @RequestBody Direction direction) {
+	public Direction updateDirection(@PathVariable(name = "id") Long id, @RequestBody Direction direction) {
 		return this.directionService.edit(id, direction);
 	}
 	
 	@DeleteMapping(path = "direction/byCodDir/{id}")
-	public Boolean deleteDirection(@PathVariable(name = "id") String id) {
+	public Boolean deleteDirection(@PathVariable(name = "id") Long id) {
 		
 		return this.directionService.delete(id);
 	}	

@@ -21,13 +21,13 @@ public class ArticleService {
 	}
 	
 	public Article save(Article article) {
-		if(!repo.existsById(article.getCodeArticle())) {
+		if(!repo.existsById(article.getNumArticle())) {
 			return this.repo.save(article);
 		}
 		return null;
 	}
 	
-	public Article edit(String id, Article article) {
+	public Article edit(Long id, Article article) {
 		
 		Article entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -62,7 +62,7 @@ public class ArticleService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		Article entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -72,7 +72,7 @@ public class ArticleService {
 		return !this.repo.existsById(id);
 	}
 	
-	public Optional<Article> getById(String id){
+	public Optional<Article> getById(Long id){
 		
 		return this.repo.findById(id);
 	}

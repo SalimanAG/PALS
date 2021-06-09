@@ -21,13 +21,13 @@ public class MagasinService {
 	}
 	
 	public Magasin save(Magasin mg){
-		if(!repos.existsById(mg.getCodeMagasin())) {
+		if(!repos.existsById(mg.getNumMagasin())) {
 			return repos.save(mg);
 		}
 		return null;
 	}
 	
-	public Magasin edit(Magasin mg, String cm){
+	public Magasin edit(Magasin mg, Long cm){
 		Magasin mag=repos.getOne(cm);
 		if(mag!=null) {
 		mag.setLibMagasin(mg.getLibMagasin());
@@ -37,12 +37,12 @@ public class MagasinService {
 			return null;
 	}
 
-	public boolean delete(String cm){
+	public boolean delete(Long cm){
 		repos.deleteById(cm);
 		return repos.existsById(cm);
 	}
 
-	public Optional<Magasin> findById(String cm){
+	public Optional<Magasin> findById(Long cm){
 		return repos.findById(cm);
 	}
 
