@@ -21,10 +21,7 @@ public class MagasinService {
 	}
 	
 	public Magasin save(Magasin mg){
-		if(!repos.existsById(mg.getNumMagasin())) {
-			return repos.save(mg);
-		}
-		return null;
+		return repos.save(mg);
 	}
 	
 	public Magasin edit(Magasin mg, Long cm){

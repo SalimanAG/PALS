@@ -19,10 +19,7 @@ public class FournisseurService {
 	}
 	
 	public Fournisseur save(Fournisseur fournisseur) {
-		if(!repo.existsById(fournisseur.getNumFournisseur())) {
-			return this.repo.save(fournisseur);
-		}
-		return null;
+		return this.repo.save(fournisseur);
 	}
 	
 	public Fournisseur edit(Long id, Fournisseur fournisseur) {

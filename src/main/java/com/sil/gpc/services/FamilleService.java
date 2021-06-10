@@ -19,10 +19,7 @@ public class FamilleService {
 	}
 	
 	public Famille save(Famille famille) {
-		if(!repo.existsById(famille.getNumFamille())) {
-			return this.repo.save(famille);
-		}
-		return null;
+		return this.repo.save(famille);
 	}
 	
 	public Famille edit(Long id, Famille famille) {

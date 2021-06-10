@@ -18,10 +18,7 @@ public class DirectionService {
 	}
 	
 	public Direction save(Direction direction) {
-		if(!repo.existsById(direction.getNumDirection())) {
-			return this.repo.save(direction);
-		}
-		return null;
+		return this.repo.save(direction);
 	}
 	
 	public Direction edit(Long id, Direction direction) {

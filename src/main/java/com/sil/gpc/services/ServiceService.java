@@ -19,9 +19,7 @@ public class ServiceService {
     
  // Sauvegarder un Service
     public Service save(Service service) {
-    	if(!serviceRepository.existsById(service.getCodeService()))
-    		return   this.serviceRepository.save(service);
-		return null;
+    	return   this.serviceRepository.save(service);
     }
     
     // Editer un Service

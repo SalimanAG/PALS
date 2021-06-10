@@ -21,10 +21,8 @@ public class ArticleService {
 	}
 	
 	public Article save(Article article) {
-		if(!repo.existsById(article.getNumArticle())) {
-			return this.repo.save(article);
-		}
-		return null;
+		
+		return this.repo.save(article);
 	}
 	
 	public Article edit(Long id, Article article) {
