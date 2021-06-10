@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.Exercice;
 
 @Repository
-public interface ExerciceRepository extends JpaRepository<Exercice, String> {
+public interface ExerciceRepository extends JpaRepository<Exercice, Long> {
 
 	public List<Exercice> findByCodeExercice(String codeExercice);
 	

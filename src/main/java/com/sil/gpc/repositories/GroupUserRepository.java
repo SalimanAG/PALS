@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.GroupUser;
 
 @Repository
-public interface GroupUserRepository extends JpaRepository<GroupUser, String> {
+public interface GroupUserRepository extends JpaRepository<GroupUser, Long> {
 	
 	List<GroupUser> findByLibGroupUser(String libGroupUser);
 	

@@ -18,13 +18,10 @@ public class CauseAnomalieService {
 	}
 	
 	public CauseAnomalie save(CauseAnomalie causeAnomalie) {
-		if(!repo.existsById(causeAnomalie.getCodeCauseAno())) {
-			return this.repo.save(causeAnomalie);
-		}
-		return null;
+		return this.repo.save(causeAnomalie);
 	}
 	
-	public CauseAnomalie edit(String id, CauseAnomalie causeAnomalie) {
+	public CauseAnomalie edit(Long id, CauseAnomalie causeAnomalie) {
 		
 		CauseAnomalie entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -36,7 +33,7 @@ public class CauseAnomalieService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		CauseAnomalie entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -46,7 +43,7 @@ public class CauseAnomalieService {
 		return !this.repo.existsById(id);
 	}
 	
-	public CauseAnomalie getById(String id){
+	public CauseAnomalie getById(Long id){
 		
 		return this.repo.findById(id).get();
 	}

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.CategorieFrs;
 
 @Repository
-public interface CategorieFrsRepository extends JpaRepository<CategorieFrs, String> {
+public interface CategorieFrsRepository extends JpaRepository<CategorieFrs, Long> {
 
 }

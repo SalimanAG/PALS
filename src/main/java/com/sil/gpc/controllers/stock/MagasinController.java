@@ -456,7 +456,7 @@ public class MagasinController {
 	}
 	
 	@GetMapping(path = "typeArticle/byCodTypArti/{id}")
-	public TypeArticle getTypeArticleById(@PathVariable(name = "id") String id){	
+	public TypeArticle getTypeArticleById(@PathVariable(name = "id") Long id){	
 		return this.typeArticleService.getById(id);
 	}
 	
@@ -466,13 +466,13 @@ public class MagasinController {
 	}
 	
 	@PutMapping(path = "typeArticle/byCodTypArti/{id}")
-	public TypeArticle updateTypeArticle(@PathVariable(name = "id") String id, @RequestBody TypeArticle typeArticle) {
+	public TypeArticle updateTypeArticle(@PathVariable(name = "id") Long id, @RequestBody TypeArticle typeArticle) {
 		
 		return this.typeArticleService.edit(id, typeArticle);
 	}
 	
 	@DeleteMapping(path = "typeArticle/byCodTypArti/{id}")
-	public Boolean deleteTypeArticle(@PathVariable(name = "id") String id) {
+	public Boolean deleteTypeArticle(@PathVariable(name = "id") Long id) {
 		
 		return this.typeArticleService.delete(id);
 	}	

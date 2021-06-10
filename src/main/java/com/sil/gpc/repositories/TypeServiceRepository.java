@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.TypeService;
 
 @Repository
-public interface TypeServiceRepository extends JpaRepository<TypeService, String> {
+public interface TypeServiceRepository extends JpaRepository<TypeService, Long> {
 
 }

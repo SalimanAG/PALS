@@ -1,12 +1,16 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class CategorieFrs {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numCatFrs;
 	private String codeCatFrs;
 	private String libCatFrs;
 	
@@ -37,10 +41,23 @@ public class CategorieFrs {
 		this.libCatFrs = libCatFrs;
 	}
 
+	
+	
+	
+	public Long getNumCatFrs() {
+		return numCatFrs;
+	}
+
+	public void setNumCatFrs(Long numCatFrs) {
+		this.numCatFrs = numCatFrs;
+	}
+
 	@Override
 	public String toString() {
-		return "CategorieFrs [codeCatFrs=" + codeCatFrs + ", libCatFrs=" + libCatFrs + "]";
+		return "CategorieFrs [numCatFrs=" + numCatFrs + ", codeCatFrs=" + codeCatFrs + ", libCatFrs=" + libCatFrs + "]";
 	}
+
+
 	
 	
 	

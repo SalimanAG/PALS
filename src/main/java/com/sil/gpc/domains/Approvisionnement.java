@@ -23,7 +23,7 @@ public class Approvisionnement implements Serializable {
 	private int valeur;
 	
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = true)
 	private Exercice exercice;
 	
 	@ManyToOne(targetEntity = Magasin.class, fetch = FetchType.EAGER)

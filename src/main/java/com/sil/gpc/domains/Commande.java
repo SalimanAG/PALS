@@ -29,11 +29,12 @@ public class Commande implements Serializable {
 	private boolean reporter;
 	
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity =Fournisseur.class)
+	@JoinColumn(name = "numFournisseur", referencedColumnName = "numFournisseur", nullable = false)
 	private Fournisseur frs;
 
 	//Liaison avec la table Exercice
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = false)
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = false)
 	private Exercice exercice;
 
 	public Commande() {

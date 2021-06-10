@@ -118,7 +118,7 @@ public class CommuneController {
 	}
 	
 	@GetMapping(path = "exercice/byCodExe/{id}")
-	public Optional<Exercice> getExerciceById(@PathVariable(name = "id") String id){
+	public Optional<Exercice> getExerciceById(@PathVariable(name = "id") Long id){
 		
 		return this.exerciceService.getById(id);
 	}
@@ -136,13 +136,13 @@ public class CommuneController {
 	}
 	
 	@PutMapping(path = "exercice/byCodExe/{id}")
-	public Exercice updateExercice(@PathVariable(name = "id") String id, @RequestBody Exercice exercice) {
+	public Exercice updateExercice(@PathVariable(name = "id") Long id, @RequestBody Exercice exercice) {
 		
 		return this.exerciceService.edit(id, exercice);
 	}
 	
 	@DeleteMapping(path = "exercice/byCodExe/{id}")
-	public Boolean deleteExercice(@PathVariable(name = "id") String id) {
+	public Boolean deleteExercice(@PathVariable(name = "id") Long id) {
 		
 		return this.exerciceService.delete(id);
 	}
@@ -459,7 +459,7 @@ public class CommuneController {
 	}
 	
 	@GetMapping(path = "gro/byId/{id}")
-	public Optional<GroupUser> getGroupe(@PathVariable(name = "id") String id){
+	public Optional<GroupUser> getGroupe(@PathVariable(name = "id") Long id){
 		
 		return this.ug.findById(id);
 	}
@@ -477,13 +477,13 @@ public class CommuneController {
 	}
 	
 	@PutMapping(path = "gro/byid/{id}")
-	public GroupUser updateGroup(@PathVariable(name = "id") String id, @RequestBody GroupUser g) {
+	public GroupUser updateGroup(@PathVariable(name = "id") Long id, @RequestBody GroupUser g) {
 		
 		return this.ug.edit(id, g);
 	}
 	
 	@DeleteMapping(path = "gro/byid/{id}")
-	public Boolean deleteGroup(@PathVariable(name = "id") String id) {
+	public Boolean deleteGroup(@PathVariable(name = "id") Long id) {
 		
 		return this.ug.delete(id);
 }	
@@ -797,7 +797,7 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@GetMapping(path = "categorieFrs/byCodCatFrs/{id}")
-	public CategorieFrs getCategorieFrsById(@PathVariable(name = "id") String id){
+	public CategorieFrs getCategorieFrsById(@PathVariable(name = "id") Long id){
 		
 		return this.categorieFrsService.getById(id);
 	}
@@ -809,12 +809,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@PutMapping(path = "categorieFrs/byCodCatFrs/{id}")
-	public CategorieFrs updateCategorieFrs(@PathVariable(name = "id") String id, @RequestBody CategorieFrs categorieFrs) {
+	public CategorieFrs updateCategorieFrs(@PathVariable(name = "id") Long id, @RequestBody CategorieFrs categorieFrs) {
 		return this.categorieFrsService.edit(id, categorieFrs);
 	}
 	
 	@DeleteMapping(path = "categorieFrs/byCodCatFrs/{id}")
-	public Boolean deleteCategorieFrs(@PathVariable(name = "id") String id) {
+	public Boolean deleteCategorieFrs(@PathVariable(name = "id") Long id) {
 		
 		return this.categorieFrsService.delete(id);
 	}	
@@ -832,7 +832,7 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@GetMapping(path = "causeAnomalie/byCodCauAno/{id}")
-	public CauseAnomalie getCauseAnomalieById(@PathVariable(name = "id") String id){
+	public CauseAnomalie getCauseAnomalieById(@PathVariable(name = "id") Long id){
 		
 		return this.causeAnomalieService.getById(id);
 	}
@@ -844,12 +844,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@PutMapping(path = "causeAnomalie/byCodCauAno/{id}")
-	public CauseAnomalie updateCauseAnomalie(@PathVariable(name = "id") String id, @RequestBody CauseAnomalie causeAnomalie) {
+	public CauseAnomalie updateCauseAnomalie(@PathVariable(name = "id") Long id, @RequestBody CauseAnomalie causeAnomalie) {
 		return this.causeAnomalieService.edit(id, causeAnomalie);
 	}
 	
 	@DeleteMapping(path = "causeAnomalie/byCodCauAno/{id}")
-	public Boolean deleteCauseAnomalie(@PathVariable(name = "id") String id) {
+	public Boolean deleteCauseAnomalie(@PathVariable(name = "id") Long id) {
 		
 		return this.causeAnomalieService.delete(id);
 	}	
@@ -867,7 +867,7 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@GetMapping(path = "typeService/byCodTypSer/{id}")
-	public TypeService getTypeServiceById(@PathVariable(name = "id") String id){
+	public TypeService getTypeServiceById(@PathVariable(name = "id") Long id){
 		
 		return this.typeServiceService.getById(id);
 	}
@@ -879,12 +879,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	}
 	
 	@PutMapping(path = "typeService/byCodTypSer/{id}")
-	public TypeService updateDirection(@PathVariable(name = "id") String id, @RequestBody TypeService typeService) {
+	public TypeService updateDirection(@PathVariable(name = "id") Long id, @RequestBody TypeService typeService) {
 		return this.typeServiceService.edit(id, typeService);
 	}
 	
 	@DeleteMapping(path = "typeService/byCodTypSer/{id}")
-	public Boolean deleteTypeService(@PathVariable(name = "id") String id) {
+	public Boolean deleteTypeService(@PathVariable(name = "id") Long id) {
 		
 		return this.typeServiceService.delete(id);
 	}	

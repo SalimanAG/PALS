@@ -1,12 +1,16 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class TypeService {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numTypService;
 	private String codeTypService;
 	private String libTypService;
 	
@@ -36,12 +40,23 @@ public class TypeService {
 	public void setLibTypService(String libTypService) {
 		this.libTypService = libTypService;
 	}
+	
+	
+
+	public Long getNumTypService() {
+		return numTypService;
+	}
+
+	public void setNumTypService(Long numTypService) {
+		this.numTypService = numTypService;
+	}
 
 	@Override
 	public String toString() {
-		return "TypeService [codeTypService=" + codeTypService + ", libTypService=" + libTypService + "]";
+		return "TypeService [numTypService=" + numTypService + ", codeTypService=" + codeTypService + ", libTypService="
+				+ libTypService + "]";
 	}
-	
+
 	
 	
 }

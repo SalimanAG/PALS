@@ -3,6 +3,8 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @SuppressWarnings("serial")
@@ -10,6 +12,8 @@ import javax.persistence.Id;
 public class Exercice implements Serializable{
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numExercice;
 	private String codeExercice;
 	private String libExercice;
 	private Date dateDebut;
@@ -84,12 +88,25 @@ public class Exercice implements Serializable{
 		this.cloturerExo = cloturerExo;
 	}
 
+	
+
+	public Long getNumExercice() {
+		return numExercice;
+	}
+
+
+	public void setNumExercice(Long numExercice) {
+		this.numExercice = numExercice;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Exercice [codeExercice=" + codeExercice + ", libExercice=" + libExercice + ", dateDebut=" + dateDebut
-				+ ", dateFin=" + dateFin + ", etatExo=" + etatExo + ", cloturerExo=" + cloturerExo + "]";
+		return "Exercice [numExercice=" + numExercice + ", codeExercice=" + codeExercice + ", libExercice="
+				+ libExercice + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", etatExo=" + etatExo
+				+ ", cloturerExo=" + cloturerExo + "]";
 	}
+
 
 	
 	

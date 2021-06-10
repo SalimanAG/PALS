@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.TypeArticle;
 
 @Repository
-public interface TypeArticleRepository extends JpaRepository<TypeArticle, String> {
+public interface TypeArticleRepository extends JpaRepository<TypeArticle, Long> {
 
 }

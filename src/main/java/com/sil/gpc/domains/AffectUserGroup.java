@@ -22,7 +22,7 @@ public class AffectUserGroup {
 	
 //Liaison  Groupe Utilisateur
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = GroupUser.class)
-	@JoinColumn(name="idGroupUser", referencedColumnName = "idGroupUser", nullable = false)
+	@JoinColumn(name="numGroupUser", referencedColumnName = "numGroupUser", nullable = false)
 	private GroupUser groupUser ;
 	
 	public AffectUserGroup() {

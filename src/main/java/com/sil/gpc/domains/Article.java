@@ -51,30 +51,37 @@ public class Article implements Serializable {
 		
 	//Migration du code de la famille vers l'article
 	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "famille",referencedColumnName = "codeFamille")
+	@JoinColumn(name = "numFamille",referencedColumnName = "numFamille")
 	private Famille famille;
 	
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Fournisseur.class)
-	@JoinColumn(name = "codeFrs", referencedColumnName = "codeFrs",nullable = false)
+	@JoinColumn(name = "numFournisseur", referencedColumnName = "numFournisseur",nullable = false)
 	public Fournisseur fournisseur;
+	
+	//Migration de la clé de l'unité vers l'article
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = TypeArticle.class)
+	@JoinColumn(name = "numTypeArt", referencedColumnName = "numTypeArt",nullable = false)
+	public TypeArticle typeArticle;
+	
 	
 	public Article() {
 		super();
 	}
 
 	
+	
 
 
-
-	public Article(String codeArticle, String libArticle, boolean stockerArticle, boolean numSerieArticle,
-			boolean livrableArticle, boolean consommableArticle, Long prixVenteArticle, String couleurArticle,
-			double qteStIniTres, double puStIniTres, Date datStInitArtTres, String specialiterArticle,
-			String abregerArticle, String compteArticle, String codeBareArticle, double tvaArticle,
-			double taxeSpecifiqArticle, boolean afficherArticle, double cmupActuArticle, double stockMinimArticle,
-			double stockAlertArticle, double stockSecurArticle, Exercice exo, Famille famille,
-			Fournisseur fournisseur) {
+	public Article(Long numArticle, String codeArticle, String libArticle, boolean stockerArticle,
+			boolean numSerieArticle, boolean livrableArticle, boolean consommableArticle, Long prixVenteArticle,
+			String couleurArticle, double qteStIniTres, double puStIniTres, Date datStInitArtTres,
+			String specialiterArticle, String abregerArticle, String compteArticle, String codeBareArticle,
+			double tvaArticle, double taxeSpecifiqArticle, boolean afficherArticle, double cmupActuArticle,
+			double stockMinimArticle, double stockAlertArticle, double stockSecurArticle, Exercice exo, Famille famille,
+			Fournisseur fournisseur, TypeArticle typeArticle) {
 		super();
+		this.numArticle = numArticle;
 		this.codeArticle = codeArticle;
 		this.libArticle = libArticle;
 		this.stockerArticle = stockerArticle;
@@ -100,6 +107,7 @@ public class Article implements Serializable {
 		this.exo = exo;
 		this.famille = famille;
 		this.fournisseur = fournisseur;
+		this.typeArticle = typeArticle;
 	}
 
 
@@ -413,6 +421,22 @@ public class Article implements Serializable {
 
 
 
+	public TypeArticle getTypeArticle() {
+		return typeArticle;
+	}
+
+
+
+
+
+	public void setTypeArticle(TypeArticle typeArticle) {
+		this.typeArticle = typeArticle;
+	}
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "Article [numArticle=" + numArticle + ", codeArticle=" + codeArticle + ", libArticle=" + libArticle
@@ -425,10 +449,10 @@ public class Article implements Serializable {
 				+ taxeSpecifiqArticle + ", afficherArticle=" + afficherArticle + ", cmupActuArticle=" + cmupActuArticle
 				+ ", stockMinimArticle=" + stockMinimArticle + ", stockAlertArticle=" + stockAlertArticle
 				+ ", stockSecurArticle=" + stockSecurArticle + ", exo=" + exo + ", famille=" + famille
-				+ ", fournisseur=" + fournisseur + "]";
+				+ ", fournisseur=" + fournisseur + ", typeArticle=" + typeArticle + "]";
 	}
 
-	
+
 	
 
 	

@@ -18,13 +18,10 @@ public class TypeArticleService {
 	}
 	
 	public TypeArticle save(TypeArticle typeArticle) {
-		if(!repo.existsById(typeArticle.getCodeTypeArt())) {
-			return this.repo.save(typeArticle);
-		}
-		return null;
+		return this.repo.save(typeArticle);
 	}
 	
-	public TypeArticle edit(String id, TypeArticle typeArticle) {
+	public TypeArticle edit(Long id, TypeArticle typeArticle) {
 		
 		TypeArticle entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -36,7 +33,7 @@ public class TypeArticleService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		TypeArticle entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -46,7 +43,7 @@ public class TypeArticleService {
 		return !this.repo.existsById(id);
 	}
 	
-	public TypeArticle getById(String id){
+	public TypeArticle getById(Long id){
 		
 		return this.repo.findById(id).get();
 	}

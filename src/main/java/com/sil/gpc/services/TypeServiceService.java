@@ -18,13 +18,10 @@ public class TypeServiceService {
 	}
 	
 	public TypeService save(TypeService typeService) {
-		if(!repo.existsById(typeService.getCodeTypService())) {
-			return this.repo.save(typeService);
-		}
-		return null;
+		return this.repo.save(typeService);
 	}
 	
-	public TypeService edit(String id, TypeService typeService) {
+	public TypeService edit(Long id, TypeService typeService) {
 		
 		TypeService entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -36,7 +33,7 @@ public class TypeServiceService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		TypeService entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -46,7 +43,7 @@ public class TypeServiceService {
 		return !this.repo.existsById(id);
 	}
 	
-	public TypeService getById(String id){
+	public TypeService getById(Long id){
 		
 		return this.repo.findById(id).get();
 	}

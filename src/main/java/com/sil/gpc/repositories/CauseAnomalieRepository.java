@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.sil.gpc.domains.CauseAnomalie;
 
 @Repository
-public interface CauseAnomalieRepository extends JpaRepository<CauseAnomalie, String> {
+public interface CauseAnomalieRepository extends JpaRepository<CauseAnomalie, Long> {
 
 }

@@ -26,7 +26,7 @@ public class Reception implements Serializable {
 	private String refBordLivraiRecept;
 
 	@ManyToOne(targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice")
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice")
 	Exercice exercice;
 	
 	@ManyToOne(targetEntity = Magasin.class, fetch = FetchType.EAGER)

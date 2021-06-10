@@ -20,14 +20,11 @@ public class GroupUserService {
 
     // Sauvegarder 
     public GroupUser save(GroupUser guser) {
-    	if(!repo.existsById(guser.getIdGroupUser())) {
-    		return repo.save(guser);
-		}
-		return null;
+    	return repo.save(guser);
     }
     
     // Editer 
-    public GroupUser edit(String id, GroupUser guser) {
+    public GroupUser edit(Long id, GroupUser guser) {
        	if(repo.existsById(id)) {
    			GroupUser por=repo.getOne(id);
    			por.setLibGroupUser(guser.getLibGroupUser());
@@ -37,7 +34,7 @@ public class GroupUserService {
        }
     
     // Supprimer 
-    public boolean delete(String  id) {
+    public boolean delete(Long  id) {
     	if(this.repo.existsById(id))
             this.repo.deleteById(id);
     	
@@ -45,7 +42,7 @@ public class GroupUserService {
     }
     
     // 
-    public Optional<GroupUser> findById(String id) {
+    public Optional<GroupUser> findById(Long id) {
         return this.repo.findById(id);
     }
     

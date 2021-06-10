@@ -32,7 +32,7 @@ public class Service implements Serializable {
 	
 	//Liaison à son type de centre de consommation
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = TypeService.class)
-	@JoinColumn(name = "codeTypService", referencedColumnName = "codeTypService")
+	@JoinColumn(name = "numTypService", referencedColumnName = "numTypService")
 	private TypeService typeService;
 	
 	public Service() {

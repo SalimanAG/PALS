@@ -21,7 +21,7 @@ public class Inventaire {
 	private int valeur;
 	
 	@ManyToOne(targetEntity = Exercice.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice")
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice")
 	private Exercice exercice;
 	
 	@ManyToOne(targetEntity = Magasin.class, fetch = FetchType.EAGER)

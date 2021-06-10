@@ -37,7 +37,7 @@ public class Fournisseur implements Serializable{
 	
 	//Liaison à la catégorie de Frs
 		@ManyToOne(fetch = FetchType.EAGER, targetEntity = CategorieFrs.class)
-		@JoinColumn(name = "codeCatFrs", referencedColumnName = "codeCatFrs")
+		@JoinColumn(name = "numCatFrs", referencedColumnName = "numCatFrs")
 		private CategorieFrs categorieFrs;
 	
 	public Fournisseur() {

@@ -1,12 +1,16 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class TypeArticle {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numTypeArt;
 	private String codeTypeArt;
 	private String libTypeArt;
 	
@@ -37,12 +41,22 @@ public class TypeArticle {
 		this.libTypeArt = libTypeArt;
 	}
 
+	
+	
+	public Long getNumTypeArt() {
+		return numTypeArt;
+	}
+
+	public void setNumTypeArt(Long numTypeArt) {
+		this.numTypeArt = numTypeArt;
+	}
+
 	@Override
 	public String toString() {
-		return "TypeArticle [codeTypeArt=" + codeTypeArt + ", libTypeArt=" + libTypeArt + "]";
+		return "TypeArticle [numTypeArt=" + numTypeArt + ", codeTypeArt=" + codeTypeArt + ", libTypeArt=" + libTypeArt
+				+ "]";
 	}
-	
-	
+
 	
 	
 

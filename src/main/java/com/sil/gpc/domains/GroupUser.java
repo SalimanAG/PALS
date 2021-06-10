@@ -1,12 +1,16 @@
 package com.sil.gpc.domains;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class GroupUser {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long numGroupUser;
 	private String idGroupUser;
 	private String libGroupUser;
 	
@@ -39,10 +43,21 @@ public class GroupUser {
 	
 	
 
+	public Long getNumGroupUser() {
+		return numGroupUser;
+	}
+
+	public void setNumGroupUser(Long numGroupUser) {
+		this.numGroupUser = numGroupUser;
+	}
+
 	@Override
 	public String toString() {
-		return "GroupUser [idGroupUser=" + idGroupUser + ", libGroupUser=" + libGroupUser + "]";
+		return "GroupUser [numGroupUser=" + numGroupUser + ", idGroupUser=" + idGroupUser + ", libGroupUser="
+				+ libGroupUser + "]";
 	}
+
+
 	
 	
 }

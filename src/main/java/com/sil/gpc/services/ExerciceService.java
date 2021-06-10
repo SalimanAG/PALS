@@ -20,13 +20,10 @@ public class ExerciceService {
 	}
 	
 	public Exercice save (Exercice exercice) {
-		if(!repo.existsById(exercice.getCodeExercice())) {
 		return this.repo.save(exercice);
-		}
-		return null;
 	}
 	
-	public Exercice edit (String id, Exercice exercice) {
+	public Exercice edit (Long id, Exercice exercice) {
 		
 		Exercice entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -42,7 +39,7 @@ public class ExerciceService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
@@ -50,7 +47,7 @@ public class ExerciceService {
 		return !this.repo.existsById(id);
 	}
 	
-	public Optional<Exercice> getById(String id){
+	public Optional<Exercice> getById(Long id){
 		
 		return this.repo.findById(id);
 	}

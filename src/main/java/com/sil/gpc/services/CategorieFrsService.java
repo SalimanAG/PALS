@@ -18,13 +18,10 @@ public class CategorieFrsService {
 	}
 	
 	public CategorieFrs save(CategorieFrs categorieFrs) {
-		if(!repo.existsById(categorieFrs.getCodeCatFrs())) {
-			return this.repo.save(categorieFrs);
-		}
-		return null;
+		return this.repo.save(categorieFrs);
 	}
 	
-	public CategorieFrs edit(String id, CategorieFrs categorieFrs) {
+	public CategorieFrs edit(Long id, CategorieFrs categorieFrs) {
 		
 		CategorieFrs entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -36,7 +33,7 @@ public class CategorieFrsService {
 		return null;
 	}
 	
-	public boolean delete(String id) {
+	public boolean delete(Long id) {
 		
 		CategorieFrs entiter = this.repo.getOne(id);
 		if(entiter != null) {
@@ -46,7 +43,7 @@ public class CategorieFrsService {
 		return !this.repo.existsById(id);
 	}
 	
-	public CategorieFrs getById(String id){
+	public CategorieFrs getById(Long id){
 		
 		return this.repo.findById(id).get();
 	}

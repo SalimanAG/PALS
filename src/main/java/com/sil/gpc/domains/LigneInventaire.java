@@ -28,6 +28,11 @@ public class LigneInventaire {
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Inventaire.class)
 	@JoinColumn(name = "numInv", referencedColumnName = "numInv",nullable = false)
 	private Inventaire inventaire;
+	
+	@ManyToOne(targetEntity = CauseAnomalie.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "numCauseAno", referencedColumnName = "numCauseAno")
+	private CauseAnomalie causeAnomalie;
+	
 
 	/**
 	 * 
