@@ -25,6 +25,7 @@ public class CategorieFrsService {
 		
 		CategorieFrs entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeCatFrs(categorieFrs.getCodeCatFrs());
 			entiter.setLibCatFrs(categorieFrs.getLibCatFrs());
 			
 			return this.repo.save(entiter);

@@ -25,6 +25,7 @@ public class TypeServiceService {
 		
 		TypeService entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeTypService(typeService.getCodeTypService());
 			entiter.setLibTypService(typeService.getLibTypService());
 			
 			return this.repo.save(entiter);

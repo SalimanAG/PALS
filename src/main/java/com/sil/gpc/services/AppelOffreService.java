@@ -29,6 +29,8 @@ public class AppelOffreService {
 		AppelOffre entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			entiter.setCommande(appelOffre.getCommande());
+			entiter.setExercice(appelOffre.getExercice());
+			
 			return this.repo.save(entiter);
 		}
 		

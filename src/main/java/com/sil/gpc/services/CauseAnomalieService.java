@@ -25,6 +25,7 @@ public class CauseAnomalieService {
 		
 		CauseAnomalie entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeCauseAno(causeAnomalie.getCodeCauseAno());
 			entiter.setLibCauseAno(causeAnomalie.getLibCauseAno());
 			
 			return this.repo.save(entiter);

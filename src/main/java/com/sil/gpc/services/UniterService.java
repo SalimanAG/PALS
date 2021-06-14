@@ -28,7 +28,7 @@ public class UniterService {
     	
     	Uniter unitemod = this.uniterRepository.getOne(codeUniter);
 		if(unitemod != null) {
-			
+			unitemod.setCodeUniter(uniter.getCodeUniter());
 			unitemod.setLibUniter(uniter.getLibUniter());
 			
 			return this.uniterRepository.save(unitemod);

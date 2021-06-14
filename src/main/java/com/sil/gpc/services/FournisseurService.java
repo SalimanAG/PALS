@@ -26,6 +26,7 @@ public class FournisseurService {
 		
 		Fournisseur entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeFrs(fournisseur.getCodeFrs());
 			entiter.setAdresseFrs(fournisseur.getAdresseFrs());
 			entiter.setDescription(fournisseur.getDescription());
 			entiter.setIdentiteFrs(fournisseur.getIdentiteFrs());

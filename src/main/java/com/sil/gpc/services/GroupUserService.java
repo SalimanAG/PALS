@@ -27,6 +27,7 @@ public class GroupUserService {
     public GroupUser edit(Long id, GroupUser guser) {
        	if(repo.existsById(id)) {
    			GroupUser por=repo.getOne(id);
+   			por.setIdGroupUser(guser.getIdGroupUser());
    			por.setLibGroupUser(guser.getLibGroupUser());
    			return this.repo.save(por);
        }

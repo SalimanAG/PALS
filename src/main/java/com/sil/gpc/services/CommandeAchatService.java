@@ -29,6 +29,7 @@ public class CommandeAchatService {
 		CommandeAchat entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			entiter.setCommande(commandeAchat.getCommande());
+			entiter.setExercice(commandeAchat.getExercice());
 			
 			return this.repo.save(entiter);
 		}

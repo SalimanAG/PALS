@@ -51,17 +51,17 @@ public class Article implements Serializable {
 		
 	//Migration du code de la famille vers l'article
 	@ManyToOne(targetEntity = Famille.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "numFamille",referencedColumnName = "numFamille")
+	@JoinColumn(name = "numFamille",referencedColumnName = "numFamille",nullable = true)
 	private Famille famille;
 	
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Fournisseur.class)
-	@JoinColumn(name = "numFournisseur", referencedColumnName = "numFournisseur",nullable = false)
+	@JoinColumn(name = "numFournisseur", referencedColumnName = "numFournisseur",nullable = true)
 	public Fournisseur fournisseur;
 	
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = TypeArticle.class)
-	@JoinColumn(name = "numTypeArt", referencedColumnName = "numTypeArt",nullable = false)
+	@JoinColumn(name = "numTypeArt", referencedColumnName = "numTypeArt",nullable = true)
 	public TypeArticle typeArticle;
 	
 	

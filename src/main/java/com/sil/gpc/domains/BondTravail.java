@@ -18,6 +18,11 @@ public class BondTravail {
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
 	public Commande commande;
+	
+	//Liaison avec la table Exercice
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = false)
+	private Exercice exercice;
 
 
 	public BondTravail() {
@@ -25,12 +30,16 @@ public class BondTravail {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 
-	public BondTravail(String numBondTravail, Commande commande) {
+	public BondTravail(String numBondTravail, double valeur, Commande commande, Exercice exercice) {
 		super();
 		this.numBondTravail = numBondTravail;
+		this.valeur = valeur;
 		this.commande = commande;
+		this.exercice = exercice;
 	}
+
 
 
 	public String getNumBondTravail() {
@@ -53,12 +62,6 @@ public class BondTravail {
 	}
 
 
-	@Override
-	public String toString() {
-		return "BondTravail [numBondTravail=" + numBondTravail + ", commande=" + commande + "]";
-	}
-
-
 	public double getValeur() {
 		return valeur;
 	}
@@ -68,6 +71,25 @@ public class BondTravail {
 		this.valeur = valeur;
 	}
 
+
+
+	public Exercice getExercice() {
+		return exercice;
+	}
+
+
+
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "BondTravail [numBondTravail=" + numBondTravail + ", valeur=" + valeur + ", commande=" + commande
+				+ ", exercice=" + exercice + "]";
+	}
 	
 	
 	

@@ -25,6 +25,7 @@ public class TypeArticleService {
 		
 		TypeArticle entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeTypeArt(typeArticle.getCodeTypeArt());
 			entiter.setLibTypeArt(typeArticle.getLibTypeArt());
 			
 			return this.repo.save(entiter);

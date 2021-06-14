@@ -19,6 +19,11 @@ public class CommandeAchat {
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
 	public Commande commande;
+	
+	//Liaison avec la table Exercice
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = false)
+	private Exercice exercice;
 
 
 	public CommandeAchat() {
@@ -27,11 +32,15 @@ public class CommandeAchat {
 	}
 
 
-	public CommandeAchat(String numComAchat, Commande commande) {
+	public CommandeAchat(String numComAchat, double valeur, Commande commande, Exercice exercice) {
 		super();
 		this.numComAchat = numComAchat;
+		this.valeur = valeur;
 		this.commande = commande;
+		this.exercice = exercice;
 	}
+
+
 
 
 	public String getNumComAchat() {
@@ -66,10 +75,24 @@ public class CommandeAchat {
 	}
 
 
+	public Exercice getExercice() {
+		return exercice;
+	}
+
+
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
+	}
+
+
 	@Override
 	public String toString() {
-		return "CommandeAchat [numComAchat=" + numComAchat + ", valeur=" + valeur + ", commande=" + commande + "]";
+		return "CommandeAchat [numComAchat=" + numComAchat + ", valeur=" + valeur + ", commande=" + commande
+				+ ", exercice=" + exercice + "]";
 	}
+
+
+
 
 	
 	

@@ -19,18 +19,26 @@ public class AppelOffre {
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
 	public Commande commande;
 
+	//Liaison avec la table Exercice
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = false)
+	private Exercice exercice;
 
 	public AppelOffre() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public AppelOffre(String numAppelOffre, Commande commande) {
+	
+	
+	public AppelOffre(String numAppelOffre, double valeur, Commande commande, Exercice exercice) {
 		super();
 		this.numAppelOffre = numAppelOffre;
+		this.valeur = valeur;
 		this.commande = commande;
+		this.exercice = exercice;
 	}
+
 
 
 	public String getNumAppelOffre() {
@@ -53,12 +61,6 @@ public class AppelOffre {
 	}
 
 
-	@Override
-	public String toString() {
-		return "AppelOffre [numAppelOffre=" + numAppelOffre + ", commande=" + commande + "]";
-	}
-
-
 	public double getValeur() {
 		return valeur;
 	}
@@ -66,6 +68,26 @@ public class AppelOffre {
 
 	public void setValeur(double valeur) {
 		this.valeur = valeur;
+	}
+
+
+
+	public Exercice getExercice() {
+		return exercice;
+	}
+
+
+
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "AppelOffre [numAppelOffre=" + numAppelOffre + ", valeur=" + valeur + ", commande=" + commande
+				+ ", exercice=" + exercice + "]";
 	}
 
 	

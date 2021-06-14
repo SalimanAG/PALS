@@ -27,6 +27,7 @@ public class MagasinService {
 	public Magasin edit(Magasin mg, Long cm){
 		Magasin mag=repos.getOne(cm);
 		if(mag!=null) {
+		mag.setCodeMagasin(mg.getCodeMagasin());
 		mag.setLibMagasin(mg.getLibMagasin());
 		
 		return repos.save(mag);

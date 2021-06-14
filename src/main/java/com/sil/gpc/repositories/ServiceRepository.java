@@ -8,7 +8,7 @@ import com.sil.gpc.domains.Service;
 
 
 @Repository
-public interface ServiceRepository extends JpaRepository<Service, String> {
+public interface ServiceRepository extends JpaRepository<Service, Long> {
 	
 	public List<Service> findByCodeService(String CodeService);
 	

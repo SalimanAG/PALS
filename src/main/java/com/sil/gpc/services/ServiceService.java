@@ -23,7 +23,7 @@ public class ServiceService {
     }
     
     // Editer un Service
- public Service edit(String codeService, Service sev) {
+ public Service edit(Long codeService, Service sev) {
     	
     	Service sevmod = this.serviceRepository.getOne(codeService);
 		if(sevmod != null) {
@@ -39,7 +39,7 @@ public class ServiceService {
  
     
  // Supprimer un Service
- public boolean delete(String id) {
+ public boolean delete(Long id) {
 	 if(this.serviceRepository.existsById(id))
          this.serviceRepository.deleteById(id);
 	 
@@ -47,7 +47,7 @@ public class ServiceService {
  }   
  
  // Renvoie un Service par son id
- public Optional <Service> findById(String id) {
+ public Optional <Service> findById(Long id) {
      return this.serviceRepository.findById(id);
  }
  

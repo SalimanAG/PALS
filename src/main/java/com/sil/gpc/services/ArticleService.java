@@ -29,6 +29,7 @@ public class ArticleService {
 		
 		Article entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeArticle(article.getCodeArticle());
 			entiter.setConsommableArticle(article.isConsommableArticle());
 			entiter.setCouleurArticle(article.getCouleurArticle());
 			entiter.setLibArticle(article.getLibArticle());
@@ -53,6 +54,7 @@ public class ArticleService {
 			entiter.setStockSecurArticle(article.getStockSecurArticle());
 			entiter.setStockMinimArticle(article.getStockMinimArticle());
 			entiter.setStockAlertArticle(article.getStockAlertArticle());
+			entiter.setTypeArticle(article.getTypeArticle());
 			
 			return this.repo.save(entiter);
 		}

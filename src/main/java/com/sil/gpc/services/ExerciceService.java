@@ -27,6 +27,7 @@ public class ExerciceService {
 		
 		Exercice entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeExercice(exercice.getCodeExercice());
 			entiter.setDateDebut(exercice.getDateDebut());
 			entiter.setDateFin(exercice.getDateFin());
 			entiter.setEtatExo(exercice.getEtatExo());

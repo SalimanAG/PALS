@@ -29,6 +29,7 @@ public class BondTravailService {
 		BondTravail entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			entiter.setCommande(bondTravail.getCommande());
+			entiter.setExercice(bondTravail.getExercice());
 			
 			return this.repo.save(entiter);
 		}

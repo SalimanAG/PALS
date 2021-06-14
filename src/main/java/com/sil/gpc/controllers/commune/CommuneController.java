@@ -214,7 +214,7 @@ public class CommuneController {
 	}
 	
 	@GetMapping(path = "service/byCodSev/{id}")
-	public Optional<Service> getServiceById(@PathVariable(name = "id") String id){
+	public Optional<Service> getServiceById(@PathVariable(name = "id") Long id){
 		
 		return this.serviceService.findById(id);
 	}
@@ -232,13 +232,13 @@ public class CommuneController {
 	}
 	
 	@PutMapping(path = "service/byCodSev/{id}")
-	public Service updateService(@PathVariable(name = "id") String id, @RequestBody Service service) {
+	public Service updateService(@PathVariable(name = "id") Long id, @RequestBody Service service) {
 		
 		return this.serviceService.edit(id, service);
 	}
 	
 	@DeleteMapping(path = "service/byCodSev/{id}")
-	public Boolean deleteService(@PathVariable(name = "id") String id) {
+	public Boolean deleteService(@PathVariable(name = "id") Long id) {
 		
 		return this.serviceService.delete(id);
 	}	
