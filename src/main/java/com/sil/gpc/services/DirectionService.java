@@ -25,6 +25,7 @@ public class DirectionService {
 		
 		Direction entiter = this.repo.getOne(id);
 		if(entiter != null) {
+			entiter.setCodeDirection(direction.getCodeDirection());
 			entiter.setLibDirection(direction.getLibDirection());
 			
 			return this.repo.save(entiter);

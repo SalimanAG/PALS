@@ -27,10 +27,12 @@ public class ServiceService {
     	
     	Service sevmod = this.serviceRepository.getOne(codeService);
 		if(sevmod != null) {
+			
 			sevmod.setLibService(sev.getLibService());
 			sevmod.setDirection(sev.getDirection());
 			sevmod.setSuperService(sev.getSuperService());
 			sevmod.setTypeService(sev.getTypeService());
+			sevmod.setCodeService(sev.getCodeService());
 			
 			return this.serviceRepository.save(sevmod);
     }
