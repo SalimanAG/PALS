@@ -18,10 +18,7 @@ public class AffectUniterToArticleService {
 	}
 	
 	public AffectUniterToArticle save(AffectUniterToArticle affectUniterToArticle) {
-		if(!repo.existsById(affectUniterToArticle.getIdAffectUniterToArticle())) {
-			return this.repo.save(affectUniterToArticle);
-		}
-		return null;
+		return this.repo.save(affectUniterToArticle);
 	}
 	
 	public AffectUniterToArticle edit(Long id, AffectUniterToArticle affectUniterToArticle) {
