@@ -1,7 +1,9 @@
 package com.sil.gpc.services;
 
+import com.sil.gpc.domains.LigneFactureProFormAchat;
+import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.domains.Reception;
-
+import com.sil.gpc.repositories.LigneReceptionRepository;
 import com.sil.gpc.repositories.ReceptionRepository;
 
 import java.sql.Date;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 public class ReceptionService {
 
 	private final ReceptionRepository receptionRepository;
+	private final LigneReceptionRepository repo2;
 
-    public ReceptionService(ReceptionRepository receptionRepository) {
+    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2) {
         this.receptionRepository = receptionRepository;
+		this.repo2 = repo2;
     }
 
     // Sauvegarder 
@@ -70,7 +74,22 @@ public class ReceptionService {
             this.receptionRepository.deleteById(id);
     	
     	return this.receptionRepository.existsById(id);
-    }   
+    }  
+    
+    
+	public boolean deleteAReception2(String id) {
+		
+		List<LigneReception> lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getReception().getNumReception() == id) {
+				this.repo2.deleteById(lignes.get(i).getIdLigneReception());
+			}
+		}
+		
+		return this.delete(id);
+	}
+    
     
     // 
     public Optional<Reception> findById(String numReception) {

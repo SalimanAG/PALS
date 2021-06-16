@@ -8,4 +8,5 @@ import com.sil.gpc.domains.AffectUniterToArticle;
 @Repository
 public interface AffectUniterToArticleRepository extends JpaRepository<AffectUniterToArticle, Long> {
 
+	
 }

@@ -110,10 +110,22 @@ public class TresorController {
 		return this.commandeService.edit(id, commande);
 	}
 	
+	@PutMapping(path = "commande/byCodCom2/{id}")
+	public EncapCommande updateCommande2(@PathVariable(name = "id") Long id, @RequestBody EncapCommande encapCommande) {
+		
+		return this.commandeService.editByEncap(id, encapCommande);
+	}
+	
 	@DeleteMapping(path = "commande/byCodCom/{id}")
 	public Boolean deleteCommande(@PathVariable(name = "id") Long id) {
 		
 		return this.commandeService.delete(id);
+	}
+	
+	@DeleteMapping(path = "commande/byCodCom2/{id}")
+	public Boolean deleteCommande2(@PathVariable(name = "id") Long id) {
+		
+		return this.commandeService.deleteACommande2(id);
 	}
 	
 	
@@ -210,6 +222,12 @@ public class TresorController {
 		return this.receptionService.delete(id);
 	}	
 	
+	@DeleteMapping(path = "reception/byCodRec2/{id}")
+	public Boolean deleteReception2(@PathVariable(name = "id") String id) {
+		
+		return this.receptionService.deleteAReception2(id);
+	}	
+	
 	
 	
 	/*###########################################################
@@ -302,6 +320,12 @@ public class TresorController {
 	public Boolean deleteDemandeAppro(@PathVariable(name = "id") String id) {
 		
 		return this.demandeApproService.delete(id);
+	}
+	
+	@DeleteMapping(path = "demandeAppro/byCodDemApp2/{id}")
+	public Boolean deleteDemandeAppro2(@PathVariable(name = "id") String id) {
+		
+		return this.demandeApproService.deleteADemandeApprovisionnement2(id);
 	}
 	
 	

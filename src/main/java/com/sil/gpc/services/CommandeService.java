@@ -1,6 +1,7 @@
 package com.sil.gpc.services;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,16 +9,23 @@ import org.springframework.stereotype.Service;
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.Fournisseur;
+import com.sil.gpc.domains.LigneCommande;
+import com.sil.gpc.encapsuleurs.EncapCommande;
 import com.sil.gpc.repositories.CommandeRepository;
+import com.sil.gpc.repositories.LigneCommandeRepository;
 
 @Service
 public class CommandeService {
 
 	private final CommandeRepository repo;
+	private final LigneCommandeRepository repo2;
+	private final LigneCommandeService servi2;
 
-	public CommandeService(CommandeRepository repo) {
+	public CommandeService(CommandeRepository repo, LigneCommandeRepository repo2, LigneCommandeService servi2) {
 		super();
 		this.repo = repo;
+		this.repo2 = repo2;
+		this.servi2 = servi2;
 	}
 	
 	public Commande save(Commande commande) {
@@ -67,12 +75,92 @@ public class CommandeService {
 		return null;
 	}
 	
+	
+	public EncapCommande editByEncap(Long id, EncapCommande encap) {
+				
+		List<LigneCommande> lignes = this.repo2.findAll();
+		List<LigneCommande> concernedLignes = new ArrayList<LigneCommande>();
+		List<LigneCommande> newLignes = new ArrayList<LigneCommande>();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).numCommande.getNumCommande() == id) {
+				concernedLignes.add(lignes.get(i));
+			}
+		}
+		
+		for(int i = 0; i < encap.getLigneCommandes().size(); i++) {
+			boolean added = true;
+			LigneCommande enti = null;
+			
+			for(int j = 0; j < concernedLignes.size(); j++) {
+				if(concernedLignes.get(j).getArticle().getNumArticle() == encap.getLigneCommandes().get(i).getArticle().getNumArticle()) {
+					added = false;
+					enti = concernedLignes.get(j);
+					break;
+				}
+			}
+			
+			LigneCommande newer = encap.getLigneCommandes().get(i);
+			newer.setNumCommande(repo.getOne(id));
+			
+			if(added == true) {
+				
+				this.repo2.save(newer);
+			}
+			else {
+				this.servi2.edit(enti.getIdLigneCommande(), newer);
+			}
+		}
+		
+		for(int i = 0; i < concernedLignes.size(); i++) {
+			
+			boolean removed = true;
+			
+			for(int j = 0; j < encap.getLigneCommandes().size(); j++) {
+				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getLigneCommandes().get(j).getArticle().getNumArticle()) {
+					removed = false;
+					break;
+				}
+			}
+			
+			if(removed == true) {
+				this.repo2.deleteById(concernedLignes.get(i).getIdLigneCommande());
+			}			
+			
+		}
+		
+		lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).numCommande.getNumCommande() == id) {
+				newLignes.add(lignes.get(i));
+			}
+		}
+		
+		
+		return new EncapCommande(this.edit(id, encap.getCommande()), newLignes);
+	}
+	
+	
 	public boolean delete(Long id) {
 		
 		if(this.repo.existsById(id)==true)
 			this.repo.deleteById(id);
 		
 		return !this.repo.existsById(id);
+	}
+	
+	public boolean deleteACommande2(Long id) {
+		
+		List<LigneCommande> lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getNumCommande().getNumCommande() == id) {
+				this.repo2.deleteById(lignes.get(i).getIdLigneCommande());
+			}
+		}
+		
+		return this.delete(id);
 	}
 	
 	public Commande getById(Long id){

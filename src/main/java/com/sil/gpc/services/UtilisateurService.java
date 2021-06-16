@@ -49,7 +49,28 @@ public class UtilisateurService {
             this.userRepository.deleteById(id);
             
     	return this.userRepository.existsById(id);
-    }   
+    }  
+    
+    
+    public Utilisateur findByLoginAndMdp(String login, String mdp) {
+    	
+    	List<Utilisateur> lis = userRepository.findAll();
+    	
+    	for(int i = 0; i < lis.size(); i++) {
+    		
+    		if(lis.get(i).getLogin() == login) {
+    			if(lis.get(i).isAskMdp1erLance()) {
+    				return lis.get(i);
+    			}
+    			else if(lis.get(i).getMotDePass() == mdp){
+    				return lis.get(i);
+    			}
+    		}
+    	}
+    	
+        return null;
+    }
+    
 
     // 
     public Optional<Utilisateur> findById(Long id) {

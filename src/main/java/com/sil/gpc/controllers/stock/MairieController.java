@@ -372,6 +372,12 @@ public class MairieController {
 		return this.demandePrixService.delete(id);
 	}
 	
+	@DeleteMapping(path = "demandePrix/byCodDemPri2/{id}")
+	public Boolean deleteDemandePrix2(@PathVariable(name = "id") String id) {
+		
+		return this.demandePrixService.deleteADemandePrix2(id);
+	}
+	
 	
 	/*###########################################################
 	#############	Partie réservée pour LigneDemandePrix
@@ -500,6 +506,13 @@ public class MairieController {
 	public Boolean deleteFactureProFormAcha(@PathVariable(name = "id") String id) {
 		
 		return this.factureProFormAchaService.delete(id);
+	}
+
+	
+	@DeleteMapping(path = "factureProFormAcha/byCodFacProForAch2/{id}")
+	public Boolean deleteFactureProFormAcha2(@PathVariable(name = "id") String id) {
+		
+		return this.factureProFormAchaService.deleteAFactureProFormAcha2(id);
 	}
 
 	

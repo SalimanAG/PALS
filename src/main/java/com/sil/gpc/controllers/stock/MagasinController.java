@@ -377,7 +377,13 @@ public class MagasinController {
 	public Boolean deleteInvent(@PathVariable(name = "id") String id) {
 		
 		return this.invServ.delete(id);
-	}	
+	}
+	
+	@DeleteMapping(path = "inventaire/byCodSto2/{id}")
+	public Boolean deleteInvent2(@PathVariable(name = "id") String id) {
+		
+		return this.invServ.deleteAInventaire2(id);
+	}
 
 	/*###########################################################
 	###########	Partie réservée pour LigneInventaire#############

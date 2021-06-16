@@ -6,16 +6,21 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Inventaire;
+import com.sil.gpc.domains.LigneInventaire;
+import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.repositories.InventaireRepository;
+import com.sil.gpc.repositories.LigneInventaireRepository;
 
 @Service
 public class InventaireService {
 
 	private final InventaireRepository repos;
+	private final LigneInventaireRepository repo2;
 
-	public InventaireService(InventaireRepository repos) {
+	public InventaireService(InventaireRepository repos, LigneInventaireRepository repo) {
 		super();
 		this.repos = repos;
+		this.repo2 = repo;
 	}
 
 	public Optional<Inventaire> findById(String num){
@@ -59,6 +64,19 @@ public class InventaireService {
 	public boolean delete(String num){
 		repos.deleteById(num);
 		return !repos.existsById(num);
+	}
+	
+	public boolean deleteAInventaire2(String id) {
+		
+		List<LigneInventaire> lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getInventaire().getNumInv() == id) {
+				this.repo2.deleteById(lignes.get(i).getIdLigneInv());
+			}
+		}
+		
+		return this.delete(id);
 	}
 	
 }

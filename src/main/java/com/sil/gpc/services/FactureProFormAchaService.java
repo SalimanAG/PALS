@@ -5,16 +5,21 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.FactureProFormAcha;
+import com.sil.gpc.domains.LigneDemandePrix;
+import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.repositories.FactureProFormAchaRepository;
+import com.sil.gpc.repositories.LigneFactureProFormAchatRepository;
 
 @Service
 public class FactureProFormAchaService {
 
 	private final FactureProFormAchaRepository repo;
+	private final LigneFactureProFormAchatRepository repo2;
 
-	public FactureProFormAchaService(FactureProFormAchaRepository repo) {
+	public FactureProFormAchaService(FactureProFormAchaRepository repo, LigneFactureProFormAchatRepository repo2) {
 		super();
 		this.repo = repo;
+		this.repo2 = repo2;
 	}
 	
 	public FactureProFormAcha save(FactureProFormAcha factureProFormAcha) {
@@ -54,6 +59,21 @@ public class FactureProFormAchaService {
 		
 		return !this.repo.existsById(id);
 	}
+	
+	
+	public boolean deleteAFactureProFormAcha2(String id) {
+		
+		List<LigneFactureProFormAchat> lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getFactureProFormAcha().getIdFpfa() == id) {
+				this.repo2.deleteById(lignes.get(i).getIdLigneFpfa());
+			}
+		}
+		
+		return this.delete(id);
+	}
+	
 	
 	public FactureProFormAcha getById(String id){
 		

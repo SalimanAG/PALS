@@ -8,16 +8,21 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.Exercice;
+import com.sil.gpc.domains.LigneDemandeAppro;
+import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.repositories.DemandeApproRepository;
+import com.sil.gpc.repositories.LigneDemandeApproRepository;
 
 @Service
 public class DemandeApproService {
 
 	private final DemandeApproRepository repo;
+	private final LigneDemandeApproRepository repo2;
 
-	public DemandeApproService(DemandeApproRepository repo) {
+	public DemandeApproService(DemandeApproRepository repo, LigneDemandeApproRepository repo2) {
 		super();
 		this.repo = repo;
+		this.repo2 = repo2;
 	}
 	
 	public DemandeApprovisionnement save(DemandeApprovisionnement demandeApprovisionnement) {
@@ -68,6 +73,21 @@ public class DemandeApproService {
 		
 		return !this.repo.existsById(id);
 	}
+	
+	
+	public boolean deleteADemandeApprovisionnement2(String id) {
+		
+		List<LigneDemandeAppro> lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getAppro().getNumDA() == id) {
+				this.repo2.deleteById(lignes.get(i).getIdLigneDA());
+			}
+		}
+		
+		return this.delete(id);
+	}
+	
 	
 	public Optional<DemandeApprovisionnement> getById(String id){
 		

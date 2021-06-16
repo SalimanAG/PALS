@@ -8,16 +8,21 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.Exercice;
+import com.sil.gpc.domains.LigneAppro;
+import com.sil.gpc.domains.LigneDemandeAppro;
 import com.sil.gpc.repositories.ApprovisionementRepository;
+import com.sil.gpc.repositories.LigneApproRepository;
 
 @Service
 public class ApprovisionnementService {
 
 	private final ApprovisionementRepository repo;
+	private final LigneApproRepository repo2;
 
-	public ApprovisionnementService(ApprovisionementRepository repo) {
+	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2) {
 		super();
 		this.repo = repo;
+		this.repo2 = repo2;
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
@@ -73,6 +78,21 @@ public class ApprovisionnementService {
 		
 		return !this.repo.existsById(id);
 	}
+	
+	
+	public boolean deleteAApprovisionnement2(String id) {
+		
+		List<LigneAppro> lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getAppro().getNumAppro() == id) {
+				this.repo2.deleteById(lignes.get(i).getIdLigneAppro());
+			}
+		}
+		
+		return this.delete(id);
+	}
+	
 	
 	public Optional<Approvisionnement> getById(String id){
 		

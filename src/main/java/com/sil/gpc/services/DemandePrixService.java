@@ -5,16 +5,21 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.DemandePrix;
+import com.sil.gpc.domains.LigneCommande;
+import com.sil.gpc.domains.LigneDemandePrix;
 import com.sil.gpc.repositories.DemandePrixRepository;
+import com.sil.gpc.repositories.LigneDemandePrixRepository;
 
 @Service
 public class DemandePrixService {
 
 	private final DemandePrixRepository repo;
+	private final LigneDemandePrixRepository repo2;
 
-	public DemandePrixService(DemandePrixRepository repo) {
+	public DemandePrixService(DemandePrixRepository repo, LigneDemandePrixRepository repo2) {
 		super();
 		this.repo = repo;
+		this.repo2 = repo2;
 	}
 	
 	public DemandePrix save(DemandePrix demandePrix) {
@@ -50,6 +55,21 @@ public class DemandePrixService {
 		
 		return !this.repo.existsById(id);
 	}
+	
+	
+	public boolean deleteADemandePrix2(String id) {
+		
+		List<LigneDemandePrix> lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getDemandePrix().getIdDemandePrix() == id) {
+				this.repo2.deleteById(lignes.get(i).getIdLigneDemandePrix());
+			}
+		}
+		
+		return this.delete(id);
+	}
+	
 	
 	public DemandePrix getById(String id){
 		
