@@ -28,6 +28,26 @@ public class FactureProFormAchaService {
 	}
 	
 	public FactureProFormAcha save(FactureProFormAcha factureProFormAcha) {
+		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "FPA-";
+		if(this.repo.findLastNumUsed(factureProFormAcha.getExercice().getNumExercice()) != null) {
+			val = this.repo.findLastNumUsed(factureProFormAcha.getExercice().getNumExercice());
+			val++;
+			
+		}
+		
+		factureProFormAcha.setValeur(val);
+		
+		code = code+factureProFormAcha.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		factureProFormAcha.setIdFpfa(code+val);
+		
+		
 		if(!repo.existsById(factureProFormAcha.getIdFpfa())) {
 			return this.repo.save(factureProFormAcha);
 		}

@@ -18,6 +18,27 @@ public class CommandeAchatService {
 	}
 	
 	public CommandeAchat save(CommandeAchat commandeAchat) {
+		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "CA-";
+		if(this.repo.findLastNumUsed(commandeAchat.getExercice().getNumExercice()) != null) {
+			val = this.repo.findLastNumUsed(commandeAchat.getExercice().getNumExercice());
+			val++;
+			
+		}
+		
+		commandeAchat.setValeur(val);
+		
+		code = code+commandeAchat.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		commandeAchat.setNumComAchat(code+val);
+		
+		
+		
 		if(!repo.existsById(commandeAchat.getNumComAchat())) {
 			return this.repo.save(commandeAchat);
 		}

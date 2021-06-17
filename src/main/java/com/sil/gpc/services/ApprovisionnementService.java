@@ -32,7 +32,7 @@ public class ApprovisionnementService {
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
-		approvisionnement.setValideAppro(true);	
+		//approvisionnement.setValideAppro(true);	
 		
 		Integer val = 1, nbrMaxCaract = 6;
 		String code = "BA-";

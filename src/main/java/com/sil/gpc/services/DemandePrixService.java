@@ -28,6 +28,25 @@ public class DemandePrixService {
 	}
 	
 	public DemandePrix save(DemandePrix demandePrix) {
+		
+    	Integer val = 1, nbrMaxCaract = 6;
+		String code = "DP-";
+		if(this.repo.findLastNumUsed(demandePrix.getExercice().getNumExercice()) != null) {
+			val = this.repo.findLastNumUsed(demandePrix.getExercice().getNumExercice());
+			val++;
+			
+		}
+		
+		demandePrix.setValeur(val);
+		
+		code = code+demandePrix.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		demandePrix.setIdDemandePrix(code+val);
+		
 		if(!repo.existsById(demandePrix.getIdDemandePrix())) {
 			return this.repo.save(demandePrix);
 		}

@@ -18,6 +18,27 @@ public class LettreCommandeService {
 	}
 	
 	public LettreCommande save(LettreCommande lettreCommande) {
+		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "LC-";
+		if(this.repo.findLastNumUsed(lettreCommande.getExercice().getNumExercice()) != null) {
+			val = this.repo.findLastNumUsed(lettreCommande.getExercice().getNumExercice());
+			val++;
+			
+		}
+		
+		lettreCommande.setValeur(val);
+		
+		code = code+lettreCommande.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		lettreCommande.setNumLettreComm(code+val);
+		
+		
+		
 		if(!repo.existsById(lettreCommande.getNumLettreComm())) {
 			return this.repo.save(lettreCommande);
 		}

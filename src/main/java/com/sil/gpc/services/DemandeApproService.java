@@ -32,9 +32,9 @@ public class DemandeApproService {
 	}
 	
 	public DemandeApprovisionnement save(DemandeApprovisionnement demandeApprovisionnement) {
-		demandeApprovisionnement.setValideDA(true);
+		//demandeApprovisionnement.setValideDA(true);
 		Integer val = 1, nbrMaxCaract = 6;
-		String code = "DA-";
+		String code = "CI-";
 		if(this.repo.findLastNumUsed(demandeApprovisionnement.getExercice().getNumExercice()) != null) {
 			val = this.repo.findLastNumUsed(demandeApprovisionnement.getExercice().getNumExercice());
 			val++;

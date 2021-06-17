@@ -31,7 +31,7 @@ public class ReceptionService {
 
     // Sauvegarder 
     public Reception save(Reception rep) {
-    	rep.setValideRecep(true);
+    	//rep.setValideRecep(true);
     	Integer val = 1, nbrMaxCaract = 6;
 		String code = "RC-";
 		if(this.receptionRepository.findLastNumUsed(rep.getExercice().getNumExercice()) != null) {

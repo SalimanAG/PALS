@@ -18,6 +18,27 @@ public class AppelOffreService {
 	}
 	
 	public AppelOffre save(AppelOffre appelOffre) {
+		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "AO-";
+		if(this.repo.findLastNumUsed(appelOffre.getExercice().getNumExercice()) != null) {
+			val = this.repo.findLastNumUsed(appelOffre.getExercice().getNumExercice());
+			val++;
+			
+		}
+		
+		appelOffre.setValeur(val);
+		
+		code = code+appelOffre.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		appelOffre.setNumAppelOffre(code+val);
+		
+		
+		
 		if(!repo.existsById(appelOffre.getNumAppelOffre())) {
 			return this.repo.save(appelOffre);
 		}

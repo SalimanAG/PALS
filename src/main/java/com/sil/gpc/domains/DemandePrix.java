@@ -18,6 +18,7 @@ public class DemandePrix {
 	private Timestamp dateLimiteDemandePrix;
 	private boolean valideDemandePrix;
 	private boolean reporter;
+	private double valeur;
 	
 	//Liaison à exercice
 		@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
@@ -98,13 +99,24 @@ public class DemandePrix {
 		this.exercice = exercice;
 	}
 
+
+	public double getValeur() {
+		return valeur;
+	}
+
+	public void setValeur(double valeur) {
+		this.valeur = valeur;
+	}
+
 	@Override
 	public String toString() {
 		return "DemandePrix [idDemandePrix=" + idDemandePrix + ", designationDemandePrix=" + designationDemandePrix
 				+ ", dateDemandePrix=" + dateDemandePrix + ", dateLimiteDemandePrix=" + dateLimiteDemandePrix
-				+ ", valideDemandePrix=" + valideDemandePrix + ", reporter=" + reporter + ", exercice=" + exercice
-				+ "]";
+				+ ", valideDemandePrix=" + valideDemandePrix + ", reporter=" + reporter + ", valeur=" + valeur
+				+ ", exercice=" + exercice + "]";
 	}
+	
+	
 	
 		
 	

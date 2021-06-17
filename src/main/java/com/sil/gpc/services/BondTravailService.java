@@ -18,6 +18,27 @@ public class BondTravailService {
 	}
 	
 	public BondTravail save(BondTravail bondTravail) {
+		
+		Integer val = 1, nbrMaxCaract = 6;
+		String code = "BT-";
+		if(this.repo.findLastNumUsed(bondTravail.getExercice().getNumExercice()) != null) {
+			val = this.repo.findLastNumUsed(bondTravail.getExercice().getNumExercice());
+			val++;
+			
+		}
+		
+		bondTravail.setValeur(val);
+		
+		code = code+bondTravail.getExercice().getCodeExercice();
+		
+		for (int i=0; i<nbrMaxCaract -  (val+"").length(); i++) {
+			code+="0";
+		}
+		
+		bondTravail.setNumBondTravail(code+val);
+		
+		
+		
 		if(!repo.existsById(bondTravail.getNumBondTravail())) {
 			return this.repo.save(bondTravail);
 		}
