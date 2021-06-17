@@ -373,6 +373,13 @@ public class MagasinController {
 		return this.invServ.edit(inv, id);
 	}
 	
+	@PutMapping(path = "inventaire/byCodSto2/{id}")
+	public EncapInventaire updateInventaire2(@PathVariable(name = "id") String id, @RequestBody EncapInventaire encapInventaire) {
+		
+		return this.invServ.editByEncap(id, encapInventaire);
+	}
+	
+	
 	@DeleteMapping(path = "inventaire/byCodSto/{id}")
 	public Boolean deleteInvent(@PathVariable(name = "id") String id) {
 		

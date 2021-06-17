@@ -123,6 +123,13 @@ public class MairieController {
 		return this.approvisionnementService.edit(id, approvisionnement);
 	}
 	
+	@PutMapping(path = "approvisionnement/byCodApp2/{id}")
+	public EncapApprovisionnement updateApprovisionnement2(@PathVariable(name = "id") String id, @RequestBody EncapApprovisionnement encapApprovisionnement) {
+		
+		return this.approvisionnementService.editByEncap(id, encapApprovisionnement);
+	}
+	
+	
 	@DeleteMapping(path = "approvisionnement/byCodApp/{id}")
 	public Boolean deleteApprovisionnement(@PathVariable(name = "id") String id) {
 		
@@ -366,6 +373,12 @@ public class MairieController {
 		return this.demandePrixService.edit(id, demandePrix);
 	}
 	
+	@PutMapping(path = "demandePrix/byCodDemPri2/{id}")
+	public EncapDemandePrix updateDemandePrix2(@PathVariable(name = "id") String id, @RequestBody EncapDemandePrix encapDemandePrix) {
+		
+		return this.demandePrixService.editByEncap(id, encapDemandePrix);
+	}
+	
 	@DeleteMapping(path = "demandePrix/byCodDemPri/{id}")
 	public Boolean deleteDemandePrix(@PathVariable(name = "id") String id) {
 		
@@ -501,6 +514,14 @@ public class MairieController {
 		
 		return this.factureProFormAchaService.edit(id, factureProFormAcha);
 	}
+	
+	@PutMapping(path = "factureProFormAcha/byCodFacProForAch2/{id}")
+	public EncapFactureProformAchat updateFactureProFormAcha2(@PathVariable(name = "id") String id, @RequestBody EncapFactureProformAchat encapFactureProformAchat) {
+		
+		return this.factureProFormAchaService.editByEncap(id, encapFactureProformAchat);
+	}
+	
+	
 	
 	@DeleteMapping(path = "factureProFormAcha/byCodFacProForAch/{id}")
 	public Boolean deleteFactureProFormAcha(@PathVariable(name = "id") String id) {

@@ -23,7 +23,7 @@ public class DemandeApprovisionnement implements Serializable{
 	
 	//Liaison avec Exercice
 	@ManyToOne(targetEntity = Exercice.class,fetch = FetchType.EAGER)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice",nullable = false)
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice",nullable = false)
 	public Exercice exercice;
 	
 	//Liaison avec Centre de consommation 

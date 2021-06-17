@@ -1,12 +1,16 @@
 package com.sil.gpc.services;
 
+import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.domains.Reception;
+import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
+import com.sil.gpc.encapsuleurs.EncapReception;
 import com.sil.gpc.repositories.LigneReceptionRepository;
 import com.sil.gpc.repositories.ReceptionRepository;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +21,12 @@ public class ReceptionService {
 
 	private final ReceptionRepository receptionRepository;
 	private final LigneReceptionRepository repo2;
+	private final LigneReceptionService servi2;
 
-    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2) {
+    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2, LigneReceptionService servi2) {
         this.receptionRepository = receptionRepository;
 		this.repo2 = repo2;
+		this.servi2 = servi2;
     }
 
     // Sauvegarder 
@@ -28,8 +34,8 @@ public class ReceptionService {
     	rep.setValideRecep(true);
     	Integer val = 1, nbrMaxCaract = 6;
 		String code = "RC-";
-		if(this.receptionRepository.findLastNumUsed(rep.getExercice().getCodeExercice()) != null) {
-			val = this.receptionRepository.findLastNumUsed(rep.getExercice().getCodeExercice());
+		if(this.receptionRepository.findLastNumUsed(rep.getExercice().getNumExercice()) != null) {
+			val = this.receptionRepository.findLastNumUsed(rep.getExercice().getNumExercice());
 			val++;
 			
 		}
@@ -67,6 +73,79 @@ public class ReceptionService {
        }
    		return null;
        }
+    
+    
+	
+	public EncapReception editByEncap(String id, EncapReception encap) {
+		
+		List<LigneReception> lignes = this.repo2.findAll();
+		List<LigneReception> concernedLignes = new ArrayList<LigneReception>();
+		List<LigneReception> newLignes = new ArrayList<LigneReception>();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getReception().getNumReception() == id) {
+				concernedLignes.add(lignes.get(i));
+			}
+		}
+		
+		for(int i = 0; i < encap.getLigneReceptions().size(); i++) {
+			boolean added = true;
+			LigneReception enti = null;
+			
+			for(int j = 0; j < concernedLignes.size(); j++) {
+				if(concernedLignes.get(j).getLigneCommande().getArticle().getNumArticle() == encap.getLigneReceptions().get(i).getLigneCommande().getArticle().getNumArticle()) {
+					added = false;
+					enti = concernedLignes.get(j);
+					break;
+				}
+			}
+			
+			LigneReception newer = encap.getLigneReceptions().get(i);
+			newer.setReception(this.receptionRepository.getOne(id));
+			
+			if(added == true) {
+				
+				this.repo2.save(newer);
+			}
+			else {
+				this.servi2.edit(newer, enti.getIdLigneReception());
+			}
+		}
+		
+		for(int i = 0; i < concernedLignes.size(); i++) {
+			
+			boolean removed = true;
+			
+			for(int j = 0; j < encap.getLigneReceptions().size(); j++) {
+				if(concernedLignes.get(i).getLigneCommande().getArticle().getNumArticle() == encap.getLigneReceptions().get(j).getLigneCommande().getArticle().getNumArticle()) {
+					removed = false;
+					break;
+				}
+			}
+			
+			if(removed == true) {
+				this.repo2.deleteById(concernedLignes.get(i).getIdLigneReception());
+			}			
+			
+		}
+		
+		lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getReception().getNumReception() == id) {
+				newLignes.add(lignes.get(i));
+			}
+		}
+		
+		
+		return new EncapReception(this.edit(id, encap.getReception()), newLignes);
+	}
+	
+	
+    
+    
+    
+    
     
     // Supprimer 
     public boolean delete(String  id) {

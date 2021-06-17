@@ -216,6 +216,14 @@ public class TresorController {
 		return this.receptionService.edit(id, reception);
 	}
 	
+	@PutMapping(path = "reception/byCodRec2/{id}")
+	public EncapReception updateReception2(@PathVariable(name = "id") String id, @RequestBody EncapReception encapReception) {
+		
+		return this.receptionService.editByEncap(id, encapReception);
+	}
+	
+	
+	
 	@DeleteMapping(path = "reception/byCodRec/{id}")
 	public Boolean deleteReception(@PathVariable(name = "id") String id) {
 		
@@ -315,6 +323,13 @@ public class TresorController {
 		
 		return this.demandeApproService.edit(id, demandeApprovisionnement);
 	}
+	
+	@PutMapping(path = "demandeAppro/byCodDemApp2/{id}")
+	public EncapDemandeAppro updateDemandeAppro2(@PathVariable(name = "id") String id, @RequestBody EncapDemandeAppro encapDemandeAppro) {
+		
+		return this.demandeApproService.editByEncap(id, encapDemandeAppro);
+	}
+	
 	
 	@DeleteMapping(path = "demandeAppro/byCodDemApp/{id}")
 	public Boolean deleteDemandeAppro(@PathVariable(name = "id") String id) {

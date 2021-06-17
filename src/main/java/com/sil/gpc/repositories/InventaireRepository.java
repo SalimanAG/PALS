@@ -9,8 +9,8 @@ import com.sil.gpc.domains.Inventaire;
 @Repository
 public interface InventaireRepository extends JpaRepository<Inventaire, String>{
 
-	@Query(value="SELECT valeur FROM Inventaire WHERE code_exercice = ?1 ORDER BY valeur DESC LIMIT 1;"
+	@Query(value="SELECT valeur FROM inventaire WHERE num_exercice = ?1 ORDER BY valeur DESC LIMIT 1;"
 			, nativeQuery = true)
-	Integer findLastNumUsed(String codeExo);
+	Integer findLastNumUsed(Long numExercice);
 	
 }

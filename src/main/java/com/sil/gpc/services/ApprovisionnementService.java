@@ -1,6 +1,7 @@
 package com.sil.gpc.services;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,9 @@ import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneDemandeAppro;
+import com.sil.gpc.domains.LigneDemandePrix;
+import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
+import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.repositories.ApprovisionementRepository;
 import com.sil.gpc.repositories.LigneApproRepository;
 
@@ -18,11 +22,13 @@ public class ApprovisionnementService {
 
 	private final ApprovisionementRepository repo;
 	private final LigneApproRepository repo2;
+	private final LigneApproService servi2;
 
-	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2) {
+	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
+		this.servi2 = servi2;
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
@@ -30,8 +36,8 @@ public class ApprovisionnementService {
 		
 		Integer val = 1, nbrMaxCaract = 6;
 		String code = "BA-";
-		if(this.repo.findLastNumUsed(approvisionnement.getExercice().getCodeExercice()) != null) {
-			val = this.repo.findLastNumUsed(approvisionnement.getExercice().getCodeExercice());
+		if(this.repo.findLastNumUsed(approvisionnement.getExercice().getNumExercice()) != null) {
+			val = this.repo.findLastNumUsed(approvisionnement.getExercice().getNumExercice());
 			val++;
 			
 		}
@@ -68,6 +74,77 @@ public class ApprovisionnementService {
 		
 		return null;
 	}
+	
+	
+	public EncapApprovisionnement editByEncap(String id, EncapApprovisionnement encap) {
+		
+		List<LigneAppro> lignes = this.repo2.findAll();
+		List<LigneAppro> concernedLignes = new ArrayList<LigneAppro>();
+		List<LigneAppro> newLignes = new ArrayList<LigneAppro>();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getAppro().getNumAppro() == id) {
+				concernedLignes.add(lignes.get(i));
+			}
+		}
+		
+		for(int i = 0; i < encap.getLigneAppros().size(); i++) {
+			boolean added = true;
+			LigneAppro enti = null;
+			
+			for(int j = 0; j < concernedLignes.size(); j++) {
+				if(concernedLignes.get(j).getLigneDA().getArticle().getNumArticle() == encap.getLigneAppros().get(i).getLigneDA().getArticle().getNumArticle()) {
+					added = false;
+					enti = concernedLignes.get(j);
+					break;
+				}
+			}
+			
+			LigneAppro newer = encap.getLigneAppros().get(i);
+			newer.setAppro(repo.getOne(id));
+			
+			if(added == true) {
+				
+				this.repo2.save(newer);
+			}
+			else {
+				this.servi2.edit(enti.getIdLigneAppro(), newer);
+			}
+		}
+		
+		for(int i = 0; i < concernedLignes.size(); i++) {
+			
+			boolean removed = true;
+			
+			for(int j = 0; j < encap.getLigneAppros().size(); j++) {
+				if(concernedLignes.get(i).getLigneDA().getArticle().getNumArticle() == encap.getLigneAppros().get(j).getLigneDA().getArticle().getNumArticle()) {
+					removed = false;
+					break;
+				}
+			}
+			
+			if(removed == true) {
+				this.repo2.deleteById(concernedLignes.get(i).getIdLigneAppro());
+			}			
+			
+		}
+		
+		lignes = this.repo2.findAll();
+		
+		for(int i = 0; i < lignes.size(); i++) {
+			if(lignes.get(i).getAppro().getNumAppro() == id) {
+				newLignes.add(lignes.get(i));
+			}
+		}
+		
+		
+		return new EncapApprovisionnement(this.edit(id, encap.getApprovisionnement()), newLignes);
+	}
+	
+	
+
+	
+	
 	
 	public boolean delete(String id) {
 		

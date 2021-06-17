@@ -18,8 +18,8 @@ public interface ReceptionRepository extends JpaRepository<Reception, String> {
 	
 	public List<Reception> findByDateReception(Date DateReception);
 	
-	@Query(value="SELECT valeur FROM reception WHERE code_exercice = ?1 ORDER BY valeur DESC LIMIT 1;"
+	@Query(value="SELECT valeur FROM reception WHERE num_exercice = ?1 ORDER BY valeur DESC LIMIT 1;"
 			, nativeQuery = true)
-	public Integer findLastNumUsed(String codeExercice);
+	public Integer findLastNumUsed(Long numExercice);
 
 }

@@ -21,7 +21,7 @@ public class DemandePrix {
 	
 	//Liaison à exercice
 		@ManyToOne(fetch = FetchType.EAGER, targetEntity = Exercice.class)
-		@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice", nullable = true)
+		@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = true)
 		private Exercice exercice;
 
 	public DemandePrix() {

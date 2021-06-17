@@ -28,7 +28,7 @@ public class FactureProFormAcha {
 	
 	//Migration de la clé de l'exercice
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
-	@JoinColumn(name = "codeExercice", referencedColumnName = "codeExercice",nullable = true)
+	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice",nullable = true)
 	public Exercice exercice;
 	
 
