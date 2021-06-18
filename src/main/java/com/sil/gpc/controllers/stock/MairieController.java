@@ -129,6 +129,12 @@ public class MairieController {
 		return this.approvisionnementService.editByEncap(id, encapApprovisionnement);
 	}
 	
+	@PutMapping(path = "approvisionnement/byCodApp3/{id}")
+	public Approvisionnement updateApprovisionnement3(@PathVariable(name = "id") String id, @RequestBody Approvisionnement approvisionnement) {
+		
+		return this.approvisionnementService.edit3(id, approvisionnement);
+	}
+	
 	
 	@DeleteMapping(path = "approvisionnement/byCodApp/{id}")
 	public Boolean deleteApprovisionnement(@PathVariable(name = "id") String id) {

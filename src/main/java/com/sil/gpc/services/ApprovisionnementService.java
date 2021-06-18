@@ -1,6 +1,7 @@
 package com.sil.gpc.services;
 
 import java.sql.Date;
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneDemandeAppro;
 import com.sil.gpc.domains.LigneDemandePrix;
+import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.repositories.ApprovisionementRepository;
@@ -23,16 +25,18 @@ public class ApprovisionnementService {
 	private final ApprovisionementRepository repo;
 	private final LigneApproRepository repo2;
 	private final LigneApproService servi2;
+	private final StockerService servi3;
 
-	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2) {
+	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
+		this.servi3 = servi3;
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
-		//approvisionnement.setValideAppro(true);	
+		approvisionnement.setValideAppro(false);	
 		
 		Integer val = 1, nbrMaxCaract = 6;
 		String code = "BA-";
@@ -51,7 +55,6 @@ public class ApprovisionnementService {
 		}
 		
 		approvisionnement.setNumAppro(code+val);
-		approvisionnement.setValideAppro(true);
 		
 		if(repo.existsById(approvisionnement.getNumAppro())==false) return this.repo.save(approvisionnement) ;
 		
@@ -65,7 +68,7 @@ public class ApprovisionnementService {
 		if(entiter != null) {
 			entiter.setDateAppro(approvisionnement.getDateAppro());
 			entiter.setDescriptionAppro(approvisionnement.getDescriptionAppro());
-			entiter.setValideAppro(approvisionnement.isValideAppro());
+			
 			entiter.setExercice(approvisionnement.getExercice());
 			entiter.setMagasin(approvisionnement.getMagasin());
 			
@@ -142,7 +145,56 @@ public class ApprovisionnementService {
 	}
 	
 	
+	public Approvisionnement edit3(String id, Approvisionnement approvisionnement) {
+		Approvisionnement entiter = this.repo.getOne(id); 
+		if(entiter != null && approvisionnement.isValideAppro() != entiter.isValideAppro()) {
 
+			
+			
+			List<LigneAppro> lignes = this.servi2.getAll();
+			List<Stocker> listStocker = this.servi3.getAll();
+			
+			for(int i = 0; i < lignes.size(); i++) {
+				if(lignes.get(i).getAppro().getNumAppro() == id) {
+					LigneAppro ligApp = lignes.get(i);
+					
+					boolean stockerFinded = false;
+					for(int j = 0; j < listStocker.size(); j++) {
+						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneDA().getArticle().getNumArticle()
+								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()) {
+							stockerFinded = true;
+							
+							Stocker newSt = listStocker.get(j);
+							
+							
+							if(approvisionnement.isValideAppro() == true) {
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-lignes.get(i).getQuantiteLigneAppro());
+								ligApp.setPULigneAppro(newSt.getCmup());
+							}else if(approvisionnement.isValideAppro() == false) {
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneAppro());
+								ligApp.setPULigneAppro(Long.valueOf(0));
+							}
+																					
+							this.servi3.edit(listStocker.get(j).getIdStocker(), newSt);
+							
+							entiter.setValideAppro(approvisionnement.isValideAppro());
+							
+							break;
+						}
+					}
+					
+					this.repo2.save(ligApp);
+					
+				}
+			}
+			
+			
+			
+			return this.repo.save(entiter);
+		}
+		
+		return null;
+	}
 	
 	
 	
@@ -162,7 +214,7 @@ public class ApprovisionnementService {
 		List<LigneAppro> lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro() == id) {
+			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
 				this.repo2.deleteById(lignes.get(i).getIdLigneAppro());
 			}
 		}
@@ -200,5 +252,7 @@ public class ApprovisionnementService {
 		
 		return this.repo.findByExercice(exercice);
 	}
+
+
 	
 }

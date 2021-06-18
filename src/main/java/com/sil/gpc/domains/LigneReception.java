@@ -24,6 +24,7 @@ public class LigneReception implements Serializable {
 	private Long numSerieDebLigneReception;
 	private Long numSerieFinLigneReception;
 	private boolean imputer;
+	private Long lastCump;
 	
 	@ManyToOne(targetEntity = LigneCommande.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande")
@@ -178,14 +179,24 @@ public class LigneReception implements Serializable {
 	}
 
 
+	public Long getLastCump() {
+		return lastCump;
+	}
+
+
+	public void setLastCump(Long lastCump) {
+		this.lastCump = lastCump;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LigneReception [idLigneReception=" + idLigneReception + ", quantiteLigneReception="
 				+ quantiteLigneReception + ", puLigneReception=" + puLigneReception + ", observationLigneReception="
 				+ observationLigneReception + ", numSerieDebLigneReception=" + numSerieDebLigneReception
-				+ ", numSerieFinLigneReception=" + numSerieFinLigneReception + ", imputer=" + imputer
-				+ ", ligneCommande=" + ligneCommande + ", reception=" + reception + "]";
+				+ ", numSerieFinLigneReception=" + numSerieFinLigneReception + ", imputer=" + imputer + ", lastCump="
+				+ lastCump + ", ligneCommande=" + ligneCommande + ", reception=" + reception + "]";
 	}
-
+	
 	
 }

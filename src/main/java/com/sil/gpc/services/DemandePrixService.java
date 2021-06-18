@@ -154,7 +154,7 @@ public class DemandePrixService {
 		List<LigneDemandePrix> lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getDemandePrix().getIdDemandePrix() == id) {
+			if(lignes.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
 				this.repo2.deleteById(lignes.get(i).getIdLigneDemandePrix());
 			}
 		}

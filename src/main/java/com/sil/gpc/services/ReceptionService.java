@@ -1,9 +1,13 @@
 package com.sil.gpc.services;
 
+import com.sil.gpc.domains.Approvisionnement;
+import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneReception;
+import com.sil.gpc.domains.Magasin;
 import com.sil.gpc.domains.Reception;
+import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapReception;
 import com.sil.gpc.repositories.LigneReceptionRepository;
@@ -22,11 +26,13 @@ public class ReceptionService {
 	private final ReceptionRepository receptionRepository;
 	private final LigneReceptionRepository repo2;
 	private final LigneReceptionService servi2;
+	private final StockerService servi3;
 
-    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2, LigneReceptionService servi2) {
+    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2, LigneReceptionService servi2, StockerService servi3) {
         this.receptionRepository = receptionRepository;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
+		this.servi3 = servi3;
     }
 
     // Sauvegarder 
@@ -142,7 +148,74 @@ public class ReceptionService {
 	}
 	
 	
-    
+	public Reception edit3(String id, Reception reception) {
+		Reception entiter = this.receptionRepository.getOne(id); 
+		if(entiter != null && reception.isValideRecep() != entiter.isValideRecep()) {
+
+			
+			
+			List<LigneReception> lignes = this.servi2.findAll();
+			List<Stocker> listStocker = this.servi3.getAll();
+			
+			for(int i = 0; i < lignes.size(); i++) {
+				if(lignes.get(i).getReception().getNumReception() == id) {
+					boolean stockerFinded = false;
+					
+					LigneReception ligRecept = lignes.get(i);
+					
+					ligRecept.setLastCump(Long.valueOf(0));
+					
+					for(int j = 0; j < listStocker.size(); j++) {
+						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneCommande().getArticle().getNumArticle()
+								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()) {
+							stockerFinded = true;
+							
+							Stocker newSt = listStocker.get(j);
+							
+							
+							
+							if(reception.isValideRecep() == true) {//Pour Validation
+								
+								ligRecept.setLastCump(newSt.getCmup());
+								double cump = (newSt.getCmup()*newSt.getQuantiterStocker())+(lignes.get(i).getPuLigneReception()*lignes.get(i).getQuantiteLigneReception())/(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
+								newSt.setQuantiterStocker(Long.getLong((newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception())+"")); 
+								newSt.setCmup(Double.doubleToLongBits(cump));
+								
+							}else if(reception.isValideRecep() == false) {//Pour Annulation
+								newSt.setQuantiterStocker(Long.getLong((newSt.getQuantiterStocker()-lignes.get(i).getQuantiteLigneReception())+""));
+							}
+							
+							
+																					
+							this.servi3.edit(listStocker.get(j).getIdStocker(), newSt);
+							
+							break;
+							
+						}
+					}
+					
+										
+					if(stockerFinded == false) {
+						//Elément à générer en stock
+						this.servi3.save(new Stocker(Long.valueOf(0), Long.valueOf(lignes.get(i).getQuantiteLigneReception()+""), Long.valueOf(0), Long.valueOf(0), Long.valueOf(lignes.get(i).getPuLigneReception()+""), lignes.get(i).getLigneCommande().getArticle(), lignes.get(i).getReception().getMagasin()));
+					}
+					
+					
+					
+					repo2.save(ligRecept);
+					
+				}
+			}
+			
+			entiter.setValideRecep(reception.isValideRecep());
+			
+			return this.receptionRepository.save(entiter);
+		}
+		
+		return null;
+	}
+	
+
     
     
     
@@ -161,7 +234,7 @@ public class ReceptionService {
 		List<LigneReception> lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getReception().getNumReception() == id) {
+			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
 				this.repo2.deleteById(lignes.get(i).getIdLigneReception());
 			}
 		}

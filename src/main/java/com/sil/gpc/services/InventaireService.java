@@ -147,7 +147,7 @@ public class InventaireService {
 		List<LigneInventaire> lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getInventaire().getNumInv() == id) {
+			if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(id)) {
 				this.repo2.deleteById(lignes.get(i).getIdLigneInv());
 			}
 		}

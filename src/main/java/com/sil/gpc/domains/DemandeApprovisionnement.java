@@ -20,6 +20,7 @@ public class DemandeApprovisionnement implements Serializable{
 	private Date dateDA;
 	private int valeur;
 	private boolean valideDA;
+	private String description;
 	
 	//Liaison avec Exercice
 	@ManyToOne(targetEntity = Exercice.class,fetch = FetchType.EAGER)
@@ -128,13 +129,25 @@ public class DemandeApprovisionnement implements Serializable{
 	}
 
 
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "DemandeApprovisionnement [numDA=" + numDA + ", dateDA=" + dateDA + ", valeur=" + valeur + ", valideDA="
-				+ valideDA + ", exercice=" + exercice + ", service=" + service + "]";
+				+ valideDA + ", description=" + description + ", exercice=" + exercice + ", service=" + service + "]";
 	}
 
+	
 
 
 }

@@ -155,9 +155,12 @@ public class DemandeApproService {
 		List<LigneDemandeAppro> lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumDA() == id) {
+			//boolean va = false;
+			if(lignes.get(i).getAppro().getNumDA().equalsIgnoreCase(id)) {
 				this.repo2.deleteById(lignes.get(i).getIdLigneDA());
+				//va = true;
 			}
+			//System.out.println("Valllll "+va+" "+lignes.get(i).getAppro().getNumDA()+" "+id);
 		}
 		
 		return this.delete(id);

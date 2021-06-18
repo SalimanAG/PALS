@@ -284,6 +284,12 @@ public class CommuneController {
 		return this.utilisateurService.findByNomUtilisateur(nom);
 	}
 	
+	@PostMapping(path = "user/byLoginMdpUser")
+	public Utilisateur getUserByLoginMdpUser(@RequestBody Utilisateur user){
+		
+		return this.utilisateurService.findByLoginAndMdp(user.getLogin(), user.getMotDePass());
+	}
+	
 	@PostMapping(path = "user/list")
 	public Utilisateur createUser( @RequestBody Utilisateur user) {
 		
