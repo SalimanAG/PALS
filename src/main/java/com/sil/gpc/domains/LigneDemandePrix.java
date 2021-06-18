@@ -37,10 +37,10 @@ public class LigneDemandePrix {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LigneDemandePrix(Long idLigneDemandePrix, double qteLigneDemandePrix, String designationLigneDemandePrix,
+	public LigneDemandePrix(double qteLigneDemandePrix, String designationLigneDemandePrix,
 			DemandePrix demandePrix, Article article, Uniter uniter) {
 		super();
-		this.idLigneDemandePrix = idLigneDemandePrix;
+		
 		this.qteLigneDemandePrix = qteLigneDemandePrix;
 		this.designationLigneDemandePrix = designationLigneDemandePrix;
 		this.demandePrix = demandePrix;

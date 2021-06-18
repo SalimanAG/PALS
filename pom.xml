@@ -12,7 +12,7 @@
 	<artifactId>guichetuniq</artifactId>
 	<version>1.0.1</version>
 	<name>guichetuniq</name>
-	<description>Prestations communales en mode web</description>
+	
 	<packaging>war</packaging>
 
 	<properties>
@@ -55,9 +55,15 @@
 			<scope>runtime</scope>
 			<version>19.8.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>PerforaGpcApi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

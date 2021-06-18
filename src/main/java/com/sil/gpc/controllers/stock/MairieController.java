@@ -140,9 +140,14 @@ public class MairieController {
 	public Boolean deleteApprovisionnement(@PathVariable(name = "id") String id) {
 		
 		return this.approvisionnementService.delete(id);
-	}	
+	}
 	
 	
+	@DeleteMapping(path = "approvisionnement/byCodApp2/{id}")
+	public Boolean deleteApprovisionnement2(@PathVariable(name = "id") String id) {
+		
+		return this.approvisionnementService.deleteAApprovisionnement2(id);
+	}
 	
 	
 	/*###########################################################
