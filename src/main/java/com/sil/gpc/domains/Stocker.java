@@ -18,10 +18,10 @@ public class Stocker implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idStocker;
-	private Long quantiterStocker;
-	private Long stockDeSecuriter;
-	private Long stockMinimal;
-	private Long cmup;
+	private double quantiterStocker;
+	private double stockDeSecuriter;
+	private double stockMinimal;
+	private double cmup;
 
 	//Liaison à l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
@@ -37,7 +37,7 @@ public class Stocker implements Serializable{
 		super();
 	}
 
-	public Stocker(Long idStocker, Long quantiterStocker, Long stockDeSecuriter, Long stockMinimal, Long cmup,
+	public Stocker(Long idStocker, double quantiterStocker, double stockDeSecuriter, double stockMinimal, double cmup,
 			Article article, Magasin magasin) {
 		super();
 		this.idStocker = idStocker;
@@ -67,56 +67,56 @@ public class Stocker implements Serializable{
 	/**
 	 * @return 
 	 */
-	public Long getStockDeSecuriter() {
+	public double getStockDeSecuriter() {
 		return stockDeSecuriter;
 	}
 
 	/**
 	 * @param 
 	 */
-	public void setStockDeSecuriter(Long stockDeSecuriter) {
+	public void setStockDeSecuriter(double stockDeSecuriter) {
 		this.stockDeSecuriter = stockDeSecuriter;
 	}
 	
 	/**
 	 * @return 
 	 */
-	public Long getCmup() {
+	public double getCmup() {
 		return cmup;
 	}
 
 	/**
 	 * @param 
 	 */
-	public void setCmup(Long cmup) {
+	public void setCmup(double cmup) {
 		this.cmup = cmup;
 	}
 	
 	/**
 	 * @return 
 	 */
-	public Long getStockMinimal() {
+	public double getStockMinimal() {
 		return stockMinimal;
 	}
 
 	/**
 	 * @param 
 	 */
-	public void setstockMinimal(Long stockMinimal) {
+	public void setstockMinimal(double stockMinimal) {
 		this.stockMinimal = stockDeSecuriter;
 	}
 	
 	/**
 	 * @return 
 	 */
-	public Long getQuantiterStocker() {
+	public double getQuantiterStocker() {
 		return quantiterStocker;
 	}
 
 	/**
 	 * @param 
 	 */
-	public void setQuantiterStocker(Long quantiterStocker) {
+	public void setQuantiterStocker(Double quantiterStocker) {
 		this.quantiterStocker = quantiterStocker;
 	}
 	
@@ -148,7 +148,7 @@ public class Stocker implements Serializable{
 	
 	
 
-	public void setStockMinimal(Long stockMinimal) {
+	public void setStockMinimal(Double stockMinimal) {
 		this.stockMinimal = stockMinimal;
 	}
 

@@ -163,7 +163,7 @@ public class ReceptionService {
 					
 					LigneReception ligRecept = lignes.get(i);
 					
-					ligRecept.setLastCump(Long.valueOf(0));
+					
 					
 					for(int j = 0; j < listStocker.size(); j++) {
 						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneCommande().getArticle().getNumArticle()
@@ -177,12 +177,13 @@ public class ReceptionService {
 							if(reception.isValideRecep() == true) {//Pour Validation
 								
 								ligRecept.setLastCump(newSt.getCmup());
-								double cump = (newSt.getCmup()*newSt.getQuantiterStocker())+(lignes.get(i).getPuLigneReception()*lignes.get(i).getQuantiteLigneReception())/(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
-								newSt.setQuantiterStocker(Long.getLong((newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception())+"")); 
-								newSt.setCmup(Double.doubleToLongBits(cump));
+								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+(lignes.get(i).getPuLigneReception()*lignes.get(i).getQuantiteLigneReception()*(1+(lignes.get(i).getLigneCommande().getTva()))))/(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
+								newSt.setCmup(cump);
 								
 							}else if(reception.isValideRecep() == false) {//Pour Annulation
-								newSt.setQuantiterStocker(Long.getLong((newSt.getQuantiterStocker()-lignes.get(i).getQuantiteLigneReception())+""));
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-lignes.get(i).getQuantiteLigneReception());
+								newSt.setCmup(ligRecept.getLastCump());
 							}
 							
 							
@@ -197,7 +198,7 @@ public class ReceptionService {
 										
 					if(stockerFinded == false) {
 						//Elément à générer en stock
-						this.servi3.save(new Stocker(Long.valueOf(0), Long.valueOf(lignes.get(i).getQuantiteLigneReception()+""), Long.valueOf(0), Long.valueOf(0), Long.valueOf(lignes.get(i).getPuLigneReception()+""), lignes.get(i).getLigneCommande().getArticle(), lignes.get(i).getReception().getMagasin()));
+						this.servi3.save(new Stocker(Long.valueOf(0), lignes.get(i).getQuantiteLigneReception(), 0, 0, lignes.get(i).getPuLigneReception(), lignes.get(i).getLigneCommande().getArticle(), lignes.get(i).getReception().getMagasin()));
 					}
 					
 					

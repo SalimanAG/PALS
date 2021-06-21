@@ -33,7 +33,7 @@ public class StockerService {
    		if(stockmod != null) {
    			stockmod.setQuantiterStocker(stock.getQuantiterStocker());
    			stockmod.setStockDeSecuriter(stock.getStockDeSecuriter());
-   			stockmod.setstockMinimal(stock.getStockMinimal());
+   			stockmod.setStockMinimal(stock.getStockMinimal());
    			stockmod.setCmup(stock.getCmup());
    			stockmod.setArticle(stock.getArticle());
    			stockmod.setMagasin(stock.getMagasin());

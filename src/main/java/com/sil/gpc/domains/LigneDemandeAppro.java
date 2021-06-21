@@ -18,7 +18,7 @@ public class LigneDemandeAppro implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idLigneDA;
-	private Long quantiteDemandee;
+	private double quantiteDemandee;
 
 	
 	//Liaison avec Article
@@ -71,14 +71,14 @@ public class LigneDemandeAppro implements Serializable{
 	/**
 	 * @return the quantiteDemandee
 	 */
-	public Long getQuantiteDemandee() {
+	public double getQuantiteDemandee() {
 		return quantiteDemandee;
 	}
 
 	/**
 	 * @param quantiteDemandee the quantiteDemandee to set
 	 */
-	public void setQuantiteDemandee(Long quantiteDemandee) {
+	public void setQuantiteDemandee(double quantiteDemandee) {
 		this.quantiteDemandee = quantiteDemandee;
 	}
 

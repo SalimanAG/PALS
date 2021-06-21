@@ -24,7 +24,7 @@ public class LigneReception implements Serializable {
 	private Long numSerieDebLigneReception;
 	private Long numSerieFinLigneReception;
 	private boolean imputer;
-	private Long lastCump;
+	private double lastCump;
 	
 	@ManyToOne(targetEntity = LigneCommande.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande")
@@ -179,12 +179,12 @@ public class LigneReception implements Serializable {
 	}
 
 
-	public Long getLastCump() {
+	public double getLastCump() {
 		return lastCump;
 	}
 
 
-	public void setLastCump(Long lastCump) {
+	public void setLastCump(double lastCump) {
 		this.lastCump = lastCump;
 	}
 

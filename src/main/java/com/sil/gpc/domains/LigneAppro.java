@@ -17,8 +17,8 @@ public class LigneAppro implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idLigneAppro;
-	private Long quantiteLigneAppro;
-	private Long PULigneAppro;
+	private double quantiteLigneAppro;
+	private double PULigneAppro;
 
 	//Liaison avec Approvisionnement
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Approvisionnement.class)
@@ -51,19 +51,19 @@ public class LigneAppro implements Serializable {
 		this.idLigneAppro = idLigneAppro;
 	}
 
-	public Long getQuantiteLigneAppro() {
+	public double getQuantiteLigneAppro() {
 		return quantiteLigneAppro;
 	}
 
-	public void setQuantiteLigneAppro(Long quantiteLigneAppro) {
+	public void setQuantiteLigneAppro(double quantiteLigneAppro) {
 		this.quantiteLigneAppro = quantiteLigneAppro;
 	}
 
-	public Long getPULigneAppro() {
+	public double getPULigneAppro() {
 		return PULigneAppro;
 	}
 
-	public void setPULigneAppro(Long pULigneAppro) {
+	public void setPULigneAppro(double pULigneAppro) {
 		PULigneAppro = pULigneAppro;
 	}
 	

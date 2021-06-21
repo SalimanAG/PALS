@@ -17,10 +17,7 @@ public class CloturePeriodiqService {
 	}
 	
 	public CloturePeriodiq save(CloturePeriodiq cloturePeriodiq) {
-		if(!repo.existsById(cloturePeriodiq.getIdCloturePer())) {
-			return this.repo.save(cloturePeriodiq);
-		}
-		return null;
+		return this.repo.save(cloturePeriodiq);
 	}
 	
 	public CloturePeriodiq edit(Long id, CloturePeriodiq cloturePeriodiq) {

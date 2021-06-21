@@ -221,7 +221,12 @@ public class TresorController {
 		
 		return this.receptionService.editByEncap(id, encapReception);
 	}
-	
+
+	@PutMapping(path = "reception/byCodRec3/{id}")
+	public Reception updateReception3(@PathVariable(name = "id") String id, @RequestBody Reception reception) {
+		
+		return this.receptionService.edit3(id, reception);
+	}
 	
 	
 	@DeleteMapping(path = "reception/byCodRec/{id}")
