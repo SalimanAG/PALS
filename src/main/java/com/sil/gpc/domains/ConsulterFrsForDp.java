@@ -1,5 +1,7 @@
 package com.sil.gpc.domains;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,8 @@ public class ConsulterFrsForDp {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idConsulterFrsForDp;
+	private Timestamp dateRemise;
+	private boolean choisit;
 	
 	//Migration de la clé de l'unité vers l'article
 		@ManyToOne(fetch = FetchType.EAGER,targetEntity = Fournisseur.class)
@@ -30,12 +34,18 @@ public class ConsulterFrsForDp {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ConsulterFrsForDp(Long idConsulterFrsForDp, Fournisseur fournisseur, DemandePrix demandePrix) {
+
+	public ConsulterFrsForDp(Long idConsulterFrsForDp, Timestamp dateRemise, boolean choisit, Fournisseur fournisseur,
+			DemandePrix demandePrix) {
 		super();
 		this.idConsulterFrsForDp = idConsulterFrsForDp;
+		this.dateRemise = dateRemise;
+		this.choisit = choisit;
 		this.fournisseur = fournisseur;
 		this.demandePrix = demandePrix;
 	}
+
+
 
 	public Long getIdConsulterFrsForDp() {
 		return idConsulterFrsForDp;
@@ -61,12 +71,29 @@ public class ConsulterFrsForDp {
 		this.demandePrix = demandePrix;
 	}
 
+	public Timestamp getDateRemise() {
+		return dateRemise;
+	}
+
+	public void setDateRemise(Timestamp dateRemise) {
+		this.dateRemise = dateRemise;
+	}
+
+	public boolean isChoisit() {
+		return choisit;
+	}
+
+	public void setChoisit(boolean choisit) {
+		this.choisit = choisit;
+	}
+
 	@Override
 	public String toString() {
-		return "ConsulterFrsForDp [idConsulterFrsForDp=" + idConsulterFrsForDp + ", fournisseur=" + fournisseur
-				+ ", demandePrix=" + demandePrix + "]";
+		return "ConsulterFrsForDp [idConsulterFrsForDp=" + idConsulterFrsForDp + ", dateRemise=" + dateRemise
+				+ ", choisit=" + choisit + ", fournisseur=" + fournisseur + ", demandePrix=" + demandePrix + "]";
 	}
-	
+
+		
 		
 	
 }

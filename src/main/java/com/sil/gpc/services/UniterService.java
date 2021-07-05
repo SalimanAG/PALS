@@ -30,6 +30,7 @@ public class UniterService {
 		if(unitemod != null) {
 			unitemod.setCodeUniter(uniter.getCodeUniter());
 			unitemod.setLibUniter(uniter.getLibUniter());
+			unitemod.setPoids(uniter.getPoids());
 			
 			return this.uniterRepository.save(unitemod);
     }

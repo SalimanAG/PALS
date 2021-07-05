@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.ConsulterFrsForDp;
+import com.sil.gpc.domains.LigneDemandePrix;
 import com.sil.gpc.repositories.ConsulterFrsForDpRepository;
 
 @Service
@@ -18,10 +19,7 @@ public class ConsulterFrsForDpService {
 	}
 	
 	public ConsulterFrsForDp save(ConsulterFrsForDp consulterFrsForDp) {
-		if(!repo.existsById(consulterFrsForDp.getIdConsulterFrsForDp())) {
-			return this.repo.save(consulterFrsForDp);
-		}
-		return null;
+		return this.repo.save(consulterFrsForDp);
 	}
 	
 	public ConsulterFrsForDp edit(Long id, ConsulterFrsForDp consulterFrsForDp) {
@@ -30,6 +28,8 @@ public class ConsulterFrsForDpService {
 		if(entiter != null) {
 			entiter.setDemandePrix(consulterFrsForDp.getDemandePrix());
 			entiter.setFournisseur(consulterFrsForDp.getFournisseur());
+			entiter.setChoisit(consulterFrsForDp.isChoisit());
+			entiter.setDateRemise(consulterFrsForDp.getDateRemise());
 			
 			return this.repo.save(entiter);
 		}
@@ -57,7 +57,10 @@ public class ConsulterFrsForDpService {
 		return this.repo.findAll();
 	}
 
-
+	public List<ConsulterFrsForDp> saveAll(List<ConsulterFrsForDp> consulters) {
+		// TODO Auto-generated method stub
+		return this.repo.saveAll(consulters);
+	}
 	
 	
 }

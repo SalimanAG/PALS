@@ -16,16 +16,23 @@ public class Uniter implements Serializable{
 	private Long numUniter;
 	private String codeUniter;
 	private String libUniter;
+	private double poids;
 	
 	public Uniter() {
 		super();
 	}
 
-	public Uniter(String codeUniter, String libUniter) {
+	
+
+	public Uniter(Long numUniter, String codeUniter, String libUniter, double poids) {
 		super();
+		this.numUniter = numUniter;
 		this.codeUniter = codeUniter;
 		this.libUniter = libUniter;
+		this.poids = poids;
 	}
+
+
 
 	public Long getNumUniter() {
 		return numUniter;
@@ -51,9 +58,20 @@ public class Uniter implements Serializable{
 		this.libUniter = libUniter;
 	}
 
+	public double getPoids() {
+		return poids;
+	}
+
+	public void setPoids(double poids) {
+		this.poids = poids;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Uniter [numUniter=" + numUniter + ", codeUniter=" + codeUniter + ", libUniter=" + libUniter + "]";
+		return "Uniter [numUniter=" + numUniter + ", codeUniter=" + codeUniter + ", libUniter=" + libUniter + ", poids="
+				+ poids + "]";
 	}
 
 

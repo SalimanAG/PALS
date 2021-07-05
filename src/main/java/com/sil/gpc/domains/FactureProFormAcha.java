@@ -34,7 +34,7 @@ public class FactureProFormAcha {
 
 	//Liaison à la table Commande
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
-	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
+	@JoinColumn(name = "numCommande", nullable = true, referencedColumnName = "numCommande")
 	public Commande commande;
 	
 	//Liaison à la demande de prix ayant faire objet

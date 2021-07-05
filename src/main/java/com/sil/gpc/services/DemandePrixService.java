@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.ConsulterFrsForDp;
 import com.sil.gpc.domains.DemandePrix;
 import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneDemandePrix;
 import com.sil.gpc.encapsuleurs.EncapCommande;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
+import com.sil.gpc.repositories.ConsulterFrsForDpRepository;
 import com.sil.gpc.repositories.DemandePrixRepository;
 import com.sil.gpc.repositories.LigneDemandePrixRepository;
 
@@ -19,12 +21,16 @@ public class DemandePrixService {
 	private final DemandePrixRepository repo;
 	private final LigneDemandePrixRepository repo2;
 	private final LigneDemandePrixService servi2;
+	private final ConsulterFrsForDpRepository repo3;
+	private final ConsulterFrsForDpService servi3;
 
-	public DemandePrixService(DemandePrixRepository repo, LigneDemandePrixRepository repo2, LigneDemandePrixService servi2) {
+	public DemandePrixService(DemandePrixRepository repo, LigneDemandePrixRepository repo2, LigneDemandePrixService servi2, ConsulterFrsForDpService servi3, ConsulterFrsForDpRepository repo3) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
+		this.repo3 = repo3;
+		this.servi3 = servi3;
 	}
 	
 	public DemandePrix save(DemandePrix demandePrix) {
@@ -77,8 +83,9 @@ public class DemandePrixService {
 		List<LigneDemandePrix> concernedLignes = new ArrayList<LigneDemandePrix>();
 		List<LigneDemandePrix> newLignes = new ArrayList<LigneDemandePrix>();
 		
+		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getDemandePrix().getIdDemandePrix() == id) {
+			if(lignes.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
 				concernedLignes.add(lignes.get(i));
 			}
 		}
@@ -127,13 +134,75 @@ public class DemandePrixService {
 		lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getDemandePrix().getIdDemandePrix() == id) {
+			if(lignes.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
 				newLignes.add(lignes.get(i));
 			}
 		}
 		
+		//****************************Les Consulters**************************************
 		
-		return new EncapDemandePrix(this.edit(id, encap.getDemandePrix()), newLignes);
+		List<ConsulterFrsForDp> consulters = this.repo3.findAll();
+		List<ConsulterFrsForDp> concernedConsulters = new ArrayList<ConsulterFrsForDp>();
+		List<ConsulterFrsForDp> newConnsulters = new ArrayList<ConsulterFrsForDp>();
+		
+		for(int i = 0; i < consulters.size(); i++) {
+			if(consulters.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
+				concernedConsulters.add(consulters.get(i));
+			}
+		}
+		
+		for(int i = 0; i < encap.getConsulterFrsForDps().size(); i++) {
+			boolean added = true;
+			ConsulterFrsForDp enti = null;
+			
+			for(int j = 0; j < concernedConsulters.size(); j++) {
+				if(concernedConsulters.get(j).getFournisseur().getNumFournisseur() == encap.getConsulterFrsForDps().get(i).getFournisseur().getNumFournisseur()) {
+					added = false;
+					//System.out.println(added);
+					enti = concernedConsulters.get(j);
+					break;
+				}
+			}
+			
+			ConsulterFrsForDp newer = encap.getConsulterFrsForDps().get(i);
+			newer.setDemandePrix(repo.getOne(id));
+			
+			if(added == true) {
+				
+				this.repo3.save(newer);
+			}
+			else {
+				this.servi3.edit(enti.getIdConsulterFrsForDp(), newer);
+			}
+		}
+		
+		for(int i = 0; i < concernedConsulters.size(); i++) {
+			
+			boolean removed = true;
+			
+			for(int j = 0; j < encap.getConsulterFrsForDps().size(); j++) {
+				if(concernedConsulters.get(i).getFournisseur().getNumFournisseur() == encap.getConsulterFrsForDps().get(j).getFournisseur().getNumFournisseur()) {
+					removed = false;
+					break;
+				}
+			}
+			
+			if(removed == true) {
+				this.repo3.deleteById(concernedConsulters.get(i).getIdConsulterFrsForDp());
+			}			
+			
+		}
+		
+		consulters = this.repo3.findAll();
+		
+		for(int i = 0; i < consulters.size(); i++) {
+			if(consulters.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
+				newConnsulters.add(consulters.get(i));
+			}
+		}
+		
+		
+		return new EncapDemandePrix(this.edit(id, encap.getDemandePrix()), newLignes, newConnsulters);
 	}
 	
 	
@@ -156,6 +225,14 @@ public class DemandePrixService {
 		for(int i = 0; i < lignes.size(); i++) {
 			if(lignes.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
 				this.repo2.deleteById(lignes.get(i).getIdLigneDemandePrix());
+			}
+		}
+		
+		List<ConsulterFrsForDp> consulters = this.repo3.findAll();
+		
+		for(int i = 0; i < consulters.size(); i++) {
+			if(consulters.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
+				this.repo3.deleteById(consulters.get(i).getIdConsulterFrsForDp());
 			}
 		}
 		

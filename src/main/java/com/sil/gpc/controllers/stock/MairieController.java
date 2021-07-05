@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sil.gpc.domains.AppelOffre;
 import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.BondTravail;
+import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.CommandeAchat;
 import com.sil.gpc.domains.ConsulterFrsForDp;
 import com.sil.gpc.domains.DemandePrix;
@@ -27,6 +28,7 @@ import com.sil.gpc.domains.LigneDemandePrix;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneInventaire;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
+import com.sil.gpc.encapsuleurs.EncapCommande;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.encapsuleurs.EncapFactureProformAchat;
 import com.sil.gpc.encapsuleurs.EncapInventaire;
@@ -373,7 +375,21 @@ public class MairieController {
 		
 		lignes = this.ligneDemandePrixService.saveAll(lignes);
 		
-		return new EncapDemandePrix(element, lignes);
+		//*****************Consulters
+		
+		List<ConsulterFrsForDp> consulters = encapDemandePrix.getConsulterFrsForDps();
+		
+		for (int i = 0; i < consulters.size(); i++) {
+			ConsulterFrsForDp lig = consulters.get(i);
+			lig.setDemandePrix(element);
+			lig.setChoisit(false);
+			
+			consulters.set(i, lig);
+		}
+		
+		consulters = this.consulterFrsForDpService.saveAll(consulters);
+		
+		return new EncapDemandePrix(element, lignes, consulters);
 	}
 
 	
@@ -492,6 +508,12 @@ public class MairieController {
 	public FactureProFormAcha getFactureProFormAchaById(@PathVariable(name = "id") String id){
 		
 		return this.factureProFormAchaService.getById(id);
+	}
+	
+	@PostMapping(path = "factureProFormAcha/byCodFacProForAch/{id}")
+	public EncapCommande getCommandeOfFpfaById(@PathVariable(name = "id") String id, @RequestBody Commande commande){
+		
+		return this.factureProFormAchaService.getCommande(id, commande);
 	}
 	
 	@PostMapping(path = "factureProFormAcha/list")

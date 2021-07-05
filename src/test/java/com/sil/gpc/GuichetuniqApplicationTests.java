@@ -1,4 +1,4 @@
-package com.sil.gpc;
+/*package com.sil.gpc;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class GuichetuniqApplicationTests {
 	void contextLoads() {
 	}
 
-}
+}*/
