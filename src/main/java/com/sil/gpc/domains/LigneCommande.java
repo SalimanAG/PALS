@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.ColumnDefault;
 
 @SuppressWarnings("serial")
 @Entity
@@ -25,6 +28,7 @@ public class LigneCommande implements Serializable{
 	private double tva;
 	private double taibic;
 	private double ts;
+	
 
 	//Liaison à la table Commande
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
@@ -40,6 +44,9 @@ public class LigneCommande implements Serializable{
 	@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter")
 	private Uniter uniter;
+	
+	@ColumnDefault(value = "false")
+	private boolean satisfaite;
 	
 	public LigneCommande() {
 		super();
@@ -159,12 +166,24 @@ public class LigneCommande implements Serializable{
 	}
 
 
+	public boolean isSatisfaite() {
+		return satisfaite;
+	}
+
+
+	public void setSatisfaite(boolean satisfaite) {
+		this.satisfaite = satisfaite;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LigneCommande [idLigneCommande=" + idLigneCommande + ", qteLigneCommande=" + qteLigneCommande
 				+ ", puLigneCommande=" + puLigneCommande + ", remise=" + remise + ", tva=" + tva + ", taibic=" + taibic
-				+ ", ts=" + ts + ", numCommande=" + numCommande + ", article=" + article + ", uniter=" + uniter + "]";
+				+ ", ts=" + ts + ", numCommande=" + numCommande + ", article=" + article + ", uniter=" + uniter
+				+ ", satisfaite=" + satisfaite + "]";
 	}
+	
 	
 	
  	

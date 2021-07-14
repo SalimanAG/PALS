@@ -47,6 +47,7 @@ public class LigneCommandeService {
 			entiter.setTaibic(ligneCommande.getTaibic());
 			entiter.setTs(ligneCommande.getTs());
 			entiter.setUniter(ligneCommande.getUniter());
+			entiter.setSatisfaite(ligneCommande.isSatisfaite());
 			
 			return this.repo.save(entiter);
 		}

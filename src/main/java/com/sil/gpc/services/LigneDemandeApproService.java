@@ -42,6 +42,7 @@ public class LigneDemandeApproService {
 			entiter.setArticle(ligneDemandeAppro.getArticle());
 			entiter.setQuantiteDemandee(ligneDemandeAppro.getQuantiteDemandee());
 			entiter.setUniter(ligneDemandeAppro.getUniter());
+			entiter.setSatisfaite(ligneDemandeAppro.isSatisfaite());
 			
 			return this.repo.save(entiter);
 		}

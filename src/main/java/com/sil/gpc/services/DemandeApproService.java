@@ -80,7 +80,7 @@ public class DemandeApproService {
 		List<LigneDemandeAppro> newLignes = new ArrayList<LigneDemandeAppro>();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumDA() == id) {
+			if(lignes.get(i).getAppro().getNumDA().equalsIgnoreCase(id)) {
 				concernedLignes.add(lignes.get(i));
 			}
 		}
@@ -129,7 +129,7 @@ public class DemandeApproService {
 		lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumDA() == id) {
+			if(lignes.get(i).getAppro().getNumDA().equalsIgnoreCase(id)) {
 				newLignes.add(lignes.get(i));
 			}
 		}

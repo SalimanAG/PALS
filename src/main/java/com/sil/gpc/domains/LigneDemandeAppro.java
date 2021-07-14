@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @SuppressWarnings("serial")
 @Entity
 public class LigneDemandeAppro implements Serializable{
@@ -35,6 +37,9 @@ public class LigneDemandeAppro implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = DemandeApprovisionnement.class)
 	@JoinColumn(name = "numDA", referencedColumnName = "numDA",nullable = false)
 	public DemandeApprovisionnement appro;
+	
+	@ColumnDefault(value = "false")
+	private boolean satisfaite;
 	
 	public LigneDemandeAppro() {
 		super();
@@ -118,12 +123,26 @@ public class LigneDemandeAppro implements Serializable{
 		this.uniter = uniter;
 	}
 
+
+	public boolean isSatisfaite() {
+		return satisfaite;
+	}
+
+
+
+	public void setSatisfaite(boolean satisfaite) {
+		this.satisfaite = satisfaite;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "LigneDemandeAppro [idLigneDA=" + idLigneDA + ", quantiteDemandee=" + quantiteDemandee + ", article="
-				+ article + ", uniter=" + uniter + ", appro=" + appro + "]";
+				+ article + ", uniter=" + uniter + ", appro=" + appro + ", satisfaite=" + satisfaite + "]";
 	}
 
+	
 
 
 }

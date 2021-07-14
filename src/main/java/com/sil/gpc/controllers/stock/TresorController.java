@@ -204,6 +204,12 @@ public class TresorController {
 			lignes.set(i, lig);
 		}
 		
+		for(int i = 0; i < encapReception.getLigneReceptions().size(); i++) {
+			
+			this.ligneCommandeService.edit(encapReception.getLigneReceptions().get(i).getLigneCommande().getIdLigneCommande(), encapReception.getLigneReceptions().get(i).getLigneCommande());
+			
+		}
+		
 		lignes = this.ligneReceptionService.saveAll(lignes);
 		
 		return new EncapReception(element, lignes);

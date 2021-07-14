@@ -41,6 +41,7 @@ import com.sil.gpc.services.DemandePrixService;
 import com.sil.gpc.services.FactureProFormAchaService;
 import com.sil.gpc.services.LettreCommandeService;
 import com.sil.gpc.services.LigneApproService;
+import com.sil.gpc.services.LigneDemandeApproService;
 import com.sil.gpc.services.LigneDemandePrixService;
 import com.sil.gpc.services.LigneFactureProFormAchaService;
 
@@ -60,9 +61,10 @@ public class MairieController {
 	private final LettreCommandeService lettreCommandeService;
 	private final LigneDemandePrixService ligneDemandePrixService;
 	private final LigneFactureProFormAchaService ligneFactureProFormAchaService;
+	private final LigneDemandeApproService ligneDemandeApproService;
 	
 	
-	public MairieController(ApprovisionnementService approvisionnementService, LigneApproService ligneApproService, LigneFactureProFormAchaService ligneFactureProFormAchaService, LigneDemandePrixService ligneDemandePrixService, LettreCommandeService lettreCommandeService, FactureProFormAchaService factureProFormAchaService, DemandePrixService demandePrixService, ConsulterFrsForDpService consulterFrsForDpService, CommandeAchatService commandeAchatService, BondTravailService bondTravailService, AppelOffreService appelOffreService) {
+	public MairieController(ApprovisionnementService approvisionnementService, LigneApproService ligneApproService, LigneFactureProFormAchaService ligneFactureProFormAchaService, LigneDemandePrixService ligneDemandePrixService, LettreCommandeService lettreCommandeService, FactureProFormAchaService factureProFormAchaService, DemandePrixService demandePrixService, ConsulterFrsForDpService consulterFrsForDpService, CommandeAchatService commandeAchatService, BondTravailService bondTravailService, AppelOffreService appelOffreService, LigneDemandeApproService ligneDemandeApproService) {
 		super();
 		this.approvisionnementService = approvisionnementService;
 		this.ligneApproService = ligneApproService;
@@ -75,6 +77,7 @@ public class MairieController {
 		this.lettreCommandeService = lettreCommandeService;
 		this.ligneDemandePrixService = ligneDemandePrixService;
 		this.ligneFactureProFormAchaService = ligneFactureProFormAchaService;
+		this.ligneDemandeApproService = ligneDemandeApproService;
 	}
 	
 	/*###########################################################
@@ -111,6 +114,10 @@ public class MairieController {
 			lig.setAppro(element);
 			
 			lignes.set(i, lig);
+		}
+		
+		for(int i = 0; i < encapApprovisionnement.getLigneAppros().size(); i++) {			
+			this.ligneDemandeApproService.edit(encapApprovisionnement.getLigneAppros().get(i).getLigneDA().getIdLigneDA(), encapApprovisionnement.getLigneAppros().get(i).getLigneDA());
 		}
 		
 		lignes = this.ligneApproService.saveAll(lignes);

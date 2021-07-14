@@ -27,12 +27,14 @@ public class ReceptionService {
 	private final LigneReceptionRepository repo2;
 	private final LigneReceptionService servi2;
 	private final StockerService servi3;
+	private final LigneCommandeService servi4;
 
-    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2, LigneReceptionService servi2, StockerService servi3) {
+    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2, LigneReceptionService servi2, StockerService servi3, LigneCommandeService servi4) {
         this.receptionRepository = receptionRepository;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
 		this.servi3 = servi3;
+		this.servi4 = servi4;
     }
 
     // Sauvegarder 
@@ -130,8 +132,16 @@ public class ReceptionService {
 			}
 			
 			if(removed == true) {
+				concernedLignes.get(i).getLigneCommande().setSatisfaite(false);
+				this.servi4.edit(concernedLignes.get(i).getLigneCommande().getIdLigneCommande(), concernedLignes.get(i).getLigneCommande());
 				this.repo2.deleteById(concernedLignes.get(i).getIdLigneReception());
 			}			
+			
+		}
+		
+		for(int i = 0; i < encap.getLigneReceptions().size(); i++) {
+			
+			this.servi4.edit(encap.getLigneReceptions().get(i).getLigneCommande().getIdLigneCommande(), encap.getLigneReceptions().get(i).getLigneCommande());
 			
 		}
 		
@@ -141,7 +151,7 @@ public class ReceptionService {
 			if(lignes.get(i).getReception().getNumReception() == id) {
 				newLignes.add(lignes.get(i));
 			}
-		}
+		}		
 		
 		
 		return new EncapReception(this.edit(id, encap.getReception()), newLignes);
@@ -177,7 +187,7 @@ public class ReceptionService {
 							if(reception.isValideRecep() == true) {//Pour Validation
 								
 								ligRecept.setLastCump(newSt.getCmup());
-								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+(lignes.get(i).getPuLigneReception()*lignes.get(i).getQuantiteLigneReception()*(1+(lignes.get(i).getLigneCommande().getTva()))))/(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
+								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+(lignes.get(i).getPuLigneReception()*lignes.get(i).getQuantiteLigneReception()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
 								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
 								newSt.setCmup(cump);
 								
@@ -236,6 +246,8 @@ public class ReceptionService {
 		
 		for(int i = 0; i < lignes.size(); i++) {
 			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
+				lignes.get(i).getLigneCommande().setSatisfaite(false);
+				this.servi4.edit(lignes.get(i).getLigneCommande().getIdLigneCommande(), lignes.get(i).getLigneCommande());
 				this.repo2.deleteById(lignes.get(i).getIdLigneReception());
 			}
 		}

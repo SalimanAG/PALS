@@ -26,13 +26,15 @@ public class ApprovisionnementService {
 	private final LigneApproRepository repo2;
 	private final LigneApproService servi2;
 	private final StockerService servi3;
+	private final LigneDemandeApproService servi4;
 
-	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3) {
+	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3, LigneDemandeApproService servi4) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
 		this.servi3 = servi3;
+		this.servi4 = servi4;
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
@@ -127,9 +129,15 @@ public class ApprovisionnementService {
 			}
 			
 			if(removed == true) {
+				concernedLignes.get(i).getLigneDA().setSatisfaite(false);
+				this.servi4.edit(concernedLignes.get(i).getLigneDA().getIdLigneDA(), concernedLignes.get(i).getLigneDA());
 				this.repo2.deleteById(concernedLignes.get(i).getIdLigneAppro());
 			}			
 			
+		}
+		
+		for(int i = 0; i < encap.getLigneAppros().size(); i++) {			
+			this.servi4.edit(encap.getLigneAppros().get(i).getLigneDA().getIdLigneDA(), encap.getLigneAppros().get(i).getLigneDA());
 		}
 		
 		lignes = this.repo2.findAll();
@@ -215,6 +223,8 @@ public class ApprovisionnementService {
 		
 		for(int i = 0; i < lignes.size(); i++) {
 			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
+				lignes.get(i).getLigneDA().setSatisfaite(false);
+				this.servi4.edit(lignes.get(i).getLigneDA().getIdLigneDA(), lignes.get(i).getLigneDA());
 				this.repo2.deleteById(lignes.get(i).getIdLigneAppro());
 			}
 		}
