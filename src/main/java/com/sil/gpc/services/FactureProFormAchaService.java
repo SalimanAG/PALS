@@ -1,4 +1,4 @@
-package com.sil.gpc.services;
+ package com.sil.gpc.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +97,7 @@ public class FactureProFormAchaService {
 		List<LigneFactureProFormAchat> newLignes = new ArrayList<LigneFactureProFormAchat>();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getFactureProFormAcha().getIdFpfa() == id) {
+			if(lignes.get(i).getFactureProFormAcha().getIdFpfa().equalsIgnoreCase(id)) {
 				concernedLignes.add(lignes.get(i));
 			}
 		}
@@ -146,7 +146,7 @@ public class FactureProFormAchaService {
 		lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getFactureProFormAcha().getIdFpfa() == id) {
+			if(lignes.get(i).getFactureProFormAcha().getIdFpfa().equalsIgnoreCase(id)) {
 				newLignes.add(lignes.get(i));
 			}
 		}

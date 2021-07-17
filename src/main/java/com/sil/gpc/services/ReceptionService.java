@@ -91,7 +91,7 @@ public class ReceptionService {
 		List<LigneReception> newLignes = new ArrayList<LigneReception>();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getReception().getNumReception() == id) {
+			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
 				concernedLignes.add(lignes.get(i));
 			}
 		}
@@ -148,7 +148,7 @@ public class ReceptionService {
 		lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getReception().getNumReception() == id) {
+			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
 				newLignes.add(lignes.get(i));
 			}
 		}		
@@ -168,7 +168,7 @@ public class ReceptionService {
 			List<Stocker> listStocker = this.servi3.getAll();
 			
 			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getReception().getNumReception() == id) {
+				if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
 					boolean stockerFinded = false;
 					
 					LigneReception ligRecept = lignes.get(i);

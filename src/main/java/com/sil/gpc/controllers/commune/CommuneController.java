@@ -190,6 +190,12 @@ public class CommuneController {
 		return this.fournisseurService.save(fournisseur);
 	}
 	
+	@PostMapping(path = "fournisseur/list2")
+	public List<Fournisseur> createFournisseurByList( @RequestBody List<Fournisseur> fournisseurs) {
+		
+		return this.fournisseurService.save2(fournisseurs);
+	}
+	
 	@PutMapping(path = "fournisseur/byCodFou/{id}")
 	public Fournisseur updateFournisseur(@PathVariable(name = "id") Long id, @RequestBody Fournisseur fournisseur) {
 		

@@ -1,5 +1,6 @@
 package com.sil.gpc.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,22 +8,78 @@ import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.Famille;
+import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.domains.Uniter;
 import com.sil.gpc.repositories.ArticleRepository;
+import com.sil.gpc.repositories.StockerRepository;
 
 @Service
 public class ArticleService {
 
 	private final ArticleRepository repo;
+	private final StockerRepository repo2;
 
-	public ArticleService(ArticleRepository repo) {
+	public ArticleService(ArticleRepository repo, StockerRepository repo2) {
 		super();
 		this.repo = repo;
+		this.repo2 = repo2;
 	}
 	
 	public Article save(Article article) {
 		
 		return this.repo.save(article);
+	}
+	
+	public List<Article> saveByList(List<Article> articles) {
+		
+		return this.repo.saveAll(articles);
+	}
+	
+	public List<Article> saveByList2(List<Article> articles) {
+		
+		List<Article> lister = new ArrayList<Article>();
+		
+		List<Stocker> stockerList = this.repo2.findAll();
+		
+		for(int i = 0; i<articles.size(); i++) {
+			if(this.repo.existsById(articles.get(i).getNumArticle())) {
+				Article entiter = this.repo.getOne(articles.get(i).getNumArticle());
+				if(entiter.getExo() != null) {
+					entiter.setQteStIniTres(articles.get(i).getQteStIniTres());
+					entiter.setPuStIniTres(articles.get(i).getPuStIniTres());
+					entiter.setDatStInitArtTres(articles.get(i).getDatStInitArtTres());
+					entiter.setExo(articles.get(i).getExo());
+					
+					boolean finded = false;
+					
+					for(int j = 0; j > stockerList.size(); j++) {
+						if(stockerList.get(j).getArticle().getNumArticle() == entiter.getNumArticle() 
+								&& stockerList.get(j).getMagasin().getNumMagasin() == entiter.getFamille().getMagasin().getNumMagasin()) {
+							finded = true;
+							
+							Stocker elem = stockerList.get(j);
+							
+							elem.setCmup(entiter.getPuStIniTres());
+							elem.setQuantiterStocker(entiter.getQteStIniTres());
+							
+							this.repo2.save(elem);
+							
+							break;
+						}
+					}
+					
+					if(finded == false) {
+						this.repo2.save(new Stocker(null, entiter.getQteStIniTres(), 0, 0, entiter.getPuStIniTres(), entiter, entiter.getFamille().getMagasin()));
+					}
+					
+					lister.add(this.repo.save(entiter)) ;
+				}
+			}
+		}
+		
+
+		
+		return lister;
 	}
 	
 	public Article edit(Long id, Article article) {
@@ -38,10 +95,6 @@ public class ArticleService {
 			entiter.setPrixVenteArticle(article.getPrixVenteArticle());
 			entiter.setStockerArticle(article.isStockerArticle());
 			entiter.setFamille(article.getFamille());
-			entiter.setQteStIniTres(article.getQteStIniTres());
-			entiter.setPuStIniTres(article.getPuStIniTres());
-			entiter.setDatStInitArtTres(article.getDatStInitArtTres());
-			entiter.setExo(article.getExo());
 			entiter.setAbregerArticle(article.getAbregerArticle());
 			entiter.setAfficherArticle(article.isAfficherArticle());
 			entiter.setCodeBareArticle(article.getCodeBareArticle());

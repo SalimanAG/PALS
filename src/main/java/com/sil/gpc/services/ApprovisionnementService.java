@@ -88,7 +88,7 @@ public class ApprovisionnementService {
 		List<LigneAppro> newLignes = new ArrayList<LigneAppro>();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro() == id) {
+			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
 				concernedLignes.add(lignes.get(i));
 			}
 		}
@@ -143,7 +143,7 @@ public class ApprovisionnementService {
 		lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro() == id) {
+			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
 				newLignes.add(lignes.get(i));
 			}
 		}
@@ -163,7 +163,7 @@ public class ApprovisionnementService {
 			List<Stocker> listStocker = this.servi3.getAll();
 			
 			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getAppro().getNumAppro() == id) {
+				if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
 					LigneAppro ligApp = lignes.get(i);
 					
 					boolean stockerFinded = false;

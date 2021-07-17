@@ -172,6 +172,12 @@ public class MagasinController {
 		return this.familleService.save(famille);
 	}
 	
+	@PostMapping(path = "famille/list2")
+	public List<Famille> createFamilleByList( @RequestBody List<Famille> familles) {
+		
+		return this.familleService.save2(familles);
+	}
+	
 	@PutMapping(path = "famille/byCodFam/{id}")
 	public Famille updateFamille(@PathVariable(name = "id") Long id, @RequestBody Famille famille) {
 		
@@ -206,6 +212,18 @@ public class MagasinController {
 	public Article createArticle( @RequestBody Article article) {
 		
 		return this.articleService.save(article);
+	}
+	
+	@PostMapping(path = "article/list2")
+	public List<Article> createArticleByList( @RequestBody List<Article> articles) {
+		
+		return this.articleService.saveByList(articles);
+	}
+	
+	@PostMapping(path = "article/list3")
+	public List<Article> createStockInitArticleByList( @RequestBody List<Article> articles) {
+		
+		return this.articleService.saveByList2(articles);
 	}
 	
 	@PutMapping(path = "article/byCodArt/{id}")
@@ -371,6 +389,12 @@ public class MagasinController {
 	public Inventaire updateInventaire(@PathVariable(name = "id") String id, @RequestBody Inventaire inv) {
 		
 		return this.invServ.edit(inv, id);
+	}
+	
+	@PutMapping(path = "inventaire/byCodSto3/{id}")
+	public Inventaire updateInventaireValidating(@PathVariable(name = "id") String id, @RequestBody Inventaire inv) {
+		
+		return this.invServ.edit3(inv, id);
 	}
 	
 	@PutMapping(path = "inventaire/byCodSto2/{id}")

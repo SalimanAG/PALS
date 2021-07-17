@@ -22,6 +22,10 @@ public class FamilleService {
 		return this.repo.save(famille);
 	}
 	
+	public List<Famille> save2(List<Famille> familles) {
+		return this.repo.saveAll(familles);
+	}
+	
 	public Famille edit(Long id, Famille famille) {
 		
 		Famille entiter = this.repo.getOne(id);

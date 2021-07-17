@@ -22,6 +22,10 @@ public class FournisseurService {
 		return this.repo.save(fournisseur);
 	}
 	
+	public List<Fournisseur> save2(List<Fournisseur> fournisseurs) {
+		return this.repo.saveAll(fournisseurs);
+	}
+	
 	public Fournisseur edit(Long id, Fournisseur fournisseur) {
 		
 		Fournisseur entiter = this.repo.getOne(id);
