@@ -52,7 +52,7 @@ public class ArticleService {
 					
 					boolean finded = false;
 					
-					for(int j = 0; j > stockerList.size(); j++) {
+					for(int j = 0; j < stockerList.size(); j++) {
 						if(stockerList.get(j).getArticle().getNumArticle() == entiter.getNumArticle() 
 								&& stockerList.get(j).getMagasin().getNumMagasin() == entiter.getFamille().getMagasin().getNumMagasin()) {
 							finded = true;

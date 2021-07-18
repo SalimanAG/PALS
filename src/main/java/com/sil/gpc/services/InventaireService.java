@@ -65,7 +65,7 @@ public class InventaireService {
 				if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(num)) {
 					boolean finded = false;
 					
-					for(int j = 0; j > stockerList.size(); j++) {
+					for(int j = 0; j < stockerList.size(); j++) {
 						if(stockerList.get(j).getArticle().getNumArticle() == lignes.get(i).getArticle().getNumArticle() 
 								&& stockerList.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()) {
 							finded = true;
@@ -73,6 +73,7 @@ public class InventaireService {
 							Stocker elem = stockerList.get(j);
 							
 							elem.setQuantiterStocker(lignes.get(i).getStockreel());
+							//System.out.println(elem);
 							
 							this.repo3.save(elem);
 							
