@@ -21,6 +21,11 @@ public class CategorieFrsService {
 		return this.repo.save(categorieFrs);
 	}
 	
+	public List<CategorieFrs> saveByList(List<CategorieFrs> categorieFrs) {
+		return this.repo.saveAll(categorieFrs);
+	}
+
+	
 	public CategorieFrs edit(Long id, CategorieFrs categorieFrs) {
 		
 		CategorieFrs entiter = this.repo.getOne(id);

@@ -21,6 +21,10 @@ public class TypeServiceService {
 		return this.repo.save(typeService);
 	}
 	
+	public List<TypeService> saveByList(List<TypeService> typeServices) {
+		return this.repo.saveAll(typeServices);
+	}
+	
 	public TypeService edit(Long id, TypeService typeService) {
 		
 		TypeService entiter = this.repo.getOne(id);

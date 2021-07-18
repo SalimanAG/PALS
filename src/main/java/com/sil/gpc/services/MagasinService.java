@@ -24,6 +24,10 @@ public class MagasinService {
 		return repos.save(mg);
 	}
 	
+	public List<Magasin> saveByList(List<Magasin> magasins){
+		return repos.saveAll(magasins);
+	}
+	
 	public Magasin edit(Magasin mg, Long cm){
 		Magasin mag=repos.getOne(cm);
 		if(mag!=null) {

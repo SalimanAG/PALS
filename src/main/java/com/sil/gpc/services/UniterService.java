@@ -23,6 +23,10 @@ public class UniterService {
         return   this.uniterRepository.save(uniter);
     }
     
+    public List<Uniter> saveByList(List<Uniter> uniters) {
+        return   this.uniterRepository.saveAll(uniters);
+    }
+    
     // Editer un Uniter
     public Uniter edit(Long codeUniter,Uniter uniter) {
     	

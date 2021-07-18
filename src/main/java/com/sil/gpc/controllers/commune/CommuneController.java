@@ -237,6 +237,12 @@ public class CommuneController {
 		return this.serviceService.save(service);
 	}
 	
+	@PostMapping(path = "service/list2")
+	public List<Service> createServiceByList( @RequestBody List<Service> services) {
+		
+		return this.serviceService.saveByList(services);
+	}
+	
 	@PutMapping(path = "service/byCodSev/{id}")
 	public Service updateService(@PathVariable(name = "id") Long id, @RequestBody Service service) {
 		
@@ -820,6 +826,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 		return this.categorieFrsService.save(categorieFrs);
 	}
 	
+	@PostMapping(path = "categorieFrs/list2")
+	public List<CategorieFrs> createCategorieFrsByList( @RequestBody List<CategorieFrs> categorieFrs) {
+		
+		return this.categorieFrsService.saveByList(categorieFrs);
+	}
+	
 	@PutMapping(path = "categorieFrs/byCodCatFrs/{id}")
 	public CategorieFrs updateCategorieFrs(@PathVariable(name = "id") Long id, @RequestBody CategorieFrs categorieFrs) {
 		return this.categorieFrsService.edit(id, categorieFrs);
@@ -890,6 +902,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 		return this.typeServiceService.save(typeService);
 	}
 	
+	@PostMapping(path = "typeService/list2")
+	public List<TypeService> createTypeServiceByList( @RequestBody List<TypeService> typeServices) {
+		
+		return this.typeServiceService.saveByList(typeServices);
+	}
+	
 	@PutMapping(path = "typeService/byCodTypSer/{id}")
 	public TypeService updateDirection(@PathVariable(name = "id") Long id, @RequestBody TypeService typeService) {
 		return this.typeServiceService.edit(id, typeService);
@@ -956,6 +974,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	public Direction createDirection( @RequestBody Direction direction) {
 		
 		return this.directionService.save(direction);
+	}
+	
+	@PostMapping(path = "direction/list2")
+	public List<Direction> createDirectionByList( @RequestBody List<Direction> directions) {
+		
+		return this.directionService.saveByList(directions);
 	}
 	
 	@PutMapping(path = "direction/byCodDir/{id}")

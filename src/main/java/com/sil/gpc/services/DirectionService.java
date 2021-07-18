@@ -21,6 +21,10 @@ public class DirectionService {
 		return this.repo.save(direction);
 	}
 	
+	public List<Direction> saveByList(List<Direction> directions) {
+		return this.repo.saveAll(directions);
+	}
+	
 	public Direction edit(Long id, Direction direction) {
 		
 		Direction entiter = this.repo.getOne(id);

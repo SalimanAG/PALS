@@ -98,6 +98,12 @@ public class MagasinController {
 		return this.magasinService.save(magasin);
 	}
 	
+	@PostMapping(path = "magasin/list2")
+	public List<Magasin> createMagasinByList( @RequestBody List<Magasin> magasins) {
+		
+		return this.magasinService.saveByList(magasins);
+	}
+	
 	@PutMapping(path = "magasin/byCodMag/{id}")
 	public Magasin updateMagasin(@PathVariable(name = "id") Long id, @RequestBody Magasin magasin) {
 		
@@ -261,6 +267,12 @@ public class MagasinController {
 	public Uniter createUniter( @RequestBody Uniter uniter) {
 		
 		return this.uniterService.save(uniter);
+	}
+	
+	@PostMapping(path = "uniter/list2")
+	public List<Uniter> createUniterByList( @RequestBody List<Uniter> uniters) {
+		
+		return this.uniterService.saveByList(uniters);
 	}
 	
 	@PutMapping(path = "uniter/byCodUni/{id}")
@@ -500,6 +512,11 @@ public class MagasinController {
 	@PostMapping(path = "typeArticle/list")
 	public TypeArticle createTypeArticle( @RequestBody TypeArticle typeArticle) {
 		return this.typeArticleService.save(typeArticle);
+	}
+	
+	@PostMapping(path = "typeArticle/list2")
+	public List<TypeArticle> createTypeArticleByList( @RequestBody List<TypeArticle> typeArticles) {
+		return this.typeArticleService.saveByList(typeArticles);
 	}
 	
 	@PutMapping(path = "typeArticle/byCodTypArti/{id}")

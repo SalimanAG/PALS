@@ -22,6 +22,10 @@ public class ServiceService {
     	return   this.serviceRepository.save(service);
     }
     
+    public List<Service> saveByList(List<Service> services) {
+    	return   this.serviceRepository.saveAll(services);
+    }
+    
     // Editer un Service
  public Service edit(Long codeService, Service sev) {
     	
