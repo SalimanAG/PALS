@@ -44,7 +44,7 @@ public class ArticleService {
 		for(int i = 0; i<articles.size(); i++) {
 			if(this.repo.existsById(articles.get(i).getNumArticle())) {
 				Article entiter = this.repo.getOne(articles.get(i).getNumArticle());
-				if(entiter.getExo() != null) {
+				if(entiter.getExo() == null) {
 					entiter.setQteStIniTres(articles.get(i).getQteStIniTres());
 					entiter.setPuStIniTres(articles.get(i).getPuStIniTres());
 					entiter.setDatStInitArtTres(articles.get(i).getDatStInitArtTres());
