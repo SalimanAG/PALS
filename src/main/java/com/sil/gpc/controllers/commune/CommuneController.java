@@ -20,17 +20,20 @@ import com.sil.gpc.domains.AffectUserToArrondi;
 import com.sil.gpc.domains.Arrondissement;
 import com.sil.gpc.domains.CategorieFrs;
 import com.sil.gpc.domains.CauseAnomalie;
+import com.sil.gpc.domains.Civilite;
 import com.sil.gpc.domains.CloturePeriodiq;
 import com.sil.gpc.domains.Commune;
 import com.sil.gpc.domains.Departement;
 import com.sil.gpc.domains.Direction;
 import com.sil.gpc.domains.DroitUser;
 import com.sil.gpc.domains.Exercice;
+import com.sil.gpc.domains.Fonction;
 import com.sil.gpc.domains.Fournisseur;
 import com.sil.gpc.domains.GroupUser;
 import com.sil.gpc.domains.Service;
 import com.sil.gpc.domains.TypeService;
 import com.sil.gpc.domains.Pays;
+import com.sil.gpc.domains.Profession;
 import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.services.AffectDroitGroupUserService;
@@ -52,6 +55,9 @@ import com.sil.gpc.services.QuartierService;
 import com.sil.gpc.services.ServiceService;
 import com.sil.gpc.services.TypeServiceService;
 import com.sil.gpc.services.UtilisateurService;
+import com.sil.gpc.services.CiviliteService;
+import com.sil.gpc.services.FonctionService;
+import com.sil.gpc.services.ProfessionService;
 
 @RestController
 @CrossOrigin
@@ -77,6 +83,9 @@ public class CommuneController {
 	private final DirectionService directionService;
 	private final CloturePeriodiqService cloturePeriodiqService;
 	private final TypeServiceService typeServiceService;
+	private final CiviliteService civiliteService;
+	private final FonctionService fonctionService;
+	private final ProfessionService professionService;
 
 	public CommuneController(ExerciceService exerciceService, FournisseurService fournisseurService,
 			ServiceService serviceService, UtilisateurService utilisateurService, PaysService paysService,
@@ -84,7 +93,8 @@ public class CommuneController {
 			ArrondissementService arrondissementService, QuartierService quartierService,
 			GroupUserService ug,
 			AffectDroitGroupUserService dgus, AffectUserGroupService aug, DroitUserService du,
-			AffectUserToArrondiService auta, DirectionService directionService, CloturePeriodiqService cloturePeriodiqService, CauseAnomalieService causeAnomalieService, CategorieFrsService categorieFrsService, TypeServiceService typeServiceService) {
+			AffectUserToArrondiService auta, DirectionService directionService, CloturePeriodiqService cloturePeriodiqService, CauseAnomalieService causeAnomalieService, 
+			CategorieFrsService categorieFrsService, TypeServiceService typeServiceService, CiviliteService civiliteService, FonctionService fonctionService, ProfessionService professionService ) {
 		this.exerciceService = exerciceService;
 		this.fournisseurService = fournisseurService;
 		this.serviceService = serviceService;
@@ -104,6 +114,9 @@ public class CommuneController {
 		this.directionService = directionService;
 		this.cloturePeriodiqService = cloturePeriodiqService;
 		this.typeServiceService = typeServiceService;
+		this.civiliteService = civiliteService;
+		this.fonctionService = fonctionService;
+		this.professionService = professionService;
 	}
 
 	/*###########################################################
@@ -284,11 +297,6 @@ public class CommuneController {
 		return this.utilisateurService.findByActiveUtilisateur(actUser);
 	}
 	
-	@GetMapping(path = "user/byFonUser/{fonc}")
-	public List<Utilisateur> getUserByFonctionUser(@PathVariable(name = "fonc") Long fonc){
-		
-		return this.utilisateurService.findByFonctionUtilisateur(fonc);
-	}
 	
 	@GetMapping(path = "user/byNomUser/{nom}")
 	public List<Utilisateur> getUserByNomUser(@PathVariable(name = "nom") Long nom){
@@ -991,6 +999,113 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	public Boolean deleteDirection(@PathVariable(name = "id") Long id) {
 		
 		return this.directionService.delete(id);
+	}	
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour Civilite
+	###########################################################
+	*/
+	@GetMapping(path = "civilite/list")
+	public List<Civilite> getAllCivilite(){
+		
+		return this.civiliteService.getAll();
+	}
+	
+	@GetMapping(path = "civilite/byCodCiv/{id}")
+	public Civilite getCiviliteById(@PathVariable(name = "id") Long id){
+		
+		return this.civiliteService.getById(id);
+	}
+	
+	@PostMapping(path = "civilite/list")
+	public Civilite createCivilite( @RequestBody Civilite civilite) {
+		
+		return this.civiliteService.save(civilite);
+	}
+	
+	
+	@PutMapping(path = "civilite/byCodCiv/{id}")
+	public Civilite updateCivilite(@PathVariable(name = "id") Long id, @RequestBody Civilite civilite) {
+		return this.civiliteService.edit(id, civilite);
+	}
+	
+	@DeleteMapping(path = "civilite/byCodCiv/{id}")
+	public Boolean deleteCivilite(@PathVariable(name = "id") Long id) {
+		
+		return this.civiliteService.delete(id);
+	}	
+
+
+
+	/*###########################################################
+	#############	Partie réservée pour Fonction
+	###########################################################
+	*/
+	@GetMapping(path = "fonction/list")
+	public List<Fonction> getAllFonction(){
+		
+		return this.fonctionService.getAll();
+	}
+	
+	@GetMapping(path = "fonction/byCodFon/{id}")
+	public Fonction getFonctionById(@PathVariable(name = "id") Long id){
+		
+		return this.fonctionService.getById(id);
+	}
+	
+	@PostMapping(path = "fonction/list")
+	public Fonction createFonction( @RequestBody Fonction fonction) {
+		
+		return this.fonctionService.save(fonction);
+	}
+	
+	
+	@PutMapping(path = "fonction/byCodFon/{id}")
+	public Fonction updateFonction(@PathVariable(name = "id") Long id, @RequestBody Fonction fonction) {
+		return this.fonctionService.edit(id, fonction);
+	}
+	
+	@DeleteMapping(path = "fonction/byCodFon/{id}")
+	public Boolean deleteFonction(@PathVariable(name = "id") Long id) {
+		
+		return this.fonctionService.delete(id);
+	}	
+
+	
+
+	/*###########################################################
+	#############	Partie réservée pour Profession
+	###########################################################
+	*/
+	@GetMapping(path = "profession/list")
+	public List<Profession> getAllProfession(){
+		
+		return this.professionService.getAll();
+	}
+	
+	@GetMapping(path = "profession/byCodPro/{id}")
+	public Profession getProfessionById(@PathVariable(name = "id") Long id){
+		
+		return this.professionService.getById(id);
+	}
+	
+	@PostMapping(path = "profession/list")
+	public Profession createProfession( @RequestBody Profession profession) {
+		
+		return this.professionService.save(profession);
+	}
+	
+	
+	@PutMapping(path = "profession/byCodPro/{id}")
+	public Profession updateProfession(@PathVariable(name = "id") Long id, @RequestBody Profession profession) {
+		return this.professionService.edit(id, profession);
+	}
+	
+	@DeleteMapping(path = "profession/byCodPro/{id}")
+	public Boolean deleteProfession(@PathVariable(name = "id") Long id) {
+		
+		return this.professionService.delete(id);
 	}	
 
 
