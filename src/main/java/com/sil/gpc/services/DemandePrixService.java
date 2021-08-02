@@ -83,6 +83,7 @@ public class DemandePrixService {
 		List<LigneDemandePrix> concernedLignes = new ArrayList<LigneDemandePrix>();
 		List<LigneDemandePrix> newLignes = new ArrayList<LigneDemandePrix>();
 		
+		System.out.println(encap);
 		
 		for(int i = 0; i < lignes.size(); i++) {
 			if(lignes.get(i).getDemandePrix().getIdDemandePrix().equalsIgnoreCase(id)) {
@@ -119,7 +120,7 @@ public class DemandePrixService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneDemandePrixs().size(); j++) {
-				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getLigneDemandePrixs().get(j).getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getArticle().getNumArticle().longValue() == encap.getLigneDemandePrixs().get(j).getArticle().getNumArticle()) {
 					removed = false;
 					break;
 				}

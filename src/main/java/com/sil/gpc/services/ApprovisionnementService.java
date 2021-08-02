@@ -122,7 +122,7 @@ public class ApprovisionnementService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneAppros().size(); j++) {
-				if(concernedLignes.get(i).getLigneDA().getArticle().getNumArticle() == encap.getLigneAppros().get(j).getLigneDA().getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getLigneDA().getArticle().getNumArticle().longValue() == encap.getLigneAppros().get(j).getLigneDA().getArticle().getNumArticle()) {
 					removed = false;
 					break;
 				}

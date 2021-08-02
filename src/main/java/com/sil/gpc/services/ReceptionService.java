@@ -125,7 +125,7 @@ public class ReceptionService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneReceptions().size(); j++) {
-				if(concernedLignes.get(i).getLigneCommande().getArticle().getNumArticle() == encap.getLigneReceptions().get(j).getLigneCommande().getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getLigneCommande().getArticle().getNumArticle().longValue() == encap.getLigneReceptions().get(j).getLigneCommande().getArticle().getNumArticle()) {
 					removed = false;
 					break;
 				}

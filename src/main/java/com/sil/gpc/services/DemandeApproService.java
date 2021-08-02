@@ -114,7 +114,7 @@ public class DemandeApproService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneDemandeAppros().size(); j++) {
-				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getLigneDemandeAppros().get(j).getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getArticle().getNumArticle().longValue() == encap.getLigneDemandeAppros().get(j).getArticle().getNumArticle()) {
 					removed = false;
 					break;
 				}

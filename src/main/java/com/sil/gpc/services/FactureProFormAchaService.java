@@ -131,7 +131,7 @@ public class FactureProFormAchaService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getFactureProFormAchats().size(); j++) {
-				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getFactureProFormAchats().get(j).getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getArticle().getNumArticle().longValue() == encap.getFactureProFormAchats().get(j).getArticle().getNumArticle()) {
 					removed = false;
 					break;
 				}

@@ -45,6 +45,13 @@ public class EncapDemandePrix {
 	public void setConsulterFrsForDps(List<ConsulterFrsForDp> consulterFrsForDps) {
 		this.consulterFrsForDps = consulterFrsForDps;
 	}
+
+	@Override
+	public String toString() {
+		return "EncapDemandePrix [demandePrix=" + demandePrix + ", ligneDemandePrixs=" + ligneDemandePrixs
+				+ ", consulterFrsForDps=" + consulterFrsForDps + "]";
+	}
+	
 	
 	
 	
