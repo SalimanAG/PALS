@@ -33,9 +33,11 @@ public class UtilisateurService {
    			}
    			usermod.setAskMdp1erLance(user.isAskMdp1erLance());
    			usermod.setActiveUtilisateur(user.isActiveUtilisateur());
-   			usermod.setFonctionUtilisateur(user.getFonctionUtilisateur());
    			usermod.setService(user.getService());
-   			usermod.setService(user.getService());
+   			usermod.setFonction(user.getFonction());
+   			usermod.setProfession(user.getProfession());
+   			usermod.setCivilite(user.getCivilite());
+   			usermod.setGroupUser(user.getGroupUser());
    			
    			
    			return this.userRepository.save(usermod);
@@ -118,11 +120,7 @@ public class UtilisateurService {
 		return this.userRepository.findByPrenomUtilisateur(PrenomUser);
 	}
     
-    //
-    public List<Utilisateur> findByFonctionUtilisateur(Long FonctionUser){
-		
-		return this.userRepository.findByFonctionUtilisateur(FonctionUser);
-	}
+    
     
     //
     public List<Utilisateur> findByServiceUtilisateur(Service ServiceUser){

@@ -21,7 +21,6 @@ public class Utilisateur {
 	private String motDePass;
 	private String nomUtilisateur;
 	private String prenomUtilisateur;
-	private String fonctionUtilisateur;
 	private boolean activeUtilisateur;
 	private String dateLastConnex;
 	private boolean askMdp1erLance;
@@ -30,36 +29,59 @@ public class Utilisateur {
 	@JoinColumn(name = "numService", referencedColumnName = "numService", nullable = true)
 	public Service service;
 	
+	@ManyToOne(targetEntity = Profession.class)
+	@JoinColumn(name = "numProfession", referencedColumnName = "numProfession", nullable = true)
+	public Profession profession;
+	
+	@ManyToOne(targetEntity = Fonction.class)
+	@JoinColumn(name = "numFonction", referencedColumnName = "numFonction", nullable = true)
+	public Fonction fonction;
+	
+	@ManyToOne(targetEntity = Civilite.class)
+	@JoinColumn(name = "numCivilite", referencedColumnName = "numCivilite", nullable = true)
+	public Civilite civilite;
+	
+	@ManyToOne(targetEntity = GroupUser.class)
+	@JoinColumn(name = "numGroupUser", referencedColumnName = "numGroupUser", nullable = true)
+	public GroupUser groupUser;
+	
 	public Utilisateur() {
 		super();
 	}
 
 	public Utilisateur(String login, String motDePass, String nomUtilisateur, String prenomUtilisateur,
-			String fonctionUtilisateur, boolean activeUtilisateur, Service service) {
+			Fonction fonction, boolean activeUtilisateur, Service service, Profession profession,
+			Civilite civilite, GroupUser groupUser) {
 		super();
 		this.login = login;
 		this.motDePass = motDePass;
 		this.nomUtilisateur = nomUtilisateur;
 		this.prenomUtilisateur = prenomUtilisateur;
-		this.fonctionUtilisateur = fonctionUtilisateur;
+		this.fonction = fonction;
 		this.activeUtilisateur = activeUtilisateur;
 		this.service = service;
+		this.profession = profession;
+		this.civilite = civilite;
+		this.groupUser = groupUser;
 		this.askMdp1erLance = true;
 	}
 
 	public Utilisateur(String login, String motDePass, String nomUtilisateur, String prenomUtilisateur,
-			String fonctionUtilisateur, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,
-			Service service) {
+			Fonction fonction, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,
+			Service service, Profession profession,Civilite civilite, GroupUser groupUser) {
 		super();
 		this.login = login;
 		this.motDePass = motDePass;
 		this.nomUtilisateur = nomUtilisateur;
 		this.prenomUtilisateur = prenomUtilisateur;
-		this.fonctionUtilisateur = fonctionUtilisateur;
+		this.fonction = fonction;
 		this.activeUtilisateur = activeUtilisateur;
 		this.dateLastConnex = dateLastConnex;
 		this.askMdp1erLance = askMdp1erLance;
 		this.service = service;
+		this.profession = profession;
+		this.civilite = civilite;
+		this.groupUser = groupUser;
 	}
 
 	public Long getIdUtilisateur() {
@@ -102,28 +124,12 @@ public class Utilisateur {
 		this.prenomUtilisateur = prenomUtilisateur;
 	}
 
-	public String getFonctionUtilisateur() {
-		return fonctionUtilisateur;
-	}
-
-	public void setFonctionUtilisateur(String fonctionUtilisateur) {
-		this.fonctionUtilisateur = fonctionUtilisateur;
-	}
-
 	public boolean isActiveUtilisateur() {
 		return activeUtilisateur;
 	}
 
 	public void setActiveUtilisateur(boolean activeUtilisateur) {
 		this.activeUtilisateur = activeUtilisateur;
-	}
-
-	public Service getService() {
-		return service;
-	}
-
-	public void setService(Service service) {
-		this.service = service;
 	}
 
 	public String getDateLastConnex() {
@@ -142,15 +148,56 @@ public class Utilisateur {
 		this.askMdp1erLance = askMdp1erLance;
 	}
 
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
+
+	public Profession getProfession() {
+		return profession;
+	}
+
+	public void setProfession(Profession profession) {
+		this.profession = profession;
+	}
+
+	public Fonction getFonction() {
+		return fonction;
+	}
+
+	public void setFonction(Fonction fonction) {
+		this.fonction = fonction;
+	}
+
+	public Civilite getCivilite() {
+		return civilite;
+	}
+
+	public void setCivilite(Civilite civilite) {
+		this.civilite = civilite;
+	}
+
+	public GroupUser getGroupUser() {
+		return groupUser;
+	}
+
+	public void setGroupUser(GroupUser groupUser) {
+		this.groupUser = groupUser;
+	}
+
 	@Override
 	public String toString() {
 		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", login=" + login + ", motDePass=" + motDePass
 				+ ", nomUtilisateur=" + nomUtilisateur + ", prenomUtilisateur=" + prenomUtilisateur
-				+ ", fonctionUtilisateur=" + fonctionUtilisateur + ", activeUtilisateur=" + activeUtilisateur
-				+ ", dateLastConnex=" + dateLastConnex + ", askMdp1erLance=" + askMdp1erLance + ", service=" + service
-				+ "]";
+				+ ", activeUtilisateur=" + activeUtilisateur + ", dateLastConnex=" + dateLastConnex
+				+ ", askMdp1erLance=" + askMdp1erLance + ", service=" + service + ", profession=" + profession
+				+ ", fonction=" + fonction + ", civilite=" + civilite + ", groupUser=" + groupUser + "]";
 	}
 
+	
 
 	
 }
