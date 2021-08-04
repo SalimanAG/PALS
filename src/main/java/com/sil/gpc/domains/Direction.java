@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Direction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long numDirection;
+	@Column(unique = true)
 	private String codeDirection;
 	private String libDirection;
 	

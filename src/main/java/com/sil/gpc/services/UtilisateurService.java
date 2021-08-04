@@ -60,11 +60,11 @@ public class UtilisateurService {
     	
     	for(int i = 0; i < lis.size(); i++) {
     		
-    		if(lis.get(i).getLogin() == login) {
+    		if(lis.get(i).getLogin().equals(login)) {
     			if(lis.get(i).isAskMdp1erLance()) {
     				return lis.get(i);
     			}
-    			else if(lis.get(i).getMotDePass() == mdp){
+    			else if(lis.get(i).getMotDePass().equals(mdp)){
     				return lis.get(i);
     			}
     		}

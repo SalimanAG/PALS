@@ -2,6 +2,8 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,7 @@ public class Exercice implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long numExercice;
+	@Column(unique = true)
 	private String codeExercice;
 	private String libExercice;
 	private Date dateDebut;

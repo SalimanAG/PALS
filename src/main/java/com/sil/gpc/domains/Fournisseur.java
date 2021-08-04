@@ -19,6 +19,7 @@ public class Fournisseur implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long numFournisseur;
+	@Column(unique = true)
 	private String codeFrs;
 	private String identiteFrs;
 	private String adresseFrs;

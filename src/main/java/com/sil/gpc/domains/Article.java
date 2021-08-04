@@ -3,6 +3,7 @@ package com.sil.gpc.domains;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public class Article implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long numArticle;
+	@Column(unique = true)
 	private String codeArticle;
 	private String libArticle;
 	private boolean stockerArticle;
