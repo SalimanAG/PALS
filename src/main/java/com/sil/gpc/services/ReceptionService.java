@@ -237,14 +237,14 @@ public class ReceptionService {
 							String numJournVStock = "";
 							
 							for(int n=0; n < numJournaux.size(); n++) {
-								if(numJournaux.get(n).getOperation().equalsIgnoreCase("stock")) {
+								if(numJournaux.get(n).getOperation().equalsIgnoreCase("STOCK")) {
 									numJournStock = numJournaux.get(n).getJournal();
 									break;
 								}
 							}
 							
 							for(int n=0; n < numJournaux.size(); n++) {
-								if(numJournaux.get(n).getOperation().equalsIgnoreCase("vStock")) {
+								if(numJournaux.get(n).getOperation().equalsIgnoreCase("V/STOCK")) {
 									numJournVStock = numJournaux.get(n).getJournal();
 									break;
 								}
