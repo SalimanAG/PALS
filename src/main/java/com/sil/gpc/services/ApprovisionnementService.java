@@ -9,10 +9,13 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.Approvisionnement;
+import com.sil.gpc.domains.EcritureComptable;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneDemandeAppro;
 import com.sil.gpc.domains.LigneDemandePrix;
+import com.sil.gpc.domains.OpeJournalSetting;
+import com.sil.gpc.domains.StockComptaSetting;
 import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
@@ -27,14 +30,20 @@ public class ApprovisionnementService {
 	private final LigneApproService servi2;
 	private final StockerService servi3;
 	private final LigneDemandeApproService servi4;
+	private final StockComptaSettingService servi5;
+	private final OpeJournalSettingService servi6;
+	private final EcritureComptableService servi7;
 
-	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3, LigneDemandeApproService servi4) {
+	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3, LigneDemandeApproService servi4, StockComptaSettingService servi5, EcritureComptableService servi7, OpeJournalSettingService servi6) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
 		this.servi3 = servi3;
 		this.servi4 = servi4;
+		this.servi5 = servi5;
+		this.servi6 = servi6;
+		this.servi7 = servi7;
 	}
 	
 	public Approvisionnement save(Approvisionnement approvisionnement) {
@@ -176,10 +185,10 @@ public class ApprovisionnementService {
 							
 							
 							if(approvisionnement.isValideAppro() == true) {
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-lignes.get(i).getQuantiteLigneAppro());
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneAppro()*lignes.get(i).getLigneDA().getUniter().getPoids()));
 								ligApp.setPULigneAppro(newSt.getCmup());
 							}else if(approvisionnement.isValideAppro() == false) {
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneAppro());
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneAppro()*lignes.get(i).getLigneDA().getUniter().getPoids()));
 								ligApp.setPULigneAppro(Long.valueOf(0));
 							}
 																					
@@ -192,6 +201,46 @@ public class ApprovisionnementService {
 					}
 					
 					this.repo2.save(ligApp);
+					
+					//Ecritures comptables
+					List<OpeJournalSetting> numJournaux = this.servi6.getAll();
+					List<StockComptaSetting> paramFamille = this.servi5.getAll();
+					
+					for (int m=0; m < paramFamille.size(); m++) {
+						if(paramFamille.get(m).getFamille().getNumFamille() == ligApp.getLigneDA().getArticle().getFamille().getNumFamille() && paramFamille.get(m).isExportable() == true) {
+							List<EcritureComptable> ecriOper = new ArrayList<EcritureComptable>();
+							String numJournStock = "";
+							String numJournVStock = "";
+							
+							for(int n=0; n < numJournaux.size(); n++) {
+								if(numJournaux.get(n).getOperation().equalsIgnoreCase("stock")) {
+									numJournStock = numJournaux.get(n).getJournal();
+									break;
+								}
+							}
+							
+							for(int n=0; n < numJournaux.size(); n++) {
+								if(numJournaux.get(n).getOperation().equalsIgnoreCase("vStock")) {
+									numJournVStock = numJournaux.get(n).getJournal();
+									break;
+								}
+							}
+							
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, (Date) Date.from(ligApp.getAppro().getDateAppro().toInstant()), "1", paramFamille.get(m).getCompteStock(), true, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, (Date) Date.from(ligApp.getAppro().getDateAppro().toInstant()), "1", paramFamille.get(m).getCompteVaStock(), false, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+							
+							ecriOper.get(0).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
+							ecriOper.get(1).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
+							
+							this.servi7.save2(ecriOper);
+							
+							break;
+							
+						}
+						
+					}
+	
+					
 					
 				}
 			}

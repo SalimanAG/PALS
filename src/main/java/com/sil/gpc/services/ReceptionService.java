@@ -2,11 +2,15 @@ package com.sil.gpc.services;
 
 import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.Article;
+import com.sil.gpc.domains.EcritureComptable;
+import com.sil.gpc.domains.Famille;
 import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.domains.Magasin;
+import com.sil.gpc.domains.OpeJournalSetting;
 import com.sil.gpc.domains.Reception;
+import com.sil.gpc.domains.StockComptaSetting;
 import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapReception;
@@ -15,6 +19,7 @@ import com.sil.gpc.repositories.ReceptionRepository;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,13 +33,19 @@ public class ReceptionService {
 	private final LigneReceptionService servi2;
 	private final StockerService servi3;
 	private final LigneCommandeService servi4;
+	private final StockComptaSettingService servi5;
+	private final OpeJournalSettingService servi6;
+	private final EcritureComptableService servi7;
 
-    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2, LigneReceptionService servi2, StockerService servi3, LigneCommandeService servi4) {
+    public ReceptionService(ReceptionRepository receptionRepository, LigneReceptionRepository repo2, LigneReceptionService servi2, StockerService servi3, LigneCommandeService servi4, StockComptaSettingService servi5, OpeJournalSettingService servi6, EcritureComptableService servi7) {
         this.receptionRepository = receptionRepository;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
 		this.servi3 = servi3;
 		this.servi4 = servi4;
+		this.servi5 = servi5;
+		this.servi6 = servi6;
+		this.servi7 = servi7;
     }
 
     // Sauvegarder 
@@ -187,12 +198,12 @@ public class ReceptionService {
 							if(reception.isValideRecep() == true) {//Pour Validation
 								
 								ligRecept.setLastCump(newSt.getCmup());
-								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+(lignes.get(i).getPuLigneReception()*lignes.get(i).getQuantiteLigneReception()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+lignes.get(i).getQuantiteLigneReception());
+								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / (lignes.get(i).getLigneCommande().getUniter().getPoids()*lignes.get(i).getLigneCommande().getQteLigneCommande()))*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
 								newSt.setCmup(cump);
 								
 							}else if(reception.isValideRecep() == false) {//Pour Annulation
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-lignes.get(i).getQuantiteLigneReception());
+								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
 								newSt.setCmup(ligRecept.getLastCump());
 							}
 							
@@ -208,12 +219,52 @@ public class ReceptionService {
 										
 					if(stockerFinded == false) {
 						//Elément à générer en stock
-						this.servi3.save(new Stocker(Long.valueOf(0), lignes.get(i).getQuantiteLigneReception(), 0, 0, lignes.get(i).getPuLigneReception(), lignes.get(i).getLigneCommande().getArticle(), lignes.get(i).getReception().getMagasin()));
+						this.servi3.save(new Stocker(Long.valueOf(0), (lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()), 0, 0, (lignes.get(i).getLigneCommande().getPuLigneCommande()/(lignes.get(i).getLigneCommande().getUniter().getPoids())), lignes.get(i).getLigneCommande().getArticle(), lignes.get(i).getReception().getMagasin()));
 					}
 					
 					
 					
 					repo2.save(ligRecept);
+					
+					//Ecritures comptables
+					List<OpeJournalSetting> numJournaux = this.servi6.getAll();
+					List<StockComptaSetting> paramFamille = this.servi5.getAll();
+					
+					for (int m=0; m < paramFamille.size(); m++) {
+						if(paramFamille.get(m).getFamille().getNumFamille() == ligRecept.getLigneCommande().getArticle().getFamille().getNumFamille() && paramFamille.get(m).isExportable() == true) {
+							List<EcritureComptable> ecriOper = new ArrayList<EcritureComptable>();
+							String numJournStock = "";
+							String numJournVStock = "";
+							
+							for(int n=0; n < numJournaux.size(); n++) {
+								if(numJournaux.get(n).getOperation().equalsIgnoreCase("stock")) {
+									numJournStock = numJournaux.get(n).getJournal();
+									break;
+								}
+							}
+							
+							for(int n=0; n < numJournaux.size(); n++) {
+								if(numJournaux.get(n).getOperation().equalsIgnoreCase("vStock")) {
+									numJournVStock = numJournaux.get(n).getJournal();
+									break;
+								}
+							}
+							
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, (Date) Date.from(ligRecept.getReception().getDateReception().toInstant()), "1", paramFamille.get(m).getCompteStock(), false, "", "Pour Entée dans le magasin "+ligRecept.getReception().getMagasin().getCodeMagasin(), ligRecept.getReception().getNumReception(), paramFamille.get(m).getFamille()));
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, (Date) Date.from(ligRecept.getReception().getDateReception().toInstant()), "1", paramFamille.get(m).getCompteVaStock(), true, "", "Pour Entée dans le magasin "+ligRecept.getReception().getMagasin().getCodeMagasin(), ligRecept.getReception().getNumReception(), paramFamille.get(m).getFamille()));
+
+							ecriOper.get(0).setMontantEcri(ligRecept.getPuLigneReception()*ligRecept.getQuantiteLigneReception());
+							ecriOper.get(1).setMontantEcri(ligRecept.getPuLigneReception()*ligRecept.getQuantiteLigneReception());
+							
+							this.servi7.save2(ecriOper);
+							
+							break;
+							
+						}
+						
+					}
+					
+					
 					
 				}
 			}
