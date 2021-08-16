@@ -18,7 +18,10 @@ import com.sil.gpc.repositories.LigneReceptionRepository;
 import com.sil.gpc.repositories.ReceptionRepository;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -198,9 +201,13 @@ public class ReceptionService {
 							if(reception.isValideRecep() == true) {//Pour Validation
 								
 								ligRecept.setLastCump(newSt.getCmup());
-								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / (lignes.get(i).getLigneCommande().getUniter().getPoids()*lignes.get(i).getLigneCommande().getQteLigneCommande()))*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+								ligRecept.setLastStockQte(newSt.getQuantiterStocker());
+								
+								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / lignes.get(i).getLigneCommande().getUniter().getPoids())*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+								
 								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
 								newSt.setCmup(cump);
+								entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));//(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));//(System.currentTimeMillis());
 								
 							}else if(reception.isValideRecep() == false) {//Pour Annulation
 								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
@@ -219,6 +226,7 @@ public class ReceptionService {
 										
 					if(stockerFinded == false) {
 						//Elément à générer en stock
+						entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 						this.servi3.save(new Stocker(Long.valueOf(0), (lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()), 0, 0, (lignes.get(i).getLigneCommande().getPuLigneCommande()/(lignes.get(i).getLigneCommande().getUniter().getPoids())), lignes.get(i).getLigneCommande().getArticle(), lignes.get(i).getReception().getMagasin()));
 					}
 					

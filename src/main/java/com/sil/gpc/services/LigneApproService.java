@@ -40,6 +40,7 @@ public class LigneApproService {
 			entiter.setQuantiteLigneAppro(ligneAppro.getQuantiteLigneAppro());
 			entiter.setAppro(ligneAppro.getAppro());
 			entiter.setLigneDA(ligneAppro.getLigneDA());
+			entiter.setLastStockQte(ligneAppro.getLastStockQte());
 			
 			return this.repo.save(entiter);
 		}

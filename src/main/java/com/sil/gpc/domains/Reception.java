@@ -24,6 +24,7 @@ public class Reception implements Serializable {
 	private int valeur;
 	private String referenceReception;
 	private String refBordLivraiRecept;
+	private Timestamp dateValidation;
 
 	@ManyToOne(targetEntity = Exercice.class)
 	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice")
@@ -156,13 +157,25 @@ public class Reception implements Serializable {
 
 
 
+	public Timestamp getDateValidation() {
+		return dateValidation;
+	}
+
+
+
+	public void setDateValidation(Timestamp dateValidation) {
+		this.dateValidation = dateValidation;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Reception [numReception=" + numReception + ", observation=" + observation + ", dateReception="
 				+ dateReception + ", valideRecep=" + valideRecep + ", valeur=" + valeur + ", referenceReception="
-				+ referenceReception + ", refBordLivraiRecept=" + refBordLivraiRecept + ", exercice=" + exercice
-				+ ", magasin=" + magasin + "]";
+				+ referenceReception + ", refBordLivraiRecept=" + refBordLivraiRecept + ", dateValidation="
+				+ dateValidation + ", exercice=" + exercice + ", magasin=" + magasin + "]";
 	}
+
 	
 	
 	

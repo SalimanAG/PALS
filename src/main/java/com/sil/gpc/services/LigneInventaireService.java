@@ -44,6 +44,7 @@ public class LigneInventaireService {
 			opc.setPu(lInv.getPu());
 			opc.setStockreel(lInv.getStockreel());
 			opc.setStockTheoriq(lInv.getStockTheoriq());
+			opc.setLastStockQte(lInv.getLastStockQte());
 			
 			return repos.save(opc);
 		}else

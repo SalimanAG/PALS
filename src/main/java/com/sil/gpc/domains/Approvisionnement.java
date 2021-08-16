@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ public class Approvisionnement implements Serializable {
 	@Column()
 	private boolean valideAppro;
 	private int valeur;
+	private Timestamp dateValidation;
 	
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = true)
@@ -146,12 +148,25 @@ public class Approvisionnement implements Serializable {
 	}
 
 
+	public Timestamp getDateValidation() {
+		return dateValidation;
+	}
+
+
+	public void setDateValidation(Timestamp dateValidation) {
+		this.dateValidation = dateValidation;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Approvisionnement [numAppro=" + numAppro + ", descriptionAppro=" + descriptionAppro + ", dateAppro="
-				+ dateAppro + ", valideAppro=" + valideAppro + ", valeur=" + valeur + ", exercice=" + exercice
-				+ ", magasin=" + magasin + "]";
+				+ dateAppro + ", valideAppro=" + valideAppro + ", valeur=" + valeur + ", dateValidation="
+				+ dateValidation + ", exercice=" + exercice + ", magasin=" + magasin + "]";
 	}
+
+
+
 
 
 

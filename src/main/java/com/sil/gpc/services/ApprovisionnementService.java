@@ -1,6 +1,7 @@
 package com.sil.gpc.services;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,6 +186,8 @@ public class ApprovisionnementService {
 							
 							
 							if(approvisionnement.isValideAppro() == true) {
+								entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
+								ligApp.setLastStockQte(newSt.getQuantiterStocker());
 								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneAppro()*lignes.get(i).getLigneDA().getUniter().getPoids()));
 								ligApp.setPULigneAppro(newSt.getCmup());
 							}else if(approvisionnement.isValideAppro() == false) {

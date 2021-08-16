@@ -19,6 +19,7 @@ public class LigneAppro implements Serializable {
 	private Long idLigneAppro;
 	private double quantiteLigneAppro;
 	private double PULigneAppro;
+	private double lastStockQte;
 
 	//Liaison avec Approvisionnement
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Approvisionnement.class)
@@ -88,12 +89,24 @@ public class LigneAppro implements Serializable {
 	}
 
 
+	public double getLastStockQte() {
+		return lastStockQte;
+	}
+
+
+	public void setLastStockQte(double lastStockQte) {
+		this.lastStockQte = lastStockQte;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LigneAppro [idLigneAppro=" + idLigneAppro + ", quantiteLigneAppro=" + quantiteLigneAppro
-				+ ", PULigneAppro=" + PULigneAppro + ", appro=" + appro + ", ligneDA=" + ligneDA + "]";
+				+ ", PULigneAppro=" + PULigneAppro + ", lastStockQte=" + lastStockQte + ", appro=" + appro
+				+ ", ligneDA=" + ligneDA + "]";
 	}
 
+	
 
 	
 }

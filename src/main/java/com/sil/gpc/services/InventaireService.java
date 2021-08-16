@@ -64,6 +64,7 @@ public class InventaireService {
 			for(int i = 0; i < lignes.size(); i++) {
 				if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(num)) {
 					boolean finded = false;
+					LigneInventaire newInv = lignes.get(i);
 					
 					for(int j = 0; j < stockerList.size(); j++) {
 						if(stockerList.get(j).getArticle().getNumArticle() == lignes.get(i).getArticle().getNumArticle() 
@@ -73,6 +74,7 @@ public class InventaireService {
 							Stocker elem = stockerList.get(j);
 							
 							elem.setQuantiterStocker(lignes.get(i).getStockreel());
+							newInv.setPu(elem.getCmup());
 							//System.out.println(elem);
 							
 							this.repo3.save(elem);
@@ -83,7 +85,12 @@ public class InventaireService {
 					
 					if(finded == false) {
 						this.repo3.save(new Stocker(null, lignes.get(i).getStockreel(), 0, 0, lignes.get(i).getPu(), lignes.get(i).getArticle(), entiter.getMagasin()));
+						//newInv.setPu(0);
+						
 					}
+					
+					
+					this.servi2.edit(newInv, newInv.getIdLigneInv());
 	
 				}
 			}

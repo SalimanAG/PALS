@@ -18,6 +18,7 @@ public class LigneInventaire {
 	private double stockTheoriq;
 	private double stockreel;
 	private String observation;
+	private double lastStockQte;
 
 	//Migration de la clé de l'unité vers l'article
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Article.class)
@@ -158,13 +159,27 @@ public class LigneInventaire {
 
 
 
+	public double getLastStockQte() {
+		return lastStockQte;
+	}
+
+
+
+	public void setLastStockQte(double lastStockQte) {
+		this.lastStockQte = lastStockQte;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "LigneInventaire [idLigneInv=" + idLigneInv + ", pu=" + pu + ", stockTheoriq=" + stockTheoriq
-				+ ", stockreel=" + stockreel + ", observation=" + observation + ", article=" + article + ", inventaire="
-				+ inventaire + "]";
+				+ ", stockreel=" + stockreel + ", observation=" + observation + ", lastStockQte=" + lastStockQte
+				+ ", article=" + article + ", inventaire=" + inventaire + ", causeAnomalie=" + causeAnomalie + "]";
 	}
-	
-	
+
+
+
+
 	
 }

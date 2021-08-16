@@ -58,6 +58,8 @@ public class LigneReceptionService {
 		cible.setImputer(ligne.isImputer());
 		cible.setLigneCommande(ligne.getLigneCommande());
 		cible.setReception(ligne.getReception());
+		cible.setLastCump(ligne.getLastCump());
+		cible.setLastStockQte(ligne.getLastStockQte());
 		
 		return repos.save(cible);
 		}

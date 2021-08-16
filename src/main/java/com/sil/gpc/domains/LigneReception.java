@@ -25,6 +25,7 @@ public class LigneReception implements Serializable {
 	private Long numSerieFinLigneReception;
 	private boolean imputer;
 	private double lastCump;
+	private double lastStockQte;
 	
 	@ManyToOne(targetEntity = LigneCommande.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande")
@@ -118,6 +119,7 @@ public class LigneReception implements Serializable {
 	/**
 	 * @param observationLigneReception the observationLigneReception to set
 	 */
+
 	public void setObservationLigneReception(String observationLigneReception) {
 		this.observationLigneReception = observationLigneReception;
 	}
@@ -189,14 +191,26 @@ public class LigneReception implements Serializable {
 	}
 
 
+	public double getLastStockQte() {
+		return lastStockQte;
+	}
+
+
+	public void setLastStockQte(double lastStockQte) {
+		this.lastStockQte = lastStockQte;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LigneReception [idLigneReception=" + idLigneReception + ", quantiteLigneReception="
 				+ quantiteLigneReception + ", puLigneReception=" + puLigneReception + ", observationLigneReception="
 				+ observationLigneReception + ", numSerieDebLigneReception=" + numSerieDebLigneReception
 				+ ", numSerieFinLigneReception=" + numSerieFinLigneReception + ", imputer=" + imputer + ", lastCump="
-				+ lastCump + ", ligneCommande=" + ligneCommande + ", reception=" + reception + "]";
+				+ lastCump + ", lastStockQte=" + lastStockQte + ", ligneCommande=" + ligneCommande + ", reception="
+				+ reception + "]";
 	}
+
 	
 	
 }
