@@ -229,8 +229,8 @@ public class ApprovisionnementService {
 								}
 							}
 							
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, (Date) Date.from(ligApp.getAppro().getDateAppro().toInstant()), "1", paramFamille.get(m).getCompteStock(), true, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, (Date) Date.from(ligApp.getAppro().getDateAppro().toInstant()), "1", paramFamille.get(m).getCompteVaStock(), false, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteStock(), true, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteVaStock(), false, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
 							
 							ecriOper.get(0).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
 							ecriOper.get(1).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());

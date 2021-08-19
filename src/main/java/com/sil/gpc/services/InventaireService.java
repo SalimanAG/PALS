@@ -1,5 +1,6 @@
 package com.sil.gpc.services;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +73,7 @@ public class InventaireService {
 							finded = true;
 							
 							Stocker elem = stockerList.get(j);
-							
+							entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 							elem.setQuantiterStocker(lignes.get(i).getStockreel());
 							newInv.setPu(elem.getCmup());
 							//System.out.println(elem);
@@ -84,6 +85,7 @@ public class InventaireService {
 					}
 					
 					if(finded == false) {
+						entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 						this.repo3.save(new Stocker(null, lignes.get(i).getStockreel(), 0, 0, lignes.get(i).getPu(), lignes.get(i).getArticle(), entiter.getMagasin()));
 						//newInv.setPu(0);
 						

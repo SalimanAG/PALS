@@ -258,8 +258,8 @@ public class ReceptionService {
 								}
 							}
 							
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, (Date) Date.from(ligRecept.getReception().getDateReception().toInstant()), "1", paramFamille.get(m).getCompteStock(), false, "", "Pour Entée dans le magasin "+ligRecept.getReception().getMagasin().getCodeMagasin(), ligRecept.getReception().getNumReception(), paramFamille.get(m).getFamille()));
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, (Date) Date.from(ligRecept.getReception().getDateReception().toInstant()), "1", paramFamille.get(m).getCompteVaStock(), true, "", "Pour Entée dans le magasin "+ligRecept.getReception().getMagasin().getCodeMagasin(), ligRecept.getReception().getNumReception(), paramFamille.get(m).getFamille()));
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteStock(), false, "", "Pour Entée dans le magasin "+ligRecept.getReception().getMagasin().getCodeMagasin(), ligRecept.getReception().getNumReception(), paramFamille.get(m).getFamille()));
+							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteVaStock(), true, "", "Pour Entée dans le magasin "+ligRecept.getReception().getMagasin().getCodeMagasin(), ligRecept.getReception().getNumReception(), paramFamille.get(m).getFamille()));
 
 							ecriOper.get(0).setMontantEcri(ligRecept.getPuLigneReception()*ligRecept.getQuantiteLigneReception());
 							ecriOper.get(1).setMontantEcri(ligRecept.getPuLigneReception()*ligRecept.getQuantiteLigneReception());

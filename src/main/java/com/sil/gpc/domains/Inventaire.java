@@ -19,6 +19,7 @@ public class Inventaire {
 	private String descrInv;
 	private boolean valideInve;
 	private int valeur;
+	private Timestamp dateValidation;
 	
 	@ManyToOne(targetEntity = Exercice.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice")
@@ -99,11 +100,22 @@ public class Inventaire {
 	
 	
 
+	public Timestamp getDateValidation() {
+		return dateValidation;
+	}
+
+	public void setDateValidation(Timestamp dateValidation) {
+		this.dateValidation = dateValidation;
+	}
+
 	@Override
 	public String toString() {
-		return "Inventaire [numInv=" + numInv + ", dateInv=" + dateInv + ", descrInv=" + descrInv + ", exo=" + exercice
+		return "Inventaire [numInv=" + numInv + ", dateInv=" + dateInv + ", descrInv=" + descrInv + ", valideInve="
+				+ valideInve + ", valeur=" + valeur + ", dateValidation=" + dateValidation + ", exercice=" + exercice
 				+ ", magasin=" + magasin + "]";
 	}
+
+	
 
 
 	

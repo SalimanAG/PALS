@@ -1,5 +1,6 @@
 package com.sil.gpc.services;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,10 +45,10 @@ public class ArticleService {
 		for(int i = 0; i<articles.size(); i++) {
 			if(this.repo.existsById(articles.get(i).getNumArticle())) {
 				Article entiter = this.repo.getOne(articles.get(i).getNumArticle());
-				if(entiter.getExo() == null) {
+				if(true) {//(entiter.getExo() == null) {
 					entiter.setQteStIniTres(articles.get(i).getQteStIniTres());
 					entiter.setPuStIniTres(articles.get(i).getPuStIniTres());
-					entiter.setDatStInitArtTres(articles.get(i).getDatStInitArtTres());
+					entiter.setDatStInitArtTres(new Date(System.currentTimeMillis()));
 					entiter.setExo(articles.get(i).getExo());
 					
 					boolean finded = false;
@@ -57,12 +58,12 @@ public class ArticleService {
 								&& stockerList.get(j).getMagasin().getNumMagasin() == entiter.getFamille().getMagasin().getNumMagasin()) {
 							finded = true;
 							
-							Stocker elem = stockerList.get(j);
+							//Stocker elem = stockerList.get(j);
 							
-							elem.setCmup(entiter.getPuStIniTres());
-							elem.setQuantiterStocker(entiter.getQteStIniTres());
+							//elem.setCmup(entiter.getPuStIniTres());
+							//elem.setQuantiterStocker(entiter.getQteStIniTres());
 							
-							this.repo2.save(elem);
+							//this.repo2.save(elem);
 							
 							break;
 						}
