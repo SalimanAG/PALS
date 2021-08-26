@@ -172,15 +172,53 @@ public class ApprovisionnementService {
 			List<LigneAppro> lignes = this.servi2.getAll();
 			List<Stocker> listStocker = this.servi3.getAll();
 			
+			List<LigneAppro> clignes = new ArrayList<LigneAppro>();
+			List<Stocker> clistStocker = new ArrayList<Stocker>();
+			
+			boolean stockerFinded = false;
+			
+			for(int i = 0; i < lignes.size(); i++) {
+				if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
+					LigneAppro ligApp = lignes.get(i);
+					clignes.add(ligApp);
+					stockerFinded = false;
+					
+					for(int j = 0; j < listStocker.size(); j++) {
+						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneDA().getArticle().getNumArticle()
+								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()
+								&& listStocker.get(j).getQuantiterStocker() >= lignes.get(i).getQuantiteLigneAppro()) {
+							
+							stockerFinded = true;
+							Stocker newSt = listStocker.get(j);
+							clistStocker.add(newSt);
+							break;
+						}
+						
+						
+					}
+					
+					if(stockerFinded == false) {
+						
+						break;
+					}
+					
+				}
+			}
+			
+			lignes = new ArrayList<LigneAppro>(clignes);
+			listStocker = new ArrayList<Stocker>(clistStocker);
+			
+			if(stockerFinded == true)
 			for(int i = 0; i < lignes.size(); i++) {
 				if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
 					LigneAppro ligApp = lignes.get(i);
 					
-					boolean stockerFinded = false;
+					
 					for(int j = 0; j < listStocker.size(); j++) {
 						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneDA().getArticle().getNumArticle()
-								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()) {
-							stockerFinded = true;
+								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()
+								&& listStocker.get(j).getQuantiterStocker() >= lignes.get(i).getQuantiteLigneAppro()) {
+							
 							
 							Stocker newSt = listStocker.get(j);
 							
@@ -202,6 +240,8 @@ public class ApprovisionnementService {
 							break;
 						}
 					}
+					
+					
 					
 					this.repo2.save(ligApp);
 					

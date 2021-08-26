@@ -73,6 +73,7 @@ public class InventaireService {
 							finded = true;
 							
 							Stocker elem = stockerList.get(j);
+							newInv.setStockTheoriq(elem.getQuantiterStocker());
 							entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 							elem.setQuantiterStocker(lignes.get(i).getStockreel());
 							newInv.setPu(elem.getCmup());
