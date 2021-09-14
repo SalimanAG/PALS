@@ -49,7 +49,7 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter{
 			throw new RuntimeException(e);
 		}
 		
-		System.out.println("*********user : "+utilisateur);
+		//System.out.println("*********user : "+utilisateur);
 		
 		return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(utilisateur.getLogin(), utilisateur.getMotDePass()));//super.attemptAuthentication(request, response);
 	}

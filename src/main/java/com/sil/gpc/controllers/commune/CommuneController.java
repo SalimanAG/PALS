@@ -304,6 +304,13 @@ public class CommuneController {
 		return this.utilisateurService.findByNomUtilisateur(nom);
 	}
 	
+	
+	@GetMapping(path = "/utilisat/askMdp/{login}")
+	public void getUserAskMdp(@PathVariable(name = "login") String nom){
+		
+		
+	}
+	
 	@PostMapping(path = "user/byLoginMdpUser")
 	public Utilisateur getUserByLoginMdpUser(@RequestBody Utilisateur user){
 		
