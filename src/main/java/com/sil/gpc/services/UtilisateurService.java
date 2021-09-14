@@ -156,13 +156,16 @@ public class UtilisateurService implements UserDetailsService{
     	List<AffectUserGroup> affectUserGroupList = userGroupService.getAll();
     	List<AffectDroitGroupUser> affectDroitGroupUserList = droitGroupUserService.getAll();
     	
+    	//System.out.println(affectUserGroupList+" **** "+affectDroitGroupUserList+"\n *** "+utilisateur);
+    	
     	for (int i = 0; i < affectUserGroupList.size(); i++) {
-			
-    		if(affectUserGroupList.get(i).getUtilisateur().getIdUtilisateur() == utilisateur.getIdUtilisateur()) {
-    			
+    		//System.out.println(affectUserGroupList.get(i).getUtilisateur().getIdUtilisateur() +" == "+ utilisateur.getIdUtilisateur());
+    		//System.out.println(affectUserGroupList.get(i).getUtilisateur().getIdUtilisateur().equals(utilisateur.getIdUtilisateur()) );
+    		if(affectUserGroupList.get(i).getUtilisateur().getIdUtilisateur().equals(utilisateur.getIdUtilisateur())) {
+    			//System.out.println(affectUserGroupList.get(i).getUtilisateur().getIdUtilisateur() == utilisateur.getIdUtilisateur());
     			for (int j = 0; j < affectDroitGroupUserList.size(); j++) {
         			
-    				if(affectDroitGroupUserList.get(j).getGroupUser().getIdGroupUser() == affectUserGroupList.get(i).getGroupUser().getIdGroupUser()) {
+    				if(affectDroitGroupUserList.get(j).getGroupUser().getNumGroupUser().equals(affectUserGroupList.get(i).getGroupUser().getNumGroupUser())) {
         				
     					boolean finded = false;
     					

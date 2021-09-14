@@ -1,6 +1,8 @@
 package com.sil.gpc.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.FilterChain;
@@ -12,12 +14,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.sil.gpc.domains.Utilisateur;
+import com.sil.gpc.repositories.UtilisateurRepository;
+import com.sil.gpc.services.UtilisateurService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -61,6 +69,15 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter{
 		//super.successfulAuthentication(request, response, chain, authResult);
 		
 		User springUser = (User) authResult.getPrincipal();
+		
+		/*WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
+		
+		UtilisateurService serviceUser = ctx.getBean(UtilisateurService.class);
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		
+		serviceUser.getRolesByUserLogin(serviceUser.findByLoginUtilisateur(springUser.getUsername())).forEach(r->{
+			authorities.add(new SimpleGrantedAuthority(r));
+		});*/
 		
 		String token = Jwts.builder()
 						.setSubject(springUser.getUsername())
