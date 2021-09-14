@@ -42,7 +42,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Host, Referer, Connection, User-Agent, authorization, sw-useragent, sw-version");
-		response.setHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Credentials");
+		response.setHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Credentials, authorization");
 		
 		if(request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
 			
