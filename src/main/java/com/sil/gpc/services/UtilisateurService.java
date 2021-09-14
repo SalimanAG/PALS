@@ -51,7 +51,7 @@ public class UtilisateurService implements UserDetailsService{
    			usermod.setPrenomUtilisateur(user.getPrenomUtilisateur());
    			usermod.setLogin(user.getLogin());
    			if(usermod.isAskMdp1erLance() && user.getMotDePass()!=null && user.getMotDePass()!="") {
-   				usermod.setMotDePass(user.getMotDePass());
+   				usermod.setMotDePass(encoder.encode(user.getMotDePass()));
    			}
    			usermod.setAskMdp1erLance(user.isAskMdp1erLance());
    			usermod.setActiveUtilisateur(user.isActiveUtilisateur());

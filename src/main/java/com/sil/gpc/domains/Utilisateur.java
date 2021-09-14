@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 @Entity
 public class Utilisateur {
 
@@ -100,10 +103,12 @@ public class Utilisateur {
 		this.login = login;
 	}
 
+	@JsonIgnore
 	public String getMotDePass() {
 		return motDePass;
 	}
 
+	@JsonSetter
 	public void setMotDePass(String motDePass) {
 		this.motDePass = motDePass;
 	}
