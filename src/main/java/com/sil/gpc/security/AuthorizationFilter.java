@@ -45,6 +45,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		response.setHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Credentials");
 		
 		if(request.getMethod().equals(HttpMethod.OPTIONS.toString())) {
+			
 			response.setStatus(HttpStatus.OK.value());
 		}
 		else {
