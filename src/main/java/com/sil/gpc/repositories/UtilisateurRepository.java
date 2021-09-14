@@ -13,7 +13,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	
 	public List<Utilisateur> findByIdUtilisateur(Long IdUser);
 	
-	public List<Utilisateur> findByLogin(Long Login);
+	public Utilisateur findByLogin(String login);
 	
 	public List<Utilisateur> findByNomUtilisateur(Long NomUser);
 	

@@ -1,23 +1,45 @@
 package com.sil.gpc.services;
 
+import com.sil.gpc.domains.AffectDroitGroupUser;
+import com.sil.gpc.domains.AffectUserGroup;
 import com.sil.gpc.domains.Service;
 import com.sil.gpc.domains.Utilisateur;
 
 import com.sil.gpc.repositories.UtilisateurRepository;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @org.springframework.stereotype.Service
-public class UtilisateurService {
+public class UtilisateurService implements UserDetailsService{
 
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	private final UtilisateurRepository userRepository;
+	private final AffectDroitGroupUserService droitGroupUserService;
+	private final AffectUserGroupService userGroupService;
 
-    public UtilisateurService(UtilisateurRepository userRepository) {
+    public UtilisateurService(UtilisateurRepository userRepository, AffectUserGroupService userGroupService, AffectDroitGroupUserService droitGroupUserService) {
         this.userRepository = userRepository;
+		this.droitGroupUserService = droitGroupUserService;
+		this.userGroupService = userGroupService;
     }
     
     // Sauvegarder 
     public Utilisateur save(Utilisateur user) {
+    	user.setMotDePass(encoder.encode(user.getMotDePass()));
         return   this.userRepository.save(user);
     }
     
@@ -103,7 +125,7 @@ public class UtilisateurService {
 	}
   
     //
-    public List<Utilisateur> findByLoginUtilisateur(Long Login){
+    public Utilisateur findByLoginUtilisateur(String Login){
 		
 		return this.userRepository.findByLogin(Login);
 	}
@@ -126,6 +148,62 @@ public class UtilisateurService {
     public List<Utilisateur> findByServiceUtilisateur(Service ServiceUser){
 		
 		return this.userRepository.findByService(ServiceUser);
+	}
+    
+    public List<String> getRolesByUserLogin(Utilisateur utilisateur){
+    	List<String> roles = new ArrayList<>();
+    	
+    	List<AffectUserGroup> affectUserGroupList = userGroupService.getAll();
+    	List<AffectDroitGroupUser> affectDroitGroupUserList = droitGroupUserService.getAll();
+    	
+    	for (int i = 0; i < affectUserGroupList.size(); i++) {
+			
+    		if(affectUserGroupList.get(i).getUtilisateur().getIdUtilisateur() == utilisateur.getIdUtilisateur()) {
+    			
+    			for (int j = 0; j < affectDroitGroupUserList.size(); j++) {
+        			
+    				if(affectDroitGroupUserList.get(j).getGroupUser().getIdGroupUser() == affectUserGroupList.get(i).getGroupUser().getIdGroupUser()) {
+        				
+    					boolean finded = false;
+    					
+    					for (int k = 0; k < roles.size(); k++) {
+							if(roles.get(k).equals(affectDroitGroupUserList.get(j).getDroitUser().getCodeDroitUser())) {
+								
+								finded = true;
+								break;
+							}
+							
+						}
+    					
+    					if(!finded) {
+    						roles.add(affectDroitGroupUserList.get(j).getDroitUser().getCodeDroitUser());
+    					}
+    					
+        			}
+        		}
+    			
+    		}
+    		
+    		
+		}
+    	
+    	return roles;
+    }
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		Utilisateur utilisateur = userRepository.findByLogin(username);
+		
+		if(utilisateur == null) throw new UsernameNotFoundException("Erreur de Nom d'Utilisateur ou Mot de Passe");
+		
+		Collection<GrantedAuthority> authorites = new ArrayList<>();
+		
+		getRolesByUserLogin(utilisateur).forEach(r -> {
+			authorites.add(new SimpleGrantedAuthority(r));
+		});
+		
+		return new User(username, utilisateur.getMotDePass(), authorites);
 	}
   
     
