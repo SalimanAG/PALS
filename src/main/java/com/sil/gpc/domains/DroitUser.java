@@ -1,5 +1,6 @@
 package com.sil.gpc.domains;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class DroitUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idDroitUser;
+	@Column(unique = true)
 	private String codeDroitUser;
 	private String libDroitUser;
 	private String descriDroitUser;
