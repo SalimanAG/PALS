@@ -88,7 +88,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 				}
 				
 			}
-			else if(!token.startsWith(SecurityConstante.PREFIX)) {
+			else if(!token.startsWith(SecurityConstante.PREFIX) || request.getRequestURI().equals(SecurityConstante.STRING_LOGIN_URI)) {
 				filterChain.doFilter(request, response);
 			}
 			else {

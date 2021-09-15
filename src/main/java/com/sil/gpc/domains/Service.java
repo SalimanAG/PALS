@@ -24,7 +24,7 @@ public class Service implements Serializable {
 	
 	//Liaison à la direction d'Appartenance
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Direction.class)
-	@JoinColumn(name = "numDirection", referencedColumnName = "numDirection")
+	@JoinColumn(name = "numDirection", referencedColumnName = "numDirection", nullable = true)
 	private Direction direction;
 	
 	//Liaison à son super centre de consommation
