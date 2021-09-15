@@ -1,14 +1,21 @@
 package com.sil.gpc.domains;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -27,6 +34,8 @@ public class Utilisateur {
 	private boolean activeUtilisateur;
 	private String dateLastConnex;
 	private boolean askMdp1erLance;
+	@ColumnDefault(value = "true")
+	private boolean accesChildService;
 	
 	@ManyToOne(targetEntity = Service.class)
 	@JoinColumn(name = "numService", referencedColumnName = "numService", nullable = true)
@@ -48,44 +57,39 @@ public class Utilisateur {
 	@JoinColumn(name = "numGroupUser", referencedColumnName = "numGroupUser", nullable = true)
 	public GroupUser groupUser;
 	
+	@ManyToMany
+    @JoinTable(name="affect_magas_to_user")
+	private List<Magasin> magasins;
+	
 	public Utilisateur() {
 		super();
 	}
 
-	public Utilisateur(String login, String motDePass, String nomUtilisateur, String prenomUtilisateur,
-			Fonction fonction, boolean activeUtilisateur, Service service, Profession profession,
-			Civilite civilite, GroupUser groupUser) {
-		super();
-		this.login = login;
-		this.motDePass = motDePass;
-		this.nomUtilisateur = nomUtilisateur;
-		this.prenomUtilisateur = prenomUtilisateur;
-		this.fonction = fonction;
-		this.activeUtilisateur = activeUtilisateur;
-		this.service = service;
-		this.profession = profession;
-		this.civilite = civilite;
-		this.groupUser = groupUser;
-		this.askMdp1erLance = true;
-	}
+	
 
-	public Utilisateur(String login, String motDePass, String nomUtilisateur, String prenomUtilisateur,
-			Fonction fonction, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,
-			Service service, Profession profession,Civilite civilite, GroupUser groupUser) {
+	public Utilisateur(Long idUtilisateur, String login, String motDePass, String nomUtilisateur,
+			String prenomUtilisateur, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,
+			boolean accesChildService, Service service, Profession profession, Fonction fonction, Civilite civilite,
+			GroupUser groupUser, List<Magasin> magasins) {
 		super();
+		this.idUtilisateur = idUtilisateur;
 		this.login = login;
 		this.motDePass = motDePass;
 		this.nomUtilisateur = nomUtilisateur;
 		this.prenomUtilisateur = prenomUtilisateur;
-		this.fonction = fonction;
 		this.activeUtilisateur = activeUtilisateur;
 		this.dateLastConnex = dateLastConnex;
 		this.askMdp1erLance = askMdp1erLance;
+		this.accesChildService = accesChildService;
 		this.service = service;
 		this.profession = profession;
+		this.fonction = fonction;
 		this.civilite = civilite;
 		this.groupUser = groupUser;
+		this.magasins = magasins;
 	}
+
+
 
 	public Long getIdUtilisateur() {
 		return idUtilisateur;
@@ -193,13 +197,30 @@ public class Utilisateur {
 		this.groupUser = groupUser;
 	}
 
+	public boolean isAccesChildService() {
+		return accesChildService;
+	}
+
+	public void setAccesChildService(boolean accesChildService) {
+		this.accesChildService = accesChildService;
+	}
+
+	public List<Magasin> getMagasins() {
+		return magasins;
+	}
+
+	public void setMagasins(List<Magasin> magasins) {
+		this.magasins = magasins;
+	}
+
 	@Override
 	public String toString() {
 		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", login=" + login + ", motDePass=" + motDePass
 				+ ", nomUtilisateur=" + nomUtilisateur + ", prenomUtilisateur=" + prenomUtilisateur
 				+ ", activeUtilisateur=" + activeUtilisateur + ", dateLastConnex=" + dateLastConnex
-				+ ", askMdp1erLance=" + askMdp1erLance + ", service=" + service + ", profession=" + profession
-				+ ", fonction=" + fonction + ", civilite=" + civilite + ", groupUser=" + groupUser + "]";
+				+ ", askMdp1erLance=" + askMdp1erLance + ", accesChildService=" + accesChildService + ", service="
+				+ service + ", profession=" + profession + ", fonction=" + fonction + ", civilite=" + civilite
+				+ ", groupUser=" + groupUser + ", magasins=" + magasins + "]";
 	}
 
 	

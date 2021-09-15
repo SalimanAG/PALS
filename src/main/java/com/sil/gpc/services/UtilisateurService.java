@@ -4,7 +4,9 @@ import com.sil.gpc.domains.AffectDroitGroupUser;
 import com.sil.gpc.domains.AffectUserGroup;
 import com.sil.gpc.domains.Service;
 import com.sil.gpc.domains.Utilisateur;
-
+import com.sil.gpc.encapsuleurs.EncapUserGroupes;
+import com.sil.gpc.repositories.AffectDroitGroupUserRepository;
+import com.sil.gpc.repositories.AffectUserGroupRepository;
 import com.sil.gpc.repositories.UtilisateurRepository;
 
 import java.util.ArrayList;
@@ -30,11 +32,13 @@ public class UtilisateurService implements UserDetailsService{
 	private final UtilisateurRepository userRepository;
 	private final AffectDroitGroupUserService droitGroupUserService;
 	private final AffectUserGroupService userGroupService;
+	private final AffectUserGroupRepository affectUserGroupRepository;
 
-    public UtilisateurService(UtilisateurRepository userRepository, AffectUserGroupService userGroupService, AffectDroitGroupUserService droitGroupUserService) {
+    public UtilisateurService(UtilisateurRepository userRepository, AffectUserGroupService userGroupService, AffectDroitGroupUserService droitGroupUserService, AffectUserGroupRepository affectUserGroupRepository) {
         this.userRepository = userRepository;
 		this.droitGroupUserService = droitGroupUserService;
 		this.userGroupService = userGroupService;
+		this.affectUserGroupRepository = affectUserGroupRepository;
     }
     
     // Sauvegarder 
@@ -42,6 +46,22 @@ public class UtilisateurService implements UserDetailsService{
     	user.setMotDePass(encoder.encode(user.getMotDePass()));
         return   this.userRepository.save(user);
     }
+    
+    public EncapUserGroupes save2(EncapUserGroupes encapUserGroupes) {
+    	
+    	Utilisateur utilisateur = save(encapUserGroupes.getUtilisateur());
+    	
+    	List<AffectUserGroup> affectUserGroups = new ArrayList<>();
+    	
+    	encapUserGroupes.getGroupUsers().forEach(r->{
+    		affectUserGroups.add(new AffectUserGroup(utilisateur, r));
+    	});
+    	
+    	affectUserGroupRepository.saveAll(affectUserGroups);
+    	
+    	return new EncapUserGroupes(utilisateur, encapUserGroupes.getGroupUsers());
+    }
+    
     
     //Editer
     public Utilisateur edit(Long idUser, Utilisateur user) {     	
@@ -60,12 +80,63 @@ public class UtilisateurService implements UserDetailsService{
    			usermod.setProfession(user.getProfession());
    			usermod.setCivilite(user.getCivilite());
    			usermod.setGroupUser(user.getGroupUser());
-   			
+   			usermod.setAccesChildService(user.isAccesChildService());
+   			usermod.setMagasins(user.getMagasins());
    			
    			return this.userRepository.save(usermod);
        }
    		return null;
        }
+    
+    public EncapUserGroupes edit2(Long id, EncapUserGroupes encapUserGroupes) {
+    	
+    	Utilisateur utilisateur = edit(id, encapUserGroupes.getUtilisateur());
+    	
+    	List<AffectUserGroup> oldAffectUserGroups = affectUserGroupRepository.findAll();
+    	
+    	encapUserGroupes.getGroupUsers().forEach(r -> {
+    		
+    		boolean newer = true;
+    		
+    		for (int i = 0; i < oldAffectUserGroups.size(); i++) {
+				
+    			if(r.getNumGroupUser().equals(oldAffectUserGroups.get(i).getGroupUser().getNumGroupUser())
+    					&& oldAffectUserGroups.get(i).getUtilisateur().getIdUtilisateur().equals(utilisateur.getIdUtilisateur())) {
+    				newer = false;
+    				break;
+    			}
+    			
+    			if(newer) {
+    				affectUserGroupRepository.save(new AffectUserGroup(utilisateur, r));
+    			}
+    			
+			}
+    		
+    	});
+    	
+    	oldAffectUserGroups.forEach(r -> {
+    		
+    		boolean retenu = false;
+    		
+    		for (int i = 0; i < encapUserGroupes.getGroupUsers().size(); i++) {
+				if(r.getUtilisateur().getIdUtilisateur().equals(utilisateur.getIdUtilisateur()) 
+						&& r.getGroupUser().getNumGroupUser().equals(encapUserGroupes.getGroupUsers().get(i).getNumGroupUser())) {
+					
+					retenu = true;
+					break;
+				}
+			}
+    		
+    		if(!retenu) {
+    			affectUserGroupRepository.deleteById(r.getIdAffectUserGroup());
+    		}
+    		
+    	});
+    	
+    	
+    	return new EncapUserGroupes(utilisateur, encapUserGroupes.getGroupUsers());
+    }
+    
     
     // Supprimer
     public boolean delete(Long  id) {
@@ -74,6 +145,21 @@ public class UtilisateurService implements UserDetailsService{
             
     	return this.userRepository.existsById(id);
     }  
+    
+    public boolean delete2(Long id) {
+    	
+    	List<AffectUserGroup> affectUserGroups = affectUserGroupRepository.findAll();
+    	
+    	affectUserGroups.forEach(r -> {
+    		if(r.getUtilisateur().getIdUtilisateur().equals(id)) {
+    			affectUserGroupRepository.delete(r);
+    		}
+    	});
+    	
+    	delete(id);
+    	
+    	return !userRepository.existsById(id);
+    }
     
     
     public Utilisateur findByLoginAndMdp(String login, String mdp) {

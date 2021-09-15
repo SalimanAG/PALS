@@ -36,6 +36,7 @@ import com.sil.gpc.domains.Pays;
 import com.sil.gpc.domains.Profession;
 import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.domains.Utilisateur;
+import com.sil.gpc.encapsuleurs.EncapUserGroupes;
 import com.sil.gpc.services.AffectDroitGroupUserService;
 import com.sil.gpc.services.AffectUserGroupService;
 import com.sil.gpc.services.AffectUserToArrondiService;
@@ -323,10 +324,22 @@ public class CommuneController {
 		return this.utilisateurService.save(user);
 	}
 	
+	@PostMapping(path = "user/list2")
+	public EncapUserGroupes createUserByEncap( @RequestBody EncapUserGroupes encapUserGroupes) {
+		
+		return this.utilisateurService.save2(encapUserGroupes);
+	}
+	
 	@PutMapping(path = "user/byCodUser/{id}")
 	public Utilisateur updateUser(@PathVariable(name = "id") Long id, @RequestBody Utilisateur user) {
 		
 		return this.utilisateurService.edit(id, user);
+	}
+	
+	@PutMapping(path = "user/byCodUser2/{id}")
+	public EncapUserGroupes updateUserByEncap(@PathVariable(name = "id") Long id, @RequestBody EncapUserGroupes encapUserGroupes) {
+		
+		return this.utilisateurService.edit2(id, encapUserGroupes);
 	}
 	
 	@DeleteMapping(path = "user/byCodUser/{id}")
@@ -334,8 +347,13 @@ public class CommuneController {
 		
 		return this.utilisateurService.delete(id);
 	}	
-
 	
+
+	@DeleteMapping(path = "user/byCodUser2/{id}")
+	public Boolean deleteUserByEncap(@PathVariable(name = "id") Long id) {
+		
+		return this.utilisateurService.delete2(id);
+	}
 	
 	/*###########################################################
 	#############	Partie réservée pour AffectDroitGroupeUser
