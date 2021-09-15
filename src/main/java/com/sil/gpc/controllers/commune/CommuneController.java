@@ -36,6 +36,7 @@ import com.sil.gpc.domains.Pays;
 import com.sil.gpc.domains.Profession;
 import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.domains.Utilisateur;
+import com.sil.gpc.encapsuleurs.EncapGroupeDroits;
 import com.sil.gpc.encapsuleurs.EncapUserGroupes;
 import com.sil.gpc.services.AffectDroitGroupUserService;
 import com.sil.gpc.services.AffectUserGroupService;
@@ -527,17 +528,35 @@ public class CommuneController {
 		return this.ug.save(group);
 	}
 	
+	@PostMapping(path = "gro/list2")
+	public EncapGroupeDroits createGroupUserByEncap( @RequestBody EncapGroupeDroits encapGroupeDroits) {
+		
+		return this.ug.save2(encapGroupeDroits);
+	}
+	
 	@PutMapping(path = "gro/byid/{id}")
 	public GroupUser updateGroup(@PathVariable(name = "id") Long id, @RequestBody GroupUser g) {
 		
 		return this.ug.edit(id, g);
 	}
 	
+	@PutMapping(path = "gro/byid2/{id}")
+	public EncapGroupeDroits updateGroupByEncap(@PathVariable(name = "id") Long id, @RequestBody EncapGroupeDroits encapGroupeDroits) {
+		
+		return this.ug.edit2(id, encapGroupeDroits);
+	}
+	
 	@DeleteMapping(path = "gro/byid/{id}")
 	public Boolean deleteGroup(@PathVariable(name = "id") Long id) {
 		
 		return this.ug.delete(id);
-}	
+	}
+	
+	@DeleteMapping(path = "gro/byid2/{id}")
+	public Boolean deleteGroupByEncap(@PathVariable(name = "id") Long id) {
+		
+		return this.ug.delete2(id);
+	}
 	
 	
 	/*###########################################################
