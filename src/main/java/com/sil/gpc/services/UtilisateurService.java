@@ -79,7 +79,7 @@ public class UtilisateurService implements UserDetailsService{
    			usermod.setFonction(user.getFonction());
    			usermod.setProfession(user.getProfession());
    			usermod.setCivilite(user.getCivilite());
-   			usermod.setGroupUser(user.getGroupUser());
+   			
    			usermod.setAccesChildService(user.isAccesChildService());
    			usermod.setMagasins(user.getMagasins());
    			
