@@ -52,10 +52,7 @@ public class Utilisateur {
 	@ManyToOne(targetEntity = Civilite.class)
 	@JoinColumn(name = "numCivilite", referencedColumnName = "numCivilite", nullable = true)
 	public Civilite civilite;
-	
-	@ManyToOne(targetEntity = GroupUser.class)
-	@JoinColumn(name = "numGroupUser", referencedColumnName = "numGroupUser", nullable = true)
-	public GroupUser groupUser;
+
 	
 	@ManyToMany
     @JoinTable(name="affect_magas_to_user")
@@ -67,10 +64,13 @@ public class Utilisateur {
 
 	
 
+	
+
+
 	public Utilisateur(Long idUtilisateur, String login, String motDePass, String nomUtilisateur,
 			String prenomUtilisateur, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,
 			boolean accesChildService, Service service, Profession profession, Fonction fonction, Civilite civilite,
-			GroupUser groupUser, List<Magasin> magasins) {
+			List<Magasin> magasins) {
 		super();
 		this.idUtilisateur = idUtilisateur;
 		this.login = login;
@@ -85,9 +85,11 @@ public class Utilisateur {
 		this.profession = profession;
 		this.fonction = fonction;
 		this.civilite = civilite;
-		this.groupUser = groupUser;
 		this.magasins = magasins;
 	}
+
+
+
 
 
 
@@ -213,6 +215,11 @@ public class Utilisateur {
 		this.magasins = magasins;
 	}
 
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", login=" + login + ", motDePass=" + motDePass
@@ -220,9 +227,11 @@ public class Utilisateur {
 				+ ", activeUtilisateur=" + activeUtilisateur + ", dateLastConnex=" + dateLastConnex
 				+ ", askMdp1erLance=" + askMdp1erLance + ", accesChildService=" + accesChildService + ", service="
 				+ service + ", profession=" + profession + ", fonction=" + fonction + ", civilite=" + civilite
-				+ ", groupUser=" + groupUser + ", magasins=" + magasins + "]";
+				+ ", magasins=" + magasins + "]";
 	}
 
+
+	
 	
 
 	
