@@ -191,13 +191,6 @@ public class Utilisateur {
 		this.civilite = civilite;
 	}
 
-	public GroupUser getGroupUser() {
-		return groupUser;
-	}
-
-	public void setGroupUser(GroupUser groupUser) {
-		this.groupUser = groupUser;
-	}
 
 	public boolean isAccesChildService() {
 		return accesChildService;
