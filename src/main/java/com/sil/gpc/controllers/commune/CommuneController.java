@@ -337,6 +337,12 @@ public class CommuneController {
 		return this.utilisateurService.save2(encapUserGroupes);
 	}
 	
+	@PostMapping(path = "user/list3")
+	public List<Utilisateur> createUserByList( @RequestBody List<Utilisateur> utilisateurs) {
+		
+		return this.utilisateurService.save3(utilisateurs);
+	}
+	
 	@PutMapping(path = "user/byCodUser/{id}")
 	public Utilisateur updateUser(@PathVariable(name = "id") Long id, @RequestBody Utilisateur user) {
 		

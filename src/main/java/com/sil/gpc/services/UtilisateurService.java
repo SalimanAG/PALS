@@ -62,6 +62,14 @@ public class UtilisateurService implements UserDetailsService{
     	return new EncapUserGroupes(utilisateur, encapUserGroupes.getGroupUsers());
     }
     
+    public List<Utilisateur> save3(List<Utilisateur> utilisateurs) {
+    	
+    	utilisateurs.forEach(r -> {
+    		r.setMotDePass(encoder.encode(r.getMotDePass()));
+    	});
+    	
+        return   this.userRepository.saveAll(utilisateurs);
+    }
     
     //Editer
     public Utilisateur edit(Long idUser, Utilisateur user) {     	
