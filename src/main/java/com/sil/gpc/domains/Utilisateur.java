@@ -62,10 +62,6 @@ public class Utilisateur {
 		super();
 	}
 
-	
-
-	
-
 
 	public Utilisateur(Long idUtilisateur, String login, String motDePass, String nomUtilisateur,
 			String prenomUtilisateur, boolean activeUtilisateur, String dateLastConnex, boolean askMdp1erLance,
