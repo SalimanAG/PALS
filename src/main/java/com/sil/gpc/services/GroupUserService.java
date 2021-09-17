@@ -75,11 +75,11 @@ public class GroupUserService {
     				newer = false;
     				break;
     			}
-    			
-    			if(newer) {
-    				affectDroitGroupUserRepository.save(new AffectDroitGroupUser(r, groupUser));
-    			}
-    			
+    			    			
+			}
+    		
+    		if(newer) {
+				affectDroitGroupUserRepository.save(new AffectDroitGroupUser(r, groupUser));
 			}
     		
     	});

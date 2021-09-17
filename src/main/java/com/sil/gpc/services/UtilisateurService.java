@@ -113,11 +113,11 @@ public class UtilisateurService implements UserDetailsService{
     				newer = false;
     				break;
     			}
-    			
-    			if(newer) {
-    				affectUserGroupRepository.save(new AffectUserGroup(utilisateur, r));
-    			}
-    			
+    			    			
+			}
+    		
+    		if(newer) {
+				affectUserGroupRepository.save(new AffectUserGroup(utilisateur, r));
 			}
     		
     	});

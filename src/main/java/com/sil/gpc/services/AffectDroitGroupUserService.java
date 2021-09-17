@@ -1,5 +1,7 @@
 package com.sil.gpc.services;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,5 +67,18 @@ public class AffectDroitGroupUserService {
     public List<AffectDroitGroupUser> getAll() {
         return  this.repo.findAll();
     }
+    
+    public  List<DroitUser> getAllDroitUserForGroupUser(Long idGroupUser){
+        // System.out.println();
+         List<DroitUser> droitUserList= new ArrayList<>();
+         this.repo.finAllDroitUserForGroupUser(idGroupUser).forEach(
+                 a -> {
+                     Object[] b = (Object[]) a;
+                     DroitUser du = new DroitUser(((BigInteger) b[0]).longValue(), (String) b[1], (String) b[2],(String) b[3]);
+                     droitUserList.add(du);
+                 }
+         );
+         return  droitUserList;
+     }
     
 }

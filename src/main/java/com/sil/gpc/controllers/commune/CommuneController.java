@@ -444,6 +444,12 @@ public class CommuneController {
 		return this.aug.findByUser(u);
 	}
 	
+	@GetMapping(path = "aug/userGroup/{id}")
+	public List<GroupUser> getAllGroupUserForUser(@PathVariable(name = "id") Long id){
+		System.out.println(id);
+		return this.aug.getAllGroupUserForUser(id);
+	}
+	
 	@PostMapping(path = "aug/list")
 	public AffectUserGroup createAffectUserGroup( @RequestBody AffectUserGroup agu) {
 		
@@ -532,6 +538,12 @@ public class CommuneController {
 	public List<GroupUser> getGroupByLib(@PathVariable(name = "lib") String lib){
 		
 		return this.ug.findByLib(lib);
+	}
+
+	@GetMapping(path = "gro/byGroupUserId/{id}")
+	public List<DroitUser> getDroitUserForGroupeUser(@PathVariable(name = "id") Long id){
+
+		return this.dgus.getAllDroitUserForGroupUser(id);
 	}
 	
 	@PostMapping(path = "gro/list")
