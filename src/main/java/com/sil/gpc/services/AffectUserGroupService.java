@@ -69,14 +69,14 @@ public class AffectUserGroupService {
     public  List<GroupUser> getAllGroupUserForUser(Long idUser){
 	    System.out.println();
         List<GroupUser> groupUserList= new ArrayList<>();
-        this.repo.finAllGroupeUserForUser(idUser).forEach(
+        /*this.repo.finAllGroupeUserForUser(idUser).forEach(
                 a -> {
                     Object[] b = (Object[]) a;
                     GroupUser gp = new GroupUser((String) b[1], (String) b[2] );
                     gp.setNumGroupUser(((BigInteger) b[0]).longValue());
                     groupUserList.add(gp);
                 }
-        );
+        );*/
 	    return  groupUserList;
     }
     

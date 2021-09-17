@@ -71,13 +71,13 @@ public class AffectDroitGroupUserService {
     public  List<DroitUser> getAllDroitUserForGroupUser(Long idGroupUser){
         // System.out.println();
          List<DroitUser> droitUserList= new ArrayList<>();
-         this.repo.finAllDroitUserForGroupUser(idGroupUser).forEach(
+         /*this.repo.finAllDroitUserForGroupUser(idGroupUser).forEach(
                  a -> {
                      Object[] b = (Object[]) a;
                      DroitUser du = new DroitUser(((BigInteger) b[0]).longValue(), (String) b[1], (String) b[2],(String) b[3]);
                      droitUserList.add(du);
                  }
-         );
+         );*/
          return  droitUserList;
      }
     
