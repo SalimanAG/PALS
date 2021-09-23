@@ -24,6 +24,6 @@ public interface LigneCommandeRepository extends JpaRepository<LigneCommande, Lo
 	
 	public List<LigneCommande> findByNumCommande(Commande commande);
 	
-	public List<LigneCommande> findByArticle(Article article);*/
+	public List<LigneCommande> findByArticle(Article article);	*/
 	
 }

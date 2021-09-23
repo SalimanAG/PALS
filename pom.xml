@@ -51,7 +51,7 @@
 			<scope>test</scope>
 		</dependency>
 
-
+	<!--  -->
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
@@ -77,7 +77,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>PerforaGpcApi</finalName>
+		<finalName>PerforaStockApi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

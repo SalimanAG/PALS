@@ -12,12 +12,12 @@ import com.sil.gpc.domains.LigneDemandeAppro;
 @Repository
 public interface LigneDemandeApproRepository extends JpaRepository<LigneDemandeAppro, Long> {
 
-	/*public List<LigneDemandeAppro> findByIdLigneDA(Long idLigneDA);
+	public List<LigneDemandeAppro> findByIdLigneDA(Long idLigneDA);
 	
 	public List<LigneDemandeAppro> findByQuantiteDemandee(Long quantiteDemandee);
 	
 	public List<LigneDemandeAppro> findByArticle(Article article);
 	
-	public List<LigneDemandeAppro> findByAppro(DemandeApprovisionnement appro);*/
+	public List<LigneDemandeAppro> findByAppro(DemandeApprovisionnement appro);
 	
 }

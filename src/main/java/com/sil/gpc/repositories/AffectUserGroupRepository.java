@@ -16,11 +16,11 @@ public interface AffectUserGroupRepository extends JpaRepository<AffectUserGroup
 	List<AffectUserGroup> findByGroupUser(GroupUser groupUser);
 	List<AffectUserGroup> findByUtilisateur(Utilisateur utilisateur);
 	
-	/*@Query(value="SELECT group_user.num_group_user, group_user.id_group_user, group_user.lib_group_user  FROM affect_user_group, group_user, utilisateur\n" +
+	@Query(value="SELECT group_user.num_group_user, group_user.id_group_user, group_user.lib_group_user  FROM affect_user_group, group_user, utilisateur\n" +
 			" WHERE  affect_user_group.id_utilisateur = utilisateur.id_utilisateur AND \n" +
 			" group_user.num_group_user = affect_user_group.num_group_user AND utilisateur.id_utilisateur = ?1"
 			, nativeQuery = true)
-	List<Object> finAllGroupeUserForUser(Long id);*/
+	List<Object> finAllGroupeUserForUser(Long id);
 
 	
 }

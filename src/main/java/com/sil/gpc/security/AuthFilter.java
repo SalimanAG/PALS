@@ -70,14 +70,6 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter{
 		
 		User springUser = (User) authResult.getPrincipal();
 		
-		/*WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
-		
-		UtilisateurService serviceUser = ctx.getBean(UtilisateurService.class);
-		Collection<GrantedAuthority> authorities = new ArrayList<>();
-		
-		serviceUser.getRolesByUserLogin(serviceUser.findByLoginUtilisateur(springUser.getUsername())).forEach(r->{
-			authorities.add(new SimpleGrantedAuthority(r));
-		});*/
 		
 		String token = Jwts.builder()
 						.setSubject(springUser.getUsername())
