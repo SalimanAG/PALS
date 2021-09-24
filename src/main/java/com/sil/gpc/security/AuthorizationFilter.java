@@ -60,7 +60,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 					WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
 					
 					UtilisateurRepository serviceUser = ctx.getBean(UtilisateurRepository.class);
-					
+					System.out.println(request.getRequestURI());
 					String login = request.getRequestURI().replace(SecurityConstante.STRING_ASK_URI, "");
 					//System.out.println("**********login : "+login+" test "+serviceUser);
 					Utilisateur utilisateur = serviceUser.findByLogin(login);

@@ -45,7 +45,7 @@ public class LigneCommande implements Serializable{
 	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter")
 	private Uniter uniter;
 	
-	@ColumnDefault(value = "false")
+	@ColumnDefault(value = "0")
 	private boolean satisfaite;
 	
 	public LigneCommande() {
