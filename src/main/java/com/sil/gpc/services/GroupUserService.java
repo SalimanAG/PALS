@@ -86,19 +86,21 @@ public class GroupUserService {
     	
     	oldAffectDroitGroupUsers.forEach(r -> {
     		
-    		boolean retenu = false;
-    		
-    		for (int i = 0; i < encapGroupeDroits.getDroitUsers().size(); i++) {
-				if(r.getGroupUser().getNumGroupUser().equals(groupUser.getNumGroupUser()) 
-						&& r.getDroitUser().getIdDroitUser().equals(encapGroupeDroits.getDroitUsers().get(i).getIdDroitUser())) {
-					
-					retenu = true;
-					break;
-				}
-			}
-    		
-    		if(!retenu) {
-    			affectDroitGroupUserRepository.deleteById(r.getIdAffectDroitGroup());
+    		if(r.getGroupUser().getNumGroupUser().equals(groupUser)) {
+    			boolean retenu = false;
+        		
+        		for (int i = 0; i < encapGroupeDroits.getDroitUsers().size(); i++) {
+    				if(r.getGroupUser().getNumGroupUser().equals(groupUser.getNumGroupUser()) 
+    						&& r.getDroitUser().getIdDroitUser().equals(encapGroupeDroits.getDroitUsers().get(i).getIdDroitUser())) {
+    					
+    					retenu = true;
+    					break;
+    				}
+    			}
+        		
+        		if(!retenu) {
+        			affectDroitGroupUserRepository.deleteById(r.getIdAffectDroitGroup());
+        		}
     		}
     		
     	});

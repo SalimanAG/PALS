@@ -124,19 +124,21 @@ public class UtilisateurService implements UserDetailsService{
     	
     	oldAffectUserGroups.forEach(r -> {
     		
-    		boolean retenu = false;
-    		
-    		for (int i = 0; i < encapUserGroupes.getGroupUsers().size(); i++) {
-				if(r.getUtilisateur().getIdUtilisateur().equals(utilisateur.getIdUtilisateur()) 
-						&& r.getGroupUser().getNumGroupUser().equals(encapUserGroupes.getGroupUsers().get(i).getNumGroupUser())) {
-					
-					retenu = true;
-					break;
-				}
-			}
-    		
-    		if(!retenu) {
-    			affectUserGroupRepository.deleteById(r.getIdAffectUserGroup());
+    		if(r.getUtilisateur().getIdUtilisateur().equals(utilisateur)) {
+    			boolean retenu = false;
+        		
+        		for (int i = 0; i < encapUserGroupes.getGroupUsers().size(); i++) {
+    				if(r.getUtilisateur().getIdUtilisateur().equals(utilisateur.getIdUtilisateur()) 
+    						&& r.getGroupUser().getNumGroupUser().equals(encapUserGroupes.getGroupUsers().get(i).getNumGroupUser())) {
+    					
+    					retenu = true;
+    					break;
+    				}
+    			}
+        		
+        		if(!retenu) {
+        			affectUserGroupRepository.deleteById(r.getIdAffectUserGroup());
+        		}
     		}
     		
     	});

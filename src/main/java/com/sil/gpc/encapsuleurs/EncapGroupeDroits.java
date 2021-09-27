@@ -15,7 +15,12 @@ public class EncapGroupeDroits {
 		this.groupUser = groupUser;
 		this.droitUsers = droitUsers;
 	}
-
+		
+	public EncapGroupeDroits() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	public GroupUser getGroupUser() {
 		return groupUser;
 	}

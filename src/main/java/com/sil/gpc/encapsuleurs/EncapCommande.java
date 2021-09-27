@@ -15,6 +15,13 @@ public class EncapCommande {
 		this.commande = commande;
 		this.ligneCommandes = ligneCommandes;
 	}
+	
+
+	public EncapCommande() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 	public Commande getCommande() {
 		return commande;

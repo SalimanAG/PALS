@@ -17,6 +17,11 @@ public class EncapFactureProformAchat {
 		this.factureProFormAchats = factureProFormAchats;
 	}
 
+	public EncapFactureProformAchat() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public FactureProFormAcha getFactureProFormAcha() {
 		return factureProFormAcha;
 	}

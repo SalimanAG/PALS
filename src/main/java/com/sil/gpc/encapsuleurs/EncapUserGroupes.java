@@ -16,6 +16,13 @@ public class EncapUserGroupes {
 		this.utilisateur = utilisateur;
 		this.groupUsers = groupUsers;
 	}
+	
+	
+	public EncapUserGroupes() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;

@@ -1,6 +1,7 @@
 package com.sil.gpc.security;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -50,6 +51,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		else {
 			
 			String token = request.getHeader(SecurityConstante.STRING_HEADER);
+			WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
+			
+			UtilisateurRepository userReposi = ctx.getBean(UtilisateurRepository.class);
 			
 			if(token == null) {
 				
@@ -57,13 +61,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 					
 					//System.out.println(request.getRequestURI());
 					
-					WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
-					
-					UtilisateurRepository serviceUser = ctx.getBean(UtilisateurRepository.class);
 					System.out.println(request.getRequestURI());
 					String login = request.getRequestURI().replace(SecurityConstante.STRING_ASK_URI, "");
 					//System.out.println("**********login : "+login+" test "+serviceUser);
-					Utilisateur utilisateur = serviceUser.findByLogin(login);
+					Utilisateur utilisateur = userReposi.findByLogin(login);
 					if(utilisateur.isAskMdp1erLance()) {
 						
 						String newTok = Jwts.builder()
@@ -109,12 +110,21 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 					authorities.add(new SimpleGrantedAuthority(r.get("authority")));
 				});
 				
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(login, null, authorities);
-				
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-				
-				filterChain.doFilter(request, response);
-				
+				if(userReposi.findByLogin(login).isActiveUtilisateur()) {
+					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(login, null, authorities);
+					
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+					
+					filterChain.doFilter(request, response);
+				}
+				else {
+					response.setStatus(HttpStatus.BAD_REQUEST.value());
+					response.setContentType("text/plain");
+					PrintWriter out = response.getWriter();
+					out.print("{\"text\":\"Compte Utilisateur Inactif\"}");
+					out.close();
+					
+				}
 			}
 			
 		}

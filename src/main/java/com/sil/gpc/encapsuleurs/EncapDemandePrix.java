@@ -22,6 +22,11 @@ public class EncapDemandePrix {
 		this.consulterFrsForDps = consulterFrsForDps;
 	}
 
+	public EncapDemandePrix() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public DemandePrix getDemandePrix() {
 		return demandePrix;
 	}
