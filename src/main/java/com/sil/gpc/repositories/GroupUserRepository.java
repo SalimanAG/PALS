@@ -11,7 +11,7 @@ import com.sil.gpc.domains.GroupUser;
 public interface GroupUserRepository extends JpaRepository<GroupUser, Long> {
 	
 	List<GroupUser> findByLibGroupUser(String libGroupUser);
-	
+	List<GroupUser> findByIdGroupUser(String idGroupUser);
 
 	
 }

@@ -124,7 +124,7 @@ public class UtilisateurService implements UserDetailsService{
     	
     	oldAffectUserGroups.forEach(r -> {
     		
-    		if(r.getUtilisateur().getIdUtilisateur().equals(utilisateur)) {
+    		if(r.getUtilisateur().getIdUtilisateur().equals(id)) {
     			boolean retenu = false;
         		
         		for (int i = 0; i < encapUserGroupes.getGroupUsers().size(); i++) {

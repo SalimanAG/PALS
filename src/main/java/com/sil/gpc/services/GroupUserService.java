@@ -14,6 +14,7 @@ import com.sil.gpc.encapsuleurs.EncapGroupeDroits;
 import com.sil.gpc.encapsuleurs.EncapUserGroupes;
 import com.sil.gpc.repositories.AffectDroitGroupUserRepository;
 import com.sil.gpc.repositories.GroupUserRepository;
+import com.sil.gpc.utilities.SalTools;
 
 @Service
 public class GroupUserService {
@@ -29,6 +30,10 @@ public class GroupUserService {
 
     // Sauvegarder 
     public GroupUser save(GroupUser guser) {
+    	if(repo.findByIdGroupUser(guser.getIdGroupUser()).size() != 0) {
+    		SalTools.sendErr("Code déjà existant");
+    		//return null;
+    	}
     	return repo.save(guser);
     }
     
@@ -86,7 +91,7 @@ public class GroupUserService {
     	
     	oldAffectDroitGroupUsers.forEach(r -> {
     		
-    		if(r.getGroupUser().getNumGroupUser().equals(groupUser)) {
+    		if(r.getGroupUser().getNumGroupUser().equals(id)) {
     			boolean retenu = false;
         		
         		for (int i = 0; i < encapGroupeDroits.getDroitUsers().size(); i++) {
@@ -100,6 +105,7 @@ public class GroupUserService {
         		
         		if(!retenu) {
         			affectDroitGroupUserRepository.deleteById(r.getIdAffectDroitGroup());
+        			
         		}
     		}
     		

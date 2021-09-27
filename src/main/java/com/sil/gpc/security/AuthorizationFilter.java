@@ -25,6 +25,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.repositories.UtilisateurRepository;
+import com.sil.gpc.utilities.SalTools;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -118,11 +119,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 					filterChain.doFilter(request, response);
 				}
 				else {
-					response.setStatus(HttpStatus.BAD_REQUEST.value());
+					/*response.setStatus(HttpStatus.BAD_REQUEST.value());
 					response.setContentType("text/plain");
 					PrintWriter out = response.getWriter();
 					out.print("{\"text\":\"Compte Utilisateur Inactif\"}");
-					out.close();
+					out.close();*/
+					SalTools.sendErr("Compte Utilisateur Inactif");
 					
 				}
 			}
