@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.AffectDroitGroupUser;
@@ -84,7 +86,9 @@ public class GroupUserService {
 			}
     		
     		if(newer) {
-				affectDroitGroupUserRepository.save(new AffectDroitGroupUser(r, groupUser));
+    			//SessionFactory sessionFactory = new SessionF;
+    			//Session session = sessionFactory.openSession();
+				affectDroitGroupUserRepository.saveAndFlush(new AffectDroitGroupUser(r, groupUser));
 			}
     		
     	});
