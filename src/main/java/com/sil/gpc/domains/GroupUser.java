@@ -1,5 +1,7 @@
 package com.sil.gpc.domains;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,7 +61,23 @@ public class GroupUser {
 				+ libGroupUser + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(idGroupUser, libGroupUser, numGroupUser);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GroupUser other = (GroupUser) obj;
+		return Objects.equals(idGroupUser, other.idGroupUser) && Objects.equals(libGroupUser, other.libGroupUser)
+				&& Objects.equals(numGroupUser, other.numGroupUser);
+	}
 	
 	
 }

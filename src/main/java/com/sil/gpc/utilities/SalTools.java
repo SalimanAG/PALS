@@ -19,7 +19,7 @@ public class SalTools {
 		HttpServletResponse response = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse();
 		
 		response.setStatus(444);
-		response.setContentType("application/json");//("text/plain;charset=utf-8");
+		response.setContentType("application/json;charset=utf-8");//("text/plain;charset=utf-8");
 		PrintWriter out;
 		try {
 			out = response.getWriter();

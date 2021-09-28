@@ -1,5 +1,7 @@
 package com.sil.gpc.domains;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -66,8 +68,25 @@ public class AffectDroitGroupUser {
 			return "AffectDroitGroupUser [idAffectDroitGroup=" + idAffectDroitGroup + ", droitUser=" + droitUser
 					+ ", groupUser=" + groupUser + "]";
 		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(droitUser, groupUser, idAffectDroitGroup);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			AffectDroitGroupUser other = (AffectDroitGroupUser) obj;
+			return Objects.equals(droitUser, other.droitUser) && Objects.equals(groupUser, other.groupUser)
+					&& Objects.equals(idAffectDroitGroup, other.idAffectDroitGroup);
+		}
+
 		
-	
-	
 
 }
