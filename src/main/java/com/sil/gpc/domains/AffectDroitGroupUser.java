@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 public class AffectDroitGroupUser {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long idAffectDroitGroup;
 	
 	//Liaison  avec Droits des Utilisateurs
