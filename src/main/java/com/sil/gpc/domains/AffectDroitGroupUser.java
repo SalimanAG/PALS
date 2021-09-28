@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ public class AffectDroitGroupUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, unique = true)
 	private Long idAffectDroitGroup;
 	
 	//Liaison  avec Droits des Utilisateurs
