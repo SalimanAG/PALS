@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sil.gpc.domains.AffectDroitGroupUser;
@@ -23,6 +26,8 @@ public class GroupUserService {
 
 	private final GroupUserRepository repo;
 	private final AffectDroitGroupUserRepository affectDroitGroupUserRepository;
+	@Autowired
+	private EntityManagerFactory ff;
 
 	public GroupUserService(GroupUserRepository repo, AffectDroitGroupUserRepository affectDroitGroupUserRepository) {
 		super();
@@ -86,9 +91,18 @@ public class GroupUserService {
 			}
     		
     		if(newer) {
-    			//SessionFactory sessionFactory = new SessionF;
+    			SessionFactory sessionFactory = ff.unwrap(SessionFactory.class);
     			//Session session = sessionFactory.openSession();
-				affectDroitGroupUserRepository.saveAndFlush(new AffectDroitGroupUser(r, groupUser));
+    			//sessionFactory.openSession();
+    			try {
+    				sessionFactory.getCurrentSession().clear();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+    			
+				affectDroitGroupUserRepository.save(new AffectDroitGroupUser(r, groupUser));
+				//sessionFactory.getCurrentSession().close();
 			}
     		
     	});
