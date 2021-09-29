@@ -69,6 +69,10 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter{
 		//super.successfulAuthentication(request, response, chain, authResult);
 		
 		User springUser = (User) authResult.getPrincipal();
+		WebApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
+		
+		UtilisateurRepository userReposi = ctx.getBean(UtilisateurRepository.class);
+		Utilisateur user = userReposi.findByLogin(springUser.getUsername());
 		
 		
 		String token = Jwts.builder()
@@ -76,6 +80,7 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter{
 						.setExpiration(new Date(System.currentTimeMillis()+(SecurityConstante.EXPIRATION*1000)))
 						.signWith(SignatureAlgorithm.HS256, SecurityConstante.CLE)
 						.claim(SecurityConstante.STRING_ROLES, springUser.getAuthorities())
+						.claim(SecurityConstante.STRING_USER, user)
 						.compact();
 		
 		response.addHeader(SecurityConstante.STRING_HEADER, SecurityConstante.PREFIX+token);
