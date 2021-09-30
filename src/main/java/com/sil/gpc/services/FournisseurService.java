@@ -46,6 +46,8 @@ public class FournisseurService {
 			entiter.setDomaineInterven(fournisseur.getDomaineInterven());
 			entiter.setNumAgrementFrs(fournisseur.getNumAgrementFrs());
 			entiter.setRegComFrs(fournisseur.getRegComFrs());
+			entiter.setDateNaissance(fournisseur.getDateNaissance());
+			entiter.setSexeFrs(fournisseur.getSexeFrs());
 			
 			return this.repo.save(entiter);
 		}

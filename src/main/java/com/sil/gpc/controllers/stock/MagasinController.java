@@ -25,6 +25,7 @@ import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.domains.TypeArticle;
 import com.sil.gpc.domains.Uniter;
 import com.sil.gpc.encapsuleurs.EncapInventaire;
+import com.sil.gpc.repositories.ArticleRepository;
 import com.sil.gpc.services.AffectUniterToArticleService;
 import com.sil.gpc.services.ArticleService;
 import com.sil.gpc.services.FamilleService;
@@ -53,14 +54,14 @@ public class MagasinController {
 	private final InventaireService invServ;
 	private final AffectUniterToArticleService affectUniterToArticleService;
 	private final TypeArticleService typeArticleService;
-	
+	private  final  ArticleRepository articleRepository;
 	
 	
 	
 	public MagasinController(MagasinService magasinService, MagasinierService magasinierService,
 			FamilleService familleService, ArticleService articleService, UniterService uniterService,
 			GererService gererService, StockerService stockerService, LigneInventaireService lInvServ,
-			InventaireService invServ, TypeArticleService typeArticleService, AffectUniterToArticleService affectUniterToArticleService) {
+			InventaireService invServ, TypeArticleService typeArticleService, AffectUniterToArticleService affectUniterToArticleService, ArticleRepository articleRepository) {
 		super();
 		this.magasinService = magasinService;
 		this.magasinierService = magasinierService;
@@ -73,6 +74,7 @@ public class MagasinController {
 		this.invServ = invServ;
 		this.affectUniterToArticleService = affectUniterToArticleService;
 		this.typeArticleService = typeArticleService;
+		this.articleRepository = articleRepository;
 	}
 
 	/*###########################################################
@@ -212,6 +214,12 @@ public class MagasinController {
 	public Optional<Article> getCaisseById(@PathVariable(name = "id") Long id){
 		
 		return this.articleService.getById(id);
+	}
+	
+	@GetMapping(path = "article/listByCodMag/{id}")
+	public List<Article> getAllArticleByMagasin(@PathVariable(name = "id") Long id){
+
+		return this.articleRepository.finAllArticleForMagasin(id);
 	}
 	
 	@PostMapping(path = "article/list")

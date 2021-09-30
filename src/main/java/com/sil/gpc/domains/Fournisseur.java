@@ -1,6 +1,7 @@
 package com.sil.gpc.domains;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -35,6 +36,8 @@ public class Fournisseur implements Serializable{
 	private String compteAvoirFrs;
 	private boolean agreerFrs;
 	private String numAgrementFrs;
+	private Date dateNaissance;
+	private String sexeFrs;
 	
 	//Liaison à la catégorie de Frs
 		@ManyToOne(fetch = FetchType.EAGER, targetEntity = CategorieFrs.class)
@@ -46,13 +49,13 @@ public class Fournisseur implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	
 
-	public Fournisseur(String codeFrs, String identiteFrs, String adresseFrs, String raisonSociale, String numIfuFrs,
-			String telFRS, String description, String domaineInterven, String regComFrs, String compteAvanceFrs,
-			String compteFacturationFrs, String compteConsignationFrs, String compteAvoirFrs, boolean agreerFrs,
-			String numAgrementFrs, CategorieFrs categorieFrs) {
+	public Fournisseur(Long numFournisseur, String codeFrs, String identiteFrs, String adresseFrs, String raisonSociale,
+			String numIfuFrs, String telFRS, String description, String domaineInterven, String regComFrs,
+			String compteAvanceFrs, String compteFacturationFrs, String compteConsignationFrs, String compteAvoirFrs,
+			boolean agreerFrs, String numAgrementFrs, Date dateNaissance, String sexeFrs, CategorieFrs categorieFrs) {
 		super();
+		this.numFournisseur = numFournisseur;
 		this.codeFrs = codeFrs;
 		this.identiteFrs = identiteFrs;
 		this.adresseFrs = adresseFrs;
@@ -68,6 +71,8 @@ public class Fournisseur implements Serializable{
 		this.compteAvoirFrs = compteAvoirFrs;
 		this.agreerFrs = agreerFrs;
 		this.numAgrementFrs = numAgrementFrs;
+		this.dateNaissance = dateNaissance;
+		this.sexeFrs = sexeFrs;
 		this.categorieFrs = categorieFrs;
 	}
 
@@ -251,6 +256,50 @@ public class Fournisseur implements Serializable{
 
 
 
+
+
+
+
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+
+
+
+
+
+
+
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
+
+
+
+
+
+
+
+	public String getSexeFrs() {
+		return sexeFrs;
+	}
+
+
+
+
+
+
+
+	public void setSexeFrs(String sexeFrs) {
+		this.sexeFrs = sexeFrs;
+	}
+
+
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "Fournisseur [numFournisseur=" + numFournisseur + ", codeFrs=" + codeFrs + ", identiteFrs=" + identiteFrs
@@ -258,9 +307,10 @@ public class Fournisseur implements Serializable{
 				+ ", telFRS=" + telFRS + ", description=" + description + ", domaineInterven=" + domaineInterven
 				+ ", regComFrs=" + regComFrs + ", compteAvanceFrs=" + compteAvanceFrs + ", compteFacturationFrs="
 				+ compteFacturationFrs + ", compteConsignationFrs=" + compteConsignationFrs + ", compteAvoirFrs="
-				+ compteAvoirFrs + ", agreerFrs=" + agreerFrs + ", numAgrementFrs=" + numAgrementFrs + ", categorieFrs="
-				+ categorieFrs + "]";
+				+ compteAvoirFrs + ", agreerFrs=" + agreerFrs + ", numAgrementFrs=" + numAgrementFrs
+				+ ", dateNaissance=" + dateNaissance + ", sexeFrs=" + sexeFrs + ", categorieFrs=" + categorieFrs + "]";
 	}
+
 
 
 
