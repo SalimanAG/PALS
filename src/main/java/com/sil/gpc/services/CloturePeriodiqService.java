@@ -1,5 +1,6 @@
 package com.sil.gpc.services;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -52,6 +53,22 @@ public class CloturePeriodiqService {
 	public List<CloturePeriodiq> getAll(){
 		
 		return this.repo.findAll();
+	}
+	
+	public boolean isPeriodeClotured(Date date) {
+		boolean cloturer = false;
+		
+		List<CloturePeriodiq> liste = repo.findAll();
+		
+		for (int i = 0; i < liste.size(); i++) {
+			if((liste.get(i).getDateDebutCloturePer().before(date) || liste.get(i).getDateDebutCloturePer().equals(date))
+					&& (liste.get(i).getDateFinCloturePer().after(date) || liste.get(i).getDateFinCloturePer().equals(date))) {
+				cloturer = true;				
+				break;
+			}
+		}
+		
+		return cloturer; 
 	}
 
 	

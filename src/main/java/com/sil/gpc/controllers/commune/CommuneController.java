@@ -1,6 +1,7 @@
 package com.sil.gpc.controllers.commune;
 
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,7 @@ import com.sil.gpc.services.QuartierService;
 import com.sil.gpc.services.ServiceService;
 import com.sil.gpc.services.TypeServiceService;
 import com.sil.gpc.services.UtilisateurService;
+import com.sil.gpc.utilities.SalDate;
 import com.sil.gpc.services.CiviliteService;
 import com.sil.gpc.services.FonctionService;
 import com.sil.gpc.services.ProfessionService;
@@ -1010,6 +1012,12 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	public CloturePeriodiq getCloturePeriodiqById(@PathVariable(name = "id") Long id){
 		
 		return this.cloturePeriodiqService.getById(id);
+	}
+	
+	@PostMapping(path = "cloturePeriodiq/isCloturedByDate")
+	public boolean getIfPeriodIsCloturedByDate(@RequestBody SalDate date){
+		
+		return this.cloturePeriodiqService.isPeriodeClotured(date.getDate());
 	}
 	
 	@PostMapping(path = "cloturePeriodiq/list")
