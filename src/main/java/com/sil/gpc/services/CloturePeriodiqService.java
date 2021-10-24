@@ -1,11 +1,13 @@
 package com.sil.gpc.services;
 
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.sil.gpc.domains.CloturePeriodiq;
 import com.sil.gpc.repositories.CloturePeriodiqRepository;
+import com.sil.gpc.utilities.SalTools;
 
 @Service
 public class CloturePeriodiqService {
@@ -18,7 +20,41 @@ public class CloturePeriodiqService {
 	}
 	
 	public CloturePeriodiq save(CloturePeriodiq cloturePeriodiq) {
-		return this.repo.save(cloturePeriodiq);
+		if(cloturePeriodiq.getDateDebutCloturePer().compareTo(cloturePeriodiq.getDateFinCloturePer()) < 0) {
+			List<CloturePeriodiq> liste = this.repo.findAll();
+			
+			liste.sort(new Comparator<CloturePeriodiq>() {
+				@Override
+				public int compare(CloturePeriodiq o1, CloturePeriodiq o2) {
+					// TODO Auto-generated method stub
+					return o2.getDateDebutCloturePer().compareTo(o1.getDateDebutCloturePer());
+				}
+			});
+			//System.out.println(liste);
+			int nbrInter = (1*24*60*60*1000) - 1000;
+			if(liste.size()>0) {
+				Date date1Fin = liste.get(0).getDateFinCloturePer();
+				Date date2Deb = cloturePeriodiq.getDateDebutCloturePer();
+				System.out.println(((int)(date1Fin.getTime()/nbrInter))+" - "+((int)(date2Deb.getTime()/nbrInter))+" = "+(((int)(date1Fin.getTime()/nbrInter)) - ((int)(date2Deb.getTime()/nbrInter))));
+				
+				if(((int)(date2Deb.getTime()/nbrInter)) - ((int)(date1Fin.getTime()/nbrInter)) == 1) {
+					return this.repo.save(cloturePeriodiq);
+				}
+				else {
+					SalTools.sendErr("Veuillez Bien Choisir la période de cloture");
+					return null;
+				}
+			}
+			else {
+				return this.repo.save(cloturePeriodiq);
+			}
+			
+		}
+		else {
+			SalTools.sendErr("Veuillez Bien Choisir la période de cloture");
+			return null;
+		}
+		
 	}
 	
 	public CloturePeriodiq edit(Long id, CloturePeriodiq cloturePeriodiq) {

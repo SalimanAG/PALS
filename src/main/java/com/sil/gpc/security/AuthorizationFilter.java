@@ -80,8 +80,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 						
 					}
 					else {
-						
-						filterChain.doFilter(request, response);
+						SalTools.sendErr("Le mot de passe de l'utlisateur n'est pas à réinitialiser");
 					}
 				}
 				else {

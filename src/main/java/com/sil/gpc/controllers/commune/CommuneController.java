@@ -39,6 +39,8 @@ import com.sil.gpc.domains.Quartier;
 import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.encapsuleurs.EncapGroupeDroits;
 import com.sil.gpc.encapsuleurs.EncapUserGroupes;
+import com.sil.gpc.repositories.DroitUserRepository;
+import com.sil.gpc.repositories.GroupUserRepository;
 import com.sil.gpc.services.AffectDroitGroupUserService;
 import com.sil.gpc.services.AffectUserGroupService;
 import com.sil.gpc.services.AffectUserToArrondiService;
@@ -90,6 +92,8 @@ public class CommuneController {
 	private final CiviliteService civiliteService;
 	private final FonctionService fonctionService;
 	private final ProfessionService professionService;
+	private final GroupUserRepository groupUserRepository;
+	private final DroitUserRepository droitUserRepository;
 
 	public CommuneController(ExerciceService exerciceService, FournisseurService fournisseurService,
 			ServiceService serviceService, UtilisateurService utilisateurService, PaysService paysService,
@@ -98,7 +102,7 @@ public class CommuneController {
 			GroupUserService ug,
 			AffectDroitGroupUserService dgus, AffectUserGroupService aug, DroitUserService du,
 			AffectUserToArrondiService auta, DirectionService directionService, CloturePeriodiqService cloturePeriodiqService, CauseAnomalieService causeAnomalieService, 
-			CategorieFrsService categorieFrsService, TypeServiceService typeServiceService, CiviliteService civiliteService, FonctionService fonctionService, ProfessionService professionService ) {
+			CategorieFrsService categorieFrsService, TypeServiceService typeServiceService, CiviliteService civiliteService, FonctionService fonctionService, ProfessionService professionService, DroitUserRepository droitUserRepository, GroupUserRepository groupUserRepository ) {
 		this.exerciceService = exerciceService;
 		this.fournisseurService = fournisseurService;
 		this.serviceService = serviceService;
@@ -121,6 +125,8 @@ public class CommuneController {
 		this.civiliteService = civiliteService;
 		this.fonctionService = fonctionService;
 		this.professionService = professionService;
+		this.groupUserRepository = groupUserRepository;
+		this.droitUserRepository = droitUserRepository;
 	}
 
 	/*###########################################################
@@ -449,7 +455,8 @@ public class CommuneController {
 	@GetMapping(path = "aug/userGroup/{id}")
 	public List<GroupUser> getAllGroupUserForUser(@PathVariable(name = "id") Long id){
 		System.out.println(id);
-		return this.aug.getAllGroupUserForUser(id);
+		//return this.aug.getAllGroupUserForUser(id);
+		return this.groupUserRepository.finAllGroupeUserForUser(id);
 	}
 	
 	@PostMapping(path = "aug/list")
@@ -545,7 +552,9 @@ public class CommuneController {
 	@GetMapping(path = "gro/byGroupUserId/{id}")
 	public List<DroitUser> getDroitUserForGroupeUser(@PathVariable(name = "id") Long id){
 
-		return this.dgus.getAllDroitUserForGroupUser(id);
+		//return this.dgus.getAllDroitUserForGroupUser(id);
+		//return this.affectDroitGroupUserRepository.finAllDroitUserForGroupUser(id);
+		return  this.droitUserRepository.finAllDroitUserForGroupUser(id);
 	}
 	
 	@PostMapping(path = "gro/list")

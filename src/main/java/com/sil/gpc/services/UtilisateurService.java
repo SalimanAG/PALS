@@ -43,7 +43,8 @@ public class UtilisateurService implements UserDetailsService{
     
     // Sauvegarder 
     public Utilisateur save(Utilisateur user) {
-    	user.setMotDePass(encoder.encode(user.getMotDePass()));
+    	//user.setMotDePass(encoder.encode(user.getMotDePass()));
+    	user.setMotDePass(null);
         return   this.userRepository.save(user);
     }
     
@@ -65,7 +66,8 @@ public class UtilisateurService implements UserDetailsService{
     public List<Utilisateur> save3(List<Utilisateur> utilisateurs) {
     	
     	utilisateurs.forEach(r -> {
-    		r.setMotDePass(encoder.encode(r.getMotDePass()));
+    		//r.setMotDePass(encoder.encode(r.getMotDePass()));
+    		r.setMotDePass(null);
     	});
     	
         return   this.userRepository.saveAll(utilisateurs);

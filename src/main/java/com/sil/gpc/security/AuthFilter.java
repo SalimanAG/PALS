@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sil.gpc.domains.Utilisateur;
 import com.sil.gpc.repositories.UtilisateurRepository;
 import com.sil.gpc.services.UtilisateurService;
+import com.sil.gpc.utilities.SalTools;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -74,16 +75,22 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter{
 		UtilisateurRepository userReposi = ctx.getBean(UtilisateurRepository.class);
 		Utilisateur user = userReposi.findByLogin(springUser.getUsername());
 		
-		
-		String token = Jwts.builder()
-						.setSubject(springUser.getUsername())
-						.setExpiration(new Date(System.currentTimeMillis()+(SecurityConstante.EXPIRATION*1000)))
-						.signWith(SignatureAlgorithm.HS256, SecurityConstante.CLE)
-						.claim(SecurityConstante.STRING_ROLES, springUser.getAuthorities())
-						.claim(SecurityConstante.STRING_USER, user)
-						.compact();
-		
-		response.addHeader(SecurityConstante.STRING_HEADER, SecurityConstante.PREFIX+token);
+		if(user.isActiveUtilisateur()) {
+
+			String token = Jwts.builder()
+							.setSubject(springUser.getUsername())
+							.setExpiration(new Date(System.currentTimeMillis()+(SecurityConstante.EXPIRATION*1000)))
+							.signWith(SignatureAlgorithm.HS256, SecurityConstante.CLE)
+							.claim(SecurityConstante.STRING_ROLES, springUser.getAuthorities())
+							.claim(SecurityConstante.STRING_USER, user)
+							.compact();
+			
+			response.addHeader(SecurityConstante.STRING_HEADER, SecurityConstante.PREFIX+token);
+			
+		}
+		else {
+			SalTools.sendErr("Compte Utilisateur Inactif");
+		}
 		
 		
 	}
