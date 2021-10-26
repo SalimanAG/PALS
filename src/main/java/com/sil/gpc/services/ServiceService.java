@@ -3,6 +3,8 @@ package com.sil.gpc.services;
 
 import com.sil.gpc.domains.Service;
 import com.sil.gpc.repositories.ServiceRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,5 +77,23 @@ public class ServiceService {
 		
 		return this.serviceRepository.findByLibService(LibelleService);
 	}
+    
+    public List<Service> FindAllServiceFilleForService(String codeService){
+
+        List<Service> serviceFilleList = new ArrayList<>();
+
+        for (Service service: this.serviceRepository.findAll()){
+
+                if (service.getSuperService() != null && service.getSuperService().getCodeService().equals(codeService)){
+                    System.out.println("Code"+codeService);
+                    System.out.println("Code Service in list"+service.getCodeService());
+                    serviceFilleList.add(service);
+                }
+
+        }
+        System.out.println("Code"+serviceFilleList);
+
+        return  serviceFilleList;
+    }
     
 }

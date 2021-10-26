@@ -39,6 +39,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 			"  FROM article, famille, magasin \n" +
 			"  WHERE article.num_famille = famille.num_famille \n" +
 			"  AND article.qte_st_ini_tres = 0\n"+
+			"  AND famille.num_magasin = magasin.num_magasin\n"+
 			"  AND famille.num_magasin = ?1"
 			, nativeQuery = true)
 	List<Article> finAllArticleForMagasin(Long id);

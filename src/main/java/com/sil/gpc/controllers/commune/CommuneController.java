@@ -254,6 +254,12 @@ public class CommuneController {
 		return this.serviceService.findByLibelleServicer(libelle);
 	}
 	
+	@GetMapping(path = "service/list-by-codeServ/{codeService}")
+	public List<Service> getServiceFilleByService(@PathVariable(name = "codeService") String codeService){
+
+		return this.serviceService.FindAllServiceFilleForService(codeService);
+	}
+	
 	@PostMapping(path = "service/list")
 	public Service createService( @RequestBody Service service) {
 		
