@@ -343,5 +343,10 @@ public class ReceptionService {
 		
 		return this.receptionRepository.findByDateReception(DateReception);
 	}
+    
+    public List<Reception> findByNumCommande(Long numCommande){
+		
+		return this.receptionRepository.findByNumCommande(numCommande);
+	}
 
 }

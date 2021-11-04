@@ -20,12 +20,14 @@ public class CommandeService {
 	private final CommandeRepository repo;
 	private final LigneCommandeRepository repo2;
 	private final LigneCommandeService servi2;
+	private final ReceptionService servi3;
 
-	public CommandeService(CommandeRepository repo, LigneCommandeRepository repo2, LigneCommandeService servi2) {
+	public CommandeService(CommandeRepository repo, LigneCommandeRepository repo2, LigneCommandeService servi2, ReceptionService servi3) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
+		this.servi3 = servi3;
 	}
 	
 	public Commande save(Commande commande) {
@@ -197,6 +199,16 @@ public class CommandeService {
 	public List<Commande> findByExercice(Exercice exercice){
 		
 		return this.repo.findByExercice(exercice);
+	}
+
+	public boolean hasCommandeReception(Long id) {
+		boolean res = false;
+		
+		if(this.servi3.findByNumCommande(id).size() > 0) {
+			res = true;
+		}
+		
+		return res;
 	}
 	
 }

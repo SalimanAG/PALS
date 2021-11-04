@@ -78,6 +78,12 @@ public class TresorController {
 		return this.commandeService.getById(id);
 	}
 	
+	@GetMapping(path = "commande/hasRecetp/{id}")
+	public boolean getCommandeByHasRecept(@PathVariable(name = "id") Long id){
+		
+		return this.commandeService.hasCommandeReception(id);
+	}
+	
 	@PostMapping(path = "commande/list")
 	public Commande createCommande( @RequestBody Commande commande) {
 		
