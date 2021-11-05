@@ -344,9 +344,9 @@ public class ReceptionService {
 		return this.receptionRepository.findByDateReception(DateReception);
 	}
     
-    public List<Reception> findByNumCommande(Long numCommande){
+    public List<LigneReception> findByNumCommande(Long numCommande){
 		
-		return this.receptionRepository.findByNumCommande(numCommande);
+		return this.repo2.findByNumCommande(numCommande);
 	}
 
 }

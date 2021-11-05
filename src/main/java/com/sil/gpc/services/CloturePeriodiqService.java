@@ -20,6 +20,7 @@ public class CloturePeriodiqService {
 	}
 	
 	public CloturePeriodiq save(CloturePeriodiq cloturePeriodiq) {
+		cloturePeriodiq.setValide(true);
 		if(cloturePeriodiq.getDateDebutCloturePer().compareTo(cloturePeriodiq.getDateFinCloturePer()) < 0) {
 			List<CloturePeriodiq> liste = this.repo.findAll();
 			
@@ -64,6 +65,62 @@ public class CloturePeriodiqService {
 			entiter.setDateDebutCloturePer(cloturePeriodiq.getDateDebutCloturePer());
 			entiter.setDateFinCloturePer(cloturePeriodiq.getDateFinCloturePer());
 			entiter.setExercice(cloturePeriodiq.getExercice());
+			
+			return this.repo.save(entiter);
+		}
+		
+		return null;
+	}
+	
+	public CloturePeriodiq validate(Long id, CloturePeriodiq cloturePeriodiq) {
+		CloturePeriodiq entiter = this.repo.getOne(id);
+		if(entiter != null) {
+			List<CloturePeriodiq> liste = this.repo.findAll();
+			
+			liste.sort(new Comparator<CloturePeriodiq>() {
+				@Override
+				public int compare(CloturePeriodiq o1, CloturePeriodiq o2) {
+					// TODO Auto-generated method stub
+					return o2.getDateDebutCloturePer().compareTo(o1.getDateDebutCloturePer());
+				}
+			});
+			
+			
+			int indexOfPeri = 4;
+			
+			if(liste.get(0).getIdCloturePer().equals(id)) {
+				indexOfPeri = 0;
+			}else if(liste.get(1).getIdCloturePer().equals(id)) {
+				indexOfPeri = 1;
+			} else if(liste.get(2).getIdCloturePer().equals(id)) {
+				indexOfPeri = 2;
+			} else if(liste.get(3).getIdCloturePer().equals(id)) {
+				indexOfPeri = 3;
+			}
+			
+			if(cloturePeriodiq.isValide() == false) {
+				
+				for (int i = indexOfPeri-1; i > -1; i--) {
+					if(liste.get(i).isValide() == true) {
+						SalTools.sendErr("Veuillez d'abord annuler les prériodes ayants succédé la période que vous voulez annuler");
+						return null;
+					}
+				}
+				
+				if(indexOfPeri == 4) {
+					SalTools.sendErr("Vous ne pouvez que annuler au plus 4 clôtures périodiques");
+					return null;
+				}
+				
+			} else {
+				
+				if((indexOfPeri+1) < liste.size() && liste.get(indexOfPeri+1).isValide() == false) {
+					SalTools.sendErr("Veuillez d'abord valider les prériodes ayants préccédé la période que vous voulez valider");
+					return null;
+				}
+			}
+			
+			entiter.setValide(cloturePeriodiq.isValide());
 			
 			return this.repo.save(entiter);
 		}

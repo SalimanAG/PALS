@@ -1046,6 +1046,11 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 		return this.cloturePeriodiqService.edit(id, cloturePeriodiq);
 	}
 	
+	@PutMapping(path = "cloturePeriodiq/byCodCloPerValid/{id}")
+	public CloturePeriodiq validatingCloturePeriodiq(@PathVariable(name = "id") Long id, @RequestBody CloturePeriodiq cloturePeriodiq) {
+		return this.cloturePeriodiqService.validate(id, cloturePeriodiq);
+	}
+	
 	@DeleteMapping(path = "cloturePeriodiq/byCodCloPer/{id}")
 	public Boolean deleteCloturePeriodiq(@PathVariable(name = "id") Long id) {
 		

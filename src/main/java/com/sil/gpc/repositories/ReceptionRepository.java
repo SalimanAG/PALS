@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.domains.Reception;
 
 @Repository
@@ -25,8 +26,5 @@ public interface ReceptionRepository extends JpaRepository<Reception, String> {
 			, nativeQuery = true)
 	public Integer findLastNumUsed(Long numExercice);
 	
-	@Query(value="SELECT * FROM reception WHERE num_commande = ?1 ORDER BY valeur DESC;"
-			, nativeQuery = true)
-	public List<Reception> findByNumCommande(Long numCommande);
-
+	
 }
