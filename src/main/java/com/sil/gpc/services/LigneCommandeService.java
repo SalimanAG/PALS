@@ -48,6 +48,7 @@ public class LigneCommandeService {
 			entiter.setTs(ligneCommande.getTs());
 			entiter.setUniter(ligneCommande.getUniter());
 			entiter.setSatisfaite(ligneCommande.isSatisfaite());
+			entiter.setPrixUnitTtc(ligneCommande.isPrixUnitTtc());
 			
 			return this.repo.save(entiter);
 		}

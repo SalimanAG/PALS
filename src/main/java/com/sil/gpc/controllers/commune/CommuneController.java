@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,6 +69,7 @@ import com.sil.gpc.services.ProfessionService;
 @RestController
 @CrossOrigin
 @RequestMapping(path = "/perfora-stock/v1/commune/")
+@Transactional
 public class CommuneController {
 
 	private final ExerciceService exerciceService;

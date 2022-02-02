@@ -19,6 +19,11 @@ public class LettreCommande {
 	@JoinColumn(name = "numCommande", nullable = false, referencedColumnName = "numCommande")
 	public Commande commande;
 	
+	//Liaison à la table CommandeAchat
+	@ManyToOne(fetch = FetchType.EAGER,targetEntity = CommandeAchat.class)
+	@JoinColumn(name = "numComAchat", nullable = true, referencedColumnName = "numComAchat")
+	public CommandeAchat commandeAchat;
+	
 	//Liaison avec la table Exercice
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = false)
@@ -30,13 +35,15 @@ public class LettreCommande {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 
-
-	public LettreCommande(String numLettreComm, double valeur, Commande commande, Exercice exercice) {
+	public LettreCommande(String numLettreComm, double valeur, Commande commande, CommandeAchat commandeAchat,
+			Exercice exercice) {
 		super();
 		this.numLettreComm = numLettreComm;
 		this.valeur = valeur;
 		this.commande = commande;
+		this.commandeAchat = commandeAchat;
 		this.exercice = exercice;
 	}
 
@@ -85,13 +92,24 @@ public class LettreCommande {
 
 
 
+	public CommandeAchat getCommandeAchat() {
+		return commandeAchat;
+	}
+
+
+
+	public void setCommandeAchat(CommandeAchat commandeAchat) {
+		this.commandeAchat = commandeAchat;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "LettreCommande [numLettreComm=" + numLettreComm + ", valeur=" + valeur + ", commande=" + commande
-				+ ", exercice=" + exercice + "]";
+				+ ", commandeAchat=" + commandeAchat + ", exercice=" + exercice + "]";
 	}
-	
-	
+
 
 	
 	

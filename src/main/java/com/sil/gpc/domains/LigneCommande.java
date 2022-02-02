@@ -45,8 +45,15 @@ public class LigneCommande implements Serializable{
 	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter")
 	private Uniter uniter;
 	
+	//@ColumnDefault(value = "false")
 	@ColumnDefault(value = "0")
 	private boolean satisfaite;
+	
+	//@ColumnDefault(value = "false")
+	@ColumnDefault(value = "0")
+	private boolean prixUnitTtc;
+	
+	private String caracteristiqArti;
 	
 	public LigneCommande() {
 		super();
@@ -54,8 +61,11 @@ public class LigneCommande implements Serializable{
 	}
 
 
+
+
 	public LigneCommande(Long idLigneCommande, double qteLigneCommande, double puLigneCommande, double remise,
-			double tva, double taibic, double ts, Commande numCommande, Article article, Uniter uniter) {
+			double tva, double taibic, double ts, Commande numCommande, Article article, Uniter uniter,
+			boolean satisfaite, boolean prixUnitTtc, String caracteristiqArti) {
 		super();
 		this.idLigneCommande = idLigneCommande;
 		this.qteLigneCommande = qteLigneCommande;
@@ -67,6 +77,9 @@ public class LigneCommande implements Serializable{
 		this.numCommande = numCommande;
 		this.article = article;
 		this.uniter = uniter;
+		this.satisfaite = satisfaite;
+		this.prixUnitTtc = prixUnitTtc;
+		this.caracteristiqArti = caracteristiqArti;
 	}
 
 
@@ -176,14 +189,46 @@ public class LigneCommande implements Serializable{
 	}
 
 
+
+
+	public boolean isPrixUnitTtc() {
+		return prixUnitTtc;
+	}
+
+
+
+
+	public void setPrixUnitTtc(boolean prixUnitTtc) {
+		this.prixUnitTtc = prixUnitTtc;
+	}
+
+
+
+
+	public String getCaracteristiqArti() {
+		return caracteristiqArti;
+	}
+
+
+
+
+	public void setCaracteristiqArti(String caracteristiqArti) {
+		this.caracteristiqArti = caracteristiqArti;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "LigneCommande [idLigneCommande=" + idLigneCommande + ", qteLigneCommande=" + qteLigneCommande
 				+ ", puLigneCommande=" + puLigneCommande + ", remise=" + remise + ", tva=" + tva + ", taibic=" + taibic
 				+ ", ts=" + ts + ", numCommande=" + numCommande + ", article=" + article + ", uniter=" + uniter
-				+ ", satisfaite=" + satisfaite + "]";
+				+ ", satisfaite=" + satisfaite + ", prixUnitTtc=" + prixUnitTtc + ", caracteristiqArti="
+				+ caracteristiqArti + "]";
 	}
-	
+
+
 	
 	
  	

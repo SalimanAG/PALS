@@ -2,6 +2,7 @@ package com.sil.gpc.controllers.stock;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import com.sil.gpc.services.StockComptaSettingService;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-stock/v1/compta/")
+@Transactional
 public class ComptabilisationController {
 
 	private final StockComptaSettingService comptaSettingService;

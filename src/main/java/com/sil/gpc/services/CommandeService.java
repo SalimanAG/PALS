@@ -71,6 +71,11 @@ public class CommandeService {
 			entiter.setExercice(commande.getExercice());
 			entiter.setFrs(commande.getFrs());
 			entiter.setValide(commande.isValide());
+			entiter.setDepartement(commande.getDepartement());
+			entiter.setJustif(commande.getJustif());
+			entiter.setNumDa(commande.getNumDa());
+			entiter.setCmdDe(commande.getCmdDe());
+			
 			return this.repo.save(entiter);
 		}
 		
@@ -85,7 +90,7 @@ public class CommandeService {
 		List<LigneCommande> newLignes = new ArrayList<LigneCommande>();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).numCommande.getNumCommande() == id) {
+			if(lignes.get(i).numCommande.getNumCommande().equals(id)) {
 				concernedLignes.add(lignes.get(i));
 			}
 		}
@@ -95,7 +100,7 @@ public class CommandeService {
 			LigneCommande enti = null;
 			
 			for(int j = 0; j < concernedLignes.size(); j++) {
-				if(concernedLignes.get(j).getArticle().getNumArticle() == encap.getLigneCommandes().get(i).getArticle().getNumArticle()) {
+				if(concernedLignes.get(j).getArticle().getNumArticle().equals(encap.getLigneCommandes().get(i).getArticle().getNumArticle()) ) {
 					added = false;
 					enti = concernedLignes.get(j);
 					break;
@@ -119,7 +124,7 @@ public class CommandeService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneCommandes().size(); j++) {
-				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getLigneCommandes().get(j).getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getArticle().getNumArticle().longValue() == encap.getLigneCommandes().get(j).getArticle().getNumArticle().longValue()) {
 					removed = false;
 					break;
 				}
@@ -134,7 +139,7 @@ public class CommandeService {
 		lignes = this.repo2.findAll();
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).numCommande.getNumCommande() == id) {
+			if(lignes.get(i).numCommande.getNumCommande().equals(id)) {
 				newLignes.add(lignes.get(i));
 			}
 		}

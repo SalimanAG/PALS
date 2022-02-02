@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.EcritureComptable;
@@ -51,7 +52,7 @@ public class ApprovisionnementService {
 		approvisionnement.setValideAppro(false);	
 		
 		Integer val = 1, nbrMaxCaract = 6;
-		String code = "BA-";
+		String code = "CI-";
 		if(this.repo.findLastNumUsed(approvisionnement.getExercice().getNumExercice()) != null) {
 			val = this.repo.findLastNumUsed(approvisionnement.getExercice().getNumExercice());
 			val++;
@@ -296,6 +297,18 @@ public class ApprovisionnementService {
 		return null;
 	}
 	
+	
+	
+	public Approvisionnement edit4(String id, Approvisionnement approvisionnement) {
+		Approvisionnement entiter = this.repo.getOne(id); 
+		if(entiter != null) {
+			entiter.setValideAppro1(approvisionnement.isValideAppro1());
+			
+			return this.repo.save(entiter);
+		}
+		
+		return null;
+	}
 	
 	
 	public boolean delete(String id) {

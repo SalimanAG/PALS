@@ -1,6 +1,7 @@
 package com.sil.gpc.services;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,10 +11,7 @@ import org.springframework.stereotype.Service;
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneDemandeAppro;
-import com.sil.gpc.domains.LigneDemandePrix;
-import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.encapsuleurs.EncapDemandeAppro;
-import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.repositories.DemandeApproRepository;
 import com.sil.gpc.repositories.LigneDemandeApproRepository;
 
@@ -34,7 +32,7 @@ public class DemandeApproService {
 	public DemandeApprovisionnement save(DemandeApprovisionnement demandeApprovisionnement) {
 		//demandeApprovisionnement.setValideDA(true);
 		Integer val = 1, nbrMaxCaract = 6;
-		String code = "CI-";
+		String code = "DB-";
 		if(this.repo.findLastNumUsed(demandeApprovisionnement.getExercice().getNumExercice()) != null) {
 			val = this.repo.findLastNumUsed(demandeApprovisionnement.getExercice().getNumExercice());
 			val++;
@@ -50,6 +48,7 @@ public class DemandeApproService {
 		}
 		
 		demandeApprovisionnement.setNumDA(code+val);
+		demandeApprovisionnement.setDateDA(new Timestamp(System.currentTimeMillis()));
 		
 		if(repo.existsById(demandeApprovisionnement.getNumDA())==false) return this.repo.save(demandeApprovisionnement);
 		

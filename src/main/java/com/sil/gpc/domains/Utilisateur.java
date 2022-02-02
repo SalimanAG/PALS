@@ -35,6 +35,8 @@ public class Utilisateur {
 	private boolean activeUtilisateur;
 	private String dateLastConnex;
 	private boolean askMdp1erLance;
+	
+	//@ColumnDefault(value = "true")
 	@ColumnDefault(value = "1")
 	private boolean accesChildService;
 	

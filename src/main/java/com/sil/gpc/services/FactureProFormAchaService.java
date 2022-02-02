@@ -231,7 +231,7 @@ public class FactureProFormAchaService {
 			
 			for(int i = 0; i < lignes1.size(); i++) {
 				if(lignes1.get(i).getFactureProFormAcha().getIdFpfa().equalsIgnoreCase(fpfa.getIdFpfa())) {
-					tempLigneCommande.add(new LigneCommande(null, lignes1.get(i).getQteLigneFpfa(), lignes1.get(i).getPrixUnitHtLigneFpfa(), 0, lignes1.get(i).getTauxTvaLigneFpfa(), lignes1.get(i).getTauxTaxeAibicLigneFpfa(), lignes1.get(i).getTauxTsLigneFpfa(), tempCom, lignes1.get(i).getArticle(), lignes1.get(i).getUniter()));
+					tempLigneCommande.add(new LigneCommande(null, lignes1.get(i).getQteLigneFpfa(), lignes1.get(i).getPrixUnitHtLigneFpfa(), 0, lignes1.get(i).getTauxTvaLigneFpfa(), lignes1.get(i).getTauxTaxeAibicLigneFpfa(), lignes1.get(i).getTauxTsLigneFpfa(), tempCom, lignes1.get(i).getArticle(), lignes1.get(i).getUniter(), false, lignes1.get(i).isPrixUnitTtc(), lignes1.get(i).getCaracteristiqArti()));
 					
 				}
 			}

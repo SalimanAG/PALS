@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -11,13 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.query.criteria.internal.expression.function.CurrentDateFunction;
+
 @SuppressWarnings("serial")
 @Entity
 public class DemandeApprovisionnement implements Serializable{
 	@Id
 	@Column(length = 20)
 	private String numDA;
-	private Date dateDA;
+	private Timestamp dateDA;
 	private int valeur;
 	private boolean valideDA;
 	private String description;
@@ -39,7 +43,7 @@ public class DemandeApprovisionnement implements Serializable{
 
 	
 
-	public DemandeApprovisionnement(String numDA, Date dateDA, int valeur, boolean valideDA, Exercice exercice,
+	public DemandeApprovisionnement(String numDA, Timestamp dateDA, int valeur, boolean valideDA, Exercice exercice,
 			Service service) {
 		super();
 		this.numDA = numDA;
@@ -91,14 +95,14 @@ public class DemandeApprovisionnement implements Serializable{
 	/**
 	 * @return the dateDA
 	 */
-	public Date getDateDA() {
+	public Timestamp getDateDA() {
 		return dateDA;
 	}
 
 	/**
 	 * @param dateDA the dateDA to set
 	 */
-	public void setDateDA(Date dateDA) {
+	public void setDateDA(Timestamp dateDA) {
 		this.dateDA = dateDA;
 	}
 

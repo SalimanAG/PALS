@@ -1,24 +1,18 @@
 package com.sil.gpc.domains;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@SuppressWarnings("serial")
-@Entity(name = "Commande")
-public class Commande implements Serializable {
-
+@Entity
+public class Travaux {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long numCommande;
+	private String numTravaux;
 	private Date dateCommande;
 	private Date dateRemise;
 	private String description;
@@ -40,24 +34,17 @@ public class Commande implements Serializable {
 	private String departement;
 	private String numDa;
 	private String justif;
-	private String cmdDe;
-
-	public Commande() {
+	
+	public Travaux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-	
-
-
-
-	public Commande(Long numCommande, Date dateCommande, Date dateRemise, String description, int delaiLivraison,
+	public Travaux(String numTravaux, Date dateCommande, Date dateRemise, String description, int delaiLivraison,
 			boolean valide, int valeur, boolean liver, boolean reporter, Fournisseur frs, Exercice exercice,
-			String departement, String numDa, String justif, String cmdDe) {
+			String departement, String numDa, String justif) {
 		super();
-		this.numCommande = numCommande;
+		this.numTravaux = numTravaux;
 		this.dateCommande = dateCommande;
 		this.dateRemise = dateRemise;
 		this.description = description;
@@ -71,139 +58,63 @@ public class Commande implements Serializable {
 		this.departement = departement;
 		this.numDa = numDa;
 		this.justif = justif;
-		this.cmdDe = cmdDe;
 	}
 
-
-
-
-	/**
-	 * @return the valide
-	 */
-	public boolean isValide() {
-		return valide;
+	public String getNumTravaux() {
+		return numTravaux;
 	}
 
-	/**
-	 * @param valide the valide to set
-	 */
-	public void setValide(boolean valide) {
-		this.valide = valide;
+	public void setNumTravaux(String numTravaux) {
+		this.numTravaux = numTravaux;
 	}
 
-	/**
-	 * @return the valeur
-	 */
-	public int getValeur() {
-		return valeur;
-	}
-
-	/**
-	 * @param valeur the valeur to set
-	 */
-	public void setValeur(int valeur) {
-		this.valeur = valeur;
-	}
-
-	/**
-	 * @return the numCommande
-	 */
-	public Long getNumCommande() {
-		return numCommande;
-	}
-
-	/**
-	 * @param numCommande the numCommande to set
-	 */
-	public void setNumCommande(Long numCommande) {
-		this.numCommande = numCommande;
-	}
-
-	/**
-	 * @return the dateCommande
-	 */
 	public Date getDateCommande() {
 		return dateCommande;
 	}
 
-	/**
-	 * @param dateCommande the dateCommande to set
-	 */
 	public void setDateCommande(Date dateCommande) {
 		this.dateCommande = dateCommande;
 	}
 
-	/**
-	 * @return the dateRemise
-	 */
 	public Date getDateRemise() {
 		return dateRemise;
 	}
 
-	/**
-	 * @param dateRemise the dateRemise to set
-	 */
 	public void setDateRemise(Date dateRemise) {
 		this.dateRemise = dateRemise;
 	}
 
-	/**
-	 * @return the description
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description the description to set
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * @return the delaiLivraison
-	 */
 	public int getDelaiLivraison() {
 		return delaiLivraison;
 	}
 
-	/**
-	 * @param delaiLivraison the delaiLivraison to set
-	 */
 	public void setDelaiLivraison(int delaiLivraison) {
 		this.delaiLivraison = delaiLivraison;
 	}
 
-	/**
-	 * @return the frs
-	 */
-	public Fournisseur getFrs() {
-		return frs;
+	public boolean isValide() {
+		return valide;
 	}
 
-	/**
-	 * @param frs the frs to set
-	 */
-	public void setFrs(Fournisseur frs) {
-		this.frs = frs;
+	public void setValide(boolean valide) {
+		this.valide = valide;
 	}
 
-	/**
-	 * @return the exercice
-	 */
-	public Exercice getExercice() {
-		return exercice;
+	public int getValeur() {
+		return valeur;
 	}
 
-	/**
-	 * @param exercice the exercice to set
-	 */
-	public void setExercice(Exercice exercice) {
-		this.exercice = exercice;
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
 	}
-	
-	
 
 	public boolean isLiver() {
 		return liver;
@@ -221,69 +132,54 @@ public class Commande implements Serializable {
 		this.reporter = reporter;
 	}
 
+	public Fournisseur getFrs() {
+		return frs;
+	}
 
+	public void setFrs(Fournisseur frs) {
+		this.frs = frs;
+	}
+
+	public Exercice getExercice() {
+		return exercice;
+	}
+
+	public void setExercice(Exercice exercice) {
+		this.exercice = exercice;
+	}
 
 	public String getDepartement() {
 		return departement;
 	}
 
-
-
 	public void setDepartement(String departement) {
 		this.departement = departement;
 	}
-
-
 
 	public String getNumDa() {
 		return numDa;
 	}
 
-
-
 	public void setNumDa(String numDa) {
 		this.numDa = numDa;
 	}
-
-
 
 	public String getJustif() {
 		return justif;
 	}
 
-
-
 	public void setJustif(String justif) {
 		this.justif = justif;
 	}
 
-	
-	public String getCmdDe() {
-		return cmdDe;
-	}
-
-
-	public void setCmdDe(String cmdDe) {
-		this.cmdDe = cmdDe;
-	}
-
-
-
-
-
-
-
 	@Override
 	public String toString() {
-		return "Commande [numCommande=" + numCommande + ", dateCommande=" + dateCommande + ", dateRemise=" + dateRemise
+		return "Travaux [numTravaux=" + numTravaux + ", dateCommande=" + dateCommande + ", dateRemise=" + dateRemise
 				+ ", description=" + description + ", delaiLivraison=" + delaiLivraison + ", valide=" + valide
 				+ ", valeur=" + valeur + ", liver=" + liver + ", reporter=" + reporter + ", frs=" + frs + ", exercice="
-				+ exercice + ", departement=" + departement + ", numDa=" + numDa + ", justif=" + justif + ", cmdDe="
-				+ cmdDe + "]";
+				+ exercice + ", departement=" + departement + ", numDa=" + numDa + ", justif=" + justif + "]";
 	}
-
 	
 	
 
-	
 }

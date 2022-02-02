@@ -31,22 +31,29 @@ public class LigneDemandePrix {
 		@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
 		@JoinColumn(name = "numUniter", referencedColumnName = "numUniter")
 		private Uniter uniter;
+		
+		private String caracteristiqArti;
 
 	public LigneDemandePrix() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public LigneDemandePrix(double qteLigneDemandePrix, String designationLigneDemandePrix,
-			DemandePrix demandePrix, Article article, Uniter uniter) {
+	
+
+	public LigneDemandePrix(Long idLigneDemandePrix, double qteLigneDemandePrix, String designationLigneDemandePrix,
+			DemandePrix demandePrix, Article article, Uniter uniter, String caracteristiqArti) {
 		super();
-		
+		this.idLigneDemandePrix = idLigneDemandePrix;
 		this.qteLigneDemandePrix = qteLigneDemandePrix;
 		this.designationLigneDemandePrix = designationLigneDemandePrix;
 		this.demandePrix = demandePrix;
 		this.article = article;
 		this.uniter = uniter;
+		this.caracteristiqArti = caracteristiqArti;
 	}
+
+
 
 	public Long getIdLigneDemandePrix() {
 		return idLigneDemandePrix;
@@ -96,11 +103,22 @@ public class LigneDemandePrix {
 		this.uniter = uniter;
 	}
 
+	public String getCaracteristiqArti() {
+		return caracteristiqArti;
+	}
+
+	public void setCaracteristiqArti(String caracteristiqArti) {
+		this.caracteristiqArti = caracteristiqArti;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "LigneDemandePrix [idLigneDemandePrix=" + idLigneDemandePrix + ", qteLigneDemandePrix="
 				+ qteLigneDemandePrix + ", designationLigneDemandePrix=" + designationLigneDemandePrix
-				+ ", demandePrix=" + demandePrix + ", article=" + article + ", uniter=" + uniter + "]";
+				+ ", demandePrix=" + demandePrix + ", article=" + article + ", uniter=" + uniter
+				+ ", caracteristiqArti=" + caracteristiqArti + "]";
 	}
 		
 	

@@ -51,6 +51,7 @@ public class LettreCommandeService {
 		if(entiter != null) {
 			entiter.setCommande(lettreCommande.getCommande());
 			entiter.setExercice(lettreCommande.getExercice());
+			entiter.setCommandeAchat(lettreCommande.getCommandeAchat());
 			
 			return this.repo.save(entiter);
 		}

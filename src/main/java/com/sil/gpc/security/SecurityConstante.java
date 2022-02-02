@@ -9,7 +9,8 @@ public class SecurityConstante {
 	public static final String STRING_USER = "user";
 	public static final long EXPIRATION = 120000000;//en seconde
 	
-	public static final String STRING_ASK_URI = "/sigsl/utilisat/askMdp/";
+	public static final String STRING_ASK_URI = "/sigsl/utilisat/askMdp/"; // au port
+	//public static final String STRING_ASK_URI = "/utilisat/askMdp/"; //en local
 	public static final String STRING_LOGIN_URI = "/login";
 	public static final long ASK_EXPIRATION = 300;//en seconde
 	

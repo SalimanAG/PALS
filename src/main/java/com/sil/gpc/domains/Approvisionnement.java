@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @SuppressWarnings("serial")
 @Entity
 public class Approvisionnement implements Serializable {
@@ -19,6 +21,9 @@ public class Approvisionnement implements Serializable {
 	private String numAppro;
 	private String descriptionAppro;
 	private Date dateAppro;
+	//@ColumnDefault(value = "false")
+	@ColumnDefault(value = "0")
+	private boolean valideAppro1;
 	@Column()
 	private boolean valideAppro;
 	private int valeur;
@@ -158,16 +163,24 @@ public class Approvisionnement implements Serializable {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Approvisionnement [numAppro=" + numAppro + ", descriptionAppro=" + descriptionAppro + ", dateAppro="
-				+ dateAppro + ", valideAppro=" + valideAppro + ", valeur=" + valeur + ", dateValidation="
-				+ dateValidation + ", exercice=" + exercice + ", magasin=" + magasin + "]";
+	public boolean isValideAppro1() {
+		return valideAppro1;
 	}
 
 
+	public void setValideAppro1(boolean valideAppro1) {
+		this.valideAppro1 = valideAppro1;
+	}
 
 
+	@Override
+	public String toString() {
+		return "Approvisionnement [numAppro=" + numAppro + ", descriptionAppro=" + descriptionAppro + ", dateAppro="
+				+ dateAppro + ", valideAppro1=" + valideAppro1 + ", valideAppro=" + valideAppro + ", valeur=" + valeur
+				+ ", dateValidation=" + dateValidation + ", exercice=" + exercice + ", magasin=" + magasin + "]";
+	}
 
+
+	
 
 }

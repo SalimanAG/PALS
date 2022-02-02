@@ -51,6 +51,7 @@ public class CommandeAchatService {
 		if(entiter != null) {
 			entiter.setCommande(commandeAchat.getCommande());
 			entiter.setExercice(commandeAchat.getExercice());
+			entiter.setProcesByLc(commandeAchat.isProcesByLc());
 			
 			return this.repo.save(entiter);
 		}

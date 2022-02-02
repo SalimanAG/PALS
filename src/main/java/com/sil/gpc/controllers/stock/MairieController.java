@@ -3,6 +3,7 @@ package com.sil.gpc.controllers.stock;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,11 +28,14 @@ import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneDemandePrix;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneInventaire;
+import com.sil.gpc.domains.LigneTravaux;
+import com.sil.gpc.domains.Travaux;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapCommande;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.encapsuleurs.EncapFactureProformAchat;
 import com.sil.gpc.encapsuleurs.EncapInventaire;
+import com.sil.gpc.encapsuleurs.EncapTravaux;
 import com.sil.gpc.services.AppelOffreService;
 import com.sil.gpc.services.ApprovisionnementService;
 import com.sil.gpc.services.BondTravailService;
@@ -44,10 +48,13 @@ import com.sil.gpc.services.LigneApproService;
 import com.sil.gpc.services.LigneDemandeApproService;
 import com.sil.gpc.services.LigneDemandePrixService;
 import com.sil.gpc.services.LigneFactureProFormAchaService;
+import com.sil.gpc.services.LigneTravauxService;
+import com.sil.gpc.services.TravauxService;
 
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-stock/v1/stock/")
+@Transactional
 public class MairieController {
 
 	private final ApprovisionnementService approvisionnementService;
@@ -62,9 +69,11 @@ public class MairieController {
 	private final LigneDemandePrixService ligneDemandePrixService;
 	private final LigneFactureProFormAchaService ligneFactureProFormAchaService;
 	private final LigneDemandeApproService ligneDemandeApproService;
+	private final TravauxService travauxService;
+	private final LigneTravauxService ligneTravauxService;
 	
 	
-	public MairieController(ApprovisionnementService approvisionnementService, LigneApproService ligneApproService, LigneFactureProFormAchaService ligneFactureProFormAchaService, LigneDemandePrixService ligneDemandePrixService, LettreCommandeService lettreCommandeService, FactureProFormAchaService factureProFormAchaService, DemandePrixService demandePrixService, ConsulterFrsForDpService consulterFrsForDpService, CommandeAchatService commandeAchatService, BondTravailService bondTravailService, AppelOffreService appelOffreService, LigneDemandeApproService ligneDemandeApproService) {
+	public MairieController(ApprovisionnementService approvisionnementService, LigneApproService ligneApproService, LigneFactureProFormAchaService ligneFactureProFormAchaService, LigneDemandePrixService ligneDemandePrixService, LettreCommandeService lettreCommandeService, FactureProFormAchaService factureProFormAchaService, DemandePrixService demandePrixService, ConsulterFrsForDpService consulterFrsForDpService, CommandeAchatService commandeAchatService, BondTravailService bondTravailService, AppelOffreService appelOffreService, LigneDemandeApproService ligneDemandeApproService, TravauxService travauxService, LigneTravauxService ligneTravauxService) {
 		super();
 		this.approvisionnementService = approvisionnementService;
 		this.ligneApproService = ligneApproService;
@@ -78,6 +87,8 @@ public class MairieController {
 		this.ligneDemandePrixService = ligneDemandePrixService;
 		this.ligneFactureProFormAchaService = ligneFactureProFormAchaService;
 		this.ligneDemandeApproService = ligneDemandeApproService;
+		this.travauxService = travauxService;
+		this.ligneTravauxService = ligneTravauxService;
 	}
 	
 	/*###########################################################
@@ -142,6 +153,12 @@ public class MairieController {
 	public Approvisionnement updateApprovisionnement3(@PathVariable(name = "id") String id, @RequestBody Approvisionnement approvisionnement) {
 		
 		return this.approvisionnementService.edit3(id, approvisionnement);
+	}
+	
+	@PutMapping(path = "approvisionnement/byCodApp4/{id}")
+	public Approvisionnement updateApprovisionnement4(@PathVariable(name = "id") String id, @RequestBody Approvisionnement approvisionnement) {
+		
+		return this.approvisionnementService.edit4(id, approvisionnement);
 	}
 	
 	
@@ -612,7 +629,107 @@ public class MairieController {
 		
 		return this.ligneFactureProFormAchaService.delete(id);
 	}
+	
+	
+	/*###########################################################
+	#############	Partie réservée pour les Travaux
+	###########################################################
+	*/
+	
+	@GetMapping(path = "travaux/list")
+	public List<Travaux> getAllTravaux(){
+		
+		return this.travauxService.getAll();
+	}
+	
+	@GetMapping(path = "travaux/byCodTrav/{id}")
+	public Travaux getTravauxById(@PathVariable(name = "id") String id){
+		
+		return this.travauxService.getById(id);
+	}
+	
+	@PostMapping(path = "travaux/list")
+	public Travaux createTravaux( @RequestBody Travaux travaux) {
+		
+		return this.travauxService.save(travaux);
+	}
+	
+	
+	@PostMapping(path = "travaux/list2")
+	public EncapTravaux createTravauxByEncap( @RequestBody EncapTravaux encapTravaux) {
+		
+		
+		return this.travauxService.saveByEncap(encapTravaux);
+	}
 
+	
+	
+	@PutMapping(path = "travaux/byCodTrav/{id}")
+	public Travaux updateTravaux(@PathVariable(name = "id") String id, @RequestBody Travaux travaux) {
+		
+		return this.travauxService.edit(id, travaux);
+	}
+	
+	@PutMapping(path = "travaux/byCodTrav2/{id}")
+	public EncapTravaux updateTravaux2(@PathVariable(name = "id") String id, @RequestBody EncapTravaux encapTravaux) {
+		
+		return this.travauxService.editByEncap(id, encapTravaux);
+	}
+	
+	@PutMapping(path = "travaux/byCodTrav3/{id}")
+	public Travaux updateTravaux3(@PathVariable(name = "id") String id, @RequestBody Travaux travaux) {
+		
+		return this.travauxService.edit2(id, travaux);
+	}
+	
+	@DeleteMapping(path = "travaux/byCodTrav/{id}")
+	public Boolean deleteTravaux(@PathVariable(name = "id") String id) {
+		
+		return this.travauxService.delete(id);
+	}
+	
+	@DeleteMapping(path = "travaux/byCodTrav2/{id}")
+	public Boolean deleteTravaux2(@PathVariable(name = "id") String id) {
+		
+		return this.travauxService.delete2(id);
+	}
+
+	
+	/*###########################################################
+	#############	Partie réservée pour LigneTravaux
+	###########################################################
+	*/
+	
+	@GetMapping(path = "ligneTravaux/list")
+	public List<LigneTravaux> getAllLigneTravaux(){
+		
+		return this.ligneTravauxService.getAll();
+	}
+	
+	@GetMapping(path = "ligneTravaux/byCodLigTrav/{id}")
+	public LigneTravaux getLigneTravaux(@PathVariable(name = "id") Long id){
+		
+		return this.ligneTravauxService.getById(id);
+	}
+	
+	@PostMapping(path = "ligneTravaux/list")
+	public LigneTravaux createLigneTravaux( @RequestBody LigneTravaux ligneTravaux) {
+		
+		return this.ligneTravauxService.save(ligneTravaux);
+	}
+	
+	@PutMapping(path = "ligneTravaux/byCodLigTrav/{id}")
+	public LigneTravaux updateLigneTravaux(@PathVariable(name = "id") Long id, @RequestBody LigneTravaux ligneTravaux) {
+		
+		return this.ligneTravauxService.edit(id, ligneTravaux);
+	}
+	
+	@DeleteMapping(path = "ligneTravaux/byCodLigTrav/{id}")
+	public Boolean deleteLigneTravaux(@PathVariable(name = "id") Long id) {
+		
+		return this.ligneTravauxService.delete(id);
+	}
+	
 	
 	
 	
