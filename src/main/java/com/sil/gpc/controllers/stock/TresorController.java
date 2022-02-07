@@ -36,7 +36,7 @@ import com.sil.gpc.services.ReceptionService;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-stock/v1/stock/")
-@Transactional
+//@Transactional
 public class TresorController {
 
 

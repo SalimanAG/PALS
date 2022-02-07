@@ -23,7 +23,7 @@ import com.sil.gpc.services.StockComptaSettingService;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-stock/v1/compta/")
-@Transactional
+//@Transactional
 public class ComptabilisationController {
 
 	private final StockComptaSettingService comptaSettingService;

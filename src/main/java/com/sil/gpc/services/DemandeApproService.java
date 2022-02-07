@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.Exercice;
@@ -64,6 +65,7 @@ public class DemandeApproService {
 			entiter.setExercice(demandeApprovisionnement.getExercice());
 			entiter.setValideDA(demandeApprovisionnement.isValideDA());
 			entiter.setService(demandeApprovisionnement.getService());
+			entiter.setDescription(demandeApprovisionnement.getDescription());
 			
 			return this.repo.save(entiter);
 		}
@@ -72,6 +74,7 @@ public class DemandeApproService {
 	}
 	
 	
+	@Transactional
 	public EncapDemandeAppro editByEncap(String id, EncapDemandeAppro encap) {
 		
 		List<LigneDemandeAppro> lignes = this.repo2.findAll();
@@ -148,7 +151,7 @@ public class DemandeApproService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean deleteADemandeApprovisionnement2(String id) {
 		
 		List<LigneDemandeAppro> lignes = this.repo2.findAll();

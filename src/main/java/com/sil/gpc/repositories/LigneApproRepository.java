@@ -3,6 +3,7 @@ package com.sil.gpc.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sil.gpc.domains.Approvisionnement;
@@ -21,5 +22,9 @@ public interface LigneApproRepository extends JpaRepository<LigneAppro, Long> {
 	public List<LigneAppro> findByAppro(Approvisionnement approvisionnement);
 	
 	public List<LigneAppro> findByLigneDA(LigneDemandeAppro ligneDemandeAppro);
+	
+	@Query(value="FROM LigneAppro as l WHERE l.appro.numAppro = ?1"
+			, nativeQuery = false)
+	public List<LigneAppro> findByCodeAppro(String codeAppro);
 	
 }

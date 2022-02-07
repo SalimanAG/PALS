@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.sil.gpc.domains.CloturePeriodiq;
 import com.sil.gpc.repositories.CloturePeriodiqRepository;
 import com.sil.gpc.utilities.SalTools;
@@ -19,6 +21,7 @@ public class CloturePeriodiqService {
 		this.repo = repo;
 	}
 	
+	@Transactional
 	public CloturePeriodiq save(CloturePeriodiq cloturePeriodiq) {
 		cloturePeriodiq.setValide(true);
 		if(cloturePeriodiq.getDateDebutCloturePer().compareTo(cloturePeriodiq.getDateFinCloturePer()) < 0) {
@@ -72,6 +75,7 @@ public class CloturePeriodiqService {
 		return null;
 	}
 	
+	@Transactional
 	public CloturePeriodiq validate(Long id, CloturePeriodiq cloturePeriodiq) {
 		CloturePeriodiq entiter = this.repo.getOne(id);
 		if(entiter != null) {

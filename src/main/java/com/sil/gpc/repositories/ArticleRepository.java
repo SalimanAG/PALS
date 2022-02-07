@@ -31,6 +31,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	
 	public List<Article> findByConsommableArticle(boolean consommableArticle);
 	
+	@Query(value="from Article as a where a.afficherArticle = ?1"
+			, nativeQuery = false)
+	public List<Article> findByAffichableArticle(boolean affichableArticle);
+	
 	@Query(value="SELECT num_article, abreger_article, afficher_article, cmup_actu_article, code_article, " +
 			"code_bare_article, compte_article, consommable_article, couleur_article, dat_st_init_art_tres, " +
 			"lib_article, livrable_article, num_serie_article, prix_vente_article, pu_st_ini_tres, qte_st_ini_tres, " +

@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 @org.springframework.stereotype.Service
 public class UtilisateurService implements UserDetailsService{
@@ -48,6 +49,7 @@ public class UtilisateurService implements UserDetailsService{
         return   this.userRepository.save(user);
     }
     
+    @Transactional
     public EncapUserGroupes save2(EncapUserGroupes encapUserGroupes) {
     	
     	Utilisateur utilisateur = save(encapUserGroupes.getUtilisateur());
@@ -98,6 +100,7 @@ public class UtilisateurService implements UserDetailsService{
    		return null;
        }
     
+    @Transactional
     public EncapUserGroupes edit2(Long id, EncapUserGroupes encapUserGroupes) {
     	
     	Utilisateur utilisateur = edit(id, encapUserGroupes.getUtilisateur());

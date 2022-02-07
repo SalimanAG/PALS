@@ -38,11 +38,12 @@ import com.sil.gpc.services.MagasinierService;
 import com.sil.gpc.services.StockerService;
 import com.sil.gpc.services.TypeArticleService;
 import com.sil.gpc.services.UniterService;
+import com.sil.gpc.utilities.SalEncapGene;
 
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-stock/v1/stock/")
-@Transactional
+//@Transactional
 public class MagasinController {
 
 	private final MagasinService magasinService;
@@ -206,10 +207,16 @@ public class MagasinController {
 	###########################################################
 	*/
 	
-	@GetMapping(path = "article/list")
+	@GetMapping(path = "article/list0")
 	public List<Article> getAllArticle(){
 		
 		return this.articleService.getAll();
+	}
+	
+	@GetMapping(path = "article/list")
+	public List<Article> getAllArticleAffichable(){
+		
+		return this.articleService.findByAffichableArticle(true);
 	}
 	
 	@GetMapping(path = "article/byCodArt/{id}")
@@ -354,6 +361,11 @@ public class MagasinController {
 	@PostMapping(path = "stocker/list")
 	public Stocker createStocker( @RequestBody Stocker stocker) {
 		return this.stockerService.save(stocker);
+	}
+	
+	@PostMapping(path = "stocker/findByArticleAndMagasin")
+	public Stocker findAStockerByArticleAndMagasin( @RequestBody SalEncapGene donner) {
+		return this.stockerService.findByArticleAndMagasin(donner.getArticle().getNumArticle(), donner.getMagasin().getNumMagasin());
 	}
 	
 	@PutMapping(path = "stocker/byCodSto/{id}")

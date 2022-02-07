@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.LigneCommande;
@@ -55,6 +56,7 @@ public class TravauxService {
 		return null;
 	}
 	
+	@Transactional
 	public EncapTravaux saveByEncap(EncapTravaux encapTravaux) {
 		
 		List<LigneTravaux> lignes = encapTravaux.getLigneTravauxs();
@@ -96,6 +98,7 @@ public class TravauxService {
 		return null;
 	}
 	
+	@Transactional
 	public Travaux edit2(String id, Travaux travaux) {
 		
 		Travaux entiter = this.repo.getOne(id);
@@ -108,6 +111,7 @@ public class TravauxService {
 		return null;
 	}
 	
+	@Transactional
 	public EncapTravaux editByEncap(String id, EncapTravaux encapTravaux) {
 		
 		List<LigneTravaux> lignes = this.repo2.findAll();
@@ -145,7 +149,7 @@ public class TravauxService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean delete2(String id) {
 		
 		Travaux entiter = this.repo.getOne(id);

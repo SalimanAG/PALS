@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.FactureProFormAcha;
@@ -89,7 +90,7 @@ public class FactureProFormAchaService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapFactureProformAchat editByEncap(String id, EncapFactureProformAchat encap) {
 		
 		List<LigneFactureProFormAchat> lignes = this.repo2.findAll();
@@ -169,7 +170,7 @@ public class FactureProFormAchaService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean deleteAFactureProFormAcha2(String id) {
 		
 		List<LigneFactureProFormAchat> lignes = this.repo2.findAll();

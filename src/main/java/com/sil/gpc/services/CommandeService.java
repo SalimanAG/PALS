@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.Exercice;
@@ -82,7 +83,7 @@ public class CommandeService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapCommande editByEncap(Long id, EncapCommande encap) {
 				
 		List<LigneCommande> lignes = this.repo2.findAll();
@@ -157,6 +158,7 @@ public class CommandeService {
 		return !this.repo.existsById(id);
 	}
 	
+	@Transactional
 	public boolean deleteACommande2(Long id) {
 		
 		List<LigneCommande> lignes = this.repo2.findAll();

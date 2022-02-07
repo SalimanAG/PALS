@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.repositories.ExerciceRepository;
@@ -21,6 +22,7 @@ public class ExerciceService {
 		this.repo = repo;
 	}
 	
+	@Transactional
 	public Exercice save (Exercice exercice) {
 		if(exercice.getDateDebut().compareTo(exercice.getDateFin()) < 0) {
 			List<Exercice> liste = this.repo.findAll();

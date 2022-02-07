@@ -23,6 +23,7 @@ import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.repositories.ApprovisionementRepository;
 import com.sil.gpc.repositories.LigneApproRepository;
+import com.sil.gpc.utilities.SalTools;
 
 @Service
 public class ApprovisionnementService {
@@ -91,7 +92,7 @@ public class ApprovisionnementService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapApprovisionnement editByEncap(String id, EncapApprovisionnement encap) {
 		
 		List<LigneAppro> lignes = this.repo2.findAll();
@@ -163,88 +164,68 @@ public class ApprovisionnementService {
 		return new EncapApprovisionnement(this.edit(id, encap.getApprovisionnement()), newLignes);
 	}
 	
-	
+	@Transactional
 	public Approvisionnement edit3(String id, Approvisionnement approvisionnement) {
 		Approvisionnement entiter = this.repo.getOne(id); 
 		if(entiter != null && approvisionnement.isValideAppro() != entiter.isValideAppro()) {
 
 			
 			
-			List<LigneAppro> lignes = this.servi2.getAll();
-			List<Stocker> listStocker = this.servi3.getAll();
+			//List<LigneAppro> lignes = this.servi2.getAll();
+			//List<Stocker> listStocker = this.servi3.getAll();
 			
-			List<LigneAppro> clignes = new ArrayList<LigneAppro>();
+			List<LigneAppro> clignes = this.servi2.findByCodeAppro(id);
 			List<Stocker> clistStocker = new ArrayList<Stocker>();
 			
 			boolean stockerFinded = false;
 			
-			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-					LigneAppro ligApp = lignes.get(i);
-					clignes.add(ligApp);
+			for(int i = 0; i < clignes.size(); i++) {
+				
+					LigneAppro ligApp = clignes.get(i);
 					stockerFinded = false;
+					Stocker newSt = this.servi3.findByArticleAndMagasin(ligApp.getLigneDA().getArticle().getNumArticle(), entiter.getMagasin().getNumMagasin());
 					
-					for(int j = 0; j < listStocker.size(); j++) {
-						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneDA().getArticle().getNumArticle()
-								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()
-								&& listStocker.get(j).getQuantiterStocker() >= lignes.get(i).getQuantiteLigneAppro()) {
-							
-							stockerFinded = true;
-							Stocker newSt = listStocker.get(j);
-							clistStocker.add(newSt);
-							break;
-						}
-						
-						
-					}
+					if(newSt != null) stockerFinded = true;
+					else SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas de Stock");
 					
-					if(stockerFinded == false) {
+					if(newSt.getQuantiterStocker() >= ligApp.getQuantiteLigneAppro()) {
 						
+						clistStocker.add(newSt);
 						break;
 					}
 					
-				}
 			}
 			
-			lignes = new ArrayList<LigneAppro>(clignes);
-			listStocker = new ArrayList<Stocker>(clistStocker);
+		
 			
 			if(stockerFinded == true)
-			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-					LigneAppro ligApp = lignes.get(i);
-					
-					
-					for(int j = 0; j < listStocker.size(); j++) {
-						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneDA().getArticle().getNumArticle()
-								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()
-								&& listStocker.get(j).getQuantiterStocker() >= lignes.get(i).getQuantiteLigneAppro()) {
-							
-							
-							Stocker newSt = listStocker.get(j);
-							
-							
-							if(approvisionnement.isValideAppro() == true) {
-								entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
-								ligApp.setLastStockQte(newSt.getQuantiterStocker());
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneAppro()*lignes.get(i).getLigneDA().getUniter().getPoids()));
-								ligApp.setPULigneAppro(newSt.getCmup());
-							}else if(approvisionnement.isValideAppro() == false) {
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneAppro()*lignes.get(i).getLigneDA().getUniter().getPoids()));
-								ligApp.setPULigneAppro(Long.valueOf(0));
-							}
-																					
-							this.servi3.edit(listStocker.get(j).getIdStocker(), newSt);
-							
-							entiter.setValideAppro(approvisionnement.isValideAppro());
-							
-							break;
-						}
+			for(int i = 0; i < clignes.size(); i++) {
+				
+				LigneAppro ligApp = clignes.get(i);
+				
+				Stocker newSt = this.servi3.findByArticleAndMagasin(ligApp.getLigneDA().getArticle().getNumArticle(), entiter.getMagasin().getNumMagasin());
+				
+				if(newSt.getQuantiterStocker() >= ligApp.getQuantiteLigneAppro()) {
+				
+					if(approvisionnement.isValideAppro() == true) {
+						entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
+						ligApp.setLastStockQte(newSt.getQuantiterStocker());
+						newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
+						ligApp.setPULigneAppro(newSt.getCmup());
+					}else if(approvisionnement.isValideAppro() == false) {
+						newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
+						ligApp.setPULigneAppro(Long.valueOf(0));
 					}
+																			
+					this.servi3.edit(newSt.getIdStocker(), newSt);
 					
+					entiter.setValideAppro(approvisionnement.isValideAppro());
 					
-					
-					this.repo2.save(ligApp);
+				}
+				else SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas suffisament de Stock");
+				
+				
+				this.repo2.save(ligApp);
 					
 					//Ecritures comptables
 					List<OpeJournalSetting> numJournaux = this.servi6.getAll();
@@ -284,9 +265,6 @@ public class ApprovisionnementService {
 						
 					}
 	
-					
-					
-				}
 			}
 			
 			
@@ -321,17 +299,17 @@ public class ApprovisionnementService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean deleteAApprovisionnement2(String id) {
 		
-		List<LigneAppro> lignes = this.repo2.findAll();
+		List<LigneAppro> lignes = this.servi2.findByCodeAppro(id);
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
+			
 				lignes.get(i).getLigneDA().setSatisfaite(false);
 				this.servi4.edit(lignes.get(i).getLigneDA().getIdLigneDA(), lignes.get(i).getLigneDA());
 				this.repo2.deleteById(lignes.get(i).getIdLigneAppro());
-			}
+			
 		}
 		
 		return this.delete(id);

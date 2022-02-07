@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.ConsulterFrsForDp;
 import com.sil.gpc.domains.DemandePrix;
@@ -59,6 +60,7 @@ public class DemandePrixService {
 		return null;
 	}
 	
+	
 	public DemandePrix edit(String id, DemandePrix demandePrix) {
 		
 		DemandePrix entiter = this.repo.getOne(id);
@@ -76,7 +78,7 @@ public class DemandePrixService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapDemandePrix editByEncap(String id, EncapDemandePrix encap) {
 		
 		List<LigneDemandePrix> lignes = this.repo2.findAll();
@@ -218,7 +220,7 @@ public class DemandePrixService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean deleteADemandePrix2(String id) {
 		
 		List<LigneDemandePrix> lignes = this.repo2.findAll();

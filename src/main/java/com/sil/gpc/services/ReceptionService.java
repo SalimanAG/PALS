@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReceptionService {
@@ -97,7 +98,7 @@ public class ReceptionService {
        }
     
     
-	
+	@Transactional
 	public EncapReception editByEncap(String id, EncapReception encap) {
 		
 		List<LigneReception> lignes = this.repo2.findAll();
@@ -171,7 +172,7 @@ public class ReceptionService {
 		return new EncapReception(this.edit(id, encap.getReception()), newLignes);
 	}
 	
-	
+	@Transactional
 	public Reception edit3(String id, Reception reception) {
 		Reception entiter = this.receptionRepository.getOne(id); 
 		if(entiter != null && reception.isValideRecep() != entiter.isValideRecep()) {
@@ -298,7 +299,7 @@ public class ReceptionService {
     	return this.receptionRepository.existsById(id);
     }  
     
-    
+    @Transactional
 	public boolean deleteAReception2(String id) {
 		
 		List<LigneReception> lignes = this.repo2.findAll();
