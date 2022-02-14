@@ -21,7 +21,7 @@ public class CloturePeriodiqService {
 		this.repo = repo;
 	}
 	
-	@Transactional
+	
 	public CloturePeriodiq save(CloturePeriodiq cloturePeriodiq) {
 		cloturePeriodiq.setValide(true);
 		if(cloturePeriodiq.getDateDebutCloturePer().compareTo(cloturePeriodiq.getDateFinCloturePer()) < 0) {
@@ -75,7 +75,7 @@ public class CloturePeriodiqService {
 		return null;
 	}
 	
-	@Transactional
+	
 	public CloturePeriodiq validate(Long id, CloturePeriodiq cloturePeriodiq) {
 		CloturePeriodiq entiter = this.repo.getOne(id);
 		if(entiter != null) {

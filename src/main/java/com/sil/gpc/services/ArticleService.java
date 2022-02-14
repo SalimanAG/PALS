@@ -36,8 +36,8 @@ public class ArticleService {
 		
 		return this.repo.saveAll(articles);
 	}
+
 	
-	@Transactional
 	public List<Article> saveByList2(List<Article> articles) {
 		
 		List<Article> lister = new ArrayList<Article>();

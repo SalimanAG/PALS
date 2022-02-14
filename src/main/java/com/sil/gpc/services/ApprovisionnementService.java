@@ -92,7 +92,6 @@ public class ApprovisionnementService {
 		return null;
 	}
 	
-	@Transactional
 	public EncapApprovisionnement editByEncap(String id, EncapApprovisionnement encap) {
 		
 		List<LigneAppro> lignes = this.repo2.findAll();
@@ -163,8 +162,7 @@ public class ApprovisionnementService {
 		
 		return new EncapApprovisionnement(this.edit(id, encap.getApprovisionnement()), newLignes);
 	}
-	
-	@Transactional
+
 	public Approvisionnement edit3(String id, Approvisionnement approvisionnement) {
 		Approvisionnement entiter = this.repo.getOne(id); 
 		if(entiter != null && approvisionnement.isValideAppro() != entiter.isValideAppro()) {
@@ -299,7 +297,7 @@ public class ApprovisionnementService {
 		return !this.repo.existsById(id);
 	}
 	
-	@Transactional
+	
 	public boolean deleteAApprovisionnement2(String id) {
 		
 		List<LigneAppro> lignes = this.servi2.findByCodeAppro(id);

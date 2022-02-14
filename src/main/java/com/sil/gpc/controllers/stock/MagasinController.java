@@ -43,7 +43,6 @@ import com.sil.gpc.utilities.SalEncapGene;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/perfora-stock/v1/stock/")
-//@Transactional
 public class MagasinController {
 
 	private final MagasinService magasinService;

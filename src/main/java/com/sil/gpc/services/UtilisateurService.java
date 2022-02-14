@@ -49,7 +49,7 @@ public class UtilisateurService implements UserDetailsService{
         return   this.userRepository.save(user);
     }
     
-    @Transactional
+    
     public EncapUserGroupes save2(EncapUserGroupes encapUserGroupes) {
     	
     	Utilisateur utilisateur = save(encapUserGroupes.getUtilisateur());
@@ -100,7 +100,7 @@ public class UtilisateurService implements UserDetailsService{
    		return null;
        }
     
-    @Transactional
+    
     public EncapUserGroupes edit2(Long id, EncapUserGroupes encapUserGroupes) {
     	
     	Utilisateur utilisateur = edit(id, encapUserGroupes.getUtilisateur());

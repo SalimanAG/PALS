@@ -22,7 +22,7 @@ public class ExerciceService {
 		this.repo = repo;
 	}
 	
-	@Transactional
+	
 	public Exercice save (Exercice exercice) {
 		if(exercice.getDateDebut().compareTo(exercice.getDateFin()) < 0) {
 			List<Exercice> liste = this.repo.findAll();

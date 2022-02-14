@@ -74,7 +74,7 @@ public class DemandeApproService {
 	}
 	
 	
-	@Transactional
+	
 	public EncapDemandeAppro editByEncap(String id, EncapDemandeAppro encap) {
 		
 		List<LigneDemandeAppro> lignes = this.repo2.findAll();
@@ -151,7 +151,7 @@ public class DemandeApproService {
 		return !this.repo.existsById(id);
 	}
 	
-	@Transactional
+	
 	public boolean deleteADemandeApprovisionnement2(String id) {
 		
 		List<LigneDemandeAppro> lignes = this.repo2.findAll();

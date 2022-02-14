@@ -78,7 +78,7 @@ public class DemandePrixService {
 		return null;
 	}
 	
-	@Transactional
+	
 	public EncapDemandePrix editByEncap(String id, EncapDemandePrix encap) {
 		
 		List<LigneDemandePrix> lignes = this.repo2.findAll();
@@ -220,7 +220,7 @@ public class DemandePrixService {
 		return !this.repo.existsById(id);
 	}
 	
-	@Transactional
+	
 	public boolean deleteADemandePrix2(String id) {
 		
 		List<LigneDemandePrix> lignes = this.repo2.findAll();

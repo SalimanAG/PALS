@@ -83,7 +83,7 @@ public class CommandeService {
 		return null;
 	}
 	
-	@Transactional
+	
 	public EncapCommande editByEncap(Long id, EncapCommande encap) {
 				
 		List<LigneCommande> lignes = this.repo2.findAll();
@@ -158,7 +158,7 @@ public class CommandeService {
 		return !this.repo.existsById(id);
 	}
 	
-	@Transactional
+	
 	public boolean deleteACommande2(Long id) {
 		
 		List<LigneCommande> lignes = this.repo2.findAll();

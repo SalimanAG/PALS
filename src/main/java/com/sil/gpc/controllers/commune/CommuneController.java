@@ -69,7 +69,6 @@ import com.sil.gpc.services.ProfessionService;
 @RestController
 @CrossOrigin
 @RequestMapping(path = "/perfora-stock/v1/commune/")
-@Transactional
 public class CommuneController {
 
 	private final ExerciceService exerciceService;

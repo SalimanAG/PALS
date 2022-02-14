@@ -56,7 +56,7 @@ public class InventaireService {
 			return null;
 	}
 	
-	@Transactional
+	
 	public Inventaire edit3(Inventaire inv, String num){
 		Inventaire entiter=repos.getOne(num);
 		if (entiter!=null && entiter.isValideInve() == false) {
@@ -107,7 +107,7 @@ public class InventaireService {
 	}
 
 	
-	@Transactional
+	
 	public EncapInventaire editByEncap(String id, EncapInventaire encap) {
 		
 		List<LigneInventaire> lignes = this.repo2.findAll();

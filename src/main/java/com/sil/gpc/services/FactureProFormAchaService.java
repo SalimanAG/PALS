@@ -90,7 +90,7 @@ public class FactureProFormAchaService {
 		return null;
 	}
 	
-	@Transactional
+	
 	public EncapFactureProformAchat editByEncap(String id, EncapFactureProformAchat encap) {
 		
 		List<LigneFactureProFormAchat> lignes = this.repo2.findAll();
@@ -170,7 +170,7 @@ public class FactureProFormAchaService {
 		return !this.repo.existsById(id);
 	}
 	
-	@Transactional
+	
 	public boolean deleteAFactureProFormAcha2(String id) {
 		
 		List<LigneFactureProFormAchat> lignes = this.repo2.findAll();
