@@ -394,6 +394,11 @@ public class MagasinController {
 		return this.invServ.findById(id);
 	}
 	
+	@GetMapping(path = "inventaire/byCodExo/{codExo}")
+	public List<Inventaire> getInventaireByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.invServ.findByCodeExercice(id);
+	}
+	
 	@PostMapping(path = "inventaire/list")
 	public Inventaire createInventaire( @RequestBody Inventaire inv) {
 		return this.invServ.save(inv);
@@ -462,6 +467,13 @@ public class MagasinController {
 	@GetMapping(path = "ligneInventaire/byCodSto/{id}")
 	public Optional<LigneInventaire> getLigneInventaireById(@PathVariable(name = "id") Long id){	
 		return this.lInvServ.findById(id);
+	}
+	
+	@GetMapping(path = "ligneInventaire/list/byCodeInv/{code}")
+	public List<LigneInventaire> getLigneInventaireByCodeInventaire(@PathVariable(name = "code") String cod){	
+		
+		return this.lInvServ.findByCodeInventaire(cod);
+		
 	}
 	
 	@PostMapping(path = "ligneInventaire/list")

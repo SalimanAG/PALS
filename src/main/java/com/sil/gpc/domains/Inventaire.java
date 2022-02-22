@@ -107,6 +107,8 @@ public class Inventaire {
 	public void setDateValidation(Timestamp dateValidation) {
 		this.dateValidation = dateValidation;
 	}
+	
+	
 
 	@Override
 	public String toString() {

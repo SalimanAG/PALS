@@ -20,6 +20,7 @@ import com.sil.gpc.domains.BondTravail;
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.CommandeAchat;
 import com.sil.gpc.domains.ConsulterFrsForDp;
+import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.DemandePrix;
 import com.sil.gpc.domains.FactureProFormAcha;
 import com.sil.gpc.domains.Inventaire;
@@ -107,6 +108,11 @@ public class MairieController {
 		return this.approvisionnementService.getById(id);
 	}
 	
+	@GetMapping(path = "approvisionnement/byCodExo/{codExo}")
+	public List<Approvisionnement> getApprovisionnementByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.approvisionnementService.findByCodeExercice(id);
+	}
+	
 	@PostMapping(path = "approvisionnement/list")
 	public Approvisionnement createApprovisionnement( @RequestBody Approvisionnement approvisionnement) {
 		
@@ -115,24 +121,9 @@ public class MairieController {
 	
 	@PostMapping(path = "approvisionnement/list2")
 	public EncapApprovisionnement createApprovisionnementByEncap( @RequestBody EncapApprovisionnement encapApprovisionnement) {
-		List<LigneAppro> lignes = encapApprovisionnement.getLigneAppros();
 		
-		Approvisionnement element = this.approvisionnementService.save(encapApprovisionnement.getApprovisionnement());
+		return this.approvisionnementService.saveByEncap(encapApprovisionnement);
 		
-		for (int i = 0; i < lignes.size(); i++) {
-			LigneAppro lig = lignes.get(i);
-			lig.setAppro(element);
-			
-			lignes.set(i, lig);
-		}
-		
-		for(int i = 0; i < encapApprovisionnement.getLigneAppros().size(); i++) {			
-			this.ligneDemandeApproService.edit(encapApprovisionnement.getLigneAppros().get(i).getLigneDA().getIdLigneDA(), encapApprovisionnement.getLigneAppros().get(i).getLigneDA());
-		}
-		
-		lignes = this.ligneApproService.saveAll(lignes);
-		
-		return new EncapApprovisionnement(element, lignes);
 	}
 
 	
@@ -190,6 +181,13 @@ public class MairieController {
 	public Optional<LigneAppro> getLigneApproById(@PathVariable(name = "id") Long id){
 		
 		return this.ligneApproService.getById(id);
+	}
+	
+	@GetMapping(path = "ligneAppro/list/byCodeAppro/{code}")
+	public List<LigneAppro> getLigneApproByCodeAppro(@PathVariable(name = "code") String cod){
+		
+		return this.ligneApproService.findByCodeAppro(cod);
+		
 	}
 	
 	@PostMapping(path = "ligneAppro/list")
@@ -300,6 +298,11 @@ public class MairieController {
 	public CommandeAchat getCommandeAchatById(@PathVariable(name = "id") String id){
 		
 		return this.commandeAchatService.getById(id);
+	}
+	
+	@GetMapping(path = "commandeAchat/byCodExo/{codExo}")
+	public List<CommandeAchat> getCommandeAchatByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.commandeAchatService.findByCodeExercice(id);
 	}
 	
 	@PostMapping(path = "commandeAchat/list")
@@ -496,6 +499,11 @@ public class MairieController {
 		return this.lettreCommandeService.getById(id);
 	}
 	
+	@GetMapping(path = "lettreCommande/byCodExo/{codExo}")
+	public List<LettreCommande> getLettreCommandeByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.lettreCommandeService.findByCodeExercice(id);
+	}
+	
 	@PostMapping(path = "lettreCommande/list")
 	public LettreCommande createLettreCommande( @RequestBody LettreCommande lettreCommande) {
 		
@@ -647,6 +655,11 @@ public class MairieController {
 		return this.travauxService.getById(id);
 	}
 	
+	@GetMapping(path = "travaux/byCodExo/{codExo}")
+	public List<Travaux> getTravauxByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.travauxService.findByCodeExercice(id);
+	}
+	
 	@PostMapping(path = "travaux/list")
 	public Travaux createTravaux( @RequestBody Travaux travaux) {
 		
@@ -709,6 +722,12 @@ public class MairieController {
 	public LigneTravaux getLigneTravaux(@PathVariable(name = "id") Long id){
 		
 		return this.ligneTravauxService.getById(id);
+	}
+	
+	@GetMapping(path = "ligneTravaux/list/byCodeTrav/{code}")
+	public List<LigneTravaux> getLigneTravauxByCodeTravaux(@PathVariable(name = "code") String cod){
+		
+		return this.ligneTravauxService.findByCodeTravaux(cod);
 	}
 	
 	@PostMapping(path = "ligneTravaux/list")

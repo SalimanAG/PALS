@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Commande;
+import com.sil.gpc.domains.CommandeAchat;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.Fournisseur;
 import com.sil.gpc.domains.LigneCommande;
@@ -83,18 +84,13 @@ public class CommandeService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapCommande editByEncap(Long id, EncapCommande encap) {
 				
-		List<LigneCommande> lignes = this.repo2.findAll();
-		List<LigneCommande> concernedLignes = new ArrayList<LigneCommande>();
-		List<LigneCommande> newLignes = new ArrayList<LigneCommande>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).numCommande.getNumCommande().equals(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
+		List<LigneCommande> concernedLignes = this.repo2.findByCodeCommande(id);
+		List<LigneCommande> newLignes = new ArrayList<LigneCommande>();
+
 		
 		for(int i = 0; i < encap.getLigneCommandes().size(); i++) {
 			boolean added = true;
@@ -137,13 +133,7 @@ public class CommandeService {
 			
 		}
 		
-		lignes = this.repo2.findAll();
-		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).numCommande.getNumCommande().equals(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}
+		newLignes = this.repo2.findByCodeCommande(id);
 		
 		
 		return new EncapCommande(this.edit(id, encap.getCommande()), newLignes);
@@ -158,7 +148,7 @@ public class CommandeService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean deleteACommande2(Long id) {
 		
 		List<LigneCommande> lignes = this.repo2.findAll();
@@ -216,6 +206,11 @@ public class CommandeService {
 		}
 		
 		return res;
+	}
+	
+	public List<Commande> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
 	}
 	
 }

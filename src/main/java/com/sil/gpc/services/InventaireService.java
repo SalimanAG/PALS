@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.Inventaire;
 import com.sil.gpc.domains.LigneDemandePrix;
 import com.sil.gpc.domains.LigneInventaire;
@@ -57,6 +58,7 @@ public class InventaireService {
 	}
 	
 	
+	@Transactional
 	public Inventaire edit3(Inventaire inv, String num){
 		Inventaire entiter=repos.getOne(num);
 		if (entiter!=null && entiter.isValideInve() == false) {
@@ -107,25 +109,19 @@ public class InventaireService {
 	}
 
 	
-	
+	@Transactional
 	public EncapInventaire editByEncap(String id, EncapInventaire encap) {
 		
-		List<LigneInventaire> lignes = this.repo2.findAll();
-		List<LigneInventaire> concernedLignes = new ArrayList<LigneInventaire>();
+		List<LigneInventaire> concernedLignes = this.repo2.findByCodeInventaire(id);
 		List<LigneInventaire> newLignes = new ArrayList<LigneInventaire>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
-		
+				
 		for(int i = 0; i < encap.getLigneInventaires().size(); i++) {
 			boolean added = true;
 			LigneInventaire enti = null;
 			
 			for(int j = 0; j < concernedLignes.size(); j++) {
-				if(concernedLignes.get(j).getArticle().getNumArticle() == encap.getLigneInventaires().get(i).getArticle().getNumArticle()) {
+				if(concernedLignes.get(j).getArticle().getNumArticle().equals(encap.getLigneInventaires().get(i).getArticle().getNumArticle())) {
 					added = false;
 					enti = concernedLignes.get(j);
 					break;
@@ -149,7 +145,7 @@ public class InventaireService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneInventaires().size(); j++) {
-				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getLigneInventaires().get(j).getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getArticle().getNumArticle().equals(encap.getLigneInventaires().get(j).getArticle().getNumArticle())) {
 					removed = false;
 					break;
 				}
@@ -161,13 +157,7 @@ public class InventaireService {
 			
 		}
 		
-		lignes = this.repo2.findAll();
-		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}
+		newLignes = this.repo2.findByCodeInventaire(id);
 		
 		
 		return new EncapInventaire(this.edit(encap.getInventaire(), id), newLignes);
@@ -198,6 +188,7 @@ public class InventaireService {
 		return !repos.existsById(num);
 	}
 	
+	@Transactional
 	public boolean deleteAInventaire2(String id) {
 		
 		List<LigneInventaire> lignes = this.repo2.findAll();
@@ -209,6 +200,11 @@ public class InventaireService {
 		}
 		
 		return this.delete(id);
+	}
+	
+	public List<Inventaire> findByCodeExercice(String codeExo){
+		
+		return this.repos.findByCodeExercice(codeExo);
 	}
 	
 }

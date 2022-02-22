@@ -68,24 +68,11 @@ public class LigneDemandeApproService {
 		return this.repo.findAll();
 	}
 	
-	/*public List<LigneDemandeAppro> findByIdLigneDA(Long idLigneDA){
-		
-		return this.repo.findByIdLigneDA(idLigneDA);
-	}
 	
-	public List<LigneDemandeAppro> findByQuantiteDemandee(Long quantiteDemandee){
-		
-		return this.repo.findByQuantiteDemandee(quantiteDemandee);
-	}
 	
-	public List<LigneDemandeAppro> findByArticle(Article article){
+	public List<LigneDemandeAppro> findByCodeDemAppro(String codeDemAppro){
 		
-		return this.repo.findByArticle(article);
+		return this.repo.findByCodeDemAppro(codeDemAppro);
 	}
-	
-	public List<LigneDemandeAppro> findByAppro(DemandeApprovisionnement appro){
-		
-		return this.repo.findByAppro(appro);
-	}*/
 	
 }

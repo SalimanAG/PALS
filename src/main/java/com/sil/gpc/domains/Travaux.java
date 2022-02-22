@@ -34,15 +34,18 @@ public class Travaux {
 	private String departement;
 	private String numDa;
 	private String justif;
+	private String cmdDe;
 	
 	public Travaux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public Travaux(String numTravaux, Date dateCommande, Date dateRemise, String description, int delaiLivraison,
 			boolean valide, int valeur, boolean liver, boolean reporter, Fournisseur frs, Exercice exercice,
-			String departement, String numDa, String justif) {
+			String departement, String numDa, String justif, String cmdDe) {
 		super();
 		this.numTravaux = numTravaux;
 		this.dateCommande = dateCommande;
@@ -58,7 +61,10 @@ public class Travaux {
 		this.departement = departement;
 		this.numDa = numDa;
 		this.justif = justif;
+		this.cmdDe = cmdDe;
 	}
+
+
 
 	public String getNumTravaux() {
 		return numTravaux;
@@ -172,13 +178,25 @@ public class Travaux {
 		this.justif = justif;
 	}
 
+	public String getCmdDe() {
+		return cmdDe;
+	}
+
+	public void setCmdDe(String cmdDe) {
+		this.cmdDe = cmdDe;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Travaux [numTravaux=" + numTravaux + ", dateCommande=" + dateCommande + ", dateRemise=" + dateRemise
 				+ ", description=" + description + ", delaiLivraison=" + delaiLivraison + ", valide=" + valide
 				+ ", valeur=" + valeur + ", liver=" + liver + ", reporter=" + reporter + ", frs=" + frs + ", exercice="
-				+ exercice + ", departement=" + departement + ", numDa=" + numDa + ", justif=" + justif + "]";
+				+ exercice + ", departement=" + departement + ", numDa=" + numDa + ", justif=" + justif + ", cmdDe="
+				+ cmdDe + "]";
 	}
+	
 	
 	
 

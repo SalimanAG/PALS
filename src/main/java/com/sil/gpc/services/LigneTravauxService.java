@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.LigneReception;
 import com.sil.gpc.domains.LigneTravaux;
 import com.sil.gpc.repositories.LigneTravauxRepository;
 
@@ -74,6 +75,12 @@ public class LigneTravauxService {
 	public List<LigneTravaux> getAll(){
 		
 		return this.repo.findAll();
+	}
+	
+	public List<LigneTravaux> findByCodeTravaux(String codeTravaux){
+		
+		return this.repo.findByCodeTravaux(codeTravaux);
+		
 	}
 
 	

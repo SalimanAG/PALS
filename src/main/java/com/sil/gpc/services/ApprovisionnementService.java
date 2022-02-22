@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Approvisionnement;
+import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.EcritureComptable;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneAppro;
@@ -22,6 +23,7 @@ import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.repositories.ApprovisionementRepository;
+import com.sil.gpc.repositories.DemandeApproRepository;
 import com.sil.gpc.repositories.LigneApproRepository;
 import com.sil.gpc.utilities.SalTools;
 
@@ -30,6 +32,7 @@ public class ApprovisionnementService {
 
 	private final ApprovisionementRepository repo;
 	private final LigneApproRepository repo2;
+	private final DemandeApproRepository repo3;
 	private final LigneApproService servi2;
 	private final StockerService servi3;
 	private final LigneDemandeApproService servi4;
@@ -37,10 +40,11 @@ public class ApprovisionnementService {
 	private final OpeJournalSettingService servi6;
 	private final EcritureComptableService servi7;
 
-	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3, LigneDemandeApproService servi4, StockComptaSettingService servi5, EcritureComptableService servi7, OpeJournalSettingService servi6) {
+	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3, LigneDemandeApproService servi4, StockComptaSettingService servi5, EcritureComptableService servi7, OpeJournalSettingService servi6, DemandeApproRepository repo3) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
+		this.repo3 = repo3;
 		this.servi2 = servi2;
 		this.servi3 = servi3;
 		this.servi4 = servi4;
@@ -76,6 +80,33 @@ public class ApprovisionnementService {
 		
 	}
 	
+	@Transactional
+	public EncapApprovisionnement saveByEncap(EncapApprovisionnement encapApprovisionnement) {
+		List<LigneAppro> lignes = encapApprovisionnement.getLigneAppros();
+		
+		Approvisionnement element = this.save(encapApprovisionnement.getApprovisionnement());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneAppro lig = lignes.get(i);
+			lig.setAppro(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		for(int i = 0; i < encapApprovisionnement.getLigneAppros().size(); i++) {			
+			this.servi4.edit(encapApprovisionnement.getLigneAppros().get(i).getLigneDA().getIdLigneDA(), encapApprovisionnement.getLigneAppros().get(i).getLigneDA());
+		}
+		
+		lignes = this.repo2.saveAll(lignes);
+		
+		DemandeApprovisionnement demAppr =  this.repo3.getOne(encapApprovisionnement.getDemandeApprovisionnement().getNumDA());
+		
+		demAppr.setNotProcessAgain(encapApprovisionnement.getDemandeApprovisionnement().isNotProcessAgain());
+		
+		return new EncapApprovisionnement(element, lignes, this.repo3.save(demAppr));
+		
+	}
+	
 	public Approvisionnement edit(String id, Approvisionnement approvisionnement) {
 		
 		Approvisionnement entiter = this.repo.getOne(id); 
@@ -92,17 +123,12 @@ public class ApprovisionnementService {
 		return null;
 	}
 	
+	@Transactional
 	public EncapApprovisionnement editByEncap(String id, EncapApprovisionnement encap) {
 		
-		List<LigneAppro> lignes = this.repo2.findAll();
-		List<LigneAppro> concernedLignes = new ArrayList<LigneAppro>();
+		List<LigneAppro> concernedLignes = this.repo2.findByCodeAppro(id);
 		List<LigneAppro> newLignes = new ArrayList<LigneAppro>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
 		
 		for(int i = 0; i < encap.getLigneAppros().size(); i++) {
 			boolean added = true;
@@ -151,18 +177,17 @@ public class ApprovisionnementService {
 			this.servi4.edit(encap.getLigneAppros().get(i).getLigneDA().getIdLigneDA(), encap.getLigneAppros().get(i).getLigneDA());
 		}
 		
-		lignes = this.repo2.findAll();
+		newLignes = this.repo2.findByCodeAppro(id);
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}
+		DemandeApprovisionnement demAppr =  this.repo3.getOne(encap.getDemandeApprovisionnement().getNumDA());
+		
+		demAppr.setNotProcessAgain(encap.getDemandeApprovisionnement().isNotProcessAgain());
 		
 		
-		return new EncapApprovisionnement(this.edit(id, encap.getApprovisionnement()), newLignes);
+		return new EncapApprovisionnement(this.edit(id, encap.getApprovisionnement()), newLignes, this.repo3.save(demAppr));
 	}
 
+	@Transactional
 	public Approvisionnement edit3(String id, Approvisionnement approvisionnement) {
 		Approvisionnement entiter = this.repo.getOne(id); 
 		if(entiter != null && approvisionnement.isValideAppro() != entiter.isValideAppro()) {
@@ -298,6 +323,7 @@ public class ApprovisionnementService {
 	}
 	
 	
+	@Transactional
 	public boolean deleteAApprovisionnement2(String id) {
 		
 		List<LigneAppro> lignes = this.servi2.findByCodeAppro(id);
@@ -342,6 +368,11 @@ public class ApprovisionnementService {
 	public List<Approvisionnement> findByExercice(Exercice exercice){
 		
 		return this.repo.findByExercice(exercice);
+	}
+	
+	public List<Approvisionnement> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
 	}
 
 

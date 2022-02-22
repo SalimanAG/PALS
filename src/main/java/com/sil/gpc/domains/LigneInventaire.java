@@ -43,19 +43,25 @@ public class LigneInventaire {
 		// TODO Auto-generated constructor stub
 	}
 
+
+	
 	
 
 	public LigneInventaire(Long idLigneInv, double pu, double stockTheoriq, double stockreel, String observation,
-			Article article, Inventaire inventaire) {
+			double lastStockQte, Article article, Inventaire inventaire, CauseAnomalie causeAnomalie) {
 		super();
 		this.idLigneInv = idLigneInv;
 		this.pu = pu;
 		this.stockTheoriq = stockTheoriq;
 		this.stockreel = stockreel;
 		this.observation = observation;
+		this.lastStockQte = lastStockQte;
 		this.article = article;
 		this.inventaire = inventaire;
+		this.causeAnomalie = causeAnomalie;
 	}
+
+
 
 
 
@@ -167,6 +173,17 @@ public class LigneInventaire {
 
 	public void setLastStockQte(double lastStockQte) {
 		this.lastStockQte = lastStockQte;
+	}
+
+
+	public CauseAnomalie getCauseAnomalie() {
+		return causeAnomalie;
+	}
+
+
+
+	public void setCauseAnomalie(CauseAnomalie causeAnomalie) {
+		this.causeAnomalie = causeAnomalie;
 	}
 
 

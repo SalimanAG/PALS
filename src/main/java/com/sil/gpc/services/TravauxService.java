@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneTravaux;
+import com.sil.gpc.domains.Reception;
 import com.sil.gpc.domains.Travaux;
 import com.sil.gpc.encapsuleurs.EncapTravaux;
 import com.sil.gpc.repositories.LigneTravauxRepository;
@@ -56,7 +57,7 @@ public class TravauxService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapTravaux saveByEncap(EncapTravaux encapTravaux) {
 		
 		List<LigneTravaux> lignes = encapTravaux.getLigneTravauxs();
@@ -91,6 +92,7 @@ public class TravauxService {
 			entiter.setLiver(travaux.isLiver());
 			entiter.setNumDa(travaux.getNumDa());
 			entiter.setReporter(travaux.isReporter());
+			entiter.setCmdDe(travaux.getCmdDe());
 			
 			return this.repo.save(entiter);
 		}
@@ -111,18 +113,12 @@ public class TravauxService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapTravaux editByEncap(String id, EncapTravaux encapTravaux) {
 		
-		List<LigneTravaux> lignes = this.repo2.findAll();
-		List<LigneTravaux> concernedLignes = new ArrayList<LigneTravaux>();
-		List<LigneTravaux> newLignes = encapTravaux.getLigneTravauxs();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getTravaux().getNumTravaux().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
+		List<LigneTravaux> concernedLignes = this.repo2.findByCodeTravaux(id);
+		List<LigneTravaux> newLignes = encapTravaux.getLigneTravauxs();
 		
 		
 		this.serv2.deleteAll(concernedLignes);
@@ -149,22 +145,15 @@ public class TravauxService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean delete2(String id) {
 		
 		Travaux entiter = this.repo.getOne(id);
 		if(entiter != null) {
 			
-			List<LigneTravaux> lignes = this.repo2.findAll();
-			List<LigneTravaux> concernedLignes = new ArrayList<LigneTravaux>();
+			List<LigneTravaux> concernedLignes = this.repo2.findByCodeTravaux(id);
 			
-			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getTravaux().getNumTravaux().equalsIgnoreCase(id)) {
-					concernedLignes.add(lignes.get(i));
-				}
-			}
-			
-			
+
 			this.serv2.deleteAll(concernedLignes);
 			
 			
@@ -184,7 +173,11 @@ public class TravauxService {
 		return this.repo.findAll();
 	}
 
-
+	
+	public List<Travaux> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
+	}
 	
 
 }

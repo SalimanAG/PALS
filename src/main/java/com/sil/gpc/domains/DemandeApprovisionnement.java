@@ -35,6 +35,10 @@ public class DemandeApprovisionnement implements Serializable{
 	@ManyToOne(targetEntity = Service.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numService", referencedColumnName = "numService",nullable = false)
 	public Service service;
+	
+	//@ColumnDefault(value = "false")
+	@ColumnDefault(value = "0")
+	private boolean notProcessAgain;
 
 	public DemandeApprovisionnement() {
 		super();
@@ -42,16 +46,18 @@ public class DemandeApprovisionnement implements Serializable{
 	}
 
 	
-
-	public DemandeApprovisionnement(String numDA, Timestamp dateDA, int valeur, boolean valideDA, Exercice exercice,
-			Service service) {
+	
+	public DemandeApprovisionnement(String numDA, Timestamp dateDA, int valeur, boolean valideDA, String description,
+			Exercice exercice, Service service, boolean notProcessAgain) {
 		super();
 		this.numDA = numDA;
 		this.dateDA = dateDA;
 		this.valeur = valeur;
 		this.valideDA = valideDA;
+		this.description = description;
 		this.exercice = exercice;
 		this.service = service;
+		this.notProcessAgain = notProcessAgain;
 	}
 
 
@@ -145,11 +151,26 @@ public class DemandeApprovisionnement implements Serializable{
 
 
 
+	public boolean isNotProcessAgain() {
+		return notProcessAgain;
+	}
+
+
+
+	public void setNotProcessAgain(boolean notProcessAgain) {
+		this.notProcessAgain = notProcessAgain;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "DemandeApprovisionnement [numDA=" + numDA + ", dateDA=" + dateDA + ", valeur=" + valeur + ", valideDA="
-				+ valideDA + ", description=" + description + ", exercice=" + exercice + ", service=" + service + "]";
+				+ valideDA + ", description=" + description + ", exercice=" + exercice + ", service=" + service
+				+ ", notProcessAgain=" + notProcessAgain + "]";
 	}
+
+
 
 	
 

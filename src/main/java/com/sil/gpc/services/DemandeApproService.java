@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneDemandeAppro;
@@ -74,18 +75,13 @@ public class DemandeApproService {
 	}
 	
 	
-	
+	@Transactional
 	public EncapDemandeAppro editByEncap(String id, EncapDemandeAppro encap) {
 		
-		List<LigneDemandeAppro> lignes = this.repo2.findAll();
-		List<LigneDemandeAppro> concernedLignes = new ArrayList<LigneDemandeAppro>();
+		
+		List<LigneDemandeAppro> concernedLignes = this.repo2.findByCodeDemAppro(id);
 		List<LigneDemandeAppro> newLignes = new ArrayList<LigneDemandeAppro>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumDA().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
 		
 		for(int i = 0; i < encap.getLigneDemandeAppros().size(); i++) {
 			boolean added = true;
@@ -128,13 +124,8 @@ public class DemandeApproService {
 			
 		}
 		
-		lignes = this.repo2.findAll();
+		newLignes = this.repo2.findByCodeDemAppro(id);
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumDA().equalsIgnoreCase(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}
 		
 		
 		return new EncapDemandeAppro(this.edit(id, encap.getDemandeApprovisionnement()), newLignes);
@@ -151,7 +142,7 @@ public class DemandeApproService {
 		return !this.repo.existsById(id);
 	}
 	
-	
+	@Transactional
 	public boolean deleteADemandeApprovisionnement2(String id) {
 		
 		List<LigneDemandeAppro> lignes = this.repo2.findAll();
@@ -192,6 +183,11 @@ public class DemandeApproService {
 	public List<DemandeApprovisionnement> findByExercice(Exercice exercice){
 		
 		return this.repo.findByExercice(exercice);
+	}
+	
+	public List<DemandeApprovisionnement> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
 	}
 	
 }

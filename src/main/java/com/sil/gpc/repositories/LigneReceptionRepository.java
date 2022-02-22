@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.sil.gpc.domains.LigneInventaire;
 import com.sil.gpc.domains.LigneReception;
 
 @Repository
@@ -17,6 +18,11 @@ public interface LigneReceptionRepository extends JpaRepository<LigneReception, 
 	@Query(value="FROM LigneReception as l WHERE l.ligneCommande.numCommande.numCommande = ?1"
 			, nativeQuery = false)
 	public List<LigneReception> findByNumCommande(Long numCommande);
+	
+	
+	@Query(value="FROM LigneReception as l WHERE l.reception.numReception = ?1"
+			, nativeQuery = false)
+	public List<LigneReception> findByCodeReception(String codeReception);
 
 	
 }

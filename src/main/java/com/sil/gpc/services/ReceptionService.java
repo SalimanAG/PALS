@@ -4,6 +4,7 @@ import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.EcritureComptable;
 import com.sil.gpc.domains.Famille;
+import com.sil.gpc.domains.Inventaire;
 import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneReception;
@@ -98,18 +99,12 @@ public class ReceptionService {
        }
     
     
-	
+    @Transactional
 	public EncapReception editByEncap(String id, EncapReception encap) {
 		
-		List<LigneReception> lignes = this.repo2.findAll();
-		List<LigneReception> concernedLignes = new ArrayList<LigneReception>();
+		List<LigneReception> concernedLignes = this.repo2.findByCodeReception(id);
 		List<LigneReception> newLignes = new ArrayList<LigneReception>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
 		
 		for(int i = 0; i < encap.getLigneReceptions().size(); i++) {
 			boolean added = true;
@@ -160,19 +155,12 @@ public class ReceptionService {
 			
 		}
 		
-		lignes = this.repo2.findAll();
-		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}		
-		
-		
+		newLignes = this.repo2.findByCodeReception(id);
+				
 		return new EncapReception(this.edit(id, encap.getReception()), newLignes);
 	}
 	
-	
+    @Transactional
 	public Reception edit3(String id, Reception reception) {
 		Reception entiter = this.receptionRepository.getOne(id); 
 		if(entiter != null && reception.isValideRecep() != entiter.isValideRecep()) {
@@ -208,7 +196,7 @@ public class ReceptionService {
 								
 								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
 								newSt.setCmup(cump);
-								entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));//(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));//(System.currentTimeMillis());
+								entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 								
 							}else if(reception.isValideRecep() == false) {//Pour Annulation
 								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
@@ -299,7 +287,7 @@ public class ReceptionService {
     	return this.receptionRepository.existsById(id);
     }  
     
-    
+    @Transactional
 	public boolean deleteAReception2(String id) {
 		
 		List<LigneReception> lignes = this.repo2.findAll();
@@ -348,6 +336,11 @@ public class ReceptionService {
     public List<LigneReception> findByNumCommande(Long numCommande){
 		
 		return this.repo2.findByNumCommande(numCommande);
+	}
+    
+	public List<Reception> findByCodeExercice(String codeExo){
+		
+		return this.receptionRepository.findByCodeExercice(codeExo);
 	}
 
 }
