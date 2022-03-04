@@ -40,7 +40,7 @@ public class LigneTravaux {
 	
 	//Liaison à la unité
 	@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter")
+	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter", nullable = false)
 	private Uniter uniter;
 	
 	public LigneTravaux() {

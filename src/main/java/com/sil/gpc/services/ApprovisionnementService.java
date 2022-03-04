@@ -193,100 +193,89 @@ public class ApprovisionnementService {
 		if(entiter != null && approvisionnement.isValideAppro() != entiter.isValideAppro()) {
 
 			
-			
-			//List<LigneAppro> lignes = this.servi2.getAll();
-			//List<Stocker> listStocker = this.servi3.getAll();
-			
 			List<LigneAppro> clignes = this.servi2.findByCodeAppro(id);
-			List<Stocker> clistStocker = new ArrayList<Stocker>();
 			
-			boolean stockerFinded = false;
 			
-			for(int i = 0; i < clignes.size(); i++) {
-				
-					LigneAppro ligApp = clignes.get(i);
-					stockerFinded = false;
-					Stocker newSt = this.servi3.findByArticleAndMagasin(ligApp.getLigneDA().getArticle().getNumArticle(), entiter.getMagasin().getNumMagasin());
-					
-					if(newSt != null) stockerFinded = true;
-					else SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas de Stock");
-					
-					if(newSt.getQuantiterStocker() >= ligApp.getQuantiteLigneAppro()) {
-						
-						clistStocker.add(newSt);
-						break;
-					}
-					
-			}
-			
-		
-			
-			if(stockerFinded == true)
 			for(int i = 0; i < clignes.size(); i++) {
 				
 				LigneAppro ligApp = clignes.get(i);
 				
 				Stocker newSt = this.servi3.findByArticleAndMagasin(ligApp.getLigneDA().getArticle().getNumArticle(), entiter.getMagasin().getNumMagasin());
 				
-				if(newSt.getQuantiterStocker() >= ligApp.getQuantiteLigneAppro()) {
-				
-					if(approvisionnement.isValideAppro() == true) {
-						entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
-						ligApp.setLastStockQte(newSt.getQuantiterStocker());
-						newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
-						ligApp.setPULigneAppro(newSt.getCmup());
-					}else if(approvisionnement.isValideAppro() == false) {
-						newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
-						ligApp.setPULigneAppro(Long.valueOf(0));
-					}
-																			
-					this.servi3.edit(newSt.getIdStocker(), newSt);
+				if(newSt != null) {
 					
-					entiter.setValideAppro(approvisionnement.isValideAppro());
+					if(newSt.getQuantiterStocker() >= ligApp.getQuantiteLigneAppro()) {
+						
+						if(approvisionnement.isValideAppro() == true) {
+							entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
+							ligApp.setLastStockQte(newSt.getQuantiterStocker());
+							newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
+							ligApp.setPULigneAppro(newSt.getCmup());
+						
+							//Ecritures comptables
+							List<OpeJournalSetting> numJournaux = this.servi6.getAll();
+							List<StockComptaSetting> paramFamille = this.servi5.getAll();
+							
+							for (int m=0; m < paramFamille.size(); m++) {
+								if(paramFamille.get(m).getFamille().getNumFamille() == ligApp.getLigneDA().getArticle().getFamille().getNumFamille() && paramFamille.get(m).isExportable() == true) {
+									List<EcritureComptable> ecriOper = new ArrayList<EcritureComptable>();
+									String numJournStock = "";
+									String numJournVStock = "";
+									
+									for(int n=0; n < numJournaux.size(); n++) {
+										if(numJournaux.get(n).getOperation().equalsIgnoreCase("STOCK")) {
+											numJournStock = numJournaux.get(n).getJournal();
+											break;
+										}
+									}
+									
+									for(int n=0; n < numJournaux.size(); n++) {
+										if(numJournaux.get(n).getOperation().equalsIgnoreCase("V/STOCK")) {
+											numJournVStock = numJournaux.get(n).getJournal();
+											break;
+										}
+									}
+									
+									ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteStock(), true, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+									ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteVaStock(), false, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+									
+									ecriOper.get(0).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
+									ecriOper.get(1).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
+									
+									this.servi7.save2(ecriOper);
+									
+									break;
+									
+								}
+								
+							}
+							
+							
+						
+						}else if(approvisionnement.isValideAppro() == false) {
+							newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
+							ligApp.setPULigneAppro(Long.valueOf(0));
+						}
+																				
+						this.servi3.edit(newSt.getIdStocker(), newSt);
+						
+						this.repo2.save(ligApp);
+						
+						entiter.setValideAppro(approvisionnement.isValideAppro());
+						
+					} else {
+						SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas suffisament de Stock");
+						return null;
+					}
 					
 				}
-				else SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas suffisament de Stock");
+				else {
+					SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas de Stock");
+					return null;
+				}
 				
 				
-				this.repo2.save(ligApp);
-					
-					//Ecritures comptables
-					List<OpeJournalSetting> numJournaux = this.servi6.getAll();
-					List<StockComptaSetting> paramFamille = this.servi5.getAll();
-					
-					for (int m=0; m < paramFamille.size(); m++) {
-						if(paramFamille.get(m).getFamille().getNumFamille() == ligApp.getLigneDA().getArticle().getFamille().getNumFamille() && paramFamille.get(m).isExportable() == true) {
-							List<EcritureComptable> ecriOper = new ArrayList<EcritureComptable>();
-							String numJournStock = "";
-							String numJournVStock = "";
-							
-							for(int n=0; n < numJournaux.size(); n++) {
-								if(numJournaux.get(n).getOperation().equalsIgnoreCase("STOCK")) {
-									numJournStock = numJournaux.get(n).getJournal();
-									break;
-								}
-							}
-							
-							for(int n=0; n < numJournaux.size(); n++) {
-								if(numJournaux.get(n).getOperation().equalsIgnoreCase("V/STOCK")) {
-									numJournVStock = numJournaux.get(n).getJournal();
-									break;
-								}
-							}
-							
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteStock(), true, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteVaStock(), false, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
-							
-							ecriOper.get(0).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
-							ecriOper.get(1).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
-							
-							this.servi7.save2(ecriOper);
-							
-							break;
-							
-						}
-						
-					}
+				
 	
 			}
 			

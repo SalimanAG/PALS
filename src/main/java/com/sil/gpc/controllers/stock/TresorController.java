@@ -99,6 +99,7 @@ public class TresorController {
 	
 	
 	@PostMapping(path = "commande/list2")
+	@Transactional
 	public EncapCommande createCommandeByEncap( @RequestBody EncapCommande encapCommande) {
 		List<LigneCommande> lignes = encapCommande.getLigneCommandes();
 		
@@ -218,10 +219,12 @@ public class TresorController {
 	
 	
 	@PostMapping(path = "reception/list2")
+	@Transactional
 	public EncapReception createReceptionByEncap( @RequestBody EncapReception encapReception) {
 		List<LigneReception> lignes = encapReception.getLigneReceptions();
 		
 		Reception element = this.receptionService.save(encapReception.getReception());
+		
 		
 		for (int i = 0; i < lignes.size(); i++) {
 			LigneReception lig = lignes.get(i);
@@ -235,6 +238,7 @@ public class TresorController {
 			this.ligneCommandeService.edit(encapReception.getLigneReceptions().get(i).getLigneCommande().getIdLigneCommande(), encapReception.getLigneReceptions().get(i).getLigneCommande());
 			
 		}
+		
 		
 		lignes = this.ligneReceptionService.saveAll(lignes);
 		
@@ -351,6 +355,7 @@ public class TresorController {
 	
 	
 	@PostMapping(path = "demandeAppro/list2")
+	@Transactional
 	public EncapDemandeAppro createDemandeApproByEncap( @RequestBody EncapDemandeAppro encapDemandeAppro) {
 		List<LigneDemandeAppro> lignes = encapDemandeAppro.getLigneDemandeAppros();
 		
