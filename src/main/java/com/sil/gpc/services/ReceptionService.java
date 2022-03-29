@@ -191,7 +191,8 @@ public class ReceptionService {
 							ligRecept.setLastCump(newSt.getCmup());
 							ligRecept.setLastStockQte(newSt.getQuantiterStocker());
 							
-							double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / lignes.get(i).getLigneCommande().getUniter().getPoids())*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+							//double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / lignes.get(i).getLigneCommande().getUniter().getPoids())*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+							double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / lignes.get(i).getLigneCommande().getUniter().getPoids())*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
 							
 							newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
 							newSt.setCmup(cump);
