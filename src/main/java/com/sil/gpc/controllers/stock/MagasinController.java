@@ -3,6 +3,7 @@ package com.sil.gpc.controllers.stock;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +28,7 @@ import com.sil.gpc.domains.TypeArticle;
 import com.sil.gpc.domains.Uniter;
 import com.sil.gpc.encapsuleurs.EncapInventaire;
 import com.sil.gpc.repositories.ArticleRepository;
+import com.sil.gpc.repositories.FamilleRepository;
 import com.sil.gpc.services.AffectUniterToArticleService;
 import com.sil.gpc.services.ArticleService;
 import com.sil.gpc.services.FamilleService;
@@ -57,6 +59,9 @@ public class MagasinController {
 	private final AffectUniterToArticleService affectUniterToArticleService;
 	private final TypeArticleService typeArticleService;
 	private  final  ArticleRepository articleRepository;
+	
+	@Autowired
+	FamilleRepository familleRepository;
 	
 	
 	
@@ -200,7 +205,12 @@ public class MagasinController {
 		return this.familleService.delete(id);
 	}
 	
-	
+	//Add
+	@GetMapping(path = "famille/list-by-magasin/{numMagasin}")
+	public List<Famille> getAllFamilleByMagasin(@PathVariable Long numMagasin){
+		
+		return familleRepository.findAllByMagasin_NumMagasin(numMagasin);
+	}
 	/*###########################################################
 	#############	Partie réservée pour article
 	###########################################################
