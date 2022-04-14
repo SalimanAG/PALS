@@ -63,9 +63,6 @@ public class MagasinController {
 	@Autowired
 	FamilleRepository familleRepository;
 
-	@Autowired
-	ArticleRepository articleRepo;
-	
 	
 	
 	public MagasinController(MagasinService magasinService, MagasinierService magasinierService,
@@ -277,7 +274,7 @@ public class MagasinController {
 	@GetMapping(path = "article/listByFamille/{familleId}")
 	public List<Article> getAllArticleByFamille(@PathVariable(name = "familleId") Long familleId){
 
-		return this.articleRepo.findAllByFamille_NumFamille(familleId);
+		return this.articleRepository.findAllByFamille_NumFamille(familleId);
 	}
 	
 	
