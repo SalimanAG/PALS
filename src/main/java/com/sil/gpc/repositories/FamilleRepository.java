@@ -11,5 +11,7 @@ public interface FamilleRepository extends JpaRepository<Famille, Long>{
 	public List<Famille> findByCodeFamille(String codeFamille);
 	
 	public List<Famille> findByLibFamille(String libFamille);
+
+	List<Famille> findAllByMagasin_NumMagasin(Long numMagasin);
 	
 }
