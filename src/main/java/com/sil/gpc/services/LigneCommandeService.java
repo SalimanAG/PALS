@@ -48,6 +48,7 @@ public class LigneCommandeService {
 			entiter.setTs(ligneCommande.getTs());
 			entiter.setUniter(ligneCommande.getUniter());
 			entiter.setSatisfaite(ligneCommande.isSatisfaite());
+			entiter.setPrixUnitTtc(ligneCommande.isPrixUnitTtc());
 			
 			return this.repo.save(entiter);
 		}
@@ -72,40 +73,10 @@ public class LigneCommandeService {
 		
 		return this.repo.findAll();
 	}
-	
-	/*public List<LigneCommande> findByIdLigneCommande (Long idLigneCommande){
-		
-		return this.repo.findByIdLigneCommande(idLigneCommande);
+
+	public List<LigneCommande> findByCodeCommande(Long code){
+		return this.repo.findByCodeCommande(code);
 	}
-	
-	public List<LigneCommande> findByQteLigneCommande(Long qteLigneCommande){
-		
-		return this.repo.findByQteLigneCommande(qteLigneCommande);
-	}
-	
-	public List<LigneCommande> findByPULigneCommande(Long PULigneCommande){
-		
-		return this.repo.findByPULigneCommande(PULigneCommande);
-	}
-	
-	public List<LigneCommande> findByREmise(Long remise){
-		
-		return this.repo.findByRemise(remise);
-	}
-	
-	public List<LigneCommande> findByTVA(Long tva){
-		
-		return this.repo.findByTVA(tva);
-	}
-	
-	public List<LigneCommande> findByNumCommande(Commande commande){
-		
-		return this.repo.findByNumCommande(commande);
-	}
-	
-	public List<LigneCommande> findByArticle(Article article){
-		
-		return this.repo.findByArticle(article);
-	}*/
+
 	
 }

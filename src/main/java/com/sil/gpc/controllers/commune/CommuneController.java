@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -1044,6 +1045,11 @@ public AffectUserToArrondi updateUserArrondi(@PathVariable(name = "id") Long id,
 	@PutMapping(path = "cloturePeriodiq/byCodCloPer/{id}")
 	public CloturePeriodiq updateCloturePeriodiq(@PathVariable(name = "id") Long id, @RequestBody CloturePeriodiq cloturePeriodiq) {
 		return this.cloturePeriodiqService.edit(id, cloturePeriodiq);
+	}
+	
+	@PutMapping(path = "cloturePeriodiq/byCodCloPerValid/{id}")
+	public CloturePeriodiq validatingCloturePeriodiq(@PathVariable(name = "id") Long id, @RequestBody CloturePeriodiq cloturePeriodiq) {
+		return this.cloturePeriodiqService.validate(id, cloturePeriodiq);
 	}
 	
 	@DeleteMapping(path = "cloturePeriodiq/byCodCloPer/{id}")

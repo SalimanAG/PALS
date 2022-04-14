@@ -18,6 +18,7 @@ public class CloturePeriodiq {
 	private Long idCloturePer;
 	private Date dateDebutCloturePer;
 	private Date dateFinCloturePer;
+	private boolean valide;
 	
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Exercice.class)
 	@JoinColumn(name = "numExercice", referencedColumnName = "numExercice", nullable = true)
@@ -28,13 +29,17 @@ public class CloturePeriodiq {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CloturePeriodiq(Long idCloturePer, Date dateDebutCloturePer, Date dateFinCloturePer, Exercice exercice) {
+	
+	public CloturePeriodiq(Long idCloturePer, Date dateDebutCloturePer, Date dateFinCloturePer, boolean valide,
+			Exercice exercice) {
 		super();
 		this.idCloturePer = idCloturePer;
 		this.dateDebutCloturePer = dateDebutCloturePer;
 		this.dateFinCloturePer = dateFinCloturePer;
+		this.valide = valide;
 		this.exercice = exercice;
 	}
+
 
 	public Long getIdCloturePer() {
 		return idCloturePer;
@@ -68,12 +73,23 @@ public class CloturePeriodiq {
 		this.exercice = exercice;
 	}
 
+
+	public boolean isValide() {
+		return valide;
+	}
+
+
+	public void setValide(boolean valide) {
+		this.valide = valide;
+	}
+
+
 	@Override
 	public String toString() {
 		return "CloturePeriodiq [idCloturePer=" + idCloturePer + ", dateDebutCloturePer=" + dateDebutCloturePer
-				+ ", dateFinCloturePer=" + dateFinCloturePer + ", exercice=" + exercice + "]";
+				+ ", dateFinCloturePer=" + dateFinCloturePer + ", valide=" + valide + ", exercice=" + exercice + "]";
 	}
-	
+
 	
 	
 }

@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 @org.springframework.stereotype.Service
 public class UtilisateurService implements UserDetailsService{
@@ -47,6 +48,7 @@ public class UtilisateurService implements UserDetailsService{
     	user.setMotDePass(null);
         return   this.userRepository.save(user);
     }
+    
     
     public EncapUserGroupes save2(EncapUserGroupes encapUserGroupes) {
     	
@@ -97,6 +99,7 @@ public class UtilisateurService implements UserDetailsService{
        }
    		return null;
        }
+    
     
     public EncapUserGroupes edit2(Long id, EncapUserGroupes encapUserGroupes) {
     	

@@ -12,6 +12,8 @@ public interface AppelOffreRepository extends JpaRepository<AppelOffre, String> 
 	
 	@Query(value="SELECT valeur FROM (SELECT valeur FROM appel_offre WHERE num_exercice = ?1 ORDER BY valeur DESC) WHERE ROWNUM = 1"
 			, nativeQuery = true)
+	/*@Query(value="SELECT valeur FROM appel_offre WHERE num_exercice = ?1 ORDER BY valeur DESC LIMIT 1"
+	, nativeQuery = true)*/
 	public Integer findLastNumUsed(Long numExercice);
 	
 	

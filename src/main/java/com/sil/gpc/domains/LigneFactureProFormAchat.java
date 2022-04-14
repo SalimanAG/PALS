@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @Entity
 public class LigneFactureProFormAchat {
 	
@@ -36,6 +38,12 @@ public class LigneFactureProFormAchat {
 	@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter", nullable = false)
 	private Uniter uniter;
+	
+	//@ColumnDefault(value = "false")
+	@ColumnDefault(value = "0")
+	private boolean prixUnitTtc;
+	
+	private String caracteristiqArti;
 
 	public LigneFactureProFormAchat() {
 		super();
@@ -45,7 +53,8 @@ public class LigneFactureProFormAchat {
 
 	public LigneFactureProFormAchat(Long idLigneFpfa, double qteLigneFpfa, double prixUnitLigneFpfa,
 			String designLigneFpfa, double tauxTaxeAibicLigneFpfa, double tauxTvaLigneFpfa, double tauxTsLigneFpfa,
-			double prixUnitHtLigneFpfa, FactureProFormAcha factureProFormAcha, Article article, Uniter uniter) {
+			double prixUnitHtLigneFpfa, FactureProFormAcha factureProFormAcha, Article article, Uniter uniter,
+			boolean prixUnitTtc, String caracteristiqArti) {
 		super();
 		this.idLigneFpfa = idLigneFpfa;
 		this.qteLigneFpfa = qteLigneFpfa;
@@ -58,9 +67,10 @@ public class LigneFactureProFormAchat {
 		this.factureProFormAcha = factureProFormAcha;
 		this.article = article;
 		this.uniter = uniter;
+		this.prixUnitTtc = prixUnitTtc;
+		this.caracteristiqArti = caracteristiqArti;
 	}
 
-	
 
 	public Long getIdLigneFpfa() {
 		return idLigneFpfa;
@@ -167,14 +177,39 @@ public class LigneFactureProFormAchat {
 	}
 
 
+	public boolean isPrixUnitTtc() {
+		return prixUnitTtc;
+	}
+
+
+	public void setPrixUnitTtc(boolean prixUnitTtc) {
+		this.prixUnitTtc = prixUnitTtc;
+	}
+
+
+
+	public String getCaracteristiqArti() {
+		return caracteristiqArti;
+	}
+
+
+
+	public void setCaracteristiqArti(String caracteristiqArti) {
+		this.caracteristiqArti = caracteristiqArti;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LigneFactureProFormAchat [idLigneFpfa=" + idLigneFpfa + ", qteLigneFpfa=" + qteLigneFpfa
 				+ ", prixUnitLigneFpfa=" + prixUnitLigneFpfa + ", designLigneFpfa=" + designLigneFpfa
 				+ ", tauxTaxeAibicLigneFpfa=" + tauxTaxeAibicLigneFpfa + ", tauxTvaLigneFpfa=" + tauxTvaLigneFpfa
 				+ ", tauxTsLigneFpfa=" + tauxTsLigneFpfa + ", prixUnitHtLigneFpfa=" + prixUnitHtLigneFpfa
-				+ ", factureProFormAcha=" + factureProFormAcha + ", article=" + article + ", uniter=" + uniter + "]";
+				+ ", factureProFormAcha=" + factureProFormAcha + ", article=" + article + ", uniter=" + uniter
+				+ ", prixUnitTtc=" + prixUnitTtc + ", caracteristiqArti=" + caracteristiqArti + "]";
 	}
+	
+	
 
 		
 

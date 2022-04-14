@@ -3,6 +3,7 @@ package com.sil.gpc.controllers.stock;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ import com.sil.gpc.services.MagasinierService;
 import com.sil.gpc.services.StockerService;
 import com.sil.gpc.services.TypeArticleService;
 import com.sil.gpc.services.UniterService;
+import com.sil.gpc.utilities.SalEncapGene;
 
 @CrossOrigin
 @RestController
@@ -204,10 +206,16 @@ public class MagasinController {
 	###########################################################
 	*/
 	
-	@GetMapping(path = "article/list")
+	@GetMapping(path = "article/list0")
 	public List<Article> getAllArticle(){
 		
 		return this.articleService.getAll();
+	}
+	
+	@GetMapping(path = "article/list")
+	public List<Article> getAllArticleAffichable(){
+		
+		return this.articleService.findByAffichableArticle(true);
 	}
 	
 	@GetMapping(path = "article/byCodArt/{id}")
@@ -354,6 +362,11 @@ public class MagasinController {
 		return this.stockerService.save(stocker);
 	}
 	
+	@PostMapping(path = "stocker/findByArticleAndMagasin")
+	public Stocker findAStockerByArticleAndMagasin( @RequestBody SalEncapGene donner) {
+		return this.stockerService.findByArticleAndMagasin(donner.getArticle().getNumArticle(), donner.getMagasin().getNumMagasin());
+	}
+	
 	@PutMapping(path = "stocker/byCodSto/{id}")
 	public Stocker updateStocker(@PathVariable(name = "id") Long id, @RequestBody Stocker stocker) {
 		
@@ -379,6 +392,11 @@ public class MagasinController {
 	@GetMapping(path = "inventaire/byCodSto/{id}")
 	public Optional<Inventaire> getInventaireById(@PathVariable(name = "id") String id){	
 		return this.invServ.findById(id);
+	}
+	
+	@GetMapping(path = "inventaire/byCodExo/{codExo}")
+	public List<Inventaire> getInventaireByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.invServ.findByCodeExercice(id);
 	}
 	
 	@PostMapping(path = "inventaire/list")
@@ -449,6 +467,13 @@ public class MagasinController {
 	@GetMapping(path = "ligneInventaire/byCodSto/{id}")
 	public Optional<LigneInventaire> getLigneInventaireById(@PathVariable(name = "id") Long id){	
 		return this.lInvServ.findById(id);
+	}
+	
+	@GetMapping(path = "ligneInventaire/list/byCodeInv/{code}")
+	public List<LigneInventaire> getLigneInventaireByCodeInventaire(@PathVariable(name = "code") String cod){	
+		
+		return this.lInvServ.findByCodeInventaire(cod);
+		
 	}
 	
 	@PostMapping(path = "ligneInventaire/list")

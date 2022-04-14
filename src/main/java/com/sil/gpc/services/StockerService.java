@@ -106,7 +106,11 @@ public class StockerService {
 		return this.stockerRepository.findByMagasin(mag);
 	}
 
-    
+    public Stocker findByArticleAndMagasin(Long numArticle, Long numMagasin) {
+    	
+    	return this.stockerRepository.findByArticleAndMagasin(numArticle, numMagasin);
+    	
+    }
    
     
    

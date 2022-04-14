@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.Inventaire;
 import com.sil.gpc.domains.LettreCommande;
 import com.sil.gpc.repositories.LettreCommandeRepository;
 
@@ -51,6 +52,7 @@ public class LettreCommandeService {
 		if(entiter != null) {
 			entiter.setCommande(lettreCommande.getCommande());
 			entiter.setExercice(lettreCommande.getExercice());
+			entiter.setCommandeAchat(lettreCommande.getCommandeAchat());
 			
 			return this.repo.save(entiter);
 		}
@@ -76,6 +78,12 @@ public class LettreCommandeService {
 	public List<LettreCommande> getAll(){
 		
 		return this.repo.findAll();
+	}
+	
+	
+	public List<LettreCommande> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
 	}
 
 

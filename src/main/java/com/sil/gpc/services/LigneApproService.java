@@ -91,4 +91,9 @@ public class LigneApproService {
 		return this.repo.findByLigneDA(ligneDemandeAppro);
 	}*/
 	
+	public List<LigneAppro> findByCodeAppro(String codeAppro){
+		
+		return this.repo.findByCodeAppro(codeAppro);
+	}
+	
 }

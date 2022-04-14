@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+
 @Entity
 public class CommandeAchat {
 
@@ -14,6 +16,9 @@ public class CommandeAchat {
 	
 	private double valeur;
 	
+	//@ColumnDefault(value = "false")
+	@ColumnDefault(value = "0")
+	private boolean procesByLc;
 
 	//Liaison à la table Commande
 	@ManyToOne(fetch = FetchType.EAGER,targetEntity = Commande.class)
@@ -32,14 +37,15 @@ public class CommandeAchat {
 	}
 
 
-	public CommandeAchat(String numComAchat, double valeur, Commande commande, Exercice exercice) {
+	
+	public CommandeAchat(String numComAchat, double valeur, boolean procesByLc, Commande commande, Exercice exercice) {
 		super();
 		this.numComAchat = numComAchat;
 		this.valeur = valeur;
+		this.procesByLc = procesByLc;
 		this.commande = commande;
 		this.exercice = exercice;
 	}
-
 
 
 
@@ -85,16 +91,22 @@ public class CommandeAchat {
 	}
 
 
-	@Override
-	public String toString() {
-		return "CommandeAchat [numComAchat=" + numComAchat + ", valeur=" + valeur + ", commande=" + commande
-				+ ", exercice=" + exercice + "]";
+	public boolean isProcesByLc() {
+		return procesByLc;
 	}
 
 
+	public void setProcesByLc(boolean procesByLc) {
+		this.procesByLc = procesByLc;
+	}
 
 
-	
+	@Override
+	public String toString() {
+		return "CommandeAchat [numComAchat=" + numComAchat + ", valeur=" + valeur + ", procesByLc=" + procesByLc
+				+ ", commande=" + commande + ", exercice=" + exercice + "]";
+	}
+
 	
 	
 }

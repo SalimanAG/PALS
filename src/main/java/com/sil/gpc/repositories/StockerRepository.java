@@ -26,5 +26,8 @@ public interface StockerRepository extends JpaRepository<Stocker, Long> {
 	public List<Stocker> findByArticle(Article art);
 	
 	public List<Stocker> findByMagasin(Magasin mag);
+	
+	@Query(value = "from Stocker as st WHERE st.magasin.numMagasin = ?2 AND st.article.numArticle = ?1")
+	public Stocker findByArticleAndMagasin(Long numArticle, Long numMagasin);
 
 }

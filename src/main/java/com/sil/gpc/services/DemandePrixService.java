@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.ConsulterFrsForDp;
 import com.sil.gpc.domains.DemandePrix;
@@ -58,6 +59,7 @@ public class DemandePrixService {
 		}
 		return null;
 	}
+	
 	
 	public DemandePrix edit(String id, DemandePrix demandePrix) {
 		

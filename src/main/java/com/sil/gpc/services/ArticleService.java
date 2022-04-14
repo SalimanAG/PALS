@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.Famille;
@@ -35,6 +36,7 @@ public class ArticleService {
 		
 		return this.repo.saveAll(articles);
 	}
+
 	
 	public List<Article> saveByList2(List<Article> articles) {
 		
@@ -184,6 +186,11 @@ public class ArticleService {
 	public List<Article> findByConsommableArticle(boolean consommableArticle){
 		
 		return this.repo.findByConsommableArticle(consommableArticle);
+	}
+	
+	public List<Article> findByAffichableArticle(boolean affichableArticle){
+		
+		return this.repo.findByAffichableArticle(affichableArticle);
 	}
 	
 	

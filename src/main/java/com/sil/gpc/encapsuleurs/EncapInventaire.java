@@ -41,7 +41,7 @@ public class EncapInventaire {
 	public String toString() {
 		return "EncapInventaire [inventaire=" + inventaire + ", ligneInventaires=" + ligneInventaires + "]";
 	}
-	
+
 	
 	
 }

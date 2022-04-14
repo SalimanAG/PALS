@@ -28,11 +28,11 @@ public class LigneReception implements Serializable {
 	private double lastStockQte;
 	
 	@ManyToOne(targetEntity = LigneCommande.class,fetch = FetchType.EAGER)
-	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande")
+	@JoinColumn(name = "idLigneCmde",referencedColumnName = "idLigneCommande", nullable = false)
 	private LigneCommande ligneCommande;
 	
 	@ManyToOne( targetEntity = Reception.class,fetch = FetchType.EAGER)
-	@JoinColumn(name = "numReception", referencedColumnName = "numReception")
+	@JoinColumn(name = "numReception", referencedColumnName = "numReception", nullable = false)
 	private Reception reception;
 	
 

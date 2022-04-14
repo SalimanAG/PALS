@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.Exercice;
 
@@ -21,7 +22,12 @@ public interface DemandeApproRepository extends JpaRepository<DemandeApprovision
 	
 	@Query(value="SELECT valeur FROM (SELECT valeur FROM demande_approvisionnement WHERE num_exercice = ?1 ORDER BY valeur DESC) WHERE ROWNUM = 1"
 			, nativeQuery = true)
+	/*@Query(value="SELECT valeur FROM demande_approvisionnement WHERE num_exercice = ?1 ORDER BY valeur DESC LIMIT 1"
+			, nativeQuery = true)*/
 	public Integer findLastNumUsed(Long numExercice);
+	
+	@Query(value = "from DemandeApprovisionnement as l where l.exercice.codeExercice = ?1")
+	public List<DemandeApprovisionnement> findByCodeExercice(String codeExo);
 
 	
 }

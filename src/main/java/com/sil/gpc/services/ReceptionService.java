@@ -4,6 +4,7 @@ import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.Article;
 import com.sil.gpc.domains.EcritureComptable;
 import com.sil.gpc.domains.Famille;
+import com.sil.gpc.domains.Inventaire;
 import com.sil.gpc.domains.LigneAppro;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
 import com.sil.gpc.domains.LigneReception;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReceptionService {
@@ -72,7 +74,14 @@ public class ReceptionService {
 		
 		rep.setNumReception(code+val);
 		
-		if(receptionRepository.existsById(rep.getNumReception())==false) return this.receptionRepository.save(rep) ;
+		
+		
+		
+		
+		if(receptionRepository.existsById(rep.getNumReception())==false) {
+			
+			return this.receptionRepository.save(rep) ;
+		}
 		
 		return null;
         
@@ -97,18 +106,12 @@ public class ReceptionService {
        }
     
     
-	
+    @Transactional
 	public EncapReception editByEncap(String id, EncapReception encap) {
 		
-		List<LigneReception> lignes = this.repo2.findAll();
-		List<LigneReception> concernedLignes = new ArrayList<LigneReception>();
+		List<LigneReception> concernedLignes = this.repo2.findByCodeReception(id);
 		List<LigneReception> newLignes = new ArrayList<LigneReception>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
 		
 		for(int i = 0; i < encap.getLigneReceptions().size(); i++) {
 			boolean added = true;
@@ -159,77 +162,56 @@ public class ReceptionService {
 			
 		}
 		
-		lignes = this.repo2.findAll();
-		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}		
-		
-		
+		newLignes = this.repo2.findByCodeReception(id);
+				
 		return new EncapReception(this.edit(id, encap.getReception()), newLignes);
 	}
 	
-	
+    @Transactional
 	public Reception edit3(String id, Reception reception) {
 		Reception entiter = this.receptionRepository.getOne(id); 
 		if(entiter != null && reception.isValideRecep() != entiter.isValideRecep()) {
 
 			
 			
-			List<LigneReception> lignes = this.servi2.findAll();
-			List<Stocker> listStocker = this.servi3.getAll();
+			List<LigneReception> lignes = this.servi2.findByCodeReception(id);
+			
 			
 			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getReception().getNumReception().equalsIgnoreCase(id)) {
-					boolean stockerFinded = false;
+				
+					
 					
 					LigneReception ligRecept = lignes.get(i);
 					
+					Stocker newSt = this.servi3.findByArticleAndMagasin(lignes.get(i).getLigneCommande().getArticle().getNumArticle(), entiter.getMagasin().getNumMagasin());
 					
-					
-					for(int j = 0; j < listStocker.size(); j++) {
-						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneCommande().getArticle().getNumArticle()
-								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()) {
-							stockerFinded = true;
+					if(newSt != null) {
+						if(reception.isValideRecep() == true) {//Pour Validation
 							
-							Stocker newSt = listStocker.get(j);
+							ligRecept.setLastCump(newSt.getCmup());
+							ligRecept.setLastStockQte(newSt.getQuantiterStocker());
 							
+							//double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / lignes.get(i).getLigneCommande().getUniter().getPoids())*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+							double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / lignes.get(i).getLigneCommande().getUniter().getPoids())*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids())) /(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
 							
+							newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+							newSt.setCmup(cump);
+							entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 							
-							if(reception.isValideRecep() == true) {//Pour Validation
-								
-								ligRecept.setLastCump(newSt.getCmup());
-								ligRecept.setLastStockQte(newSt.getQuantiterStocker());
-								
-								double cump = ((newSt.getCmup()*newSt.getQuantiterStocker())+((lignes.get(i).getPuLigneReception() / lignes.get(i).getLigneCommande().getUniter().getPoids())*lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()*(1+(lignes.get(i).getLigneCommande().getTva()/100))))/(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
-								
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
-								newSt.setCmup(cump);
-								entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));//(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));//(System.currentTimeMillis());
-								
-							}else if(reception.isValideRecep() == false) {//Pour Annulation
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
-								newSt.setCmup(ligRecept.getLastCump());
-							}
-							
-							
-																					
-							this.servi3.edit(listStocker.get(j).getIdStocker(), newSt);
-							
-							break;
-							
+						}else if(reception.isValideRecep() == false) {//Pour Annulation
+							newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()));
+							newSt.setCmup(ligRecept.getLastCump());
 						}
+						
+						
+																				
+						this.servi3.edit(newSt.getIdStocker(), newSt);
 					}
-					
-										
-					if(stockerFinded == false) {
+					else {
 						//Elément à générer en stock
 						entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 						this.servi3.save(new Stocker(Long.valueOf(0), (lignes.get(i).getQuantiteLigneReception()*lignes.get(i).getLigneCommande().getUniter().getPoids()), 0, 0, (lignes.get(i).getLigneCommande().getPuLigneCommande()/(lignes.get(i).getLigneCommande().getUniter().getPoids())), lignes.get(i).getLigneCommande().getArticle(), lignes.get(i).getReception().getMagasin()));
 					}
-					
 					
 					
 					repo2.save(ligRecept);
@@ -274,7 +256,7 @@ public class ReceptionService {
 					
 					
 					
-				}
+				
 			}
 			
 			entiter.setValideRecep(reception.isValideRecep());
@@ -298,7 +280,7 @@ public class ReceptionService {
     	return this.receptionRepository.existsById(id);
     }  
     
-    
+    @Transactional
 	public boolean deleteAReception2(String id) {
 		
 		List<LigneReception> lignes = this.repo2.findAll();
@@ -342,6 +324,16 @@ public class ReceptionService {
     public List<Reception> findByDateReception(Date DateReception ){
 		
 		return this.receptionRepository.findByDateReception(DateReception);
+	}
+    
+    public List<LigneReception> findByNumCommande(Long numCommande){
+		
+		return this.repo2.findByNumCommande(numCommande);
+	}
+    
+	public List<Reception> findByCodeExercice(String codeExo){
+		
+		return this.receptionRepository.findByCodeExercice(codeExo);
 	}
 
 }

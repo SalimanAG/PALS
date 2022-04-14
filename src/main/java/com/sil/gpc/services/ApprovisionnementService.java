@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Approvisionnement;
+import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.EcritureComptable;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.LigneAppro;
@@ -21,13 +23,16 @@ import com.sil.gpc.domains.Stocker;
 import com.sil.gpc.encapsuleurs.EncapApprovisionnement;
 import com.sil.gpc.encapsuleurs.EncapDemandePrix;
 import com.sil.gpc.repositories.ApprovisionementRepository;
+import com.sil.gpc.repositories.DemandeApproRepository;
 import com.sil.gpc.repositories.LigneApproRepository;
+import com.sil.gpc.utilities.SalTools;
 
 @Service
 public class ApprovisionnementService {
 
 	private final ApprovisionementRepository repo;
 	private final LigneApproRepository repo2;
+	private final DemandeApproRepository repo3;
 	private final LigneApproService servi2;
 	private final StockerService servi3;
 	private final LigneDemandeApproService servi4;
@@ -35,10 +40,11 @@ public class ApprovisionnementService {
 	private final OpeJournalSettingService servi6;
 	private final EcritureComptableService servi7;
 
-	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3, LigneDemandeApproService servi4, StockComptaSettingService servi5, EcritureComptableService servi7, OpeJournalSettingService servi6) {
+	public ApprovisionnementService(ApprovisionementRepository repo, LigneApproRepository repo2, LigneApproService servi2, StockerService servi3, LigneDemandeApproService servi4, StockComptaSettingService servi5, EcritureComptableService servi7, OpeJournalSettingService servi6, DemandeApproRepository repo3) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
+		this.repo3 = repo3;
 		this.servi2 = servi2;
 		this.servi3 = servi3;
 		this.servi4 = servi4;
@@ -51,7 +57,7 @@ public class ApprovisionnementService {
 		approvisionnement.setValideAppro(false);	
 		
 		Integer val = 1, nbrMaxCaract = 6;
-		String code = "BA-";
+		String code = "CI-";
 		if(this.repo.findLastNumUsed(approvisionnement.getExercice().getNumExercice()) != null) {
 			val = this.repo.findLastNumUsed(approvisionnement.getExercice().getNumExercice());
 			val++;
@@ -74,6 +80,33 @@ public class ApprovisionnementService {
 		
 	}
 	
+	@Transactional
+	public EncapApprovisionnement saveByEncap(EncapApprovisionnement encapApprovisionnement) {
+		List<LigneAppro> lignes = encapApprovisionnement.getLigneAppros();
+		
+		Approvisionnement element = this.save(encapApprovisionnement.getApprovisionnement());
+		
+		for (int i = 0; i < lignes.size(); i++) {
+			LigneAppro lig = lignes.get(i);
+			lig.setAppro(element);
+			
+			lignes.set(i, lig);
+		}
+		
+		for(int i = 0; i < encapApprovisionnement.getLigneAppros().size(); i++) {			
+			this.servi4.edit(encapApprovisionnement.getLigneAppros().get(i).getLigneDA().getIdLigneDA(), encapApprovisionnement.getLigneAppros().get(i).getLigneDA());
+		}
+		
+		lignes = this.repo2.saveAll(lignes);
+		
+		DemandeApprovisionnement demAppr =  this.repo3.getOne(encapApprovisionnement.getDemandeApprovisionnement().getNumDA());
+		
+		demAppr.setNotProcessAgain(encapApprovisionnement.getDemandeApprovisionnement().isNotProcessAgain());
+		
+		return new EncapApprovisionnement(element, lignes, this.repo3.save(demAppr));
+		
+	}
+	
 	public Approvisionnement edit(String id, Approvisionnement approvisionnement) {
 		
 		Approvisionnement entiter = this.repo.getOne(id); 
@@ -90,18 +123,12 @@ public class ApprovisionnementService {
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapApprovisionnement editByEncap(String id, EncapApprovisionnement encap) {
 		
-		List<LigneAppro> lignes = this.repo2.findAll();
-		List<LigneAppro> concernedLignes = new ArrayList<LigneAppro>();
+		List<LigneAppro> concernedLignes = this.repo2.findByCodeAppro(id);
 		List<LigneAppro> newLignes = new ArrayList<LigneAppro>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
 		
 		for(int i = 0; i < encap.getLigneAppros().size(); i++) {
 			boolean added = true;
@@ -150,142 +177,106 @@ public class ApprovisionnementService {
 			this.servi4.edit(encap.getLigneAppros().get(i).getLigneDA().getIdLigneDA(), encap.getLigneAppros().get(i).getLigneDA());
 		}
 		
-		lignes = this.repo2.findAll();
+		newLignes = this.repo2.findByCodeAppro(id);
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}
+		DemandeApprovisionnement demAppr =  this.repo3.getOne(encap.getDemandeApprovisionnement().getNumDA());
+		
+		demAppr.setNotProcessAgain(encap.getDemandeApprovisionnement().isNotProcessAgain());
 		
 		
-		return new EncapApprovisionnement(this.edit(id, encap.getApprovisionnement()), newLignes);
+		return new EncapApprovisionnement(this.edit(id, encap.getApprovisionnement()), newLignes, this.repo3.save(demAppr));
 	}
-	
-	
+
+	@Transactional
 	public Approvisionnement edit3(String id, Approvisionnement approvisionnement) {
 		Approvisionnement entiter = this.repo.getOne(id); 
 		if(entiter != null && approvisionnement.isValideAppro() != entiter.isValideAppro()) {
 
 			
+			List<LigneAppro> clignes = this.servi2.findByCodeAppro(id);
 			
-			List<LigneAppro> lignes = this.servi2.getAll();
-			List<Stocker> listStocker = this.servi3.getAll();
 			
-			List<LigneAppro> clignes = new ArrayList<LigneAppro>();
-			List<Stocker> clistStocker = new ArrayList<Stocker>();
-			
-			boolean stockerFinded = false;
-			
-			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-					LigneAppro ligApp = lignes.get(i);
-					clignes.add(ligApp);
-					stockerFinded = false;
+			for(int i = 0; i < clignes.size(); i++) {
+				
+				LigneAppro ligApp = clignes.get(i);
+				
+				Stocker newSt = this.servi3.findByArticleAndMagasin(ligApp.getLigneDA().getArticle().getNumArticle(), entiter.getMagasin().getNumMagasin());
+				
+				if(newSt != null) {
 					
-					for(int j = 0; j < listStocker.size(); j++) {
-						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneDA().getArticle().getNumArticle()
-								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()
-								&& listStocker.get(j).getQuantiterStocker() >= lignes.get(i).getQuantiteLigneAppro()) {
+					if(newSt.getQuantiterStocker() >= ligApp.getQuantiteLigneAppro()) {
+						
+						if(approvisionnement.isValideAppro() == true) {
+							entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
+							ligApp.setLastStockQte(newSt.getQuantiterStocker());
+							newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
+							ligApp.setPULigneAppro(newSt.getCmup());
+						
+							//Ecritures comptables
+							List<OpeJournalSetting> numJournaux = this.servi6.getAll();
+							List<StockComptaSetting> paramFamille = this.servi5.getAll();
 							
-							stockerFinded = true;
-							Stocker newSt = listStocker.get(j);
-							clistStocker.add(newSt);
-							break;
+							for (int m=0; m < paramFamille.size(); m++) {
+								if(paramFamille.get(m).getFamille().getNumFamille() == ligApp.getLigneDA().getArticle().getFamille().getNumFamille() && paramFamille.get(m).isExportable() == true) {
+									List<EcritureComptable> ecriOper = new ArrayList<EcritureComptable>();
+									String numJournStock = "";
+									String numJournVStock = "";
+									
+									for(int n=0; n < numJournaux.size(); n++) {
+										if(numJournaux.get(n).getOperation().equalsIgnoreCase("STOCK")) {
+											numJournStock = numJournaux.get(n).getJournal();
+											break;
+										}
+									}
+									
+									for(int n=0; n < numJournaux.size(); n++) {
+										if(numJournaux.get(n).getOperation().equalsIgnoreCase("V/STOCK")) {
+											numJournVStock = numJournaux.get(n).getJournal();
+											break;
+										}
+									}
+									
+									ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteStock(), true, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+									ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteVaStock(), false, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
+									
+									ecriOper.get(0).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
+									ecriOper.get(1).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
+									
+									this.servi7.save2(ecriOper);
+									
+									break;
+									
+								}
+								
+							}
+							
+							
+						
+						}else if(approvisionnement.isValideAppro() == false) {
+							newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(clignes.get(i).getQuantiteLigneAppro()*clignes.get(i).getLigneDA().getUniter().getPoids()));
+							ligApp.setPULigneAppro(Long.valueOf(0));
 						}
+																				
+						this.servi3.edit(newSt.getIdStocker(), newSt);
 						
+						this.repo2.save(ligApp);
 						
-					}
-					
-					if(stockerFinded == false) {
+						entiter.setValideAppro(approvisionnement.isValideAppro());
 						
-						break;
+					} else {
+						SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas suffisament de Stock");
+						return null;
 					}
 					
 				}
-			}
-			
-			lignes = new ArrayList<LigneAppro>(clignes);
-			listStocker = new ArrayList<Stocker>(clistStocker);
-			
-			if(stockerFinded == true)
-			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
-					LigneAppro ligApp = lignes.get(i);
-					
-					
-					for(int j = 0; j < listStocker.size(); j++) {
-						if(listStocker.get(j).getArticle().getNumArticle() == lignes.get(i).getLigneDA().getArticle().getNumArticle()
-								&& listStocker.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()
-								&& listStocker.get(j).getQuantiterStocker() >= lignes.get(i).getQuantiteLigneAppro()) {
-							
-							
-							Stocker newSt = listStocker.get(j);
-							
-							
-							if(approvisionnement.isValideAppro() == true) {
-								entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
-								ligApp.setLastStockQte(newSt.getQuantiterStocker());
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()-(lignes.get(i).getQuantiteLigneAppro()*lignes.get(i).getLigneDA().getUniter().getPoids()));
-								ligApp.setPULigneAppro(newSt.getCmup());
-							}else if(approvisionnement.isValideAppro() == false) {
-								newSt.setQuantiterStocker(newSt.getQuantiterStocker()+(lignes.get(i).getQuantiteLigneAppro()*lignes.get(i).getLigneDA().getUniter().getPoids()));
-								ligApp.setPULigneAppro(Long.valueOf(0));
-							}
-																					
-							this.servi3.edit(listStocker.get(j).getIdStocker(), newSt);
-							
-							entiter.setValideAppro(approvisionnement.isValideAppro());
-							
-							break;
-						}
-					}
-					
-					
-					
-					this.repo2.save(ligApp);
-					
-					//Ecritures comptables
-					List<OpeJournalSetting> numJournaux = this.servi6.getAll();
-					List<StockComptaSetting> paramFamille = this.servi5.getAll();
-					
-					for (int m=0; m < paramFamille.size(); m++) {
-						if(paramFamille.get(m).getFamille().getNumFamille() == ligApp.getLigneDA().getArticle().getFamille().getNumFamille() && paramFamille.get(m).isExportable() == true) {
-							List<EcritureComptable> ecriOper = new ArrayList<EcritureComptable>();
-							String numJournStock = "";
-							String numJournVStock = "";
-							
-							for(int n=0; n < numJournaux.size(); n++) {
-								if(numJournaux.get(n).getOperation().equalsIgnoreCase("STOCK")) {
-									numJournStock = numJournaux.get(n).getJournal();
-									break;
-								}
-							}
-							
-							for(int n=0; n < numJournaux.size(); n++) {
-								if(numJournaux.get(n).getOperation().equalsIgnoreCase("V/STOCK")) {
-									numJournVStock = numJournaux.get(n).getJournal();
-									break;
-								}
-							}
-							
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteStock(), true, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
-							ecriOper.add(new EcritureComptable(Long.valueOf(0), numJournVStock, new Date(System.currentTimeMillis()), "1", paramFamille.get(m).getCompteVaStock(), false, ligApp.getLigneDA().getAppro().getService().getCodeService(), "Pour Sortie du magasin "+ligApp.getAppro().getMagasin().getCodeMagasin(), ligApp.getAppro().getNumAppro(), paramFamille.get(m).getFamille()));
-							
-							ecriOper.get(0).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
-							ecriOper.get(1).setMontantEcri(ligApp.getPULigneAppro()*ligApp.getQuantiteLigneAppro()*ligApp.getLigneDA().getUniter().getPoids());
-							
-							this.servi7.save2(ecriOper);
-							
-							break;
-							
-						}
-						
-					}
+				else {
+					SalTools.sendErr("L'article "+ ligApp.getLigneDA().getArticle().getCodeArticle() +" n'a pas de Stock");
+					return null;
+				}
+				
+				
+				
 	
-					
-					
-				}
 			}
 			
 			
@@ -296,6 +287,18 @@ public class ApprovisionnementService {
 		return null;
 	}
 	
+	
+	
+	public Approvisionnement edit4(String id, Approvisionnement approvisionnement) {
+		Approvisionnement entiter = this.repo.getOne(id); 
+		if(entiter != null) {
+			entiter.setValideAppro1(approvisionnement.isValideAppro1());
+			
+			return this.repo.save(entiter);
+		}
+		
+		return null;
+	}
 	
 	
 	public boolean delete(String id) {
@@ -309,16 +312,17 @@ public class ApprovisionnementService {
 	}
 	
 	
+	@Transactional
 	public boolean deleteAApprovisionnement2(String id) {
 		
-		List<LigneAppro> lignes = this.repo2.findAll();
+		List<LigneAppro> lignes = this.servi2.findByCodeAppro(id);
 		
 		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getAppro().getNumAppro().equalsIgnoreCase(id)) {
+			
 				lignes.get(i).getLigneDA().setSatisfaite(false);
 				this.servi4.edit(lignes.get(i).getLigneDA().getIdLigneDA(), lignes.get(i).getLigneDA());
 				this.repo2.deleteById(lignes.get(i).getIdLigneAppro());
-			}
+			
 		}
 		
 		return this.delete(id);
@@ -353,6 +357,11 @@ public class ApprovisionnementService {
 	public List<Approvisionnement> findByExercice(Exercice exercice){
 		
 		return this.repo.findByExercice(exercice);
+	}
+	
+	public List<Approvisionnement> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
 	}
 
 

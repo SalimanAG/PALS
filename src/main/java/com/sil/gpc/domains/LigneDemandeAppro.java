@@ -30,7 +30,7 @@ public class LigneDemandeAppro implements Serializable{
 	
 	//Liaison à la unité
 	@ManyToOne(targetEntity = Uniter.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter")
+	@JoinColumn(name = "numUniter", referencedColumnName = "numUniter", nullable = false)
 	private Uniter uniter;
 
 	//Liaison avec Demande Appro Approvisionnement
@@ -38,6 +38,7 @@ public class LigneDemandeAppro implements Serializable{
 	@JoinColumn(name = "numDA", referencedColumnName = "numDA",nullable = false)
 	public DemandeApprovisionnement appro;
 	
+	//@ColumnDefault(value = "false")
 	@ColumnDefault(value = "0")
 	private boolean satisfaite;
 	

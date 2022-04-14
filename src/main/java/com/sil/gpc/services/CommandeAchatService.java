@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.gpc.domains.Approvisionnement;
 import com.sil.gpc.domains.CommandeAchat;
 import com.sil.gpc.repositories.CommandeAchatRepository;
 
@@ -51,6 +52,7 @@ public class CommandeAchatService {
 		if(entiter != null) {
 			entiter.setCommande(commandeAchat.getCommande());
 			entiter.setExercice(commandeAchat.getExercice());
+			entiter.setProcesByLc(commandeAchat.isProcesByLc());
 			
 			return this.repo.save(entiter);
 		}
@@ -76,6 +78,12 @@ public class CommandeAchatService {
 	public List<CommandeAchat> getAll(){
 		
 		return this.repo.findAll();
+	}
+	
+	
+	public List<CommandeAchat> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
 	}
 
 

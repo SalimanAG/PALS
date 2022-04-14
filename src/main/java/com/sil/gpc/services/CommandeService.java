@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sil.gpc.domains.Commande;
+import com.sil.gpc.domains.CommandeAchat;
 import com.sil.gpc.domains.Exercice;
 import com.sil.gpc.domains.Fournisseur;
 import com.sil.gpc.domains.LigneCommande;
@@ -20,12 +22,14 @@ public class CommandeService {
 	private final CommandeRepository repo;
 	private final LigneCommandeRepository repo2;
 	private final LigneCommandeService servi2;
+	private final ReceptionService servi3;
 
-	public CommandeService(CommandeRepository repo, LigneCommandeRepository repo2, LigneCommandeService servi2) {
+	public CommandeService(CommandeRepository repo, LigneCommandeRepository repo2, LigneCommandeService servi2, ReceptionService servi3) {
 		super();
 		this.repo = repo;
 		this.repo2 = repo2;
 		this.servi2 = servi2;
+		this.servi3 = servi3;
 	}
 	
 	public Commande save(Commande commande) {
@@ -69,31 +73,31 @@ public class CommandeService {
 			entiter.setExercice(commande.getExercice());
 			entiter.setFrs(commande.getFrs());
 			entiter.setValide(commande.isValide());
+			entiter.setDepartement(commande.getDepartement());
+			entiter.setJustif(commande.getJustif());
+			entiter.setNumDa(commande.getNumDa());
+			entiter.setCmdDe(commande.getCmdDe());
+			
 			return this.repo.save(entiter);
 		}
 		
 		return null;
 	}
 	
-	
+	@Transactional
 	public EncapCommande editByEncap(Long id, EncapCommande encap) {
 				
-		List<LigneCommande> lignes = this.repo2.findAll();
-		List<LigneCommande> concernedLignes = new ArrayList<LigneCommande>();
-		List<LigneCommande> newLignes = new ArrayList<LigneCommande>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).numCommande.getNumCommande() == id) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
+		List<LigneCommande> concernedLignes = this.repo2.findByCodeCommande(id);
+		List<LigneCommande> newLignes = new ArrayList<LigneCommande>();
+
 		
 		for(int i = 0; i < encap.getLigneCommandes().size(); i++) {
 			boolean added = true;
 			LigneCommande enti = null;
 			
 			for(int j = 0; j < concernedLignes.size(); j++) {
-				if(concernedLignes.get(j).getArticle().getNumArticle() == encap.getLigneCommandes().get(i).getArticle().getNumArticle()) {
+				if(concernedLignes.get(j).getArticle().getNumArticle().equals(encap.getLigneCommandes().get(i).getArticle().getNumArticle()) ) {
 					added = false;
 					enti = concernedLignes.get(j);
 					break;
@@ -117,7 +121,7 @@ public class CommandeService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneCommandes().size(); j++) {
-				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getLigneCommandes().get(j).getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getArticle().getNumArticle().longValue() == encap.getLigneCommandes().get(j).getArticle().getNumArticle().longValue()) {
 					removed = false;
 					break;
 				}
@@ -129,13 +133,7 @@ public class CommandeService {
 			
 		}
 		
-		lignes = this.repo2.findAll();
-		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).numCommande.getNumCommande() == id) {
-				newLignes.add(lignes.get(i));
-			}
-		}
+		newLignes = this.repo2.findByCodeCommande(id);
 		
 		
 		return new EncapCommande(this.edit(id, encap.getCommande()), newLignes);
@@ -150,6 +148,7 @@ public class CommandeService {
 		return !this.repo.existsById(id);
 	}
 	
+	@Transactional
 	public boolean deleteACommande2(Long id) {
 		
 		List<LigneCommande> lignes = this.repo2.findAll();
@@ -197,6 +196,21 @@ public class CommandeService {
 	public List<Commande> findByExercice(Exercice exercice){
 		
 		return this.repo.findByExercice(exercice);
+	}
+
+	public boolean hasCommandeReception(Long id) {
+		boolean res = false;
+		
+		if(this.servi3.findByNumCommande(id).size() > 0) {
+			res = true;
+		}
+		
+		return res;
+	}
+	
+	public List<Commande> findByCodeExercice(String codeExo){
+		
+		return this.repo.findByCodeExercice(codeExo);
 	}
 	
 }

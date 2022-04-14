@@ -2,6 +2,7 @@ package com.sil.gpc.domains;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -11,13 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.query.criteria.internal.expression.function.CurrentDateFunction;
+
 @SuppressWarnings("serial")
 @Entity
 public class DemandeApprovisionnement implements Serializable{
 	@Id
 	@Column(length = 20)
 	private String numDA;
-	private Date dateDA;
+	private Timestamp dateDA;
 	private int valeur;
 	private boolean valideDA;
 	private String description;
@@ -31,6 +35,10 @@ public class DemandeApprovisionnement implements Serializable{
 	@ManyToOne(targetEntity = Service.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "numService", referencedColumnName = "numService",nullable = false)
 	public Service service;
+	
+	//@ColumnDefault(value = "false")
+	@ColumnDefault(value = "0")
+	private boolean notProcessAgain;
 
 	public DemandeApprovisionnement() {
 		super();
@@ -38,16 +46,18 @@ public class DemandeApprovisionnement implements Serializable{
 	}
 
 	
-
-	public DemandeApprovisionnement(String numDA, Date dateDA, int valeur, boolean valideDA, Exercice exercice,
-			Service service) {
+	
+	public DemandeApprovisionnement(String numDA, Timestamp dateDA, int valeur, boolean valideDA, String description,
+			Exercice exercice, Service service, boolean notProcessAgain) {
 		super();
 		this.numDA = numDA;
 		this.dateDA = dateDA;
 		this.valeur = valeur;
 		this.valideDA = valideDA;
+		this.description = description;
 		this.exercice = exercice;
 		this.service = service;
+		this.notProcessAgain = notProcessAgain;
 	}
 
 
@@ -91,14 +101,14 @@ public class DemandeApprovisionnement implements Serializable{
 	/**
 	 * @return the dateDA
 	 */
-	public Date getDateDA() {
+	public Timestamp getDateDA() {
 		return dateDA;
 	}
 
 	/**
 	 * @param dateDA the dateDA to set
 	 */
-	public void setDateDA(Date dateDA) {
+	public void setDateDA(Timestamp dateDA) {
 		this.dateDA = dateDA;
 	}
 
@@ -141,11 +151,26 @@ public class DemandeApprovisionnement implements Serializable{
 
 
 
+	public boolean isNotProcessAgain() {
+		return notProcessAgain;
+	}
+
+
+
+	public void setNotProcessAgain(boolean notProcessAgain) {
+		this.notProcessAgain = notProcessAgain;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "DemandeApprovisionnement [numDA=" + numDA + ", dateDA=" + dateDA + ", valeur=" + valeur + ", valideDA="
-				+ valideDA + ", description=" + description + ", exercice=" + exercice + ", service=" + service + "]";
+				+ valideDA + ", description=" + description + ", exercice=" + exercice + ", service=" + service
+				+ ", notProcessAgain=" + notProcessAgain + "]";
 	}
+
+
 
 	
 

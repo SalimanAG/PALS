@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.Inventaire;
 import com.sil.gpc.domains.LigneDemandePrix;
 import com.sil.gpc.domains.LigneInventaire;
@@ -56,48 +58,42 @@ public class InventaireService {
 	}
 	
 	
+	@Transactional
 	public Inventaire edit3(Inventaire inv, String num){
 		Inventaire entiter=repos.getOne(num);
 		if (entiter!=null && entiter.isValideInve() == false) {
-			List<LigneInventaire> lignes = this.repo2.findAll();
-			List<Stocker> stockerList = this.repo3.findAll();
+			List<LigneInventaire> lignes = this.repo2.findByCodeInventaire(num);
 			
 			for(int i = 0; i < lignes.size(); i++) {
-				if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(num)) {
-					boolean finded = false;
+				
+					
 					LigneInventaire newInv = lignes.get(i);
 					
-					for(int j = 0; j < stockerList.size(); j++) {
-						if(stockerList.get(j).getArticle().getNumArticle() == lignes.get(i).getArticle().getNumArticle() 
-								&& stockerList.get(j).getMagasin().getNumMagasin() == entiter.getMagasin().getNumMagasin()) {
-							finded = true;
-							
-							Stocker elem = stockerList.get(j);
-							newInv.setStockTheoriq(elem.getQuantiterStocker());
-							entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
-							elem.setQuantiterStocker(lignes.get(i).getStockreel());
-							newInv.setPu(elem.getCmup());
-							//System.out.println(elem);
-							
-							this.repo3.save(elem);
-							
-							break;
-						}
-					}
+					Stocker elem = this.repo3.findByArticleAndMagasin(newInv.getArticle().getNumArticle(), entiter.getMagasin().getNumMagasin());
 					
-					if(finded == false) {
+					if(elem != null) {
+						
+						
+						newInv.setStockTheoriq(elem.getQuantiterStocker());
+						
+						elem.setQuantiterStocker(lignes.get(i).getStockreel());
+						newInv.setPu(elem.getCmup());
+						//System.out.println(elem);
+						
+						this.repo3.save(elem);
+					}
+					else {
 						entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 						this.repo3.save(new Stocker(null, lignes.get(i).getStockreel(), 0, 0, lignes.get(i).getPu(), lignes.get(i).getArticle(), entiter.getMagasin()));
 						//newInv.setPu(0);
-						
 					}
-					
 					
 					this.servi2.edit(newInv, newInv.getIdLigneInv());
 	
-				}
+				
 			}
 			
+			entiter.setDateValidation(new Timestamp(System.currentTimeMillis()));
 			entiter.setValideInve(inv.isValideInve());
 		
 			return repos.save(entiter);
@@ -106,25 +102,19 @@ public class InventaireService {
 	}
 
 	
-	
+	@Transactional
 	public EncapInventaire editByEncap(String id, EncapInventaire encap) {
 		
-		List<LigneInventaire> lignes = this.repo2.findAll();
-		List<LigneInventaire> concernedLignes = new ArrayList<LigneInventaire>();
+		List<LigneInventaire> concernedLignes = this.repo2.findByCodeInventaire(id);
 		List<LigneInventaire> newLignes = new ArrayList<LigneInventaire>();
 		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(id)) {
-				concernedLignes.add(lignes.get(i));
-			}
-		}
-		
+				
 		for(int i = 0; i < encap.getLigneInventaires().size(); i++) {
 			boolean added = true;
 			LigneInventaire enti = null;
 			
 			for(int j = 0; j < concernedLignes.size(); j++) {
-				if(concernedLignes.get(j).getArticle().getNumArticle() == encap.getLigneInventaires().get(i).getArticle().getNumArticle()) {
+				if(concernedLignes.get(j).getArticle().getNumArticle().equals(encap.getLigneInventaires().get(i).getArticle().getNumArticle())) {
 					added = false;
 					enti = concernedLignes.get(j);
 					break;
@@ -148,7 +138,7 @@ public class InventaireService {
 			boolean removed = true;
 			
 			for(int j = 0; j < encap.getLigneInventaires().size(); j++) {
-				if(concernedLignes.get(i).getArticle().getNumArticle() == encap.getLigneInventaires().get(j).getArticle().getNumArticle()) {
+				if(concernedLignes.get(i).getArticle().getNumArticle().equals(encap.getLigneInventaires().get(j).getArticle().getNumArticle())) {
 					removed = false;
 					break;
 				}
@@ -160,13 +150,7 @@ public class InventaireService {
 			
 		}
 		
-		lignes = this.repo2.findAll();
-		
-		for(int i = 0; i < lignes.size(); i++) {
-			if(lignes.get(i).getInventaire().getNumInv().equalsIgnoreCase(id)) {
-				newLignes.add(lignes.get(i));
-			}
-		}
+		newLignes = this.repo2.findByCodeInventaire(id);
 		
 		
 		return new EncapInventaire(this.edit(encap.getInventaire(), id), newLignes);
@@ -197,6 +181,7 @@ public class InventaireService {
 		return !repos.existsById(num);
 	}
 	
+	@Transactional
 	public boolean deleteAInventaire2(String id) {
 		
 		List<LigneInventaire> lignes = this.repo2.findAll();
@@ -208,6 +193,11 @@ public class InventaireService {
 		}
 		
 		return this.delete(id);
+	}
+	
+	public List<Inventaire> findByCodeExercice(String codeExo){
+		
+		return this.repos.findByCodeExercice(codeExo);
 	}
 	
 }

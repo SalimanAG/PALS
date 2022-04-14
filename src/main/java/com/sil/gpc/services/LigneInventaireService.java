@@ -60,4 +60,10 @@ public class LigneInventaireService {
 		return !repos.existsById(num);
 	}
 	
+	public List<LigneInventaire> findByCodeInventaire(String codeInventaire){
+		
+		return this.repos.findByCodeInventaire(codeInventaire);
+		
+	}
+	
 }

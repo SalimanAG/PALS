@@ -26,13 +26,6 @@ public class LigneReceptionService {
 	}
 
 
-	/*public List<LigneReception> findByQte (double qte){
-		return repos.findByQuantiteLigneReception(qte);
-	}
-
-	public List<LigneReception> findByPrix (double prix){
-		return repos.findByPULigneReception(prix);
-	}*/
 
 	public List<LigneReception> findAll() {
 		return repos.findAll();
@@ -70,5 +63,11 @@ public class LigneReceptionService {
 	public boolean delete(Long id) {
 		repos.deleteById(id);
 		return repos.existsById(id);
+	}
+	
+	public List<LigneReception> findByCodeReception(String codeReception){
+		
+		return this.repos.findByCodeReception(codeReception);
+		
 	}
 }

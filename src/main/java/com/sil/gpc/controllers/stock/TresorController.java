@@ -3,6 +3,7 @@ package com.sil.gpc.controllers.stock;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sil.gpc.domains.Commande;
 import com.sil.gpc.domains.DemandeApprovisionnement;
 import com.sil.gpc.domains.FactureProFormAcha;
+import com.sil.gpc.domains.LettreCommande;
 import com.sil.gpc.domains.LigneCommande;
 import com.sil.gpc.domains.LigneDemandeAppro;
 import com.sil.gpc.domains.LigneFactureProFormAchat;
@@ -78,6 +80,17 @@ public class TresorController {
 		return this.commandeService.getById(id);
 	}
 	
+	@GetMapping(path = "commande/hasRecetp/{id}")
+	public boolean getCommandeByHasRecept(@PathVariable(name = "id") Long id){
+		
+		return this.commandeService.hasCommandeReception(id);
+	}
+	
+	@GetMapping(path = "commande/byCodExo/{codExo}")
+	public List<Commande> getCommandeByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.commandeService.findByCodeExercice(id);
+	}
+	
 	@PostMapping(path = "commande/list")
 	public Commande createCommande( @RequestBody Commande commande) {
 		
@@ -86,6 +99,7 @@ public class TresorController {
 	
 	
 	@PostMapping(path = "commande/list2")
+	@Transactional
 	public EncapCommande createCommandeByEncap( @RequestBody EncapCommande encapCommande) {
 		List<LigneCommande> lignes = encapCommande.getLigneCommandes();
 		
@@ -148,6 +162,13 @@ public class TresorController {
 		return this.ligneCommandeService.getById(id);
 	}
 	
+	@GetMapping(path = "ligneCommande/list/byCodeCom/{code}")
+	public List<LigneCommande> getLigneCommandeByCodeCommande(@PathVariable(name = "code") Long cod){
+		
+		return this.ligneCommandeService.findByCodeCommande(cod);
+		
+	}
+	
 	@PostMapping(path = "ligneCommande/list")
 	public LigneCommande createLigneCommande( @RequestBody LigneCommande ligneCommande) {
 		
@@ -185,6 +206,11 @@ public class TresorController {
 		return this.receptionService.findById(id);
 	}
 	
+	@GetMapping(path = "reception/byCodExo/{codExo}")
+	public List<Reception> getReceptionByCodeExo(@PathVariable(name = "codExo") String id){	
+		return this.receptionService.findByCodeExercice(id);
+	}
+	
 	@PostMapping(path = "reception/list")
 	public Reception createReception( @RequestBody Reception reception) {
 		
@@ -193,10 +219,12 @@ public class TresorController {
 	
 	
 	@PostMapping(path = "reception/list2")
+	@Transactional
 	public EncapReception createReceptionByEncap( @RequestBody EncapReception encapReception) {
 		List<LigneReception> lignes = encapReception.getLigneReceptions();
 		
 		Reception element = this.receptionService.save(encapReception.getReception());
+		
 		
 		for (int i = 0; i < lignes.size(); i++) {
 			LigneReception lig = lignes.get(i);
@@ -210,6 +238,7 @@ public class TresorController {
 			this.ligneCommandeService.edit(encapReception.getLigneReceptions().get(i).getLigneCommande().getIdLigneCommande(), encapReception.getLigneReceptions().get(i).getLigneCommande());
 			
 		}
+		
 		
 		lignes = this.ligneReceptionService.saveAll(lignes);
 		
@@ -267,6 +296,13 @@ public class TresorController {
 		return this.ligneReceptionService.findById(id);
 	}
 	
+	@GetMapping(path = "ligneReception/list/byCodeRec/{code}")
+	public List<LigneReception> getLigneReceptionByCodeReception(@PathVariable(name = "code") String cod){
+		
+		return this.ligneReceptionService.findByCodeReception(cod);
+		
+	}
+	
 	@PostMapping(path = "ligneReception/list")
 	public LigneReception createLigneReception( @RequestBody LigneReception ligneReception) {
 		
@@ -304,6 +340,13 @@ public class TresorController {
 		return this.demandeApproService.getById(id);
 	}
 	
+	@GetMapping(path = "demandeAppro/byCodExo/{codExo}")
+	public List<DemandeApprovisionnement> getDemandeApprovisionnementByCodeExo(@PathVariable(name = "codExo") String id){	
+		
+		return this.demandeApproService.findByCodeExercice(id);
+		
+	}
+	
 	@PostMapping(path = "demandeAppro/list")
 	public DemandeApprovisionnement createDemandeAppro( @RequestBody DemandeApprovisionnement demandeApprovisionnement) {
 		
@@ -312,6 +355,7 @@ public class TresorController {
 	
 	
 	@PostMapping(path = "demandeAppro/list2")
+	@Transactional
 	public EncapDemandeAppro createDemandeApproByEncap( @RequestBody EncapDemandeAppro encapDemandeAppro) {
 		List<LigneDemandeAppro> lignes = encapDemandeAppro.getLigneDemandeAppros();
 		
@@ -372,6 +416,12 @@ public class TresorController {
 	public Optional<LigneDemandeAppro> getLigneDemandeApproById(@PathVariable(name = "id") Long id){
 		
 		return this.ligneDemandeApproService.getById(id);
+	}
+	
+	@GetMapping(path = "ligneDemandeAppro/list/byCodeDemApp/{code}")
+	public List<LigneDemandeAppro> getLigneDemandeApproByCodeDemAppro(@PathVariable(name = "code") String cod){
+		
+		return this.ligneDemandeApproService.findByCodeDemAppro(cod);
 	}
 	
 	@PostMapping(path = "ligneDemandeAppro/list")
