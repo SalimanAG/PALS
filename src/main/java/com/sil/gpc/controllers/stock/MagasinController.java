@@ -62,6 +62,9 @@ public class MagasinController {
 	
 	@Autowired
 	FamilleRepository familleRepository;
+
+	@Autowired
+	ArticleRepository articleRepo;
 	
 	
 	
@@ -268,6 +271,13 @@ public class MagasinController {
 	public Boolean deleteArticle(@PathVariable(name = "id") Long id) {
 		
 		return this.articleService.delete(id);
+	}
+
+	//Add
+	@GetMapping(path = "article/listByFamille/{familleId}")
+	public List<Article> getAllArticleByFamille(@PathVariable(name = "familleId") Long familleId){
+
+		return this.articleRepo.findAllByFamille_NumFamille(familleId);
 	}
 	
 	

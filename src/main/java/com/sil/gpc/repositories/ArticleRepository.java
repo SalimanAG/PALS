@@ -48,6 +48,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 			, nativeQuery = true)
 	List<Article> finAllArticleForMagasin(Long id);
 
+	List<Article> findAllByFamille_NumFamille(Long numFamille);
+
 
 	
 }
