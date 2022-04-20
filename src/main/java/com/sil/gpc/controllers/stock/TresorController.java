@@ -1,8 +1,12 @@
 package com.sil.gpc.controllers.stock;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +31,7 @@ import com.sil.gpc.encapsuleurs.EncapCommande;
 import com.sil.gpc.encapsuleurs.EncapDemandeAppro;
 import com.sil.gpc.encapsuleurs.EncapFactureProformAchat;
 import com.sil.gpc.encapsuleurs.EncapReception;
+import com.sil.gpc.repositories.LigneReceptionRepository;
 import com.sil.gpc.services.CommandeService;
 import com.sil.gpc.services.DemandeApproService;
 import com.sil.gpc.services.LigneCommandeService;
@@ -61,6 +66,9 @@ public class TresorController {
 		this.demandeApproService = demandeApproService;
 		this.ligneDemandeApproService = ligneDemandeApproService;
 	}
+	
+	@Autowired
+	LigneReceptionRepository ligneReceptionRepository;
 		
 
 	/*###########################################################
@@ -319,7 +327,26 @@ public class TresorController {
 	public Boolean deleteLigneReception(@PathVariable(name = "id") Long id) {
 		
 		return this.ligneReceptionService.delete(id);
-	}		
+	}
+	
+	//Add
+	@GetMapping(path = "ligneReception/list/numArticle/periode/{code}/{dateDebut}/{dateFin}")
+	public List<LigneReception> getAllLigneReceptionByPeriodeAndArticle(@PathVariable Long code, @PathVariable String dateDebut, @PathVariable String dateFin  ){
+		
+		LocalDate debut = LocalDate.parse(dateDebut);
+		LocalDate fin = LocalDate.parse(dateFin);
+		LocalDateTime start = LocalDateTime.of(LocalDate.from(debut), LocalTime.of(0, 0, 0));
+		LocalDateTime end = LocalDateTime.of(LocalDate.from(fin), LocalTime.of(23, 59, 59));
+		
+		System.out.println("date  debut "+start);
+		System.out.println("date fin "+end);
+		System.out.println("Article "+code);
+		
+		
+		return ligneReceptionRepository.getAllLigneReceptionByPeriodeAndArticle(code, start, end );
+		
+	}
+	
 	
 	
 	
