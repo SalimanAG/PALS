@@ -3,6 +3,9 @@ package com.sil.gpc.controllers.stock;
 import java.util.List;
 import java.util.Optional;
 
+import com.sil.gpc.repositories.CommandeAchatRepository;
+import com.sil.gpc.repositories.LettreCommandeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -90,6 +93,13 @@ public class MairieController {
 		this.travauxService = travauxService;
 		this.ligneTravauxService = ligneTravauxService;
 	}
+
+	@Autowired
+	CommandeAchatRepository commandeAchatRepository;
+	
+	@Autowired
+	LettreCommandeRepository lettreCommandeRepository;
+	
 	
 	/*###########################################################
 	#############	Partie réservée pour Approvisionnement
@@ -317,13 +327,25 @@ public class MairieController {
 		return this.commandeAchatService.edit(id, commandeAchat);
 	}
 	
+
 	@DeleteMapping(path = "commandeAchat/byCodComAch/{id}")
 	public Boolean deleteCommandeAchat(@PathVariable(name = "id") String id) {
 		
 		return this.commandeAchatService.delete(id);
 	}
+
+	@GetMapping(path = "commandeAchat/byNumCom/{id}")
+	public Optional<CommandeAchat> getCommandeAchatBynumCommande(@PathVariable(name = "id") Long id) {
+
+		return commandeAchatRepository.findByCommande_NumCommande(id);
+	}
 	
-	
+	@GetMapping(path = "lettreCommande/byNumCom/{id}")
+	public Optional<LettreCommande> getLettreCommandeBynumCommande(@PathVariable(name = "id") Long id) {
+
+		return lettreCommandeRepository.findByCommande_NumCommande(id);
+	}
+
 	
 	/*###########################################################
 	#############	Partie réservée pour ConsulterFrsForDp

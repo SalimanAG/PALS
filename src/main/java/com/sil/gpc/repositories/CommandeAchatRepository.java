@@ -1,6 +1,7 @@
 package com.sil.gpc.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,8 @@ public interface CommandeAchatRepository extends JpaRepository<CommandeAchat, St
 	
 	@Query(value = "from CommandeAchat as l where l.exercice.codeExercice = ?1")
 	public List<CommandeAchat> findByCodeExercice(String codeExo);
+
+	Optional<CommandeAchat> findByCommande_NumCommande(Long numCommande);
 	
 	
 }

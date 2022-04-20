@@ -1,6 +1,7 @@
 package com.sil.gpc.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +22,8 @@ public interface LettreCommandeRepository extends JpaRepository<LettreCommande, 
 	
 	@Query(value = "from LettreCommande as l where l.exercice.codeExercice = ?1")
 	public List<LettreCommande> findByCodeExercice(String codeExo);
+
+	Optional<LettreCommande> findByCommande_NumCommande(Long numCommande);
 	
 	
 }
